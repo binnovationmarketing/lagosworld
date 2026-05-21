@@ -54,6 +54,8 @@ nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.06)}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-cta{background:var(--black);color:#fff;padding:.55rem 1.4rem;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:background .25s,transform .2s}
 .nav-cta:hover{background:var(--gold);transform:translateY(-1px)}
+.nav-admin{font-size:1rem;color:var(--text-light);text-decoration:none;transition:color .25s;padding:.3rem;display:flex;align-items:center}
+.nav-admin:hover{color:var(--gold)}
 @media(max-width:768px){.nav-links{display:none}.nav-right{gap:.8rem}}
 @media(max-width:480px){nav{padding:0 1.2rem}}
 
@@ -94,19 +96,22 @@ nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.06)}
 .platforms{background:var(--bg)}
 .platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:4rem}
 @media(max-width:900px){.platforms-grid{grid-template-columns:1fr;gap:1.5rem}}
-.platform-card{position:relative;overflow:hidden;background:var(--bg-soft);text-decoration:none;color:inherit;display:block;transition:transform .4s}
-.platform-card:hover{transform:translateY(-4px)}
-.pc-image{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--bg-warm)}
-.pc-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;background:var(--bg-warm);transition:transform .5s}
-.platform-card:hover .pc-image-placeholder{transform:scale(1.04)}
-.pc-tag{position:absolute;top:1.2rem;left:1.2rem;background:var(--black);color:#fff;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .7rem;font-weight:600}
-.pc-info{padding:1.8rem 1.5rem}
-.pc-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.4rem}
-.pc-sub{font-size:.72rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.2rem}
-.pc-link{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-mid);font-weight:600;display:flex;align-items:center;gap:.4rem;transition:color .25s;text-decoration:none}
+.platform-card{position:relative;overflow:hidden;background:var(--black);text-decoration:none;color:inherit;display:block;transition:transform .4s,box-shadow .4s}
+.platform-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.18)}
+.pc-image{position:relative;overflow:hidden;aspect-ratio:3/4}
+.pc-image img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .5s}
+.platform-card:hover .pc-image img{transform:scale(1.08);filter:brightness(.75)}
+.pc-image-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.55) 60%,rgba(0,0,0,.85) 100%);transition:opacity .4s}
+.pc-tag{position:absolute;top:1.2rem;left:1.2rem;background:var(--gold);color:#fff;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;padding:.3rem .75rem;font-weight:700;z-index:2;transition:background .3s}
+.platform-card:hover .pc-tag{background:var(--black)}
+.pc-info{position:absolute;bottom:0;left:0;right:0;padding:2rem 1.8rem;z-index:2;transform:translateY(6px);transition:transform .4s}
+.platform-card:hover .pc-info{transform:translateY(0)}
+.pc-name{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:600;color:#fff;margin-bottom:.4rem;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.pc-sub{font-size:.72rem;color:rgba(255,255,255,.72);line-height:1.6;margin-bottom:1.2rem}
+.pc-link{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);font-weight:600;display:flex;align-items:center;gap:.4rem;transition:color .25s;text-decoration:none}
 .pc-link::after{content:'→';transition:transform .25s}
-.platform-card:hover .pc-link{color:var(--gold)}
-.platform-card:hover .pc-link::after{transform:translateX(4px)}
+.platform-card:hover .pc-link{color:#fff}
+.platform-card:hover .pc-link::after{transform:translateX(5px)}
 
 /* FOUNDER STORY */
 .story{background:var(--bg-warm);overflow:hidden}
@@ -205,6 +210,7 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 3rem 2rem}
   </ul>
   <div class="nav-right">
     <a href="https://wa.me/12156262345" class="nav-cta">Contact</a>
+    <a href="/jewelry#admin" class="nav-admin" title="Admin Panel">⚙</a>
   </div>
 </nav>
 
@@ -259,7 +265,8 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 3rem 2rem}
 
       <a href="/jewelry" class="platform-card reveal">
         <div class="pc-image">
-          <div class="pc-image-placeholder">💎</div>
+          <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&q=90&auto=format&fit=crop" alt="Lagos Jewelry — 18k Gold Plated Collection" loading="lazy">
+          <div class="pc-image-overlay"></div>
           <div class="pc-tag">Shop Now</div>
         </div>
         <div class="pc-info">
@@ -271,7 +278,8 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 3rem 2rem}
 
       <a href="/cleaning" class="platform-card reveal">
         <div class="pc-image">
-          <div class="pc-image-placeholder">✨</div>
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=90&auto=format&fit=crop" alt="Lagos Cleaning — Luxury Home Cleaning Services" loading="lazy">
+          <div class="pc-image-overlay"></div>
           <div class="pc-tag">Book Now</div>
         </div>
         <div class="pc-info">
@@ -283,7 +291,8 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 3rem 2rem}
 
       <a href="/courses" class="platform-card reveal">
         <div class="pc-image">
-          <div class="pc-image-placeholder">📚</div>
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=900&q=90&auto=format&fit=crop" alt="Lagos Courses — Professional Beauty & Wellness Training" loading="lazy">
+          <div class="pc-image-overlay"></div>
           <div class="pc-tag">Enroll Now</div>
         </div>
         <div class="pc-info">

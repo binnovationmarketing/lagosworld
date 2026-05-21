@@ -706,8 +706,11 @@ window.addEventListener('scroll',()=>{
   }
 })();
 
-// COUNTDOWN — target: Sep 1 2025
-const target=new Date('2025-09-01T00:00:00');
+// COUNTDOWN — 30 days from first visit, stored in localStorage
+const STORAGE_KEY='lagos_courses_launch';
+let stored=localStorage.getItem(STORAGE_KEY);
+if(!stored){stored=new Date(Date.now()+30*24*60*60*1000).toISOString();localStorage.setItem(STORAGE_KEY,stored);}
+const target=new Date(stored);
 function updateCountdown(){
   const now=new Date();
   const diff=Math.max(0,target-now);
