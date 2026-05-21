@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <title>Lagos Jewelry - Admin Panel</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Theme Color matching our luxury gold theme -->
+    <meta name="theme-color" content="#1E1E1E">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome for sleek, modern icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="theme-gold">
+
+    <!-- Admin Panel Header Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div id="store-logo-placeholder" class="logo-circle">L</div>
+                <h1 id="store-name-display" class="store-name">Lagos Jewelry</h1>
+                <span style="font-size:0.75rem; background-color:var(--primary); color:#FFFFFF; padding:0.2rem 0.5rem; border-radius:var(--radius-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-left:0.5rem;">Admin</span>
+            </a>
+            
+            <div class="header-actions">
+                <a href="index.html" class="category-btn">
+                    <i class="fa-solid fa-arrow-left"></i> View Catalog
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Admin Grid Layout -->
+    <main class="admin-layout">
+        <!-- Sidebar Navigation Options -->
+        <aside class="admin-sidebar">
+            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1rem; padding-left:0.5rem; font-family:'Outfit';">Menu</h3>
+            
+            <button class="admin-nav-btn active" data-tab="settings">
+                <i class="fa-solid fa-sliders"></i> Store Configuration
+            </button>
+            <button class="admin-nav-btn" data-tab="products">
+                <i class="fa-solid fa-gem"></i> Manage Products
+            </button>
+            <button class="admin-nav-btn" data-tab="categories">
+                <i class="fa-solid fa-tags"></i> Manage Categories
+            </button>
+            
+            <div style="margin-top:auto; padding-top:2rem; border-top:1px solid var(--border-color);">
+                <a href="index.html" class="admin-nav-btn" style="color:var(--text-muted);">
+                    <i class="fa-solid fa-circle-arrow-left"></i> Return to Shop
+                </a>
+            </div>
+        </aside>
+
+        <!-- Dynamic Admin Content Container -->
+        <section class="admin-main">
+            
+            <!-- Section A: Store Configurations -->
+            <div id="section-settings" class="admin-section active">
+                <div class="admin-header">
+                    <h2>Store Configuration</h2>
+                    <button id="save-settings-btn" class="admin-btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Settings
+                    </button>
+                </div>
+                
+                <form id="store-settings-form" class="admin-form-grid" onsubmit="event.preventDefault();">
+                    <div class="admin-form-group">
+                        <label for="input-store-name">Store Name</label>
+                        <input type="text" id="input-store-name" class="admin-input" placeholder="Lagos Jewelry" required>
+                    </div>
+                    
+                    <div class="admin-form-group">
+                        <label for="input-store-logo">Custom Logo Image URL</label>
+                        <input type="url" id="input-store-logo" class="admin-input" placeholder="https://example.com/logo.png">
+                    </div>
+                    
+                    <div class="admin-form-group">
+                        <label for="input-store-phone">WhatsApp Number (For WhatsApp API)</label>
+                        <input type="text" id="input-store-phone" class="admin-input" placeholder="12156262345" required>
+                        <span style="font-size:0.7rem; color:var(--text-muted); margin-top:0.2rem;">Format: DDI + DDD + Number (without spaces or dashes). E.g. 12156262345</span>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="input-store-phone-display">WhatsApp Display Text</label>
+                        <input type="text" id="input-store-phone-display" class="admin-input" placeholder="(215) 626-2345" required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="input-store-theme">Visual Layout Color Theme</label>
+                        <select id="input-store-theme" class="admin-input" required>
+                            <option value="gold" selected>Luxury Gold (Default)</option>
+                            <option value="dark">Space Deep Dark</option>
+                            <option value="rose">Romantic Rose Gold</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Section B: Manage Products CRUD -->
+            <div id="section-products" class="admin-section">
+                <div class="admin-header">
+                    <h2>Manage Products</h2>
+                    <button id="add-product-modal-trigger" class="admin-btn-primary">
+                        <i class="fa-solid fa-plus"></i> Add New Product
+                    </button>
+                </div>
+                
+                <!-- Table listing all existing items -->
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>SKU</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-products-table-body">
+                            <!-- Populated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section C: Manage Categories -->
+            <div id="section-categories" class="admin-section">
+                <div class="admin-header">
+                    <h2>Manage Categories</h2>
+                </div>
+                
+                <!-- Create new category input -->
+                <form id="add-category-form" style="display:flex; gap:1rem; margin-bottom:2rem;" onsubmit="event.preventDefault();">
+                    <input type="text" id="input-new-category" class="admin-input" placeholder="E.g., Bracelets, Anklets" style="flex-grow:1;" required>
+                    <button type="submit" class="admin-btn-primary">
+                        <i class="fa-solid fa-plus"></i> Add Category
+                    </button>
+                </form>
+                
+                <!-- List existing categories -->
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Category Name</th>
+                                <th style="width:120px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-categories-table-body">
+                            <!-- Populated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Modal for Adding / Editing Products -->
+    <div id="admin-product-modal" class="modal-backdrop">
+        <div class="modal-content" style="max-width: 600px; grid-template-columns: 1fr;">
+            <div class="modal-info-col" style="overflow-y:auto; max-height:85vh; position:relative; padding:2.5rem 2rem 2rem 2rem;">
+                <button class="modal-close-btn" id="admin-product-modal-close" style="top:1.2rem; right:1.2rem;"><i class="fa-solid fa-xmark"></i></button>
+                
+                <h3 id="admin-modal-title" style="font-size:1.4rem; margin-bottom:1.5rem; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem;">Add New Product</h3>
+                
+                <form id="product-crud-form" class="admin-form-grid" onsubmit="event.preventDefault();" style="grid-template-columns:1fr 1fr;">
+                    <!-- Hidden field to check if editing or creating -->
+                    <input type="hidden" id="crud-product-id" value="">
+
+                    <div class="admin-form-group" style="grid-column:1/-1;">
+                        <label for="crud-title">Product Title</label>
+                        <input type="text" id="crud-title" class="admin-input" placeholder="E.g., 18k Solitaire Twist Ring" required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="crud-sku">SKU Code</label>
+                        <input type="text" id="crud-sku" class="admin-input" placeholder="E.g., RING-SOL-002" required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="crud-category">Category</label>
+                        <select id="crud-category" class="admin-input" required>
+                            <!-- Populated dynamically via JavaScript -->
+                        </select>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="crud-price">Selling Price ($)</label>
+                        <input type="number" id="crud-price" step="0.01" min="0.01" class="admin-input" placeholder="79.90" required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="crud-original-price">Original Price (For Promo % OFF)</label>
+                        <input type="number" id="crud-original-price" step="0.01" min="0.01" class="admin-input" placeholder="99.90">
+                    </div>
+
+                    <div class="admin-form-group" style="grid-column:1/-1;">
+                        <label for="crud-image">Image URL</label>
+                        <input type="url" id="crud-image" class="admin-input" placeholder="E.g., https://example.com/ring.png">
+                    </div>
+
+                    <div class="admin-form-group" style="grid-column:1/-1;">
+                        <label for="crud-description">Description</label>
+                        <textarea id="crud-description" class="admin-input" rows="3" placeholder="Describe materials, details, style..." required></textarea>
+                    </div>
+
+                    <!-- Simple Variations Input -->
+                    <div class="admin-form-group" style="grid-column:1/-1; border-top:1px solid var(--border-color); padding-top:1rem; margin-top:0.5rem;">
+                        <h4 style="font-size:0.875rem; font-weight:700; margin-bottom:0.5rem;">Product Variations (Optional)</h4>
+                        <div style="display:grid; grid-template-columns: 1fr 2fr; gap:0.75rem;">
+                            <input type="text" id="crud-var-name" class="admin-input" placeholder="E.g., Size, Color">
+                            <input type="text" id="crud-var-options" class="admin-input" placeholder="E.g., 6, 7, 8 (comma separated)">
+                        </div>
+                        <span style="font-size:0.7rem; color:var(--text-muted); margin-top:0.25rem;">E.g. Variation Name: Size, Variation Options: 6, 7, 8, 9</span>
+                    </div>
+
+                    <div style="grid-column: 1/-1; display:flex; gap:1rem; justify-content:flex-end; border-top:1px solid var(--border-color); padding-top:1.5rem; margin-top:1rem;">
+                        <button type="button" class="admin-input" id="crud-cancel-btn" style="cursor:pointer; padding:0.6rem 1.2rem;">Cancel</button>
+                        <button type="submit" class="admin-btn-primary" style="padding:0.6rem 1.4rem;">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Alerts Container -->
+    <div id="toast-alerts-container" class="toast-container"></div>
+
+    <!-- Core Scripts -->
+    <script src="database.js"></script>
+    <script src="admin.js"></script>
+
+</body>
+</html>

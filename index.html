@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <title>Lagos Jewelry - Catálogo Online de Joias & Plataforma de Vendas</title>
+    <meta name="description" content="Crie seu catálogo de joias online de luxo. Configure em minutos, sem conhecimento técnico, e comece a vender imediatamente direto pelo WhatsApp.">
+    
+    <!-- Theme Color matching our luxury gold theme -->
+    <meta name="theme-color" content="#1E1E1E">
+    
+    <!-- Open Graph (OG) Meta Tags for Social Sharing -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Lagos Jewelry - Plataforma de Catálogo de Joias Online">
+    <meta property="og:description" content="Monte sua vitrine digital de luxo. Compra em um clique, sem taxas sobre vendas e suporte humanizado via WhatsApp.">
+    <meta property="og:url" content="https://app.conectavenda.com.br/lagos_jewelry">
+    <meta property="og:site_name" content="Lagos Jewelry">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- API Configuration -->
+    <script>
+        window.LAGOS_API_URL = 'https://lagos-api.vercel.app';
+    </script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome for sleek, modern icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* SaaS Navigation Custom Styles */
+        .saas-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .nav-link {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        @media (max-width: 900px) {
+            .saas-nav {
+                display: none;
+            }
+        }
+
+        /* Demo Header Label */
+        .demo-badge-banner {
+            background-color: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto 2.5rem auto;
+            color: var(--text-main);
+        }
+        .demo-badge-banner i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        .demo-badge-banner p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="theme-gold">
+
+    <!-- Header Navigation Section -->
+    <header id="main-header">
+        <div class="header-container">
+            <a href="#" class="logo-section" style="text-decoration: none;">
+                <div id="store-logo-placeholder" class="logo-circle">L</div>
+                <h1 id="store-name-display" class="store-name">Lagos Jewelry</h1>
+            </a>
+
+            <!-- SaaS Main Navigation Links -->
+            <nav class="saas-nav">
+                <a href="#inicio" class="nav-link">Início</a>
+                <a href="#recursos" class="nav-link">Recursos</a>
+                <a href="#demo" class="nav-link">Demonstração</a>
+                <a href="#planos" class="nav-link">Planos</a>
+                <a href="#comparativo" class="nav-link">Comparar Recursos</a>
+                <a href="#depoimentos" class="nav-link">Depoimentos</a>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="https://wa.me/12156262345" target="_blank" id="header-whatsapp-btn" class="category-btn" style="border-color:#25D366; color:#25D366; text-decoration: none;">
+                    <i class="fa-brands fa-whatsapp"></i> <span class="hidden-mobile">WhatsApp</span>
+                </a>
+                
+                <!-- Cart Trigger Button -->
+                <button id="cart-trigger" class="cart-toggle" aria-label="Open Shopping Bag">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <div id="cart-badge-count" class="cart-badge" style="display: none;">0</div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. HERO BANNER: SaaS Platform Hero -->
+    <section id="inicio" class="saas-hero">
+        <div class="saas-hero-content">
+            <div class="section-tag" style="align-self: flex-start; margin-bottom: 1rem; color: var(--primary);">PLATAFORMA PREMIUM</div>
+            <h2 class="saas-hero-title">Crie seu Catálogo de Joias de Luxo e venda 24h por dia</h2>
+            <p class="saas-hero-desc">
+                Configure tudo em poucos minutos, sem precisar de conhecimento técnico. Cadastre seus produtos e comece a vender imediatamente direto pelo WhatsApp, sem taxas sobre as vendas e com checkout em 1 clique.
+            </p>
+            <div class="saas-hero-actions">
+                <a href="#demo" class="pricing-card-btn solid" style="text-decoration: none;">Ver Catálogo em Ação</a>
+                <a href="#planos" class="pricing-card-btn outline" style="text-decoration: none;">Ver Planos</a>
+            </div>
+        </div>
+        <div class="saas-hero-img-box">
+            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1000&auto=format&fit=crop" alt="Empreendedora com catálogo digital de joias no tablet" class="saas-hero-img">
+        </div>
+    </section>
+
+    <!-- 2. FEATURES GRID: Recursos para Escalar -->
+    <section id="recursos" class="brand-philosophy-section luxury-glow" style="margin-top: 5rem; padding: 5rem 1.5rem;">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <span class="section-tag">Recursos Para Escalar</span>
+            <h2 class="section-title-premium" style="font-size: 2.5rem; margin-top: 0.5rem;">Autonomia, velocidade e zero taxas</h2>
+            <p class="section-desc" style="max-width: 750px; margin: 0 auto;">Desde a contratação, tenha acesso a ferramentas modernas e recursos avançados para atrair clientes, divulgar suas joias e aumentar suas vendas.</p>
+        </div>
+        
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+            <div class="feature-item" style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); transition: var(--transition); text-align: left;">
+                <div class="feature-icon-wrapper" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-cart-shopping"></i></div>
+                <div class="feature-info">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem; font-family:'Outfit', sans-serif;">Compra em 1 clique</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">O grande diferencial do Lagos Jewelry. Seu cliente não precisa entrar em cada produto para comprar; na mesma tela, consegue ver as informações e adicionar à sacola.</p>
+                </div>
+            </div>
+            
+            <div class="feature-item" style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); transition: var(--transition); text-align: left;">
+                <div class="feature-icon-wrapper" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-clock"></i></div>
+                <div class="feature-info">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem; font-family:'Outfit', sans-serif;">Venda 24h por Dia</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Mantenha sua vitrine de joias aberta 7 dias por semana. Receba pedidos de forma automatizada, completa e organizada diretamente no seu celular.</p>
+                </div>
+            </div>
+            
+            <div class="feature-item" style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); transition: var(--transition); text-align: left;">
+                <div class="feature-icon-wrapper" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-percent"></i></div>
+                <div class="feature-info">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem; font-family:'Outfit', sans-serif;">Sem Taxas Sobre Vendas</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Não cobramos comissões ou taxas sobre suas transações. Você paga apenas a assinatura mensal do seu plano e o lucro das joias vendidas é 100% seu.</p>
+                </div>
+            </div>
+            
+            <div class="feature-item" style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); transition: var(--transition); text-align: left;">
+                <div class="feature-icon-wrapper" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <div class="feature-info">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem; font-family:'Outfit', sans-serif;">Vitrine Responsiva Premium</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Uma experiência de compra de alto luxo otimizada para qualquer tela. Seus clientes compram com perfeição pelo celular, tablet ou computador.</p>
+                </div>
+            </div>
+            
+            <div class="feature-item" style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); transition: var(--transition); text-align: left;">
+                <div class="feature-icon-wrapper" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-headset"></i></div>
+                <div class="feature-info">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem; font-family:'Outfit', sans-serif;">Atendimento Humanizado</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Suporte técnico completo direto via WhatsApp em horário comercial (segunda a sexta das 7:30h às 17:30h, com pausa ao meio-dia) para te ajudar a gerenciar sua vitrine.</p>
+                </div>
+            </div>
+
+            <div class="feature-item" style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); transition: var(--transition); text-align: left;">
+                <div class="feature-icon-wrapper" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <div class="feature-info">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem; font-family:'Outfit', sans-serif;">Cloud e Autonomia Geral</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Segurança com informações armazenadas 100% na nuvem. Altere cores, banner, logo e gerencie seu catálogo com total autonomia a qualquer hora.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. INTERACTIVE LIVE DEMO VITRINE -->
+    <section id="demo" style="margin-top: 5rem; padding: 5rem 1.5rem; text-align: center; background-color: var(--bg-card); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <span class="section-tag">Demonstração Interativa em Tempo Real</span>
+            <h2 class="section-title-premium">Sinta o Poder do Lagos Jewelry em Ação</h2>
+            <p class="section-desc" style="max-width: 800px; margin: 0 auto 1.5rem auto;">
+                Esta é a vitrine virtual premium que seu cliente final utilizará para fazer pedidos. Adicione joias à sacola e faça um pedido de demonstração para entender como funciona o envio direto para o WhatsApp!
+            </p>
+        </div>
+
+        <!-- Banner Slideshow Carousel inside Demo Vitrine -->
+        <section class="banner-carousel" id="banners-section" style="margin-bottom: 3rem;">
+            <div class="banner-track">
+                <!-- Slide 1 -->
+                <div class="banner-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200&auto=format&fit=crop');">
+                    <div class="banner-overlay"></div>
+                    <div class="banner-content">
+                        <h2>Elegance in Every Detail</h2>
+                        <p>Discover our exclusive 18k gold-plated jewelry collection, designed for those who appreciate true craftsmanship.</p>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="banner-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop');">
+                    <div class="banner-overlay"></div>
+                    <div class="banner-content">
+                        <h2>Free Global Shipping</h2>
+                        <p>Receive your favorite pieces at home with complimentary express shipping on all orders over $150.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Demo Status Banner -->
+        <div class="demo-badge-banner">
+            <i class="fa-solid fa-circle-info"></i>
+            <p>
+                <strong>Diferencial "Compra com Um Clique":</strong> Você pode clicar diretamente em <strong>"Add to Bag"</strong> sem sair da página! O valor do item será somado instantaneamente na Sacola de Compras no topo do site.
+            </p>
+        </div>
+
+        <!-- Interactive Search & Filtering Container -->
+        <div style="max-width: 500px; margin: 0 auto 2.5rem auto; display: flex; justify-content: center; align-items: center;">
+            <div class="search-container" style="width: 100%; box-shadow: var(--theme-shadow-sm);">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Pesquisar joias no catálogo de demonstração..." style="width: 100%; padding-left: 2.8rem;">
+            </div>
+        </div>
+
+        <!-- Dynamic Categories Navigation Menu -->
+        <nav class="categories-container" style="margin-bottom: 2rem;">
+            <div id="categories-scroll-menu" class="categories-scroll">
+                <!-- Rendered dynamically by JavaScript -->
+                <button class="category-btn active" data-category="All">All Pieces</button>
+            </div>
+        </nav>
+
+        <!-- Dynamic Products Showcase Grid -->
+        <main class="products-wrapper">
+            <div id="products-showcase-grid" class="products-grid">
+                <!-- Dynamic cards with products will be rendered here by app.js -->
+                <div class="product-card skeleton" style="height: 380px;"></div>
+                <div class="product-card skeleton" style="height: 380px;"></div>
+                <div class="product-card skeleton" style="height: 380px;"></div>
+                <div class="product-card skeleton" style="height: 380px;"></div>
+            </div>
+        </main>
+    </section>
+
+    <!-- 4. PLANS AND PRICING GRID -->
+    <section id="planos" class="pricing-section">
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+            <span class="section-tag">Nossos Planos</span>
+            <h2 class="section-title-premium" style="font-size: 2.5rem; margin-top: 0.5rem;">Selecione um plano e comece a vender hoje mesmo</h2>
+            <p class="section-desc" style="max-width: 650px; margin: 0 auto;">Todos sem nenhuma taxa de instalação e livre de taxas sobre as suas vendas. Pague apenas a mensalidade fixa do seu plano.</p>
+        </div>
+
+        <!-- Animated Monthly/Yearly Switch -->
+        <div class="pricing-toggle-container">
+            <span class="pricing-toggle-btn active" id="toggle-monthly" style="cursor: pointer;">Mensal</span>
+            <div class="toggle-switch-wrapper" id="billing-toggle">
+                <div class="toggle-switch-handle"></div>
+            </div>
+            <span class="pricing-toggle-btn" id="toggle-yearly" style="cursor: pointer;">Anual</span>
+            <span class="pricing-discount-tag">Até 25% OFF</span>
+        </div>
+
+        <!-- 3 Subscription Cards Grid -->
+        <div class="pricing-grid">
+            <!-- Card 1: Básico -->
+            <div class="pricing-card">
+                <div class="pricing-card-header">
+                    <h3>Básico</h3>
+                    <p>A opção perfeita para quem está iniciando na venda online de joias, precisa captar leads e organizar seus pedidos.</p>
+                </div>
+                
+                <div class="pricing-price-wrapper">
+                    <div class="pricing-price-row">
+                        <span class="pricing-price-currency">R$</span>
+                        <span class="pricing-price-val" id="price-val-basico">67,90</span>
+                        <span class="pricing-price-period">/ao mês</span>
+                    </div>
+                    <p class="pricing-price-annual-info" id="annual-info-basico" style="opacity: 0; visibility: hidden; transition: var(--transition); height: 0; overflow: hidden; margin-top: 0;">Total ano: R$ 692,58 em até 12x</p>
+                </div>
+
+                <ul class="pricing-features-list">
+                    <li class="pricing-feature-row"><i class="fa-solid fa-user pricing-feature-icon"></i> <span><strong>1</strong> usuário</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-box pricing-feature-icon"></i> <span>Até <strong>99</strong> produtos</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-cubes pricing-feature-icon"></i> <span>Até <strong>5</strong> variações por produto</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-image pricing-feature-icon"></i> <span><strong>1</strong> foto por produto</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-folder-open pricing-feature-icon"></i> <span>Até <strong>3</strong> catálogos ativos</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-hand-holding-dollar pricing-feature-icon"></i> <span>Sem taxas sobre vendas (0%)</span></li>
+                    
+                    <li class="pricing-feature-row" style="font-weight: 700; color: var(--primary); border-top: 1px solid var(--border-color); padding-top: 0.85rem; margin-top: 0.5rem;">Recursos inclusos:</li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Visitantes e pedidos ilimitados</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Sacolas abandonadas + lead capture</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Mentoria de implementação ao vivo</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Relatório de produtos, pedidos e clientes</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Observação para produtos personalizados</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Acesso completo ao Clube Conectado</span></li>
+                    <li class="pricing-feature-row"><i class="fa-brands fa-whatsapp pricing-feature-icon"></i> <span>Suporte ilimitado via WhatsApp comercial</span></li>
+                </ul>
+
+                <button class="pricing-card-btn outline" onclick="window.showToast('Parabéns! Você ativou 14 dias de teste grátis no plano Básico.', 'success')">Testar grátis por 14 dias</button>
+            </div>
+
+            <!-- Card 2: Essencial (FEATURED / + vendido) -->
+            <div class="pricing-card featured">
+                <span class="pricing-card-badge">+ vendido</span>
+                <div class="pricing-card-header">
+                    <h3>Essencial</h3>
+                    <p>A melhor escolha para quem quer profissionalizar o catálogo, com recursos avançados de pagamento online e fretes integrados.</p>
+                </div>
+                
+                <div class="pricing-price-wrapper">
+                    <div class="pricing-price-row">
+                        <span class="pricing-price-currency">R$</span>
+                        <span class="pricing-price-val" id="price-val-essencial">157,90</span>
+                        <span class="pricing-price-period">/ao mês</span>
+                    </div>
+                    <p class="pricing-price-annual-info" id="annual-info-essencial" style="opacity: 0; visibility: hidden; transition: var(--transition); height: 0; overflow: hidden; margin-top: 0;">Total ano: R$ 1.515,84 em até 12x</p>
+                </div>
+
+                <ul class="pricing-features-list">
+                    <li class="pricing-feature-row"><i class="fa-solid fa-users pricing-feature-icon"></i> <span><strong>2</strong> usuários</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-box-open pricing-feature-icon"></i> <span>Produtos <strong>ilimitados</strong></span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-cubes pricing-feature-icon"></i> <span>Variações <strong>ilimitadas</strong></span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-images pricing-feature-icon"></i> <span>Fotos <strong>ilimitadas</strong> por produto</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-folder-tree pricing-feature-icon"></i> <span>Catálogos <strong>ilimitados</strong></span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-hand-holding-dollar pricing-feature-icon"></i> <span>Sem taxas sobre vendas (0%)</span></li>
+                    
+                    <li class="pricing-feature-row" style="font-weight: 700; color: var(--primary); border-top: 1px solid var(--border-color); padding-top: 0.85rem; margin-top: 0.5rem;">Todos os recursos do Básico, mais:</li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Importação em massa de produtos</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Controle de estoque automático</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Logística integrada (Correios e transportadora)</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Pagamento online completo (Pix e Cartão)</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Múltiplas tabelas de preço</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Cupons de desconto exclusivos</span></li>
+                    <li class="pricing-feature-row"><i class="fa-brands fa-whatsapp pricing-feature-icon"></i> <span>Suporte ilimitado via WhatsApp comercial</span></li>
+                </ul>
+
+                <button class="pricing-card-btn solid" onclick="window.showToast('Parabéns! Você ativou 14 dias de teste grátis no plano Essencial.', 'success')">Testar grátis por 14 dias</button>
+            </div>
+
+            <!-- Card 3: Avançado -->
+            <div class="pricing-card">
+                <div class="pricing-card-header">
+                    <h3>Avançado</h3>
+                    <p>Ideal para lojas de joias que possuem grandes demandas de vendas e precisam de domínio próprio, integrações de API e tráfego.</p>
+                </div>
+                
+                <div class="pricing-price-wrapper">
+                    <div class="pricing-price-row">
+                        <span class="pricing-price-currency">R$</span>
+                        <span class="pricing-price-val" id="price-val-avancado">259,90</span>
+                        <span class="pricing-price-period">/ao mês</span>
+                    </div>
+                    <p class="pricing-price-annual-info" id="annual-info-avancado" style="opacity: 0; visibility: hidden; transition: var(--transition); height: 0; overflow: hidden; margin-top: 0;">Total ano: R$ 2.339,04 em até 12x</p>
+                </div>
+
+                <ul class="pricing-features-list">
+                    <li class="pricing-feature-row"><i class="fa-solid fa-users-gear pricing-feature-icon"></i> <span><strong>4</strong> usuários</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-box-open pricing-feature-icon"></i> <span>Produtos <strong>ilimitados</strong></span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-cubes pricing-feature-icon"></i> <span>Variações <strong>ilimitadas</strong></span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-images pricing-feature-icon"></i> <span>Fotos <strong>ilimitadas</strong> por produto</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-folder-tree pricing-feature-icon"></i> <span>Catálogos <strong>ilimitados</strong></span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-hand-holding-dollar pricing-feature-icon"></i> <span>Sem taxas sobre vendas (0%)</span></li>
+                    
+                    <li class="pricing-feature-row" style="font-weight: 700; color: var(--primary); border-top: 1px solid var(--border-color); padding-top: 0.85rem; margin-top: 0.5rem;">Todos os recursos do Essencial, mais:</li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Hospedagem em domínio próprio</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Modo Loja Virtual integrado</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Integração Sacolinha do Instagram</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Tráfego pago via MetaAds e PinterestAds</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Integrações via chave de API externa</span></li>
+                    <li class="pricing-feature-row"><i class="fa-solid fa-check pricing-feature-icon"></i> <span>Relatórios de dados personalizados</span></li>
+                    <li class="pricing-feature-row"><i class="fa-brands fa-whatsapp pricing-feature-icon"></i> <span>Gerente exclusivo de conta via WhatsApp</span></li>
+                </ul>
+
+                <button class="pricing-card-btn outline" onclick="window.showToast('Parabéns! Você ativou 14 dias de teste grátis no plano Avançado.', 'success')">Testar grátis por 14 dias</button>
+            </div>
+        </div>
+
+        <!-- wide Premium card -->
+        <div class="premium-plan-banner" style="margin-top: 4rem;">
+            <div class="premium-banner-content">
+                <span class="section-tag" style="background: rgba(212, 175, 55, 0.15); color: var(--primary); padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: var(--radius-full); margin-bottom: 1rem; display: inline-block;">ALTO FATURAMENTO</span>
+                <h3>Plano Premium</h3>
+                <p>O plano ideal para atacadistas, distribuidores ou fabricantes de joias que faturam mais de R$ 50 mil por mês e precisam profissionalizar as vendas através de times de representantes integrados no WhatsApp.</p>
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; align-items: center;">
+                    <i class="fa-solid fa-rocket" style="font-size: 1.5rem; color: var(--primary);"></i>
+                    <span style="font-size: 0.9rem; font-weight: 600;">Feito para times comerciais com 4+ vendedores</span>
+                </div>
+                <a href="https://wa.me/12156262345?text=Olá! Gostaria de saber mais sobre o Plano Premium Lagos Jewelry." target="_blank" class="pricing-card-btn solid" style="text-decoration: none; width: auto; display: inline-block; padding: 0.9rem 2.2rem; margin-top: 2rem;">Falar com Gerente Exclusivo pelo WhatsApp</a>
+            </div>
+            <div>
+                <h4 style="font-family:'Outfit', sans-serif; font-size: 1rem; color: var(--primary); margin-bottom: 1rem;">Todos os recursos do Avançado, mais:</h4>
+                <ul class="premium-features-grid" style="grid-template-columns: 1fr;">
+                    <li class="premium-feature-item"><i class="fa-solid fa-circle-check"></i> <span>Atendimento prioritário 8h/5 dias via WhatsApp</span></li>
+                    <li class="premium-feature-item"><i class="fa-solid fa-circle-check"></i> <span>Mentorias exclusivas com equipe especializada</span></li>
+                    <li class="premium-feature-item"><i class="fa-solid fa-circle-check"></i> <span>Implantação assistida com assessoria estratégica</span></li>
+                    <li class="premium-feature-item"><i class="fa-solid fa-circle-check"></i> <span>Estrutura robusta para alto volume de vendas</span></li>
+                    <li class="premium-feature-item"><i class="fa-solid fa-circle-check"></i> <span>Usuários sob demanda personalizados para seu time</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPRA SEGURA TICKER MARQUEE -->
+    <section class="safety-ticker-section">
+        <div class="ticker-wrapper">
+            <span class="ticker-title">Compra segura <i class="fa-solid fa-arrow-right"></i></span>
+            <div class="ticker-content-track">
+                <div class="ticker-items">
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                    <span class="divider">|</span>
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                    <span class="divider">|</span>
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                    <span class="divider">|</span>
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="ticker-items" aria-hidden="true">
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                    <span class="divider">|</span>
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                    <span class="divider">|</span>
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                    <span class="divider">|</span>
+                    <span>14 dias de teste grátis</span>
+                    <span class="divider">|</span>
+                    <span>Cancele a qualquer momento, no período de teste</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. DETAILED COMPARISON TABLE -->
+    <section id="comparativo" class="comparison-section">
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+            <span class="section-tag">Tabela Comparativa</span>
+            <h2 class="section-title-premium">Compare e faça a melhor escolha</h2>
+            <p class="section-desc" style="max-width: 600px; margin: 0 auto;">Transparência completa para você entender cada recurso disponível nos planos de assinatura.</p>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Recursos Detalhados</th>
+                        <th style="width: 25%;">Básico</th>
+                        <th style="width: 25%;">Essencial</th>
+                        <th style="width: 25%;">Avançado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- CATEGORY: Atendimento -->
+                    <tr class="category-header">
+                        <td colspan="4">Atendimento e Conhecimento</td>
+                    </tr>
+                    <tr>
+                        <td>Gerente de conta dedicado</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Suporte e atendimento via WhatsApp</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Chat integrado no painel administrativo</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Atendimento via Telefone comercial</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Acesso exclusivo ao Clube Conectado</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Mentoria de Implementação ao vivo</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+
+                    <!-- CATEGORY: Usuários e produtos -->
+                    <tr class="category-header">
+                        <td colspan="4">Usuários e Produtos</td>
+                    </tr>
+                    <tr>
+                        <td>Usuários cadastrados</td>
+                        <td>1 usuário</td>
+                        <td>2 usuários</td>
+                        <td>4 usuários</td>
+                    </tr>
+                    <tr>
+                        <td>Permissões personalizadas de usuários</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Produtos no catálogo</td>
+                        <td>Até 99 cadastrados</td>
+                        <td>Produtos Ilimitados</td>
+                        <td>Produtos Ilimitados</td>
+                    </tr>
+                    <tr>
+                        <td>Geração de descrição com Inteligência Artificial</td>
+                        <td>50.000 tokens / mês</td>
+                        <td>200.000 tokens / mês</td>
+                        <td>500.000 tokens / mês</td>
+                    </tr>
+                    <tr>
+                        <td>Campo de observação para personalizados</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Variações por produto (Tamanho, Acabamento, etc)</td>
+                        <td>Até 5 variações</td>
+                        <td>Variações Ilimitadas</td>
+                        <td>Variações Ilimitadas</td>
+                    </tr>
+                    <tr>
+                        <td>2 níveis de variações simultâneas</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Categorias de produtos</td>
+                        <td>Ilimitado</td>
+                        <td>Ilimitado</td>
+                        <td>Ilimitado</td>
+                    </tr>
+                    <tr>
+                        <td>Imagens do produto</td>
+                        <td>1 foto por produto</td>
+                        <td>Imagens Ilimitadas</td>
+                        <td>Imagens Ilimitadas</td>
+                    </tr>
+                    <tr>
+                        <td>Vídeos integrados no produto</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Controle de estoque automático</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Tags promocionais de destaque</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Múltiplas tabelas de preço</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Quantidade mínima de compra exigida</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Multiplicador de quantidade padrão</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Importação em massa de catálogo</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td>Planilha CSV</td>
+                        <td>Planilha CSV</td>
+                    </tr>
+                    <tr>
+                        <td>Agendamento de publicação automática</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+
+                    <!-- CATEGORY: Catálogos e Personalização -->
+                    <tr class="category-header">
+                        <td colspan="4">Catálogo e Personalização</td>
+                    </tr>
+                    <tr>
+                        <td>Quantidade de catálogos permitidos</td>
+                        <td>Até 3 catálogos ativos</td>
+                        <td>Catálogos Ilimitados</td>
+                        <td>Catálogos Ilimitados</td>
+                    </tr>
+                    <tr>
+                        <td>Personalização de paleta de cores</td>
+                        <td>Até 2 cores da marca</td>
+                        <td>Até 2 cores da marca</td>
+                        <td>Até 2 cores da marca</td>
+                    </tr>
+                    <tr>
+                        <td>Banners em carrossel</td>
+                        <td>1 banner estático</td>
+                        <td>Carrossel com 3 banners</td>
+                        <td>Carrossel com 3 banners</td>
+                    </tr>
+                    <tr>
+                        <td>Replicar catálogos e definições</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Agendar prazo de expiração</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Assessoria e manutenção de vitrines</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+
+                    <!-- CATEGORY: Recursos gerais -->
+                    <tr class="category-header">
+                        <td colspan="4">Recursos Gerais</td>
+                    </tr>
+                    <tr>
+                        <td>Pedidos de clientes</td>
+                        <td>Pedidos Ilimitados</td>
+                        <td>Pedidos Ilimitados</td>
+                        <td>Pedidos Ilimitados</td>
+                    </tr>
+                    <tr>
+                        <td>Visitas à vitrine virtual</td>
+                        <td>Visitas Ilimitadas</td>
+                        <td>Visitas Ilimitadas</td>
+                        <td>Visitas Ilimitadas</td>
+                    </tr>
+                    <tr>
+                        <td>Relatórios analíticos integrados</td>
+                        <td>Produtos, clientes e pedidos</td>
+                        <td>Produtos, clientes e pedidos</td>
+                        <td>Produtos, clientes, pedidos e personalizados</td>
+                    </tr>
+                    <tr>
+                        <td>Acompanhamento de métricas</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Captação de leads e sacola abandonada</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Endereço em subdomínio Lagos Jewelry</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Endereço em domínio próprio (.com, .com.br)</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+
+                    <!-- CATEGORY: Taxas e Checkout -->
+                    <tr class="category-header">
+                        <td colspan="4">Métodos de Checkout e Pagamentos</td>
+                    </tr>
+                    <tr>
+                        <td>Taxas sobre vendas da plataforma</td>
+                        <td><strong>0%</strong> (Livre de comissões)</td>
+                        <td><strong>0%</strong> (Livre de comissões)</td>
+                        <td><strong>0%</strong> (Livre de comissões)</td>
+                    </tr>
+                    <tr>
+                        <td>Negociação à combinar direto no WhatsApp</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Checkout integrado com Pix automático</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Checkout integrado com Cartão de Crédito</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Checkout transparente integrado</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Integrações com intermediadores (Mercado Pago, PagBank, Pagar.me)</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+
+                    <!-- CATEGORY: Frete -->
+                    <tr class="category-header">
+                        <td colspan="4">Logística, Entrega e Retirada</td>
+                    </tr>
+                    <tr>
+                        <td>Entrega local programada</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Regras de entrega especial customizadas</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Opção de retirada em local físico</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Cálculo automático de frete Correios / Melhor Envio</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+
+                    <!-- CATEGORY: Marketing -->
+                    <tr class="category-header">
+                        <td colspan="4">Marketing e Promoções</td>
+                    </tr>
+                    <tr>
+                        <td>Criação de cupons de desconto</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Regra de Frete Grátis na loja</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Preços De: / Por: promocionais</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Mínimo de compras em valor ou itens</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Acompanhamento de sacolas abandonadas</td>
+                        <td>Histórico de 30 dias</td>
+                        <td>Histórico de 30 dias</td>
+                        <td>Histórico de 30 dias</td>
+                    </tr>
+                    <tr>
+                        <td>Integração com Sacolinha do Instagram</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+
+                    <!-- CATEGORY: Integrações -->
+                    <tr class="category-header">
+                        <td colspan="4">Integrações de Software</td>
+                    </tr>
+                    <tr>
+                        <td>Integração ERP Tiny / Bling</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Chave de API do sistema externa</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Integração Pixel do Facebook e Meta API</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                    <tr>
+                        <td>Integração de anúncios Pinterest Ads</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-xmark"></i> Não disponível</td>
+                        <td><i class="fa-solid fa-circle-check"></i> Disponível</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 6. VIDEO TESTIMONIALS SECTION -->
+    <section id="depoimentos" class="video-testimonials-section">
+        <div class="testimonials-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <span class="section-tag">Aprovado por + de 4.000 Lojistas</span>
+                <h2 class="section-title-premium">Depoimentos dos Nossos Clientes</h2>
+                <p class="section-desc" style="max-width: 650px; margin: 0 auto;">Marcas renomadas de joias e semijoias que escalaram e organizaram suas vendas utilizando nosso catálogo digital.</p>
+            </div>
+            
+            <div class="video-grid">
+                <!-- Testimonial 1: Gaen Brutos (Tânia) -->
+                <div class="video-card">
+                    <div class="video-thumbnail-container" onclick="window.showToast('Reproduzindo depoimento em vídeo de Tânia - Gaen Brutos...', 'success')">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop" alt="Tânia - Gaen Brutos" class="video-thumbnail-img">
+                        <div class="video-play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-client-name">Tânia</h3>
+                        <p class="video-client-brand">Gaen Brutos</p>
+                        <p class="video-client-quote">“É uma ferramenta fácil do cliente entender também, de nós usar aqui, é fácil de subir foto, é fácil subir peça nele, então, é bem tranquilo. Quando ele acostuma, ele já volta, já sabe o que fazer, os dados dele já estão gravados lá.”</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2: Cy Pratas (Thomas) -->
+                <div class="video-card">
+                    <div class="video-thumbnail-container" onclick="window.showToast('Reproduzindo depoimento em vídeo de Thomas - Cy Pratas...', 'success')">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=600&auto=format&fit=crop" alt="Thomas - Cy Pratas" class="video-thumbnail-img">
+                        <div class="video-play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-client-name">Thomas</h3>
+                        <p class="video-client-brand">Cy Pratas</p>
+                        <p class="video-client-quote">“A gente já chegou e foi direto com o Conecta, então, foi muito legal que a plataforma atendeu todas as expectativas dela, de maneira simples, intuitiva e prática. E foi muito bom que a conexão della com os clientes bateu de primeira, assim.”</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3: Degan Semijoias (Natalia) -->
+                <div class="video-card">
+                    <div class="video-thumbnail-container" onclick="window.showToast('Reproduzindo depoimento em vídeo de Natália - Degan Semijoias...', 'success')">
+                        <img src="https://images.unsplash.com/photo-1580894732444-8fecef2271ff?q=80&w=600&auto=format&fit=crop" alt="Natália - Degan Semijoias" class="video-thumbnail-img">
+                        <div class="video-play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-client-name">Natália</h3>
+                        <p class="video-client-brand">Degan Semijoias</p>
+                        <p class="video-client-quote">“O cliente ali consegue com mais rapidez olhar tudo que eu tenho ali na pronta entrega. Fácil o layout para olhar tudo, sair e entrar no produto. Consegue fazer o download da minha foto, que eu acho maravilhoso, porque é um pedido que elas têm muito.”</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 4: Marmentini Joias (Diego) -->
+                <div class="video-card">
+                    <div class="video-thumbnail-container" onclick="window.showToast('Reproduzindo depoimento em vídeo de Diego - Marmentini Joias...', 'success')">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Diego - Marmentini Joias" class="video-thumbnail-img">
+                        <div class="video-play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-client-name">Diego</h3>
+                        <p class="video-client-brand">Marmentini Joias</p>
+                        <p class="video-client-quote">“Então, eu vejo hoje uma ferramenta não só como venda, mas sim, para auxiliar no dia a dia e para chegar até o cliente, e marcar a nossa presença.”</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 5: Bulky e Voga (Alvaro) -->
+                <div class="video-card">
+                    <div class="video-thumbnail-container" onclick="window.showToast('Reproduzindo depoimento em vídeo de Álvaro - Bulky e Voga...', 'success')">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=600&auto=format&fit=crop" alt="Álvaro - Bulky e Voga" class="video-thumbnail-img">
+                        <div class="video-play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-client-name">Álvaro</h3>
+                        <p class="video-client-brand">Bulky & Voga</p>
+                        <p class="video-client-quote">“A gente utilizou a ferramenta pro nosso Black Friday, a gente fez uma venda em massa, então, atendeu a gente super bem. A gente acabou fazendo, eu acho que numa hora, entrou 100, 200 pedidos para gente no Conecta.”</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 6: LBF Joias (Lúcia) -->
+                <div class="video-card">
+                    <div class="video-thumbnail-container" onclick="window.showToast('Reproduzindo depoimento em vídeo de Lúcia - LBF Joias...', 'success')">
+                        <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=600&auto=format&fit=crop" alt="Lúcia - LBF Joias" class="video-thumbnail-img">
+                        <div class="video-play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-client-name">Lúcia</h3>
+                        <p class="video-client-brand">LBF Joias</p>
+                        <p class="video-client-quote">“Então você consegue otimizar o tempo tanto da consultora, da equipe de forma geral, quando da cliente, né? E aí, a gente dispara o material na sexta, então a cliente tem todo o final de semana, quando é segunda-feira eu já tô com um monte de pedido do Conecta para tirar.”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6B. WHY CHOOSE SECTION -->
+    <section class="why-choose-section" style="margin-top: 5rem; padding: 5rem 1.5rem; text-align: center;">
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+            <span class="section-tag">Diferenciais da Plataforma</span>
+            <h2 class="section-title-premium" style="font-size: 2.5rem; margin-top: 0.5rem;">Por que escolher o Lagos Jewelry?</h2>
+            <p class="section-desc" style="max-width: 750px; margin: 0 auto;">O Lagos Jewelry é um sistema de vendas com recursos essenciais, acessível, confiável e descomplicado, feito para acelerar seu negócio.</p>
+        </div>
+
+        <div class="why-choose-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+            <!-- Card 1: Atendimento Humanizado -->
+            <div class="why-choose-card" style="background: var(--bg-card); padding: 2.5rem 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--theme-shadow-sm); transition: var(--transition); text-align: left; display: flex; gap: 1.25rem;">
+                <div class="why-choose-icon" style="font-size: 1.75rem; color: var(--primary);"><i class="fa-solid fa-arrow-right"></i></div>
+                <div>
+                    <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Atendimento humanizado, pelo WhatsApp</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Suporte completo em horário comercial via WhatsApp para te ajudar a manter o seu catálogo, carrinho e preços atualizados.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: 100% Online -->
+            <div class="why-choose-card" style="background: var(--bg-card); padding: 2.5rem 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--theme-shadow-sm); transition: var(--transition); text-align: left; display: flex; gap: 1.25rem;">
+                <div class="why-choose-icon" style="font-size: 1.75rem; color: var(--primary);"><i class="fa-solid fa-arrow-right"></i></div>
+                <div>
+                    <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Sistema 100% online na nuvem</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Acesse de qualquer lugar e dispositivo (celular, tablet e computador) com segurança total e alta velocidade de resposta.</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Implementação Grátis -->
+            <div class="why-choose-card" style="background: var(--bg-card); padding: 2.5rem 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--theme-shadow-sm); transition: var(--transition); text-align: left; display: flex; gap: 1.25rem;">
+                <div class="why-choose-icon" style="font-size: 1.75rem; color: var(--primary);"><i class="fa-solid fa-arrow-right"></i></div>
+                <div>
+                    <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Sem custo de implementação</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Não cobramos taxas de configuração inicial ou comissão sobre suas vendas de joias. É só assinar e começar a usar imediatamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FINAL CALL TO ACTION BANNER -->
+    <section class="vip-club-section" style="margin-top: 5rem; padding: 6rem 1.5rem; text-align: center; background: linear-gradient(135deg, #111111 0%, #1a1a18 100%);">
+        <div class="vip-card" style="max-width: 800px; margin: 0 auto; background: transparent; border: none; box-shadow: none; padding: 0;">
+            <div class="vip-content">
+                <span class="section-tag" style="color: var(--primary);">COMECE GRÁTIS HOJE MESMO</span>
+                <h3 style="font-size: 2.2rem; font-family: 'Outfit', sans-serif; font-weight: 800; margin: 1rem 0; color: #FFFFFF;">Transforme suas vendas online em um processo simples e descomplicado.</h3>
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Experimente grátis por 14 dias sem taxas ocultas. Configure sua loja e comece a faturar imediatamente.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#planos" class="pricing-card-btn solid" style="text-decoration: none; width: auto; padding: 1rem 2.5rem; font-size: 1rem;">Escolher Meu Plano</a>
+                    <a href="https://wa.me/12156262345?text=Olá! Quero testar grátis o Lagos Jewelry por 14 dias." target="_blank" class="pricing-card-btn outline" style="text-decoration: none; width: auto; padding: 1rem 2.5rem; font-size: 1rem; border-color: #25D366; color: #25D366;">
+                        <i class="fa-brands fa-whatsapp"></i> Testar via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. MODAL WINDOWS & DRAWERS (FOR DYNAMIC VITRINE DEMO) -->
+    <!-- Product Detail Modal Popup -->
+    <div id="product-detail-modal" class="modal-backdrop">
+        <div class="modal-content" id="modal-content-wrapper">
+            <!-- Modal elements rendered dynamically via JavaScript by app.js -->
+        </div>
+    </div>
+
+    <!-- Shopping Bag Slide-out Drawer -->
+    <div id="cart-drawer-backdrop" class="cart-drawer-backdrop">
+        <div class="cart-drawer" id="shopping-bag-drawer">
+            <div class="cart-header">
+                <h3>Sacola de Compras (Demo)</h3>
+                <button id="cart-close-btn" class="cart-close-btn" aria-label="Close Bag">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- List of items inside bag -->
+            <div class="cart-items-list" id="cart-items-list-container">
+                <!-- Cart items rendered dynamically by app.js -->
+                <div class="cart-empty-message">
+                    <i class="fa-solid fa-bag-shopping cart-empty-icon"></i>
+                    <p>Sua sacola de compras está vazia.</p>
+                    <p style="font-size:0.8rem; margin-top:0.5rem; opacity:0.8;">Explore nossa vitrine de demonstração e adicione itens!</p>
+                </div>
+            </div>
+            
+            <!-- Checkout Footer inside Drawer -->
+            <div class="cart-footer" id="cart-footer-checkout" style="display: none;">
+                <div class="cart-total-row">
+                    <span class="cart-total-label">Subtotal:</span>
+                    <span id="cart-subtotal-value" class="cart-total-val">$0.00</span>
+                </div>
+                
+                <!-- Client Details Checkout Form -->
+                <form id="checkout-details-form" class="checkout-form" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <input type="text" id="cust-name" class="form-input" placeholder="Seu Nome Completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="cust-phone" class="form-input" placeholder="WhatsApp / Telefone com DDD" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="cust-delivery-method" class="form-input" required>
+                            <option value="Delivery" selected>Entrega a Domicílio</option>
+                            <option value="Pickup">Retirada na Loja Física</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="address-field-group">
+                        <textarea id="cust-address" class="form-input" placeholder="Endereço de Entrega Completo (Rua, Número, CEP, Bairro)" rows="2" required></textarea>
+                    </div>
+                    
+                    <button type="submit" id="submit-order-whatsapp" class="checkout-btn">
+                        <i class="fa-brands fa-whatsapp"></i> Finalizar Pedido de Demonstração
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Settings Gear Shortcut -->
+    <a href="admin.html" class="admin-gear-btn" aria-label="Acessar Painel de Admin" title="Acessar Painel de Admin">
+        <i class="fa-solid fa-gear"></i>
+    </a>
+
+    <!-- FOOTER: Branding and SaaS platform terms -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div id="footer-logo-circle" class="logo-circle">L</div>
+                <span id="footer-store-name" class="footer-store-name">Lagos Jewelry</span>
+            </div>
+            <p>Sua vitrine virtual de joias de altíssimo requinte. Configuração instantânea e vendas automáticas.</p>
+            <div class="footer-socials">
+                <a href="#" class="footer-social-link"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="footer-social-link"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="footer-social-link"><i class="fa-brands fa-pinterest"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2026 <span id="copyright-store-name">Lagos Jewelry</span>. Todos os direitos reservados. Feito com amor por Antigravity.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container for beautiful responsive alerts -->
+    <div id="toast-alerts-container" class="toast-container"></div>
+
+    <!-- Core Scripts -->
+    <script src="database.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
