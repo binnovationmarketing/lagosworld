@@ -51,3 +51,82 @@ if (require.main === module) {
 }
 
 module.exports = app;
+
+// Order email confirmation
+const nodemailer = require('nodemailer');
+
+app.post('/api/send-order', async (req, res) => {
+  try {
+    const { name, phone, email, address, zip, city, state, payment,
+            items, total, shipping, deliveryType, zelle_proof, notes } = req.body;
+
+    if (!email && !phone) return res.status(400).json({ error: 'email or phone required' });
+
+    const itemRows = (items || []).map(i =>
+      `<tr><td style="padding:6px 12px">${i.name} ${i.variant ? '('+i.variant+')' : ''} ×${i.qty}</td><td style="padding:6px 12px;text-align:right">$${(i.price*i.qty).toFixed(2)}</td></tr>`
+    ).join('');
+
+    const payInfo = payment === 'zelle'
+      ? `<p><strong>💸 Zelle:</strong> +1 (215) 626-2345 — Dayane Lago<br>Send proof to: dayane@lagosjewelry.com</p>`
+      : `<p><strong>💵 Cash:</strong> ${deliveryType === 'local' ? 'Same city — 4h delivery ($10 fee)' : 'Outside city — 6h delivery ($20 fee)'}</p>`;
+
+    const html = `
+<!DOCTYPE html><html><body style="font-family:Georgia,serif;background:#faf6ee;padding:20px">
+<div style="max-width:580px;margin:0 auto;background:#111;color:#e4ddd0;padding:2rem;border:1px solid rgba(201,168,76,.3)">
+  <div style="text-align:center;margin-bottom:1.5rem">
+    <div style="font-size:2rem;color:#c9a84c;font-family:Georgia,serif;letter-spacing:.3em">✝ Lagos Jewelry</div>
+    <div style="font-size:.75rem;color:#8a8070;letter-spacing:.3em">ORDER CONFIRMATION</div>
+  </div>
+  <p style="color:#c9a84c;font-size:.85rem;margin-bottom:.5rem">Proverbs 31:25 — "She is clothed with strength and dignity"</p>
+  <hr style="border:none;border-top:1px solid rgba(201,168,76,.2);margin:1rem 0">
+  <p><strong>Customer:</strong> ${name}</p>
+  <p><strong>Phone:</strong> ${phone || '—'}</p>
+  <p><strong>Email:</strong> ${email || '—'}</p>
+  <p><strong>Ship to:</strong> ${address}, ${city}, ${state} ${zip}</p>
+  <hr style="border:none;border-top:1px solid rgba(201,168,76,.2);margin:1rem 0">
+  <table style="width:100%;font-size:.85rem">${itemRows}</table>
+  <hr style="border:none;border-top:1px solid rgba(201,168,76,.2);margin:.5rem 0">
+  <p style="text-align:right"><strong>Shipping:</strong> ${shipping === 0 ? '🎉 FREE' : '$'+Number(shipping).toFixed(2)}</p>
+  <p style="text-align:right;font-size:1.2rem;color:#c9a84c"><strong>TOTAL: $${Number(total).toFixed(2)}</strong></p>
+  ${payInfo}
+  ${notes ? `<p><strong>Notes:</strong> ${notes}</p>` : ''}
+  ${zelle_proof ? `<p><strong>Zelle proof attached.</strong></p>` : ''}
+  <hr style="border:none;border-top:1px solid rgba(201,168,76,.2);margin:1rem 0">
+  <p style="font-size:.7rem;color:#8a8070;text-align:center">Lagos Jewelry · Philadelphia, PA · +1 (215) 626-2345</p>
+</div></body></html>`;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+    });
+
+    const attachments = [];
+    if (zelle_proof) {
+      const matches = zelle_proof.match(/^data:(.+);base64,(.+)$/);
+      if (matches) attachments.push({ filename: 'zelle_proof.jpg', content: matches[2], encoding: 'base64' });
+    }
+
+    // Send to admin
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL || 'binnovationmarketing@gmail.com',
+      subject: `🛍 New Order — ${name} — $${Number(total).toFixed(2)}`,
+      html, attachments
+    });
+
+    // Send confirmation to customer
+    if (email) {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: '✝ Your Lagos Jewelry Order is Confirmed!',
+        html
+      });
+    }
+
+    res.json({ ok: true, message: 'Order confirmed. Check your email!' });
+  } catch (err) {
+    console.error('send-order error:', err);
+    res.status(500).json({ error: 'Failed to send email. Order received via WhatsApp.' });
+  }
+});
