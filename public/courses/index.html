@@ -3,192 +3,773 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lagos Courses — Women's Professional Training & Certification</title>
-<meta name="description" content="Certified courses in beauty, wellness, and business for women. Lagos World — De Mulher para Mulher. Philadelphia, PA.">
-<link rel="stylesheet" href="styles.css">
+<title>Lagos Courses — Women's Professional Training · Coming Soon</title>
+<meta name="description" content="Certified courses in beauty, wellness, and business for women. Lagos World — De Mulher para Mulher. Philadelphia, PA. Launching soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#ffffff;
+  --bg-soft:#faf9f7;
+  --bg-warm:#f5f2ec;
+  --bg-warm2:#ede8df;
+  --text:#1a1a1a;
+  --text-mid:#4a4540;
+  --text-muted:#7a7268;
+  --text-light:#a09890;
+  --gold:#b8922e;
+  --gold-light:#d4a84c;
+  --gold-pale:#f5edd8;
+  --border:#e8e4dc;
+  --border-soft:#f0ede6;
+  --black:#0a0a0a;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg-soft)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes countUp{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(184,146,46,.2)}50%{box-shadow:0 0 40px rgba(184,146,46,.5)}}
+@keyframes lineExpand{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes particleDrift{0%{transform:translateY(0) translateX(0) rotate(0deg);opacity:1}100%{transform:translateY(-100px) translateX(30px) rotate(180deg);opacity:0}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes blink{0%,100%{border-color:var(--gold)}50%{border-color:transparent}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes badgePop{0%{transform:scale(0) rotate(-12deg)}70%{transform:scale(1.1) rotate(3deg)}100%{transform:scale(1) rotate(0deg)}}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-soft);height:68px;display:flex;align-items:center;padding:0 3rem;justify-content:space-between;transition:box-shadow .3s,background .3s}
+nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.07)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-back{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);text-decoration:none;transition:color .25s;display:flex;align-items:center;gap:.4rem}
+.nav-back:hover{color:var(--gold)}
+.nav-cta{background:var(--black);color:#fff;padding:.55rem 1.5rem;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:background .25s,transform .2s;border:none;cursor:pointer}
+.nav-cta:hover{background:var(--gold);transform:translateY(-1px)}
+
+/* ─── HERO ─── */
+.hero{margin-top:68px;min-height:92vh;background:var(--black);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:20px 20px}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(184,146,46,.18) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:glowPulse 4s ease-in-out infinite}
+.hero-particles{position:absolute;inset:0;pointer-events:none}
+.particle{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;animation:particleDrift 6s ease-in-out infinite}
+.hero-content{position:relative;z-index:2;text-align:center;padding:4rem 2rem;max-width:860px}
+.hero-eyebrow{font-size:.6rem;letter-spacing:.55em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.5rem;animation:fadeUp .8s ease both}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:600;line-height:1.05;color:#ffffff;margin-bottom:1.5rem;animation:fadeUp .8s ease .2s both}
+.hero-title em{font-style:italic;color:var(--gold-light);display:block}
+.hero-sub{font-size:.9rem;line-height:1.9;color:rgba(255,255,255,.55);max-width:540px;margin:0 auto 3rem;animation:fadeUp .8s ease .4s both}
+.hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s ease .6s both}
+.btn-gold{background:var(--gold);color:#fff;padding:.9rem 2.4rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;display:inline-block}
+.btn-gold::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transition:left .5s}
+.btn-gold:hover::before{left:100%}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,146,46,.35)}
+.btn-outline-light{background:transparent;color:#fff;padding:.9rem 2.4rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.3);cursor:pointer;transition:all .3s;display:inline-block}
+.btn-outline-light:hover{border-color:#fff;background:rgba(255,255,255,.06);transform:translateY(-2px)}
+
+/* hero countdown */
+.hero-countdown{display:flex;gap:2.5rem;justify-content:center;margin-top:3.5rem;animation:fadeUp .8s ease .8s both}
+.countdown-block{text-align:center}
+.countdown-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:600;color:#fff;line-height:1;display:block}
+.countdown-label{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:.4rem;display:block}
+.countdown-sep{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);opacity:.5;align-self:center;line-height:1;margin-top:-.5rem}
+
+/* ─── SECTION COMMONS ─── */
+.section{padding:7rem 3rem}
+.container{max-width:1200px;margin:0 auto}
+.section-label{font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.8rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:600;color:var(--text);line-height:1.15;margin-bottom:1rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-sub{font-size:.85rem;line-height:1.85;color:var(--text-muted)}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .8s ease,transform .8s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .8s ease,transform .8s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.93);transition:opacity .7s ease,transform .7s ease}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+[class*="reveal"].delay-1{transition-delay:.1s}
+[class*="reveal"].delay-2{transition-delay:.2s}
+[class*="reveal"].delay-3{transition-delay:.3s}
+[class*="reveal"].delay-4{transition-delay:.4s}
+[class*="reveal"].delay-5{transition-delay:.5s}
+
+/* ─── COURSES GRID ─── */
+.courses-section{background:var(--bg-soft)}
+.courses-intro{text-align:center;margin-bottom:5rem}
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+@media(max-width:1024px){.courses-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.courses-grid{grid-template-columns:1fr}}
+
+.course-card{position:relative;background:var(--bg);border:1px solid var(--border-soft);overflow:hidden;cursor:pointer;transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s ease}
+.course-card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.1)}
+
+/* card top banner */
+.card-banner{height:8px;background:linear-gradient(90deg,var(--gold),var(--gold-light));position:relative;overflow:hidden}
+.card-banner::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shimmer 2.5s ease infinite}
+
+/* card badge */
+.card-badge{position:absolute;top:1.5rem;right:1.5rem;background:var(--black);color:#fff;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:.35rem .8rem;font-weight:700;animation:badgePop .5s ease .3s both}
+.card-badge.gold{background:var(--gold)}
+
+/* card icon */
+.card-icon-wrap{width:72px;height:72px;border-radius:50%;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;margin:2.5rem auto 1.5rem;font-size:2rem;transition:transform .4s,background .3s}
+.course-card:hover .card-icon-wrap{transform:scale(1.1) rotate(-5deg);background:var(--gold);filter:drop-shadow(0 4px 12px rgba(184,146,46,.3))}
+
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--text);text-align:center;padding:0 1.5rem;margin-bottom:.6rem}
+.card-duration{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);text-align:center;font-weight:500;margin-bottom:1rem}
+.card-desc{font-size:.8rem;line-height:1.75;color:var(--text-muted);text-align:center;padding:0 1.8rem;margin-bottom:2rem}
+
+/* card footer */
+.card-footer{border-top:1px solid var(--border-soft);padding:1.2rem 1.8rem;display:flex;align-items:center;justify-content:space-between;background:var(--bg-soft);transition:background .3s}
+.course-card:hover .card-footer{background:var(--gold-pale)}
+.card-modality{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+.card-notify{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:.4rem;cursor:pointer;transition:color .25s}
+.card-notify:hover{color:var(--text)}
+.card-notify::after{content:'→';transition:transform .25s}
+.card-notify:hover::after{transform:translateX(3px)}
+
+/* overlay on hover */
+.card-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,146,46,.06),rgba(10,10,10,.04));opacity:0;transition:opacity .4s}
+.course-card:hover .card-overlay{opacity:1}
+
+/* ─── COMING SOON BADGE ─── */
+.coming-soon-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--black);color:#fff;font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;padding:.4rem 1rem;font-weight:600;margin-bottom:3rem}
+.cs-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+
+/* ─── STATS BAR ─── */
+.stats-bar{background:var(--black);padding:4rem 3rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1000px;margin:0 auto;text-align:center}
+@media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:600;color:var(--gold-light);line-height:1;display:block}
+.stat-label{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.5rem;display:block;line-height:1.5}
+
+/* ─── FEATURES ─── */
+.features{background:var(--bg)}
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem;align-items:center;margin-top:5rem}
+@media(max-width:900px){.features-grid{grid-template-columns:1fr;gap:2.5rem}}
+.features-visual{position:relative}
+.features-mockup{background:var(--black);border-radius:2px;padding:3rem 2.5rem;position:relative;overflow:hidden}
+.mockup-glow{position:absolute;top:-30%;left:-30%;width:160%;height:160%;background:radial-gradient(circle at 40% 40%,rgba(184,146,46,.12),transparent 60%);pointer-events:none}
+.mockup-bar{display:flex;gap:.5rem;margin-bottom:2rem}
+.mockup-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15)}
+.mockup-line{height:10px;border-radius:5px;background:rgba(255,255,255,.06);margin-bottom:.8rem;position:relative;overflow:hidden}
+.mockup-line::after{content:'';position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,rgba(184,146,46,.5),var(--gold));border-radius:5px;animation:lineExpand 1.5s ease 1s both}
+.mockup-line.w30{width:30%}.mockup-line.w50{width:50%}.mockup-line.w70{width:70%}.mockup-line.w90{width:90%}.mockup-line.w45{width:45%}
+.mockup-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:1.2rem;margin-top:1.5rem;display:flex;gap:1rem;align-items:center}
+.mockup-icon{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.mockup-text p{font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:.1em}
+.mockup-text span{font-size:.75rem;color:#fff;font-weight:500}
+
+.features-list{display:flex;flex-direction:column;gap:2rem}
+.feature-item{display:flex;gap:1.5rem;align-items:flex-start;padding:1.8rem;background:var(--bg-soft);border:1px solid var(--border-soft);transition:all .35s}
+.feature-item:hover{background:var(--bg);box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateX(6px);border-color:var(--gold)}
+.feature-icon{width:48px;height:48px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;transition:background .3s,transform .3s}
+.feature-item:hover .feature-icon{background:var(--gold);transform:scale(1.1)}
+.feature-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:.4rem}
+.feature-text{font-size:.78rem;line-height:1.7;color:var(--text-muted)}
+
+/* ─── WAITLIST ─── */
+.waitlist{background:linear-gradient(135deg,var(--black) 0%,#1a1208 100%);padding:7rem 3rem;position:relative;overflow:hidden;text-align:center}
+.waitlist-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(184,146,46,.1),transparent 70%);pointer-events:none}
+.waitlist-content{position:relative;z-index:2;max-width:640px;margin:0 auto}
+.waitlist h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:600;color:#fff;margin-bottom:1rem;line-height:1.2}
+.waitlist h2 em{font-style:italic;color:var(--gold-light)}
+.waitlist p{font-size:.85rem;line-height:1.85;color:rgba(255,255,255,.5);margin-bottom:2.5rem}
+.waitlist-form{display:flex;gap:0;max-width:480px;margin:0 auto 1.5rem}
+@media(max-width:560px){.waitlist-form{flex-direction:column;gap:.8rem}}
+.waitlist-input{flex:1;padding:.9rem 1.4rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:'Montserrat',sans-serif;font-size:.82rem;outline:none;transition:border-color .25s,background .25s}
+.waitlist-input::placeholder{color:rgba(255,255,255,.3)}
+.waitlist-input:focus{border-color:var(--gold);background:rgba(255,255,255,.08)}
+.waitlist-btn{background:var(--gold);color:#fff;padding:.9rem 1.8rem;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;border:none;cursor:pointer;transition:all .3s;white-space:nowrap;position:relative;overflow:hidden}
+.waitlist-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transition:left .5s}
+.waitlist-btn:hover::before{left:100%}
+.waitlist-btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+.waitlist-note{font-size:.62rem;color:rgba(255,255,255,.25);letter-spacing:.1em}
+
+/* ─── UPCOMING ─── */
+.upcoming{background:var(--bg-warm);padding:7rem 3rem}
+.upcoming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+@media(max-width:900px){.upcoming-grid{grid-template-columns:1fr}}
+.upcoming-card{background:var(--bg);border:1px solid var(--border-soft);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .35s}
+.upcoming-card::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.upcoming-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.08);border-color:var(--border)}
+.upcoming-card:hover::before{transform:scaleX(1)}
+.uc-num{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;color:var(--border);line-height:1;margin-bottom:1rem;transition:color .3s}
+.upcoming-card:hover .uc-num{color:var(--gold-pale)}
+.uc-icon{font-size:2rem;margin-bottom:1rem}
+.uc-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:.6rem}
+.uc-desc{font-size:.78rem;line-height:1.75;color:var(--text-muted)}
+.uc-tag{display:inline-block;margin-top:1.2rem;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:.25rem .7rem;font-weight:600}
+
+/* ─── INSTRUCTOR ─── */
+.instructor{background:var(--bg);padding:7rem 3rem}
+.instructor-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;max-width:1100px;margin:0 auto;border:1px solid var(--border-soft);overflow:hidden}
+@media(max-width:900px){.instructor-inner{grid-template-columns:1fr}}
+.instructor-photo{background:var(--bg-warm);min-height:500px;display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden}
+.instructor-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform 6s ease}
+.instructor-inner:hover .instructor-photo img{transform:scale(1.04)}
+.instructor-text{padding:4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;background:var(--bg-soft)}
+@media(max-width:900px){.instructor-text{padding:2.5rem 2rem}}
+.instructor-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;line-height:1.7;color:var(--text-mid);margin:1.5rem 0;padding-left:1.5rem;border-left:2px solid var(--gold)}
+.instructor-body{font-size:.82rem;line-height:1.85;color:var(--text-muted);margin-bottom:1rem}
+.instructor-sig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--gold);margin-top:1.5rem}
+
+/* ─── VERSE ─── */
+.verse-section{background:var(--bg-warm2);padding:5rem 3rem;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.verse-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,1.8rem);color:var(--text-mid);max-width:640px;margin:0 auto 1rem;line-height:1.7}
+.verse-ref{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--text-light)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
+.footer-inner{max-width:1140px;margin:0 auto}
+.footer-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap;gap:1.5rem}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#fff}
+.footer-brand span{color:var(--gold-light)}
+.footer-tagline{font-size:.72rem;color:#4a4540;margin-top:.4rem}
+.footer-links{display:flex;gap:2rem;flex-wrap:wrap}
+.footer-links a{color:#4a4540;text-decoration:none;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;transition:color .25s}
+.footer-links a:hover{color:var(--gold-light)}
+.footer-bottom{padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.footer-copy{font-size:.6rem;color:#2c2822}
+.footer-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:#2c2822}
+
+/* ─── MODAL ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(6px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#fff;max-width:480px;width:90%;padding:3rem;position:relative;transform:translateY(20px) scale(.97);transition:all .35s cubic-bezier(.25,.46,.45,.94);max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);transition:color .25s}
+.modal-close:hover{color:var(--text)}
+.modal h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;margin-bottom:.4rem}
+.modal p{font-size:.8rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.7}
+.modal-form-group{margin-bottom:1.2rem}
+.modal-form-group label{display:block;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-mid);font-weight:500;margin-bottom:.4rem}
+.modal-form-group input,.modal-form-group select{width:100%;padding:.75rem 1rem;border:1px solid var(--border);background:var(--bg-soft);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;outline:none;transition:border-color .25s}
+.modal-form-group input:focus,.modal-form-group select:focus{border-color:var(--gold)}
+.modal-submit{width:100%;padding:.85rem;background:var(--black);color:#fff;border:none;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:background .25s;font-family:'Montserrat',sans-serif}
+.modal-submit:hover{background:var(--gold)}
+.modal-success{text-align:center;padding:1rem 0;display:none}
+.modal-success .checkmark{font-size:3rem;display:block;margin-bottom:1rem;animation:countUp .5s ease both}
+
+/* ─── MOBILE ─── */
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .section{padding:4.5rem 1.5rem}
+  .stats-bar{padding:3rem 1.5rem}
+  .waitlist{padding:5rem 1.5rem}
+  .upcoming{padding:4.5rem 1.5rem}
+  .instructor{padding:4.5rem 1.5rem}
+  .hero{min-height:auto;padding-bottom:3rem}
+  .hero-countdown{gap:1.5rem}
+}
+</style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav class="navbar">
-  <div class="nav-container">
-    <h1>Lagos <span>Courses</span></h1>
-    <a href="/" class="nav-back">← Lagos World</a>
-    <div class="nav-buttons">
-      <button class="nav-btn" onclick="scrollToSection('courses')">Courses</button>
-      <button class="nav-btn" onclick="scrollToSection('enroll')">Enroll</button>
-      <button class="nav-btn" onclick="scrollToSection('about')">About</button>
-    </div>
-  </div>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="/" class="nav-logo">Lagos <span>World</span></a>
+  <a href="/" class="nav-back">← Lagos World</a>
+  <button class="nav-cta" onclick="openModal()">Get Early Access</button>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-particles" id="particles"></div>
+
   <div class="hero-content">
     <div class="hero-eyebrow">Philadelphia, PA · Lagos World</div>
-    <h1>Professional Courses<br><em>For Women Who Rise</em></h1>
-    <p>Certified training in beauty, wellness, and business. Flexible learning — online or in-person. Start your career today.</p>
-    <p>"She opens her mouth with wisdom, and the teaching of kindness is on her tongue." — Proverbs 31:26</p>
-    <div class="hero-buttons">
-      <button class="btn btn-primary" onclick="scrollToSection('courses')">View Courses</button>
-      <button class="btn btn-secondary" onclick="scrollToSection('enroll')">Enroll Now</button>
+    <h1 class="hero-title">
+      Lagos Courses
+      <em>Launching Soon</em>
+    </h1>
+    <p class="hero-sub">Professional certification in beauty, wellness, and business. A platform built <em style="color:var(--gold-light);font-style:italic">de mulher para mulher</em> — for women who are ready to rise.</p>
+
+    <div class="hero-actions">
+      <button class="btn-gold" onclick="openModal()">Join the Waitlist</button>
+      <a href="#courses" class="btn-outline-light">See the Courses</a>
+    </div>
+
+    <div class="hero-countdown">
+      <div class="countdown-block">
+        <span class="countdown-num" id="cd-days">00</span>
+        <span class="countdown-label">Days</span>
+      </div>
+      <span class="countdown-sep">·</span>
+      <div class="countdown-block">
+        <span class="countdown-num" id="cd-hours">00</span>
+        <span class="countdown-label">Hours</span>
+      </div>
+      <span class="countdown-sep">·</span>
+      <div class="countdown-block">
+        <span class="countdown-num" id="cd-mins">00</span>
+        <span class="countdown-label">Minutes</span>
+      </div>
+      <span class="countdown-sep">·</span>
+      <div class="countdown-block">
+        <span class="countdown-num" id="cd-secs">00</span>
+        <span class="countdown-label">Seconds</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- COURSES SECTION -->
-<section id="courses" class="section">
-  <div class="section-inner">
-    <div class="section-label">Available Courses</div>
-    <h2>Choose Your <em>Path</em></h2>
-    <p style="font-size:.85rem;color:var(--text-muted)">All courses include materials, certification, and 1-year support. Online or in-person options available.</p>
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="reveal">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Certified<br>Courses</span>
+    </div>
+    <div class="reveal delay-1">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Practical<br>Training</span>
+    </div>
+    <div class="reveal delay-2">
+      <span class="stat-num">20+</span>
+      <span class="stat-label">Years of<br>Experience</span>
+    </div>
+    <div class="reveal delay-3">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Doors<br>Opened</span>
+    </div>
+  </div>
+</div>
+
+<!-- COURSES GRID -->
+<section class="courses-section section" id="courses">
+  <div class="container">
+    <div class="courses-intro">
+      <div class="coming-soon-badge reveal"><span class="cs-dot"></span> Enrollments Opening Soon</div>
+      <div class="section-label reveal">Available Courses</div>
+      <h2 class="section-title reveal">Choose Your <em>Path</em></h2>
+      <p class="section-sub reveal" style="margin:0 auto;text-align:center;max-width:500px">Each course includes materials, hands-on practice, certification, and 1 year of ongoing support. Online or in-person.</p>
+    </div>
 
     <div class="courses-grid">
-      <div class="course-card">
-        <h3>Eyebrow Design & Shaping</h3>
-        <p><strong>Modality:</strong> Online & In-Person</p>
-        <p><strong>Duration:</strong> 40 hours</p>
-        <p>Master professional eyebrow techniques. Certification included.</p>
-        <button class="btn btn-primary" onclick="selectCourse('eyebrow')">Enroll Now</button>
+
+      <!-- Card 1 -->
+      <div class="course-card reveal delay-1" onclick="openModal('eyebrow')">
+        <div class="card-banner"></div>
+        <div class="card-badge gold">New</div>
+        <div class="card-overlay"></div>
+        <div class="card-icon-wrap">✦</div>
+        <div class="card-title">Eyebrow Design & Shaping</div>
+        <div class="card-duration">40 Hours · Online & In-Person</div>
+        <p class="card-desc">Master the art of professional eyebrow architecture. Mapping techniques, shaping, tinting, and lamination. Certification included.</p>
+        <div class="card-footer">
+          <span class="card-modality">Beauty · Certification</span>
+          <span class="card-notify">Notify Me</span>
+        </div>
       </div>
 
-      <div class="course-card">
-        <h3>Eyelash Extensions</h3>
-        <p><strong>Modality:</strong> Online & In-Person</p>
-        <p><strong>Duration:</strong> 35 hours</p>
-        <p>Advanced lash extension techniques for professional results.</p>
-        <button class="btn btn-primary" onclick="selectCourse('lashes')">Enroll Now</button>
+      <!-- Card 2 -->
+      <div class="course-card reveal delay-2" onclick="openModal('lashes')">
+        <div class="card-banner"></div>
+        <div class="card-badge">Coming Soon</div>
+        <div class="card-overlay"></div>
+        <div class="card-icon-wrap">✿</div>
+        <div class="card-title">Eyelash Extensions</div>
+        <div class="card-duration">35 Hours · Online & In-Person</div>
+        <p class="card-desc">Advanced lash extension techniques — classic, volume, and hybrid sets. Professional results with safety and precision.</p>
+        <div class="card-footer">
+          <span class="card-modality">Beauty · Certification</span>
+          <span class="card-notify">Notify Me</span>
+        </div>
       </div>
 
-      <div class="course-card">
-        <h3>Skin Care & Laser Therapy</h3>
-        <p><strong>Modality:</strong> Online & In-Person</p>
-        <p><strong>Duration:</strong> 50 hours</p>
-        <p>Professional skin care and laser treatment techniques.</p>
-        <button class="btn btn-primary" onclick="selectCourse('skincare')">Enroll Now</button>
+      <!-- Card 3 -->
+      <div class="course-card reveal delay-3" onclick="openModal('skincare')">
+        <div class="card-banner"></div>
+        <div class="card-badge">Coming Soon</div>
+        <div class="card-overlay"></div>
+        <div class="card-icon-wrap">◈</div>
+        <div class="card-title">Skin Care & Laser Therapy</div>
+        <div class="card-duration">50 Hours · Online & In-Person</div>
+        <p class="card-desc">Professional skin analysis, facial treatments, chemical peels, and laser therapy fundamentals for licensed practitioners.</p>
+        <div class="card-footer">
+          <span class="card-modality">Wellness · Certification</span>
+          <span class="card-notify">Notify Me</span>
+        </div>
       </div>
 
-      <div class="course-card">
-        <h3>Massage Therapy</h3>
-        <p><strong>Modality:</strong> Online & In-Person</p>
-        <p><strong>Duration:</strong> 60 hours</p>
-        <p>Therapeutic massage techniques and professional certification.</p>
-        <button class="btn btn-primary" onclick="selectCourse('massage')">Enroll Now</button>
+      <!-- Card 4 -->
+      <div class="course-card reveal delay-1" onclick="openModal('massage')">
+        <div class="card-banner"></div>
+        <div class="card-badge">Coming Soon</div>
+        <div class="card-overlay"></div>
+        <div class="card-icon-wrap">❋</div>
+        <div class="card-title">Massage Therapy</div>
+        <div class="card-duration">60 Hours · Online & In-Person</div>
+        <p class="card-desc">Therapeutic massage techniques: Swedish, deep tissue, and relaxation. Anatomy foundations and professional client management.</p>
+        <div class="card-footer">
+          <span class="card-modality">Wellness · Certification</span>
+          <span class="card-notify">Notify Me</span>
+        </div>
       </div>
 
-      <div class="course-card">
-        <h3>Sports Massage</h3>
-        <p><strong>Modality:</strong> Online & In-Person</p>
-        <p><strong>Duration:</strong> 45 hours</p>
-        <p>Specialized sports massage and injury prevention techniques.</p>
-        <button class="btn btn-primary" onclick="selectCourse('sports-massage')">Enroll Now</button>
+      <!-- Card 5 -->
+      <div class="course-card reveal delay-2" onclick="openModal('sports-massage')">
+        <div class="card-banner"></div>
+        <div class="card-badge">Coming Soon</div>
+        <div class="card-overlay"></div>
+        <div class="card-icon-wrap">◉</div>
+        <div class="card-title">Sports Massage</div>
+        <div class="card-duration">45 Hours · Online & In-Person</div>
+        <p class="card-desc">Specialized massage for athletes — pre and post-event protocols, injury prevention, and recovery techniques.</p>
+        <div class="card-footer">
+          <span class="card-modality">Wellness · Certification</span>
+          <span class="card-notify">Notify Me</span>
+        </div>
       </div>
+
+      <!-- Card 6 — Teaser -->
+      <div class="course-card reveal delay-3" onclick="openModal()">
+        <div class="card-banner"></div>
+        <div class="card-badge gold">More Coming</div>
+        <div class="card-overlay"></div>
+        <div class="card-icon-wrap" style="font-size:1.5rem">+</div>
+        <div class="card-title">More Courses</div>
+        <div class="card-duration">Stay Tuned · Expanding Soon</div>
+        <p class="card-desc">Business, nutrition, wellness coaching, and more. New courses added every season. Be the first to know.</p>
+        <div class="card-footer">
+          <span class="card-modality">Multiple Areas</span>
+          <span class="card-notify">Follow Updates</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ENROLLMENT FORM -->
-<section id="enroll" class="section alternate">
-  <div class="section-inner">
-    <div class="section-label">Get Started</div>
-    <h2>Enroll in a <em>Course</em></h2>
-    <p style="font-size:.85rem;color:var(--text-muted)">Fill out the form below. We'll confirm your enrollment and send all details by email.</p>
-
-    <div class="form-container">
-      <h2>Enrollment Form</h2>
-      <p>Start your professional journey today.</p>
-      <form id="enrollment-form" onsubmit="submitEnrollment(event)">
-        <div class="form-group">
-          <label>Course *</label>
-          <select id="course-select" name="course" required>
-            <option value="">Select a course...</option>
-            <option value="eyebrow">Eyebrow Design & Shaping</option>
-            <option value="lashes">Eyelash Extensions</option>
-            <option value="skincare">Skin Care & Laser Therapy</option>
-            <option value="massage">Massage Therapy</option>
-            <option value="sports-massage">Sports Massage</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Full Name *</label>
-          <input type="text" name="name" required placeholder="Your full name">
-        </div>
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" name="email" required placeholder="your@email.com">
-        </div>
-        <div class="form-group">
-          <label>Phone Number *</label>
-          <input type="tel" name="phone" required placeholder="+1 (215) 000-0000">
-        </div>
-        <div class="form-group">
-          <label>Learning Modality *</label>
-          <div class="radio-group">
-            <label><input type="radio" name="modality" value="online" required> Online</label>
-            <label><input type="radio" name="modality" value="presencial"> In-Person</label>
+<!-- FEATURES SECTION -->
+<section class="features section">
+  <div class="container">
+    <div class="features-grid">
+      <div class="features-visual reveal-left">
+        <div class="features-mockup">
+          <div class="mockup-glow"></div>
+          <div class="mockup-bar">
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+          </div>
+          <div class="mockup-line w90"></div>
+          <div class="mockup-line w70"></div>
+          <div class="mockup-line w50"></div>
+          <div class="mockup-line w30"></div>
+          <div class="mockup-card">
+            <div class="mockup-icon">✦</div>
+            <div class="mockup-text">
+              <p>Progress</p>
+              <span>Eyebrow Design · Module 3/8</span>
+            </div>
+          </div>
+          <div class="mockup-card" style="margin-top:.8rem">
+            <div class="mockup-icon" style="background:linear-gradient(135deg,#2e7d32,#4caf50)">✓</div>
+            <div class="mockup-text">
+              <p>Certificate Issued</p>
+              <span>Eyelash Extensions · Dayane L.</span>
+            </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%">Enroll Now</button>
-      </form>
+      </div>
+      <div class="features-list reveal-right">
+        <div class="section-label">What You Get</div>
+        <h2 class="section-title" style="margin-bottom:2rem">Everything a <em>Professional Needs</em></h2>
+        <div class="feature-item">
+          <div class="feature-icon">📋</div>
+          <div>
+            <div class="feature-title">Recognized Certification</div>
+            <p class="feature-text">Official certificates recognized by the industry. Add credentials to your portfolio and open new doors immediately.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📱</div>
+          <div>
+            <div class="feature-title">Online or In-Person — You Choose</div>
+            <p class="feature-text">Flexible learning that fits your life. Study from home or attend our Philadelphia studio. Same quality, your schedule.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🤝</div>
+          <div>
+            <div class="feature-title">1 Year of Ongoing Support</div>
+            <p class="feature-text">Your journey doesn't end at graduation. 12 months of mentorship, community access, and continued guidance from Dayane and her team.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✦</div>
+          <div>
+            <div class="feature-title">All Materials Included</div>
+            <p class="feature-text">No hidden costs. Every course includes all professional materials, kits, and resources you need to practice and qualify.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="section">
-  <div class="section-inner">
-    <div class="about-wrap">
-      <div class="section-label">About</div>
-      <h2>About Lagos <em>Courses</em></h2>
-      <p>Lagos Courses empowers women through professional training and certification. All courses include materials, hands-on practice, and 1-year ongoing support.</p>
-      <p>Part of <strong>Lagos World</strong> — a platform built <em>de mulher para mulher</em> by founder <strong>Dayane Lago</strong>. Every course opens a door to independence, confidence, and a brighter career.</p>
-      <blockquote class="about-quote">"Teach the older women… so they can train the younger women." — Titus 2:3–4</blockquote>
-      <a href="/" class="btn btn-primary">← Back to Lagos World</a>
+<!-- UPCOMING / NEW FEATURES -->
+<section class="upcoming">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:0">
+      <div class="section-label reveal">What's Coming</div>
+      <h2 class="section-title reveal" style="text-align:center">Big Things <em>Ahead</em></h2>
+      <p class="section-sub reveal" style="text-align:center;max-width:500px;margin:0 auto">Lagos Courses is being built with love and intention. Here's a glimpse of what's launching with the platform.</p>
+    </div>
+    <div class="upcoming-grid">
+      <div class="upcoming-card reveal delay-1">
+        <div class="uc-num">01</div>
+        <div class="uc-icon">🎓</div>
+        <div class="uc-title">Student Portal</div>
+        <p class="uc-desc">A dedicated dashboard to track your progress, access course materials, download certificates, and connect with your instructor.</p>
+        <span class="uc-tag">In Development</span>
+      </div>
+      <div class="upcoming-card reveal delay-2">
+        <div class="uc-num">02</div>
+        <div class="uc-icon">🌐</div>
+        <div class="uc-title">Live Online Classes</div>
+        <p class="uc-desc">Real-time sessions with Dayane and guest instructors. Ask questions, practice techniques, and learn alongside other women worldwide.</p>
+        <span class="uc-tag">Coming Q3 2025</span>
+      </div>
+      <div class="upcoming-card reveal delay-3">
+        <div class="uc-num">03</div>
+        <div class="uc-icon">👑</div>
+        <div class="uc-title">Community Hub</div>
+        <p class="uc-desc">An exclusive space for Lagos Courses alumni — networking, job opportunities, peer mentorship, and lifetime access to the community.</p>
+        <span class="uc-tag">Coming Soon</span>
+      </div>
+      <div class="upcoming-card reveal delay-1">
+        <div class="uc-num">04</div>
+        <div class="uc-icon">💼</div>
+        <div class="uc-title">Business Courses</div>
+        <p class="uc-desc">Entrepreneurship, client management, pricing your services, and building a brand. Go beyond technique — build your empire.</p>
+        <span class="uc-tag">Coming Soon</span>
+      </div>
+      <div class="upcoming-card reveal delay-2">
+        <div class="uc-num">05</div>
+        <div class="uc-icon">🇧🇷</div>
+        <div class="uc-title">Bilingual Content</div>
+        <p class="uc-desc">All courses available in English and Portuguese. Because knowledge should never be blocked by language.</p>
+        <span class="uc-tag">Launching</span>
+      </div>
+      <div class="upcoming-card reveal delay-3">
+        <div class="uc-num">06</div>
+        <div class="uc-icon">🤍</div>
+        <div class="uc-title">Scholarship Program</div>
+        <p class="uc-desc">Dayane's commitment: no woman left behind. A scholarship fund to make professional training accessible to those who need it most.</p>
+        <span class="uc-tag">Planned</span>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- INSTRUCTOR -->
+<section class="instructor">
+  <div class="instructor-inner">
+    <div class="instructor-photo reveal-left">
+      <img src="../images/dayane-3.png" alt="Dayane Lago — Founder & Lead Instructor">
+    </div>
+    <div class="instructor-text reveal-right">
+      <div class="section-label">Your Instructor</div>
+      <h2 class="section-title">Dayane Lago<em>Founder & Lead Instructor</em></h2>
+      <blockquote class="instructor-quote">
+        "I want every student to leave not just certified — but confident, prepared, and ready to build something beautiful."
+      </blockquote>
+      <p class="instructor-body">
+        Born in <strong>Jaru, Rondônia</strong>, Dayane built her career from the ground up after arriving in the United States over 20 years ago. With two decades of hands-on experience in residential and commercial services — and a passion for empowering women — she created Lagos Courses as a natural extension of her mission.
+      </p>
+      <p class="instructor-body">
+        Her teaching philosophy: <strong>practical over theoretical.</strong> Real skills, real scenarios, real transformation. Every course is designed to produce professionals the industry actually wants to hire.
+      </p>
+      <div class="instructor-sig">— Dayane Lago · Philadelphia, PA</div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <div class="waitlist-glow"></div>
+  <div class="waitlist-content">
+    <div class="section-label reveal" style="color:var(--gold)">Limited Spots</div>
+    <h2 class="reveal">"Be First.<br><em>Be Certified.</em>"</h2>
+    <p class="reveal">Join the waitlist and get early access, exclusive discounts, and priority enrollment before public launch.</p>
+    <form class="waitlist-form reveal" onsubmit="submitWaitlist(event)">
+      <input type="email" class="waitlist-input" placeholder="Your email address" required id="waitlist-email">
+      <button type="submit" class="waitlist-btn">Join Now</button>
+    </form>
+    <p class="waitlist-note reveal">No spam. Only launch news and your exclusive early access code.</p>
+  </div>
+</section>
+
+<!-- VERSE -->
+<div class="verse-section">
+  <p class="verse-text reveal">"Teach the older women… so they can train the younger women."</p>
+  <div class="verse-ref reveal">Titus 2:3–4</div>
+</div>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <p>"She opens her mouth with wisdom" — Proverbs 31:26</p>
-  <p>© 2025 Lagos Courses · Lagos World · Philadelphia, PA</p>
-  <p>Contact: <a href="https://wa.me/12156262345">+1 (215) 626-2345</a></p>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Lagos <span>Courses</span></div>
+        <div class="footer-tagline">Part of Lagos World · Philadelphia, PA · De Mulher para Mulher</div>
+      </div>
+      <div class="footer-links">
+        <a href="/">Lagos World</a>
+        <a href="/jewelry">Jewelry</a>
+        <a href="/cleaning">Cleaning</a>
+        <a href="https://wa.me/12156262345">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Lagos Courses · Lagos World · All rights reserved</span>
+      <span class="footer-verse">"She opens her mouth with wisdom" — Proverbs 31:26</span>
+    </div>
+  </div>
 </footer>
 
+<!-- NOTIFY MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <h3>Get Early Access</h3>
+    <p>Leave your info and we'll notify you the moment enrollment opens — with a <strong>priority discount</strong>.</p>
+    <form onsubmit="submitNotify(event)">
+      <div class="modal-form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your name" required id="modal-name">
+      </div>
+      <div class="modal-form-group">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com" required id="modal-email">
+      </div>
+      <div class="modal-form-group">
+        <label>Phone (WhatsApp)</label>
+        <input type="tel" placeholder="+1 (215) 000-0000" id="modal-phone">
+      </div>
+      <div class="modal-form-group">
+        <label>Course of Interest</label>
+        <select id="modal-course">
+          <option value="">All courses</option>
+          <option value="eyebrow">Eyebrow Design & Shaping</option>
+          <option value="lashes">Eyelash Extensions</option>
+          <option value="skincare">Skin Care & Laser Therapy</option>
+          <option value="massage">Massage Therapy</option>
+          <option value="sports-massage">Sports Massage</option>
+        </select>
+      </div>
+      <button type="submit" class="modal-submit">Send — I Want Early Access</button>
+    </form>
+    <div class="modal-success" id="modal-success">
+      <span class="checkmark">✦</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:.5rem">You're on the list!</h3>
+      <p style="font-size:.8rem;color:var(--text-muted)">We'll reach out as soon as enrollment opens. Watch your inbox.</p>
+    </div>
+  </div>
+</div>
+
 <script>
-function selectCourse(courseId) {
-  document.getElementById('course-select').value = courseId;
-  document.getElementById('enroll').scrollIntoView({behavior:'smooth'});
-}
+// NAV
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);
+});
 
-async function submitEnrollment(e) {
-  e.preventDefault();
-  const form = new FormData(e.target);
-  const courseMap = {
-    'eyebrow':'61c1e4a0-0001-0000-0000-000000000001',
-    'lashes':'61c1e4a0-0001-0000-0000-000000000002',
-    'skincare':'61c1e4a0-0001-0000-0000-000000000003',
-    'massage':'61c1e4a0-0001-0000-0000-000000000004',
-    'sports-massage':'61c1e4a0-0001-0000-0000-000000000005'
-  };
-  const data = {
-    course_id: courseMap[form.get('course')],
-    student_name: form.get('name'),
-    student_email: form.get('email'),
-    student_phone: form.get('phone'),
-    modality: form.get('modality')
-  };
-  try {
-    const res = await fetch('/api/courses/enroll', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-    if(res.ok){alert('Enrollment successful! Check your email for details.');e.target.reset();}
-    else{alert('Error enrolling. Please try again.');}
-  } catch {
-    alert('Connection error. Please try again later.');
+// PARTICLES
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*6}s;animation-duration:${5+Math.random()*4}s;opacity:${.3+Math.random()*.5};width:${2+Math.random()*3}px;height:${2+Math.random()*3}px`;
+    c.appendChild(p);
   }
+})();
+
+// COUNTDOWN — target: Sep 1 2025
+const target=new Date('2025-09-01T00:00:00');
+function updateCountdown(){
+  const now=new Date();
+  const diff=Math.max(0,target-now);
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-days').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-hours').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent=String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el=>obs.observe(el));
+
+// MODAL
+let selectedCourse='';
+function openModal(course=''){
+  selectedCourse=course;
+  if(course&&document.getElementById('modal-course'))
+    document.getElementById('modal-course').value=course;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e.target===document.getElementById('modal')) closeModalDirect();
+}
+function closeModalDirect(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalDirect();});
+
+async function submitNotify(e){
+  e.preventDefault();
+  const data={
+    name:document.getElementById('modal-name').value,
+    email:document.getElementById('modal-email').value,
+    phone:document.getElementById('modal-phone').value,
+    course:document.getElementById('modal-course').value||'all'
+  };
+  try{
+    await fetch('/api/courses/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  }catch{}
+  document.querySelector('#modal form').style.display='none';
+  document.getElementById('modal-success').style.display='block';
+  setTimeout(closeModalDirect,3000);
 }
 
-function scrollToSection(id) {
-  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+async function submitWaitlist(e){
+  e.preventDefault();
+  const email=document.getElementById('waitlist-email').value;
+  try{
+    await fetch('/api/courses/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,course:'all'})});
+  }catch{}
+  e.target.innerHTML='<p style="color:var(--gold-light);font-size:.85rem;letter-spacing:.1em">✦ You\'re on the list — we\'ll be in touch!</p>';
 }
 </script>
 </body>
