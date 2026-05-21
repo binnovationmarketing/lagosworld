@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#c9a84c;--gold-l:#f0d98a;--gold-d:#8a6820;--gold-m:#e2c060;--black:#080808;--dark:#111;--gray:#1a1a1a;--white:#faf6ee;--text:#e4ddd0;--dim:#8a8070}
+:root{--gold:#b8922e;--gold-l:#d4a84c;--gold-d:#8a6820;--gold-m:#c9a84c;--black:#0a0a0a;--dark:#f7f5f2;--gray:#eeeae3;--white:#1a1a1a;--text:#2c2822;--dim:#7a7268;--bg:#ffffff;--border:#e8e4dc}
 html{scroll-behavior:smooth}
 body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--text);overflow-x:hidden}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--gold-d)}
@@ -331,6 +331,149 @@ body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--tex
 .hidden{display:none!important}
 .animate-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
 .animate-in.vis{opacity:1;transform:translateY(0)}
+
+/* ═══ PANDORA LIGHT THEME OVERRIDE ═══ */
+body{background:#ffffff!important;color:#2c2822!important}
+
+/* NAV */
+.nav{background:rgba(255,255,255,.97)!important;border-bottom:1px solid #e8e4dc!important;box-shadow:0 1px 12px rgba(0,0,0,.06)!important}
+.nav-brand{background:none!important;-webkit-text-fill-color:#1a1a1a!important;animation:none!important;font-size:1.3rem!important;letter-spacing:.25em!important}
+.nav-brand::before{content:''!important;display:none!important}
+.nav-cat{color:#7a7268!important}
+.nav-cat:hover,.nav-cat.active{color:#1a1a1a!important}
+.cart-btn{background:#1a1a1a!important;color:#fff!important}
+.cart-btn:hover{background:#b8922e!important;box-shadow:none!important}
+.cart-badge{background:#b8922e!important;color:#fff!important}
+.nav-back-home{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#a09890;text-decoration:none;white-space:nowrap;transition:color .25s;padding:0 1rem}
+.nav-back-home:hover{color:#b8922e}
+
+/* HERO */
+.hero{background:#f5f2ec!important;min-height:75vh!important}
+.hero-grid,.hero-glow,.particle,.hero-cross{display:none!important}
+.hero-title{background:linear-gradient(135deg,#8a6820,#b8922e,#d4a84c)!important;background-size:200% 200%!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important}
+.hero-subtitle{color:#b8922e!important;opacity:1!important}
+.hero-verse{color:#7a7268!important}
+.hero-eyebrow{color:#b8922e!important}
+.hero-line{display:none!important}
+.hero-cta{border-color:#1a1a1a!important;color:#1a1a1a!important}
+.hero-cta::before{background:#1a1a1a!important}
+.hero-cta:hover{color:#ffffff!important}
+.hero-scroll span{color:#7a7268!important}
+.hero-scroll-line{background:linear-gradient(#7a7268,transparent)!important}
+.hero-scroll-line::after{border-color:#7a7268!important}
+
+/* CATALOG SECTION */
+.section-cross{display:none!important}
+.section-title{color:#1a1a1a!important}
+.section-italic{color:#b8922e!important;opacity:1!important}
+.section-desc{color:#7a7268!important}
+.section-verse{color:#a09890!important}
+.orn span{background:linear-gradient(90deg,transparent,#b8922e)!important}
+.orn span:last-child{background:linear-gradient(90deg,#b8922e,transparent)!important}
+.orn i{color:#b8922e!important}
+.ship-banner{background:#f5edd8!important;border-color:#b8922e!important;color:#8a6820!important}
+.ship-banner::before{background:linear-gradient(90deg,transparent,rgba(184,146,46,.15),transparent)!important}
+
+/* TOOLBAR */
+.search-input{background:#faf9f7!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.search-input::placeholder{color:#a09890!important}
+.search-input:focus{border-color:#b8922e!important}
+.res-count{color:#7a7268!important}
+
+/* FILTERS */
+.fp{background:#ffffff!important;border-color:#e8e4dc!important;color:#7a7268!important}
+.fp::before{background:#1a1a1a!important}
+.fp:hover,.fp.active{border-color:#1a1a1a!important}
+
+/* CARDS */
+.card{background:#ffffff!important;border:1px solid #e8e4dc!important}
+.card:hover{border-color:#b8922e!important;box-shadow:0 12px 40px rgba(0,0,0,.1)!important}
+.card-imgs{background:#f5f2ec!important}
+.card-name{color:#1a1a1a!important}
+.card-sku{color:#a09890!important}
+.card-cat{color:#b8922e!important;opacity:1!important}
+.card-overlay{background:linear-gradient(0deg,rgba(245,242,236,.7) 0%,transparent 70%)!important}
+.img-count{background:rgba(255,255,255,.9)!important;color:#1a1a1a!important}
+.price-orig,.price-range{color:#a09890!important}
+
+/* MODAL */
+.modal-bg{background:rgba(10,10,10,.6)!important}
+.modal{background:#ffffff!important;border:1px solid #e8e4dc!important}
+.modal-media,.modal-img-wrap{background:#f5f2ec!important}
+.modal-thumbs{background:#eeebe4!important}
+.modal-thumb{opacity:.65!important}
+.modal-thumb.on,.modal-thumb:hover{border-color:#b8922e!important;opacity:1!important}
+.modal-name{color:#1a1a1a!important}
+.modal-sku,.modal-desc,.modal-var-lbl{color:#7a7268!important}
+.modal-hr{background:#e8e4dc!important}
+.modal-cat{color:#b8922e!important}
+.modal-x{background:#f5f2ec!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.modal-x:hover{background:#1a1a1a!important;color:#ffffff!important}
+.var-btn{background:#ffffff!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.modal-perks{color:#7a7268!important}
+.modal-nav-btn{background:rgba(255,255,255,.9)!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.modal-nav-btn:hover{background:#1a1a1a!important;color:#fff!important}
+.modal-img-counter{background:rgba(255,255,255,.85)!important;color:#1a1a1a!important}
+
+/* CART */
+.cart-veil{background:rgba(0,0,0,.5)!important}
+.cart{background:#ffffff!important;border-left:1px solid #e8e4dc!important}
+.cart-head,.cart-foot{border-color:#e8e4dc!important}
+.cart-title{color:#1a1a1a!important}
+.cart-title::before{display:none!important}
+.cart-x{background:#f5f2ec!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.cart-x:hover{background:#1a1a1a!important;color:#ffffff!important}
+.cart-item{border-bottom-color:#e8e4dc!important}
+.ci-img{border-color:#e8e4dc!important}
+.ci-name{color:#1a1a1a!important}
+.ci-var{color:#7a7268!important}
+.ship-bar-wrap{background:#e8e4dc!important}
+.ship-msg{color:#7a7268!important}
+.cart-total-lbl{color:#7a7268!important}
+.cart-empty,.cart-empty p{color:#a09890!important}
+
+/* CHECKOUT */
+.co-veil{background:rgba(250,249,247,.96)!important}
+.co-box{background:#ffffff!important;border:1px solid #e8e4dc!important}
+.co-x{background:#f5f2ec!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.co-x:hover{background:#1a1a1a!important;color:#ffffff!important}
+.co-cross{display:none!important}
+.co-title{color:#1a1a1a!important}
+.co-verse,.co-sub~p{color:#7a7268!important}
+.co-sum{border-color:#e8e4dc!important}
+.co-sum-item{color:#7a7268!important;border-bottom-color:#f0ede6!important}
+.co-sum-ship{color:#7a7268!important;border-bottom-color:#f0ede6!important}
+.co-sum-total{color:#b8922e!important}
+.fl{color:#4a4540!important}
+.fi{background:#faf9f7!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.fi::placeholder{color:#a09890!important}
+.fi:focus{border-color:#b8922e!important;background:#ffffff!important}
+.zip-result{background:#f5edd8!important;border-color:#b8922e!important;color:#4a4540!important}
+.delivery-option{background:#faf9f7!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.delivery-option.sel,.delivery-option:hover{background:#f5edd8!important;border-color:#b8922e!important}
+.submit-btn{background:linear-gradient(135deg,#8a6820,#b8922e,#d4a84c)!important}
+
+/* SUCCESS */
+.suc-cross{display:none!important}
+
+/* ADMIN */
+.admin-fab{background:rgba(255,255,255,.95)!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+.admin-panel{background:#faf9f7!important}
+.admin-head{background:#ffffff!important;border-bottom:1px solid #e8e4dc!important}
+.admin-table th{background:#f5f2ec!important;color:#b8922e!important;border-bottom-color:#e8e4dc!important}
+.admin-table td{color:#2c2822!important;border-bottom-color:#f0ede6!important}
+.admin-price-inp{background:#faf9f7!important;border-color:#e8e4dc!important;color:#b8922e!important}
+.admin-search{background:#faf9f7!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+
+/* FOOTER */
+.footer{background:#0a0a0a!important;border-top:1px solid rgba(184,146,46,.15)!important}
+.footer-cross{display:none!important}
+.footer-brand{-webkit-text-fill-color:unset!important;color:#ffffff!important;background:none!important;animation:none!important}
+.footer-verse{color:#7a7268!important;opacity:1!important}
+.footer-col p,.footer-col a{color:#5a5450!important}
+.footer-col a:hover{color:#b8922e!important}
+.footer-col-title{color:#b8922e!important}
+.footer-bottom{border-top-color:rgba(255,255,255,.06)!important;color:#4a4540!important}
 </style>
 </head>
 <body>
@@ -340,12 +483,10 @@ body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--tex
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="hero-content">
-    <span class="hero-cross">✝</span>
-    <p class="hero-eyebrow">✦ Gold 18k · Hypoallergenic · 1 Year Warranty ✦</p>
+    <p class="hero-eyebrow">Gold 18k · Hypoallergenic · 1 Year Warranty</p>
     <h1 class="hero-title">Lagos<br>Jewelry</h1>
     <span class="hero-subtitle">De mulher para mulher</span>
     <p class="hero-verse">"She is clothed with strength and dignity" — Proverbs 31:25</p>
-    <div class="hero-line"><span></span><span style="-webkit-text-fill-color:var(--gold)">✝</span><span></span></div>
     <button class="hero-cta" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
       <span>✦</span><span>Explore Collection</span><span>→</span>
     </button>
@@ -358,6 +499,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--tex
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
+    <a href="/" class="nav-back-home">← Lagos World</a>
     <a href="#top" class="nav-brand">Lagos Jewelry</a>
     <div class="nav-cats" id="nav-cats">
       <button class="nav-cat active" onclick="filterCat('ALL',this)">All</button>

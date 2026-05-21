@@ -4,416 +4,292 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lagos World — De Mulher para Mulher</title>
-<meta name="description" content="Lagos World — A platform for women, by women. Jewelry, Cleaning Services & Professional Courses. Founded by Dayane Lago.">
+<meta name="description" content="Lagos World — Jewelry, Cleaning & Courses. A platform for women by women. Founded by Dayane Lago. Philadelphia, PA.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#c9a84c;--gold-light:#f0d98a;--gold-dark:#8a6820;
-  --dark:#080808;--dark2:#111;--dark3:#1a1a1a;
-  --text:#e4ddd0;--muted:#8a8070;--dim:#444;
+  --bg:#ffffff;
+  --bg-soft:#faf9f7;
+  --bg-warm:#f5f2ec;
+  --bg-warm2:#ede8df;
+  --text:#1a1a1a;
+  --text-mid:#4a4540;
+  --text-muted:#7a7268;
+  --text-light:#a09890;
+  --gold:#b8922e;
+  --gold-light:#d4a84c;
+  --gold-pale:#f5edd8;
+  --border:#e8e4dc;
+  --border-soft:#f0ede6;
+  --black:#0a0a0a;
 }
 
 html{scroll-behavior:smooth}
-body{font-family:'Montserrat',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 
-/* SCROLLBAR */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--dark)}
-::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:2px}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg-soft)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
 
 /* ANIMATIONS */
-@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes crossGlow{0%,100%{text-shadow:0 0 10px rgba(201,168,76,.4)}50%{text-shadow:0 0 30px rgba(201,168,76,.9),0 0 60px rgba(201,168,76,.3)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-@keyframes particleFloat{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-100vh) rotate(720deg);opacity:0}}
-@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
-@keyframes slideLeft{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes slideRight{from{transform:translateX(-60px);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes borderDance{0%{border-color:rgba(201,168,76,.2)}50%{border-color:rgba(201,168,76,.7)}100%{border-color:rgba(201,168,76,.2)}}
-
-/* PARTICLES */
-.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
-.particle{position:absolute;bottom:-20px;width:6px;height:6px;background:var(--gold);border-radius:50%;opacity:0;animation:particleFloat linear infinite}
+@keyframes shimmerGold{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.1);transition:all .3s}
-.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;letter-spacing:.3em;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
-.nav-cross{animation:crossGlow 3s ease-in-out infinite;display:inline;-webkit-text-fill-color:var(--gold);background:none}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;transition:color .3s}
-.nav-links a:hover{color:var(--gold)}
-.nav-cta{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--dark);padding:.5rem 1.2rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;font-weight:600;transition:all .3s}
-.nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-soft);padding:0 3rem;height:68px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.06)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:color .25s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.nav-cta{background:var(--black);color:#fff;padding:.55rem 1.4rem;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:background .25s,transform .2s}
+.nav-cta:hover{background:var(--gold);transform:translateY(-1px)}
+@media(max-width:768px){.nav-links{display:none}.nav-right{gap:.8rem}}
+@media(max-width:480px){nav{padding:0 1.2rem}}
 
 /* HERO */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:6rem 2rem 4rem}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,168,76,.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(201,168,76,.05) 0%,transparent 50%),linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);z-index:0}
-.hero-content{position:relative;z-index:1;max-width:800px}
-.hero-eyebrow{font-size:.65rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:1.5rem;animation:fadeIn 1s ease both}
-.hero-cross{font-size:3rem;color:var(--gold);display:block;margin-bottom:1rem;animation:crossGlow 3s ease-in-out infinite,float 4s ease-in-out infinite}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1.1;margin-bottom:1rem;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark),var(--gold-light));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite,fadeUp .8s ease .3s both}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,3vw,1.5rem);color:var(--gold);opacity:.7;margin-bottom:.5rem;animation:fadeUp .8s ease .5s both}
-.hero-verse{font-size:.72rem;color:var(--muted);letter-spacing:.15em;margin-bottom:3rem;animation:fadeUp .8s ease .7s both;font-style:italic}
-.hero-pillars{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;animation:fadeUp .8s ease .9s both}
-.pillar{text-align:center;padding:.8rem 1.5rem;border:1px solid rgba(201,168,76,.2);animation:borderDance 3s ease-in-out infinite}
-.pillar:nth-child(2){animation-delay:.5s}
-.pillar:nth-child(3){animation-delay:1s}
-.pillar-icon{font-size:1.5rem;margin-bottom:.3rem}
-.pillar-name{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
-.hero-scroll{animation:float 2s ease-in-out infinite;color:var(--muted);font-size:.7rem;letter-spacing:.2em}
+.hero{margin-top:68px;min-height:calc(100vh - 68px);display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+@media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto}}
+.hero-image{position:relative;overflow:hidden;min-height:600px}
+.hero-image img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform 8s ease}
+.hero-image:hover img{transform:scale(1.03)}
+.hero-image-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,242,236,.1),rgba(0,0,0,.08))}
+.hero-content{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;background:var(--bg-warm);position:relative}
+@media(max-width:900px){.hero-content{padding:3rem 2rem}}
+.hero-eyebrow{font-size:.6rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.5rem;animation:fadeUp .8s ease both}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:600;line-height:1.1;color:var(--text);margin-bottom:1rem;animation:fadeUp .8s ease .15s both}
+.hero-title em{font-style:italic;color:var(--gold);display:block}
+.hero-sub{font-size:.85rem;line-height:1.9;color:var(--text-muted);margin-bottom:2.5rem;max-width:380px;animation:fadeUp .8s ease .3s both}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s ease .45s both}
+.btn-primary{background:var(--black);color:#fff;padding:.8rem 2rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:background .25s,transform .2s;display:inline-block}
+.btn-primary:hover{background:var(--gold);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--text);padding:.8rem 2rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;text-decoration:none;border:1px solid var(--text);cursor:pointer;transition:all .25s;display:inline-block}
+.btn-outline:hover{background:var(--text);color:#fff;transform:translateY(-2px)}
 
-/* SECTIONS */
-section{position:relative;z-index:1}
-.section-pad{padding:6rem 2rem}
-.container{max-width:1100px;margin:0 auto}
+/* TRUST BAR */
+.trust-bar{background:var(--bg-warm2);padding:1.5rem 3rem;display:flex;align-items:center;justify-content:center;gap:4rem;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.trust-item{display:flex;align-items:center;gap:.8rem}
+.trust-icon{font-size:1.2rem;opacity:.8}
+.trust-text{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mid);font-weight:500}
 
-/* STORY */
-.story{background:linear-gradient(180deg,var(--dark2) 0%,var(--dark3) 100%)}
-.story-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-@media(max-width:768px){.story-inner{grid-template-columns:1fr;gap:3rem}}
-.story-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border:1px solid rgba(201,168,76,.3);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
-.story-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.2;margin-bottom:1.5rem}
-.story-title span{font-style:italic;color:var(--gold)}
-.story-text{font-size:.9rem;line-height:1.9;color:var(--muted);margin-bottom:1.2rem}
-.story-text strong{color:var(--text);font-weight:600}
-.story-quote{border-left:2px solid var(--gold);padding:1rem 1.5rem;margin:2rem 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--gold);line-height:1.6}
-.story-verse{font-size:.7rem;letter-spacing:.15em;color:var(--dim);margin-top:.5rem;font-style:normal}
-.story-visual{position:relative;text-align:center}
-.founder-photo{width:100%;max-width:380px;border:1px solid rgba(201,168,76,.3);display:block;margin:0 auto;position:relative}
-.founder-photo img{width:100%;display:block;filter:grayscale(10%) contrast(1.05)}
-.founder-photo::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.5));z-index:1}
-.founder-photo::after{content:'✝ Dayane Lago · Fundadora';position:absolute;bottom:1.2rem;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-size:.85rem;letter-spacing:.25em;color:var(--gold-light);z-index:2}
-.story-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
-.stat{text-align:center;padding:1rem;border:1px solid rgba(201,168,76,.1)}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)}
-.stat-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
-
-/* PHOTO GALLERY */
-.gallery{background:var(--dark)}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-@media(max-width:768px){.gallery-grid{grid-template-columns:1fr;gap:1rem}}
-.gallery-item{position:relative;overflow:hidden;cursor:pointer;border:1px solid rgba(201,168,76,.15)}
-.gallery-item img{width:100%;display:block;transition:transform .6s ease,filter .4s ease;filter:grayscale(15%) contrast(1.05)}
-.gallery-item:hover img{transform:scale(1.06);filter:grayscale(0%) contrast(1.1)}
-.gallery-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.6));opacity:0;transition:opacity .4s}
-.gallery-item:hover::after{opacity:1}
-.gallery-caption{position:absolute;bottom:1rem;left:1rem;right:1rem;z-index:2;opacity:0;transition:opacity .4s;transform:translateY(8px);transition:opacity .4s,transform .4s}
-.gallery-item:hover .gallery-caption{opacity:1;transform:translateY(0)}
-.gallery-caption span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--gold-light);letter-spacing:.1em}
-
-/* MISSION */
-.mission{background:var(--dark);text-align:center}
-.mission-cross{font-size:2.5rem;color:var(--gold);display:block;margin-bottom:1rem;animation:crossGlow 3s ease-in-out infinite}
-.section-eyebrow{font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:1rem}
-.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:1.5rem}
-.mission-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem}
-@media(max-width:640px){.mission-pillars{grid-template-columns:1fr}}
-.mpillar{padding:2.5rem 1.5rem;border:1px solid rgba(201,168,76,.15);background:rgba(201,168,76,.02);text-align:center;transition:all .4s;position:relative;overflow:hidden}
-.mpillar::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.05),transparent);opacity:0;transition:opacity .4s}
-.mpillar:hover{border-color:rgba(201,168,76,.5);transform:translateY(-6px)}
-.mpillar:hover::before{opacity:1}
-.mpillar-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
-.mpillar-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:.8rem}
-.mpillar-text{font-size:.8rem;line-height:1.7;color:var(--muted)}
+/* SECTION COMMONS */
+.section{padding:6rem 3rem}
+.container{max-width:1140px;margin:0 auto}
+.section-label{font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.8rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--text);line-height:1.2;margin-bottom:1rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-sub{font-size:.85rem;line-height:1.8;color:var(--text-muted);max-width:560px}
 
 /* PLATFORMS */
-.platforms{background:linear-gradient(180deg,var(--dark3) 0%,var(--dark2) 100%)}
-.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem}
-@media(max-width:768px){.platforms-grid{grid-template-columns:1fr;gap:1.5rem}}
-.platform-card{position:relative;border:1px solid rgba(201,168,76,.2);background:rgba(201,168,76,.02);text-decoration:none;color:inherit;overflow:hidden;display:block;transition:all .4s;group:true}
-.platform-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transition:left .6s}
-.platform-card:hover::before{left:100%}
-.platform-card:hover{border-color:rgba(201,168,76,.6);transform:translateY(-8px);box-shadow:0 20px 60px rgba(201,168,76,.1)}
-.pc-top{padding:2.5rem 2rem 1.5rem;text-align:center}
-.pc-icon{font-size:3rem;margin-bottom:1rem;display:block}
-.pc-cross{font-size:1rem;color:var(--gold);display:block;margin-bottom:.5rem}
-.pc-name{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;letter-spacing:.2em;color:var(--gold-light);margin-bottom:.5rem}
-.pc-sub{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-.pc-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent);margin:0 2rem}
-.pc-bottom{padding:1.5rem 2rem 2rem}
-.pc-desc{font-size:.82rem;line-height:1.7;color:var(--muted);margin-bottom:1.5rem}
-.pc-features{list-style:none;margin-bottom:1.5rem}
-.pc-features li{font-size:.72rem;color:var(--muted);padding:.3rem 0;display:flex;align-items:center;gap:.5rem}
-.pc-features li::before{content:'✝';color:var(--gold);font-size:.7rem;opacity:.6}
-.pc-btn{width:100%;padding:.8rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--dark);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;border:none;cursor:pointer;text-align:center;display:block;text-decoration:none;transition:opacity .3s}
-.pc-btn:hover{opacity:.85}
+.platforms{background:var(--bg)}
+.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:4rem}
+@media(max-width:900px){.platforms-grid{grid-template-columns:1fr;gap:1.5rem}}
+.platform-card{position:relative;overflow:hidden;background:var(--bg-soft);text-decoration:none;color:inherit;display:block;transition:transform .4s}
+.platform-card:hover{transform:translateY(-4px)}
+.pc-image{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--bg-warm)}
+.pc-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;background:var(--bg-warm);transition:transform .5s}
+.platform-card:hover .pc-image-placeholder{transform:scale(1.04)}
+.pc-tag{position:absolute;top:1.2rem;left:1.2rem;background:var(--black);color:#fff;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .7rem;font-weight:600}
+.pc-info{padding:1.8rem 1.5rem}
+.pc-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.4rem}
+.pc-sub{font-size:.72rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.2rem}
+.pc-link{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-mid);font-weight:600;display:flex;align-items:center;gap:.4rem;transition:color .25s;text-decoration:none}
+.pc-link::after{content:'→';transition:transform .25s}
+.platform-card:hover .pc-link{color:var(--gold)}
+.platform-card:hover .pc-link::after{transform:translateX(4px)}
 
-/* VERSE BANNER */
-.verse-banner{padding:5rem 2rem;background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(201,168,76,.02));text-align:center;border-top:1px solid rgba(201,168,76,.1);border-bottom:1px solid rgba(201,168,76,.1)}
-.vb-cross{font-size:2rem;color:var(--gold);animation:crossGlow 3s ease-in-out infinite;display:block;margin-bottom:1.5rem}
-.vb-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.3rem,3vw,2rem);color:var(--gold-light);max-width:700px;margin:0 auto 1rem;line-height:1.6}
-.vb-ref{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+/* FOUNDER STORY */
+.story{background:var(--bg-warm);overflow:hidden}
+.story-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch}
+@media(max-width:900px){.story-inner{grid-template-columns:1fr}}
+.story-photo{position:relative;overflow:hidden;min-height:600px}
+@media(max-width:900px){.story-photo{min-height:420px}}
+.story-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform 6s ease}
+.story-photo:hover img{transform:scale(1.04)}
+.story-text-wrap{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center}
+@media(max-width:900px){.story-text-wrap{padding:3rem 2rem}}
+.story-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;line-height:1.7;color:var(--text-mid);margin:1.8rem 0;padding-left:1.5rem;border-left:2px solid var(--gold)}
+.story-body{font-size:.85rem;line-height:1.9;color:var(--text-muted);margin-bottom:1rem}
+.story-body strong{color:var(--text);font-weight:600}
+.story-sig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--gold);margin-top:2rem}
+
+/* VERSE SECTION */
+.verse-section{background:var(--black);padding:5rem 3rem;text-align:center}
+.verse-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.3rem,3vw,2rem);color:#e8e4dc;max-width:700px;margin:0 auto 1rem;line-height:1.7}
+.verse-ref{font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:#7a7268}
+
+/* GALLERY */
+.gallery{background:var(--bg)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:3rem}
+@media(max-width:768px){.gallery-grid{grid-template-columns:1fr;gap:1rem}}
+.gallery-item{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:pointer}
+.gallery-item img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .6s ease}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(10,10,10,.65));opacity:0;transition:opacity .4s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-caption{position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;transform:translateY(8px);opacity:0;transition:all .4s}
+.gallery-item:hover .gallery-caption{opacity:1;transform:translateY(0)}
+.gallery-caption p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:#f5f2ec;letter-spacing:.1em}
 
 /* VALUES */
-.values{background:var(--dark2)}
-.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:4rem}
-@media(max-width:640px){.values-grid{grid-template-columns:1fr}}
-.value-card{padding:2rem;border:1px solid rgba(201,168,76,.1);position:relative;overflow:hidden}
-.value-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s}
-.value-card:hover::after{transform:scaleX(1)}
-.value-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;color:rgba(201,168,76,.1);line-height:1;margin-bottom:.5rem}
-.value-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:.8rem}
-.value-text{font-size:.82rem;line-height:1.7;color:var(--muted)}
+.values{background:var(--bg-soft)}
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:4rem}
+@media(max-width:900px){.values-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.values-grid{grid-template-columns:1fr}}
+.value-item{padding:2.5rem 1.5rem;background:var(--bg);border:1px solid var(--border-soft);transition:box-shadow .3s,transform .3s}
+.value-item:hover{box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateY(-3px)}
+.value-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:1rem}
+.value-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:.8rem}
+.value-text{font-size:.78rem;line-height:1.75;color:var(--text-muted)}
 
-/* CONTACT */
-.contact{background:var(--dark3);text-align:center}
-.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
-@media(max-width:640px){.contact-grid{grid-template-columns:1fr}}
-.contact-item{padding:2rem;border:1px solid rgba(201,168,76,.15)}
-.contact-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
-.contact-value{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold)}
-.contact-value a{color:inherit;text-decoration:none}
-.contact-value a:hover{text-decoration:underline}
+/* CONTACT STRIP */
+.contact-strip{background:var(--bg-warm2);padding:4rem 3rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:3rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+@media(max-width:768px){.contact-strip{grid-template-columns:1fr;text-align:center}}
+.contact-strip-text h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;margin-bottom:.4rem}
+.contact-strip-text p{font-size:.8rem;color:var(--text-muted);line-height:1.7}
+.contact-strip-divider{width:1px;height:80px;background:var(--border)}
+@media(max-width:768px){.contact-strip-divider{display:none}}
+.contact-strip-info{display:flex;flex-direction:column;gap:.8rem}
+.ci-item{display:flex;flex-direction:column;gap:.2rem}
+.ci-label{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-light)}
+.ci-value{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text)}
+.ci-value a{color:inherit;text-decoration:none;transition:color .25s}
+.ci-value a:hover{color:var(--gold)}
 
 /* FOOTER */
-footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.1);padding:3rem 2rem;text-align:center}
-.footer-cross{font-size:1.8rem;color:var(--gold);animation:crossGlow 3s ease-in-out infinite;display:block;margin-bottom:1rem}
-.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;letter-spacing:.3em;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
-.footer-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--muted);margin-bottom.5rem}
-.footer-links{display:flex;justify-content:center;gap:2rem;margin:1.5rem 0;flex-wrap:wrap}
-.footer-links a{color:var(--dim);text-decoration:none;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;transition:color .3s}
-.footer-links a:hover{color:var(--gold)}
-.footer-copy{font-size:.6rem;letter-spacing:.15em;color:var(--dim)}
+footer{background:var(--black);color:#e8e4dc;padding:4rem 3rem 2rem}
+.footer-inner{max-width:1140px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08)}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.footer-top{grid-template-columns:1fr}}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#fff;margin-bottom:.8rem}
+.footer-brand span{color:var(--gold-light)}
+.footer-tagline{font-size:.75rem;line-height:1.8;color:#7a7268;margin-bottom:1.5rem}
+.footer-col h4{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-light);font-weight:600;margin-bottom:1.2rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col a{color:#7a7268;text-decoration:none;font-size:.78rem;transition:color .25s}
+.footer-col a:hover{color:#e8e4dc}
+.footer-bottom{padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:.62rem;letter-spacing:.1em;color:#4a4540}
+.footer-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:#4a4540}
 
-/* INTERSECTION OBSERVER ANIMATIONS */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity .8s ease,transform .8s ease}
 .reveal-left.visible{opacity:1;transform:translateX(0)}
-.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal-right{opacity:0;transform:translateX(24px);transition:opacity .8s ease,transform .8s ease}
 .reveal-right.visible{opacity:1;transform:translateX(0)}
-
-/* MOBILE NAV */
-@media(max-width:640px){
-  .nav-links{display:none}
-  .nav-cta{display:none}
-}
 </style>
 </head>
 <body>
 
-<!-- PARTICLES -->
-<div class="particles" id="particles"></div>
-
 <!-- NAVIGATION -->
-<nav>
-  <a href="/" class="nav-brand"><span class="nav-cross">✝</span> Lagos World</a>
+<nav id="navbar">
+  <a href="/" class="nav-logo">Lagos <span>World</span></a>
   <ul class="nav-links">
+    <li><a href="/jewelry">Jewelry</a></li>
+    <li><a href="/cleaning">Cleaning</a></li>
+    <li><a href="/courses">Courses</a></li>
     <li><a href="#story">Our Story</a></li>
-    <li><a href="#mission">Mission</a></li>
-    <li><a href="#platforms">Platforms</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#platforms" class="nav-cta">Explore</a>
+  <div class="nav-right">
+    <a href="https://wa.me/12156262345" class="nav-cta">Contact</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-image">
+    <img src="images/dayane-1.png" alt="Dayane Lago — Lagos World Founder" loading="eager">
+    <div class="hero-image-overlay"></div>
+  </div>
   <div class="hero-content">
     <div class="hero-eyebrow">Philadelphia, PA · Est. 2024</div>
-    <span class="hero-cross">✝</span>
-    <h1 class="hero-title">Lagos World</h1>
-    <p class="hero-sub">De Mulher para Mulher</p>
-    <p class="hero-verse">"She is clothed with strength and dignity" — Proverbs 31:25</p>
-    <div class="hero-pillars">
-      <div class="pillar">
-        <div class="pillar-icon">💎</div>
-        <div class="pillar-name">Jewelry</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">✨</div>
-        <div class="pillar-name">Cleaning</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">📚</div>
-        <div class="pillar-name">Courses</div>
-      </div>
-    </div>
-    <div class="hero-scroll">↓ &nbsp; Discover Our Story</div>
-  </div>
-</section>
-
-<!-- STORY -->
-<section class="story section-pad" id="story">
-  <div class="container">
-    <div class="story-inner">
-      <div class="reveal-left">
-        <div class="story-badge">✝ Founder's Story</div>
-        <h2 class="story-title">The Woman Behind <span>Lagos World</span></h2>
-        <p class="story-text">
-          <strong>Dayane Lago</strong> chegou aos Estados Unidos com uma mala, uma fé inabalável e um sonho: construir algo que fosse além de um negócio. Algo que transformasse vidas — especialmente a de outras mulheres.
-        </p>
-        <p class="story-text">
-          Nascida com o espírito empreendedor e guiada por sua fé cristã, Dayane entendeu que o verdadeiro sucesso não vem sozinho. Ele é construído em comunidade, com propósito, com Deus no centro de cada decisão.
-        </p>
-        <p class="story-text">
-          Lagos World nasceu como uma plataforma <strong>de mulher para mulher</strong> — um centro de desenvolvimento, estilo e oportunidade onde cada mulher encontra não apenas produtos e serviços de excelência, mas também a chance de crescer, aprender e prosperar.
-        </p>
-        <div class="story-quote">
-          "Construí Lagos World porque acredito que toda mulher merece beleza, dignidade e oportunidade. É uma missão de fé — não apenas um negócio."
-          <div class="story-verse">— Dayane Lago, Fundadora</div>
-        </div>
-        <p class="story-text">
-          Today, Lagos World serves hundreds of women across the United States through three pillars: luxury jewelry that empowers elegance, professional cleaning services that create economic opportunity, and courses that equip women for their brightest future.
-        </p>
-      </div>
-      <div class="reveal-right">
-        <div class="story-visual">
-          <div class="founder-photo">
-            <img src="images/dayane-3.png" alt="Dayane Lago — Fundadora Lagos World" loading="lazy">
-          </div>
-          <div class="story-stats">
-            <div class="stat">
-              <div class="stat-num">500+</div>
-              <div class="stat-label">Products</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">3</div>
-              <div class="stat-label">Platforms</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">∞</div>
-              <div class="stat-label">Purpose</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <h1 class="hero-title">
+      Lagos World
+      <em>De Mulher para Mulher</em>
+    </h1>
+    <p class="hero-sub">A platform built for women who believe in beauty, purpose, and growth. Jewelry, professional services, and education — all under one vision.</p>
+    <div class="hero-actions">
+      <a href="/jewelry" class="btn-primary">Shop Jewelry</a>
+      <a href="#story" class="btn-outline">Our Story</a>
     </div>
   </div>
 </section>
 
-<!-- FOUNDER GALLERY -->
-<section class="gallery section-pad">
-  <div class="container">
-    <div class="section-eyebrow" style="text-align:center">Dayane Lago</div>
-    <h2 class="section-title reveal" style="text-align:center">Fundadora · Lagos World</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item reveal">
-        <img src="images/dayane-1.png" alt="Dayane Lago — Lagos Jewelry" loading="lazy">
-        <div class="gallery-caption"><span>✝ Lagos Jewelry · Philadelphia</span></div>
-      </div>
-      <div class="gallery-item reveal">
-        <img src="images/dayane-2.png" alt="Dayane Lago — Fundadora" loading="lazy">
-        <div class="gallery-caption"><span>✝ Fundadora · De Mulher para Mulher</span></div>
-      </div>
-      <div class="gallery-item reveal">
-        <img src="/images/dayane-3.png" alt="Dayane Lago — Lagos World" loading="lazy">
-        <div class="gallery-caption"><span>✝ Lagos World · Centro de Estilo</span></div>
-      </div>
-    </div>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <span class="trust-icon">💎</span>
+    <span class="trust-text">500+ Exclusive Products</span>
   </div>
-</section>
-
-<!-- VERSE BANNER -->
-<div class="verse-banner reveal">
-  <span class="vb-cross">✝</span>
-  <p class="vb-verse">"Charm is deceptive, and beauty is fleeting; but a woman who fears the Lord is to be praised."</p>
-  <div class="vb-ref">Proverbs 31:30</div>
+  <div class="trust-item">
+    <span class="trust-icon">🚚</span>
+    <span class="trust-text">Free Shipping Over $200</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">⭐</span>
+    <span class="trust-text">18k Gold Plated · 1-Year Guarantee</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">🤍</span>
+    <span class="trust-text">Women Empowering Women</span>
+  </div>
 </div>
-
-<!-- MISSION -->
-<section class="mission section-pad" id="mission">
-  <div class="container">
-    <span class="mission-cross">✝</span>
-    <div class="section-eyebrow">Our Mission</div>
-    <h2 class="section-title reveal">Centro de Desenvolvimento,<br>Estilo e Oportunidade</h2>
-    <p style="color:var(--muted);max-width:600px;margin:0 auto;font-size:.9rem;line-height:1.8" class="reveal">
-      Lagos World exists to empower women at every stage — through beauty that builds confidence, opportunity that creates independence, and community rooted in faith and purpose.
-    </p>
-    <div class="mission-pillars">
-      <div class="mpillar reveal">
-        <span class="mpillar-icon">🌹</span>
-        <div class="mpillar-title">Desenvolvimento</div>
-        <p class="mpillar-text">Educação, crescimento profissional e cursos certificados que abrem portas e transformam carreiras. Todo talento merece ser cultivado.</p>
-      </div>
-      <div class="mpillar reveal">
-        <span class="mpillar-icon">👑</span>
-        <div class="mpillar-title">Estilo</div>
-        <p class="mpillar-text">Joias exclusivas banhadas a ouro 18k, design sofisticado e elegância acessível. Porque toda mulher merece se sentir rainha.</p>
-      </div>
-      <div class="mpillar reveal">
-        <span class="mpillar-icon">🌟</span>
-        <div class="mpillar-title">Oportunidade</div>
-        <p class="mpillar-text">Serviços profissionais de limpeza que criam empregos e renda real para mulheres que desejam construir sua própria independência financeira.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- PLATFORMS -->
-<section class="platforms section-pad" id="platforms">
+<section class="platforms section">
   <div class="container">
-    <div class="section-eyebrow" style="text-align:center">Our Platforms</div>
-    <h2 class="section-title" style="text-align:center" class="reveal">Three Pillars of Purpose</h2>
+    <div style="text-align:center;margin-bottom:0" class="reveal">
+      <div class="section-label">Our Platforms</div>
+      <h2 class="section-title" style="text-align:center">Three Pillars of <em>Purpose</em></h2>
+    </div>
     <div class="platforms-grid">
 
-      <!-- JEWELRY -->
       <a href="/jewelry" class="platform-card reveal">
-        <div class="pc-top">
-          <span class="pc-icon">💎</span>
-          <span class="pc-cross">✝</span>
-          <div class="pc-name">JEWELRY</div>
-          <div class="pc-sub">Lagos Jewelry · Philadelphia</div>
+        <div class="pc-image">
+          <div class="pc-image-placeholder">💎</div>
+          <div class="pc-tag">Shop Now</div>
         </div>
-        <div class="pc-divider"></div>
-        <div class="pc-bottom">
-          <p class="pc-desc">Semijoias banhadas a ouro 18k com design exclusivo. Elegância acessível para a mulher moderna que valoriza beleza com propósito.</p>
-          <ul class="pc-features">
-            <li>500+ produtos exclusivos</li>
-            <li>Banhado a ouro 18k · 1 ano garantia</li>
-            <li>Frete grátis acima de $200</li>
-            <li>Cash · Zelle · Entrega expressa</li>
-          </ul>
-          <span class="pc-btn">Shop Now →</span>
+        <div class="pc-info">
+          <div class="pc-name">Lagos Jewelry</div>
+          <p class="pc-sub">18k gold-plated jewelry with exclusive designs. Elegance accessible to every woman who knows her worth.</p>
+          <span class="pc-link">Discover Collection</span>
         </div>
       </a>
 
-      <!-- CLEANING -->
       <a href="/cleaning" class="platform-card reveal">
-        <div class="pc-top">
-          <span class="pc-icon">✨</span>
-          <span class="pc-cross">✝</span>
-          <div class="pc-name">CLEANING</div>
-          <div class="pc-sub">Lagos Cleaning · Services</div>
+        <div class="pc-image">
+          <div class="pc-image-placeholder">✨</div>
+          <div class="pc-tag">Book Now</div>
         </div>
-        <div class="pc-divider"></div>
-        <div class="pc-bottom">
-          <p class="pc-desc">Serviços profissionais de limpeza residencial e comercial. Equipe treinada, confiável e dedicada — porque seu lar merece o melhor.</p>
-          <ul class="pc-features">
-            <li>Limpeza residencial e comercial</li>
-            <li>Profissionais certificadas</li>
-            <li>Orçamento gratuito</li>
-            <li>Oportunidades de trabalho disponíveis</li>
-          </ul>
-          <span class="pc-btn">Book Service →</span>
+        <div class="pc-info">
+          <div class="pc-name">Lagos Cleaning</div>
+          <p class="pc-sub">Professional residential and commercial cleaning services. Reliable, trained, and dedicated to excellence.</p>
+          <span class="pc-link">Book a Service</span>
         </div>
       </a>
 
-      <!-- COURSES -->
       <a href="/courses" class="platform-card reveal">
-        <div class="pc-top">
-          <span class="pc-icon">📚</span>
-          <span class="pc-cross">✝</span>
-          <div class="pc-name">COURSES</div>
-          <div class="pc-sub">Lagos Courses · Education</div>
+        <div class="pc-image">
+          <div class="pc-image-placeholder">📚</div>
+          <div class="pc-tag">Enroll Now</div>
         </div>
-        <div class="pc-divider"></div>
-        <div class="pc-bottom">
-          <p class="pc-desc">Cursos e treinamentos especializados em beleza, bem-estar e negócios. Certificação profissional para mulheres que desejam crescer.</p>
-          <ul class="pc-features">
-            <li>Cursos online e presenciais</li>
-            <li>Certificado reconhecido</li>
-            <li>Beleza, Estética & Negócios</li>
-            <li>Mentoria com Dayane Lago</li>
-          </ul>
-          <span class="pc-btn">Enroll Now →</span>
+        <div class="pc-info">
+          <div class="pc-name">Lagos Courses</div>
+          <p class="pc-sub">Certified courses in beauty, wellness, and business. Training that opens doors and transforms careers.</p>
+          <span class="pc-link">View Courses</span>
         </div>
       </a>
 
@@ -421,104 +297,176 @@ footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.1);padding:3
   </div>
 </section>
 
-<!-- VERSE BANNER 2 -->
-<div class="verse-banner reveal">
-  <span class="vb-cross">✝</span>
-  <p class="vb-verse">"Trust in the Lord with all your heart and lean not on your own understanding."</p>
-  <div class="vb-ref">Proverbs 3:5</div>
+<!-- FOUNDER STORY -->
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="story-photo reveal-left">
+      <img src="images/dayane-3.png" alt="Dayane Lago — Founder of Lagos World">
+    </div>
+    <div class="story-text-wrap reveal-right">
+      <div class="section-label">The Founder</div>
+      <h2 class="section-title">Dayane Lago<em>Her Story</em></h2>
+      <p class="story-body">
+        <strong>Dayane Lago</strong> arrived in the United States with a suitcase, an unshakeable faith, and a dream: to build something that went beyond a business — something that transformed lives, especially the lives of other women.
+      </p>
+      <blockquote class="story-quote">
+        "I built Lagos World because I believe every woman deserves beauty, dignity, and opportunity. This is a mission — not just a business."
+      </blockquote>
+      <p class="story-body">
+        Lagos World was born as a <strong>women-for-women platform</strong> — a center for development, style, and opportunity where every woman finds not only products and services of excellence, but also the chance to grow, learn, and thrive.
+      </p>
+      <p class="story-body">
+        Today, Lagos World serves hundreds of women across the United States through three pillars: luxury jewelry, professional cleaning services, and courses that equip women for their brightest future.
+      </p>
+      <div class="story-sig">— Dayane Lago, Founder</div>
+    </div>
+  </div>
+</section>
+
+<!-- VERSE -->
+<div class="verse-section">
+  <p class="verse-text">"She is clothed with strength and dignity, and she laughs without fear of the future."</p>
+  <div class="verse-ref">Proverbs 31:25</div>
 </div>
 
-<!-- VALUES -->
-<section class="values section-pad">
+<!-- FOUNDER GALLERY -->
+<section class="gallery section">
   <div class="container">
-    <div class="section-eyebrow" style="text-align:center">What We Believe</div>
-    <h2 class="section-title" style="text-align:center" class="reveal">Our Foundation</h2>
-    <div class="values-grid">
-      <div class="value-card reveal">
-        <div class="value-num">01</div>
-        <div class="value-title">✝ Fé que Move Montanhas</div>
-        <p class="value-text">Everything we build is grounded in faith. We believe God guides every step of this journey, and that with Him, no dream is too big for a woman with purpose.</p>
+    <div style="text-align:center" class="reveal">
+      <div class="section-label">Dayane Lago</div>
+      <h2 class="section-title" style="text-align:center">Founder · <em>Lagos World</em></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <img src="images/dayane-1.png" alt="Dayane Lago — Lagos Jewelry">
+        <div class="gallery-overlay"></div>
+        <div class="gallery-caption"><p>Lagos Jewelry · Philadelphia</p></div>
       </div>
-      <div class="value-card reveal">
-        <div class="value-num">02</div>
-        <div class="value-title">✝ Mulher Que Inspira</div>
-        <p class="value-text">We exist to inspire, elevate and empower. Every product sold, every service rendered, every course taught — it's all fuel for the women we serve.</p>
+      <div class="gallery-item reveal">
+        <img src="images/dayane-2.png" alt="Dayane Lago — Founder">
+        <div class="gallery-overlay"></div>
+        <div class="gallery-caption"><p>De Mulher para Mulher</p></div>
       </div>
-      <div class="value-card reveal">
-        <div class="value-num">03</div>
-        <div class="value-title">✝ Comunidade & Propósito</div>
-        <p class="value-text">Lagos is more than a business — it's a community. Women supporting women, growing together, and building something lasting for generations to come.</p>
-      </div>
-      <div class="value-card reveal">
-        <div class="value-num">04</div>
-        <div class="value-title">✝ Excelência em Tudo</div>
-        <p class="value-text">We don't settle for ordinary. From the gold on our jewelry to the shine in our cleaned homes — excellence is not optional. It is our standard.</p>
+      <div class="gallery-item reveal">
+        <img src="images/dayane-3.png" alt="Dayane Lago — Lagos World">
+        <div class="gallery-overlay"></div>
+        <div class="gallery-caption"><p>Lagos World · Centro de Estilo</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact section-pad" id="contact">
+<!-- VALUES -->
+<section class="values section">
   <div class="container">
-    <div class="section-eyebrow">Get In Touch</div>
-    <h2 class="section-title reveal">Connect With Lagos World</h2>
-    <div class="contact-grid">
-      <div class="contact-item reveal">
-        <div class="contact-label">WhatsApp</div>
-        <div class="contact-value"><a href="https://wa.me/12156262345">+1 (215) 626-2345</a></div>
+    <div class="reveal">
+      <div class="section-label">What We Stand For</div>
+      <h2 class="section-title">Our <em>Foundation</em></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-item reveal">
+        <div class="value-num">01</div>
+        <div class="value-title">Faith & Purpose</div>
+        <p class="value-text">Everything we build is grounded in faith. We believe every step of this journey is guided, and that no dream is too big for a woman with purpose.</p>
       </div>
-      <div class="contact-item reveal">
-        <div class="contact-label">Email</div>
-        <div class="contact-value"><a href="mailto:dayane@lagosworld.com">dayane@lagosworld.com</a></div>
+      <div class="value-item reveal">
+        <div class="value-num">02</div>
+        <div class="value-title">Women Who Inspire</div>
+        <p class="value-text">We exist to inspire, elevate, and empower. Every product sold, every service rendered, every course taught — fuel for the women we serve.</p>
       </div>
-      <div class="contact-item reveal">
-        <div class="contact-label">Location</div>
-        <div class="contact-value">Philadelphia, PA</div>
+      <div class="value-item reveal">
+        <div class="value-num">03</div>
+        <div class="value-title">Community & Growth</div>
+        <p class="value-text">Lagos is more than a business — it's a community. Women supporting women, growing together, building something lasting for generations to come.</p>
+      </div>
+      <div class="value-item reveal">
+        <div class="value-num">04</div>
+        <div class="value-title">Excellence Always</div>
+        <p class="value-text">From the gold on our jewelry to the shine in our cleaned homes — excellence is not optional. It is our standard, our promise, our identity.</p>
       </div>
     </div>
   </div>
 </section>
+
+<!-- CONTACT STRIP -->
+<div class="contact-strip">
+  <div class="contact-strip-text">
+    <h3>Connect With Lagos World</h3>
+    <p>We'd love to hear from you. Reach out via WhatsApp or email — we respond fast and with care.</p>
+    <a href="https://wa.me/12156262345" class="btn-primary" style="margin-top:1.5rem;display:inline-block">WhatsApp Us</a>
+  </div>
+  <div class="contact-strip-divider"></div>
+  <div class="contact-strip-info">
+    <div class="ci-item">
+      <span class="ci-label">WhatsApp</span>
+      <span class="ci-value"><a href="https://wa.me/12156262345">+1 (215) 626-2345</a></span>
+    </div>
+    <div class="ci-item">
+      <span class="ci-label">Location</span>
+      <span class="ci-value">Philadelphia, PA</span>
+    </div>
+    <div class="ci-item">
+      <span class="ci-label">Zelle</span>
+      <span class="ci-value">+1 (215) 626-2345 · Dayane Lago</span>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
-  <span class="footer-cross">✝</span>
-  <div class="footer-brand">Lagos World</div>
-  <p class="footer-verse">"She is clothed with strength and dignity" — Proverbs 31:25</p>
-  <div class="footer-links">
-    <a href="/jewelry">Jewelry</a>
-    <a href="/cleaning">Cleaning</a>
-    <a href="/courses">Courses</a>
-    <a href="https://wa.me/12156262345">WhatsApp</a>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Lagos <span>World</span></div>
+        <p class="footer-tagline">A platform for women, by women.<br>Jewelry · Cleaning · Courses<br>Philadelphia, PA</p>
+        <a href="https://wa.me/12156262345" class="btn-primary" style="font-size:.6rem">Get in Touch</a>
+      </div>
+      <div class="footer-col">
+        <h4>Jewelry</h4>
+        <ul>
+          <li><a href="/jewelry">Shop All</a></li>
+          <li><a href="/jewelry">Necklaces</a></li>
+          <li><a href="/jewelry">Rings</a></li>
+          <li><a href="/jewelry">Bracelets</a></li>
+          <li><a href="/jewelry">Earrings</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/cleaning">Cleaning Services</a></li>
+          <li><a href="/cleaning">Join as Professional</a></li>
+          <li><a href="/courses">Courses</a></li>
+          <li><a href="/courses">Get Certified</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="https://wa.me/12156262345">Contact</a></li>
+          <li><a href="/jewelry">Order Tracking</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Lagos World · Philadelphia, PA · All rights reserved</span>
+      <span class="footer-verse">"She is clothed with strength and dignity" — Proverbs 31:25</span>
+    </div>
   </div>
-  <div class="footer-copy">© 2025 Lagos World · Philadelphia, PA · De Mulher para Mulher</div>
 </footer>
 
 <script>
-// PARTICLES
-(function(){
-  const c = document.getElementById('particles');
-  for(let i=0;i<20;i++){
-    const p = document.createElement('div');
-    p.className='particle';
-    p.style.cssText=`left:${Math.random()*100}%;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;opacity:${.2+Math.random()*.4}`;
-    c.appendChild(p);
-  }
-})();
+// NAV SCROLL
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);
+});
 
 // SCROLL REVEAL
 const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
-  });
-},{threshold:.15});
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.12});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
-
-// NAV SCROLL
-window.addEventListener('scroll',()=>{
-  const nav = document.querySelector('nav');
-  nav.style.padding = window.scrollY > 50 ? '.6rem 2rem' : '1rem 2rem';
-});
 </script>
 </body>
 </html>
