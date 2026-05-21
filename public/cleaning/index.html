@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagos Cleaning - Professional Cleaning & Job Opportunities</title>
+    <meta name="description"
+        content="Professional cleaning services for homes and businesses. Part-time & Full-time opportunities for cleaners.">
+    <link rel="stylesheet" href="styles.css">
+    <script>window.API_URL = 'https://seus-dados.vercel.app/api';</script>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1>Lagos Cleaning</h1>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="scrollToSection('services')">Services</button>
+                <button class="nav-btn" onclick="scrollToSection('jobs')">Jobs</button>
+                <button class="nav-btn" onclick="scrollToSection('about')">About</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Professional Cleaning Services You Can Trust</h1>
+            <p>Expert cleaners ready to serve. Flexible job opportunities available.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="showForm('customer')">Request Service</button>
+                <button class="btn btn-secondary" onclick="showForm('professional')">Join as Professional</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CUSTOMER SECTION -->
+    <section id="services" class="section">
+        <h2>Need Cleaning Services?</h2>
+        <p>We connect you with vetted, professional cleaners.</p>
+
+        <form id="customer-form" class="form-container" onsubmit="submitCustomerForm(event)">
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label>Service Type *</label>
+                <select name="service_type" required>
+                    <option value="">Select service type...</option>
+                    <option value="residential">Residential Cleaning</option>
+                    <option value="commercial">Commercial Cleaning</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Employment Type</label>
+                <select name="employment_type">
+                    <option value="">Select type...</option>
+                    <option value="part-time">Part-time</option>
+                    <option value="full-time">Full-time</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Address *</label>
+                <input type="text" name="address" placeholder="Street address" required>
+            </div>
+            <div class="form-group">
+                <label>Service Details</label>
+                <textarea name="description" placeholder="Tell us what you need cleaned..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Preferred Date</label>
+                <input type="date" name="preferred_date">
+            </div>
+            <div class="form-group">
+                <label>Estimated Hours</label>
+                <input type="number" name="estimated_hours" step="0.5" placeholder="e.g., 3.5">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+        </form>
+    </section>
+
+    <!-- PROFESSIONAL SECTION -->
+    <section id="jobs" class="section alternate">
+        <h2>Earn Money as a Cleaning Professional</h2>
+        <p>Join our network of trusted cleaners. Flexible hours, competitive rates.</p>
+
+        <form id="professional-form" class="form-container" onsubmit="submitProfessionalForm(event)">
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label>Specialties (select all that apply)</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="specialties" value="residential"> Residential Cleaning</label>
+                    <label><input type="checkbox" name="specialties" value="commercial"> Commercial Cleaning</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Hourly Rate ($)</label>
+                <input type="number" name="hourly_rate" step="0.01" placeholder="e.g., 25.00">
+            </div>
+            <button type="submit" class="btn btn-primary">Register Now</button>
+        </form>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section">
+        <h2>About Lagos Cleaning</h2>
+        <p>We connect homes and businesses with reliable, professional cleaning services.</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2026 Lagos Cleaning. All rights reserved.</p>
+        <p>Contact: binnovationmarketing@gmail.com</p>
+    </footer>
+
+    <script>
+        async function submitCustomerForm(e) {
+            e.preventDefault();
+            const form = new FormData(e.target);
+            const data = {
+                customer_name: form.get('name'),
+                customer_email: form.get('email'),
+                customer_phone: form.get('phone'),
+                service_type: form.get('service_type'),
+                employment_type: form.get('employment_type') || null,
+                address: form.get('address'),
+                description: form.get('description') || null,
+                preferred_date: form.get('preferred_date') || null,
+                estimated_hours: parseFloat(form.get('estimated_hours')) || null
+            };
+
+            try {
+                const res = await fetch(window.API_URL + '/cleaning/requests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    alert('✅ Request submitted! We will contact you soon.');
+                    e.target.reset();
+                } else {
+                    alert('❌ Error submitting request. Please try again.');
+                }
+            } catch (error) {
+                alert('❌ Connection error. We will try to store locally.');
+            }
+        }
+
+        async function submitProfessionalForm(e) {
+            e.preventDefault();
+            const form = new FormData(e.target);
+            const specialties = Array.from(form.getAll('specialties'));
+            const data = {
+                name: form.get('name'),
+                email: form.get('email'),
+                phone: form.get('phone'),
+                specialties: specialties,
+                hourly_rate: parseFloat(form.get('hourly_rate')) || null
+            };
+
+            try {
+                const res = await fetch(window.API_URL + '/cleaning/professionals', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    alert('✅ Registration received! We will review your profile and contact you soon.');
+                    e.target.reset();
+                } else {
+                    alert('❌ Error submitting registration. Please try again.');
+                }
+            } catch (error) {
+                alert('❌ Connection error. Please try again later.');
+            }
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showForm(type) {
+            if (type === 'customer') {
+                document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+            } else if (type === 'professional') {
+                document.getElementById('jobs').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+
+</body>
+
+</html>

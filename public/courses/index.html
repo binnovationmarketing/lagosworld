@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagos World - Women Courses & Certifications</title>
+    <meta name="description"
+        content="Professional beauty and wellness courses. Eyebrow, lashes, skin care, massage therapy with certification.">
+    <link rel="stylesheet" href="styles.css">
+    <script>window.API_URL = 'https://seus-dados.vercel.app/api';</script>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1>Lagos World</h1>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="scrollToSection('courses')">Courses</button>
+                <button class="nav-btn" onclick="scrollToSection('about')">About</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Professional Courses for Women</h1>
+            <p>Certified training in beauty & wellness. Start your career today.</p>
+            <button class="btn btn-primary" onclick="scrollToSection('courses')">View Courses</button>
+        </div>
+    </section>
+
+    <!-- COURSES SECTION -->
+    <section id="courses" class="section">
+        <h2>Available Courses</h2>
+        <p>Flexible learning: Online or In-Person</p>
+
+        <div class="courses-grid">
+            <!-- Course Cards -->
+            <div class="course-card">
+                <h3>Eyebrow Design & Shaping</h3>
+                <p><strong>Modality:</strong> Online & In-Person</p>
+                <p><strong>Duration:</strong> 40 hours</p>
+                <p>Master professional eyebrow techniques with certification.</p>
+                <button class="btn btn-primary" onclick="enrollCourse('eyebrow')">Enroll Now</button>
+            </div>
+
+            <div class="course-card">
+                <h3>Eyelash Extensions</h3>
+                <p><strong>Modality:</strong> Online & In-Person</p>
+                <p><strong>Duration:</strong> 35 hours</p>
+                <p>Learn advanced lash extension techniques.</p>
+                <button class="btn btn-primary" onclick="enrollCourse('lashes')">Enroll Now</button>
+            </div>
+
+            <div class="course-card">
+                <h3>Skin Care & Laser Therapy</h3>
+                <p><strong>Modality:</strong> Online & In-Person</p>
+                <p><strong>Duration:</strong> 50 hours</p>
+                <p>Professional skin care and laser treatment techniques.</p>
+                <button class="btn btn-primary" onclick="enrollCourse('skincare')">Enroll Now</button>
+            </div>
+
+            <div class="course-card">
+                <h3>Massage Therapy</h3>
+                <p><strong>Modality:</strong> Online & In-Person</p>
+                <p><strong>Duration:</strong> 60 hours</p>
+                <p>Therapeutic massage techniques and certifications.</p>
+                <button class="btn btn-primary" onclick="enrollCourse('massage')">Enroll Now</button>
+            </div>
+
+            <div class="course-card">
+                <h3>Sports Massage</h3>
+                <p><strong>Modality:</strong> Online & In-Person</p>
+                <p><strong>Duration:</strong> 45 hours</p>
+                <p>Specialized sports massage and injury prevention.</p>
+                <button class="btn btn-primary" onclick="enrollCourse('sports-massage')">Enroll Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENROLLMENT FORM -->
+    <section class="section alternate">
+        <div class="form-container">
+            <h2>Enroll in a Course</h2>
+            <form id="enrollment-form" onsubmit="submitEnrollment(event)">
+                <div class="form-group">
+                    <label>Course *</label>
+                    <select id="course-select" name="course" required>
+                        <option value="">Select a course...</option>
+                        <option value="eyebrow">Eyebrow Design & Shaping</option>
+                        <option value="lashes">Eyelash Extensions</option>
+                        <option value="skincare">Skin Care & Laser Therapy</option>
+                        <option value="massage">Massage Therapy</option>
+                        <option value="sports-massage">Sports Massage</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Learning Modality *</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="modality" value="online" required> Online</label>
+                        <label><input type="radio" name="modality" value="presencial" required> In-Person</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enroll Now</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section">
+        <h2>About Lagos World</h2>
+        <p>Lagos World empowers women through professional training and certification. All courses include materials and
+            1-year support.</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2026 Lagos World. All rights reserved.</p>
+        <p>Contact: binnovationmarketing@gmail.com</p>
+    </footer>
+
+    <script>
+        function enrollCourse(courseId) {
+            document.getElementById('course-select').value = courseId;
+            scrollToSection('enrollment');
+        }
+
+        async function submitEnrollment(e) {
+            e.preventDefault();
+            const form = new FormData(e.target);
+
+            // Map courseId to course name
+            const courseMap = {
+                'eyebrow': '61c1e4a0-0001-0000-0000-000000000001',
+                'lashes': '61c1e4a0-0001-0000-0000-000000000002',
+                'skincare': '61c1e4a0-0001-0000-0000-000000000003',
+                'massage': '61c1e4a0-0001-0000-0000-000000000004',
+                'sports-massage': '61c1e4a0-0001-0000-0000-000000000005'
+            };
+
+            const data = {
+                course_id: courseMap[form.get('course')],
+                student_name: form.get('name'),
+                student_email: form.get('email'),
+                student_phone: form.get('phone'),
+                modality: form.get('modality')
+            };
+
+            try {
+                const res = await fetch(window.API_URL + '/courses/enroll', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    alert('✅ Enrollment successful! Check your email for details.');
+                    e.target.reset();
+                } else {
+                    alert('❌ Error enrolling. Please try again.');
+                }
+            } catch (error) {
+                alert('❌ Connection error. Please try again later.');
+            }
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id) || document.querySelector('.form-container').parentElement;
+            element?.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+
+</html>
