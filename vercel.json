@@ -1,24 +1,17 @@
 {
-  "buildCommand": "npm install",
-  "framework": "express",
-  "public": "public",
+  "version": 2,
+  "buildCommand": "npm install --production",
+  "outputDirectory": "public",
   "functions": {
-    "api.js": {
+    "api/index.js": {
       "memory": 1024,
       "maxDuration": 30
     }
   },
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api"
-    }
-  ],
-  "env": {
-    "SUPABASE_URL": "@supabase_url",
-    "SUPABASE_KEY": "@supabase_key",
-    "EMAIL_USER": "@email_user",
-    "EMAIL_PASS": "@email_pass",
-    "ADMIN_EMAIL": "@admin_email"
-  }
+    { "source": "/api/:path*", "destination": "/api/index.js" },
+    { "source": "/jewelry", "destination": "/jewelry/index.html" },
+    { "source": "/cleaning", "destination": "/cleaning/index.html" },
+    { "source": "/courses", "destination": "/courses/index.html" }
+  ]
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lagos World — Jewelry · Cleaning · Courses</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Georgia',serif;background:#080808;color:#e4ddd0;min-height:100vh;
+  display:flex;align-items:center;justify-content:center}
+.wrap{text-align:center;padding:3rem 2rem;max-width:700px}
+.brand{font-size:clamp(2.5rem,8vw,5rem);font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+  background:linear-gradient(135deg,#f0d98a,#c9a84c,#8a6820);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.5rem}
+.tagline{font-style:italic;font-size:1.1rem;color:#c9a84c;opacity:.7;margin-bottom:3rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem}
+@media(max-width:480px){.cards{grid-template-columns:1fr}}
+.card{border:1px solid rgba(201,168,76,.25);padding:2rem 1rem;text-decoration:none;
+  color:inherit;transition:all .3s;background:rgba(201,168,76,.03)}
+.card:hover{border-color:rgba(201,168,76,.6);background:rgba(201,168,76,.08);transform:translateY(-4px)}
+.card-ico{font-size:2.5rem;margin-bottom:1rem}
+.card-name{font-size:.8rem;letter-spacing:.4em;text-transform:uppercase;color:#c9a84c;
+  font-family:'Georgia',serif;font-weight:700;margin-bottom:.5rem}
+.card-desc{font-size:.72rem;color:#8a8070;line-height:1.5}
+.footer-note{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#444}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">Lagos World</div>
+  <div class="tagline">Elegância · Cuidado · Conhecimento</div>
+  <div class="cards">
+    <a class="card" href="/jewelry">
+      <div class="card-ico">💎</div>
+      <div class="card-name">Jewelry</div>
+      <div class="card-desc">Semijoias banhadas a ouro 18k. Design exclusivo, garantia de 1 ano.</div>
+    </a>
+    <a class="card" href="/cleaning">
+      <div class="card-ico">✨</div>
+      <div class="card-name">Cleaning</div>
+      <div class="card-desc">Serviços profissionais de limpeza residencial e comercial.</div>
+    </a>
+    <a class="card" href="/courses">
+      <div class="card-ico">📚</div>
+      <div class="card-name">Courses</div>
+      <div class="card-desc">Cursos e treinamentos especializados para crescimento profissional.</div>
+    </a>
+  </div>
+  <div class="footer-note">© 2025 Lagos World · Philadelphia, PA</div>
+</div>
+</body>
+</html>

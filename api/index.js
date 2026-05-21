@@ -42,6 +42,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message || 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Lagos Platform API running on port ${PORT}`);
-});
+// Local dev: node api/index.js
+// Vercel: exports app as serverless function handler
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Lagos Platform API running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
