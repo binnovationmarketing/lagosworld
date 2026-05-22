@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lagos Courses — Women's Professional Training · Coming Soon</title>
-<meta name="description" content="Certified courses in beauty, wellness, and business for women. Lagos World — De Mulher para Mulher. Philadelphia, PA. Launching soon.">
+<title>Lagos Training — Women's Professional Certification · Coming Soon</title>
+<meta name="description" content="Certified training in beauty, wellness, and business for women. Lagos World — De Mulher para Mulher. Philadelphia, PA. Launching soon.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -87,7 +87,9 @@ nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.07)}
 .countdown-sep{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);opacity:.5;align-self:center;line-height:1;margin-top:-.5rem}
 
 /* ─── SECTION COMMONS ─── */
-.section{padding:7rem 3rem}
+.section{padding:5rem 2.5rem}
+@media(max-width:768px){.section{padding:4rem 1.5rem}}
+@media(max-width:480px){.section{padding:3rem 1.2rem}}
 .container{max-width:1200px;margin:0 auto}
 .section-label{font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.8rem}
 .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:600;color:var(--text);line-height:1.15;margin-bottom:1rem}
@@ -114,7 +116,7 @@ nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.07)}
 .courses-intro{text-align:center;margin-bottom:5rem}
 .courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
 @media(max-width:1024px){.courses-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.courses-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.courses-grid{grid-template-columns:1fr;gap:1.2rem}}
 
 .course-card{position:relative;background:var(--bg);border:1px solid var(--border-soft);overflow:hidden;cursor:pointer;transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s ease}
 .course-card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.1)}
@@ -205,7 +207,8 @@ nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.07)}
 /* ─── UPCOMING ─── */
 .upcoming{background:var(--bg-warm);padding:7rem 3rem}
 .upcoming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
-@media(max-width:900px){.upcoming-grid{grid-template-columns:1fr}}
+@media(max-width:960px){.upcoming-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.upcoming-grid{grid-template-columns:1fr;gap:1rem}}
 .upcoming-card{background:var(--bg);border:1px solid var(--border-soft);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .35s}
 .upcoming-card::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
 .upcoming-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.08);border-color:var(--border)}
@@ -270,13 +273,24 @@ footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
 /* ─── MOBILE ─── */
 @media(max-width:768px){
   nav{padding:0 1.2rem}
-  .section{padding:4.5rem 1.5rem}
-  .stats-bar{padding:3rem 1.5rem}
-  .waitlist{padding:5rem 1.5rem}
-  .upcoming{padding:4.5rem 1.5rem}
-  .instructor{padding:4.5rem 1.5rem}
+  .stats-bar{padding:2.5rem 1.5rem}
+  .waitlist{padding:4rem 1.5rem}
+  .upcoming{padding:4rem 1.5rem}
+  .instructor{padding:4rem 1.5rem}
   .hero{min-height:auto;padding-bottom:3rem}
-  .hero-countdown{gap:1.5rem}
+  .hero-countdown{gap:1.2rem}
+  .instructor-inner{grid-template-columns:1fr}
+  .instructor-text{padding:2.5rem 1.5rem}
+  .features-grid{grid-template-columns:1fr;gap:2.5rem}
+}
+@media(max-width:480px){
+  nav{padding:0 1rem}
+  .hero-content{padding:3rem 1.2rem 2rem}
+  .hero-countdown{gap:.8rem}
+  .countdown-num{font-size:2rem}
+  .waitlist-form{flex-direction:column;gap:.8rem}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .modal{padding:2rem 1.5rem}
 }
 </style>
 </head>
@@ -298,7 +312,7 @@ footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
   <div class="hero-content">
     <div class="hero-eyebrow">Philadelphia, PA · Lagos World</div>
     <h1 class="hero-title">
-      Lagos Courses
+      Lagos Training
       <em>Launching Soon</em>
     </h1>
     <p class="hero-sub">Professional certification in beauty, wellness, and business. A platform built <em style="color:var(--gold-light);font-style:italic">de mulher para mulher</em> — for women who are ready to rise.</p>
@@ -534,7 +548,7 @@ footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
     <div style="text-align:center;margin-bottom:0">
       <div class="section-label reveal">What's Coming</div>
       <h2 class="section-title reveal" style="text-align:center">Big Things <em>Ahead</em></h2>
-      <p class="section-sub reveal" style="text-align:center;max-width:500px;margin:0 auto">Lagos Courses is being built with love and intention. Here's a glimpse of what's launching with the platform.</p>
+      <p class="section-sub reveal" style="text-align:center;max-width:500px;margin:0 auto">Lagos Training is being built with love and intention. Here's a glimpse of what's launching with the platform.</p>
     </div>
     <div class="upcoming-grid">
       <div class="upcoming-card reveal delay-1">
@@ -555,7 +569,7 @@ footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
         <div class="uc-num">03</div>
         <div class="uc-icon">👑</div>
         <div class="uc-title">Community Hub</div>
-        <p class="uc-desc">An exclusive space for Lagos Courses alumni — networking, job opportunities, peer mentorship, and lifetime access to the community.</p>
+        <p class="uc-desc">An exclusive space for Lagos Training alumni — networking, job opportunities, peer mentorship, and lifetime access to the community.</p>
         <span class="uc-tag">Coming Soon</span>
       </div>
       <div class="upcoming-card reveal delay-1">
@@ -596,7 +610,7 @@ footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
         "I want every student to leave not just certified — but confident, prepared, and ready to build something beautiful."
       </blockquote>
       <p class="instructor-body">
-        Born in <strong>Jaru, Rondônia</strong>, Dayane built her career from the ground up after arriving in the United States over 20 years ago. With two decades of hands-on experience in residential and commercial services — and a passion for empowering women — she created Lagos Courses as a natural extension of her mission.
+        Born in <strong>Jaru, Rondônia</strong>, Dayane built her career from the ground up after arriving in the United States over 20 years ago. With two decades of hands-on experience in residential and commercial services — and a passion for empowering women — she created Lagos Training as a natural extension of her mission.
       </p>
       <p class="instructor-body">
         Her teaching philosophy: <strong>practical over theoretical.</strong> Real skills, real scenarios, real transformation. Every course is designed to produce professionals the industry actually wants to hire.
@@ -632,7 +646,7 @@ footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <div class="footer-brand">Lagos <span>Courses</span></div>
+        <div class="footer-brand">Lagos <span>Training</span></div>
         <div class="footer-tagline">Part of Lagos World · Philadelphia, PA · De Mulher para Mulher</div>
       </div>
       <div class="footer-links">
@@ -643,7 +657,7 @@ footer{background:var(--black);color:#e8e4dc;padding:3.5rem 3rem 2rem}
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2025 Lagos Courses · Lagos World · All rights reserved</span>
+      <span class="footer-copy">© 2025 Lagos Training · Lagos World · All rights reserved</span>
       <span class="footer-verse">"She opens her mouth with wisdom" — Proverbs 31:26</span>
     </div>
   </div>
