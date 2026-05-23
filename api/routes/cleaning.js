@@ -54,6 +54,21 @@ router.post('/requests', async (req, res) => {
   }
 });
 
+// GET: Listar solicitações (admin dashboard)
+router.get('/requests', async (req, res) => {
+  try {
+    const { data, error } = await req.supabase
+      .from('cleaning_requests')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(100);
+    if (error) throw error;
+    res.json(data || []);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // POST: Cadastro de Profissional de Limpeza
 router.post('/professionals', async (req, res) => {
   try {

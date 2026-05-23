@@ -11654,22 +11654,25 @@ function setModalImg(i){
 }
 function updateModalCounter(){
   if(!modalProd)return;
-  document.getElementById('m-counter').textContent=(modalImgIdx+1)+' / '+modalProd.imgs.length;
+  const _imgs=modalProd._activeImgs||modalProd.imgs;document.getElementById('m-counter').textContent=(modalImgIdx+1)+' / '+_imgs.length;
 }
-function modalPrev(){if(modalProd)setModalImg((modalImgIdx-1+modalProd.imgs.length)%modalProd.imgs.length)}
-function modalNext(){if(modalProd)setModalImg((modalImgIdx+1)%modalProd.imgs.length)}
+function modalPrev(){if(modalProd){const imgs=modalProd._activeImgs||modalProd.imgs;setModalImg((modalImgIdx-1+imgs.length)%imgs.length)}}
+function modalNext(){if(modalProd){const imgs=modalProd._activeImgs||modalProd.imgs;setModalImg((modalImgIdx+1)%imgs.length)}}
 function closeModal(){document.getElementById('modal-bg').classList.remove('open');document.body.style.overflow=''}
 function addFromModal(){
   if(!modalProd||!selVar)return;
   const v=getVars(modalProd).find(x=>x.id===selVar.id)||selVar;
-  addToCart(modalProd,v);closeModal();
+  const p=modalProd;
+  closeModal();
+  requestAnimationFrame(()=>addToCart(p,v));
 }
 
 // ── CART ──
 function addToCart(prod,v){
   const key=prod.id+'_'+v.id;
   const ex=cart.find(i=>i.key===key);
-  if(ex)ex.qty++;else cart.push({key,prod,v,qty:1,img:prod.imgs[0]});
+  const cartImg=(imgsOv[prod.id]&&imgsOv[prod.id].length?imgsOv[prod.id]:prod.imgs)[0]||'';
+  if(ex)ex.qty++;else cart.push({key,prod,v,qty:1,img:cartImg});
   updateCart();showToast('✝ '+prod.name+' added!');
 }
 function rmFromCart(key){cart=cart.filter(i=>i.key!==key);updateCart()}
@@ -11685,8 +11688,7 @@ function updateCart(){
   document.getElementById('ship-bar').style.width=pct+'%';
   const msgEl=document.getElementById('ship-msg');
   if(total>=200){msgEl.innerHTML='🎉 Congrats! FREE SHIPPING on your order!';msgEl.classList.add('free')}
-  else{const need=200-total;msgEl.innerHTML=`Add <strong>$${need.toFixed(2)}</strong> more for FREE shipping!`;msgEl.classList.remove('free')}
-  document.getElementById('ship-left').textContent=(200-total).toFixed(2);
+  else{const need=200-total;msgEl.innerHTML=`Add <strong>$${need.toFixed(2)}</strong> more for FREE shipping!`;msgEl.classList.remove('free');const slEl=document.getElementById('ship-left');if(slEl)slEl.textContent=need.toFixed(2);}
   const cb=document.getElementById('cart-body');
   if(!cart.length){cb.innerHTML='<div class="cart-empty"><div class="cart-empty-ico">🛒</div><p>Your cart is empty</p></div>';return}
   cb.innerHTML=cart.map(i=>`

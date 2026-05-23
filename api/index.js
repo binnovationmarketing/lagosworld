@@ -106,11 +106,11 @@ app.post('/api/send-order', async (req, res) => {
       if (matches) attachments.push({ filename: 'zelle_proof.jpg', content: matches[2], encoding: 'base64' });
     }
 
-    // Send to admin
+    // Send to all admins
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_EMAIL || 'binnovationmarketing@gmail.com',
-      subject: `🛍 New Order — ${name} — $${Number(total).toFixed(2)}`,
+      to: ['binnovationmarketing@gmail.com', 'dayanelago22@gmail.com'],
+      subject: `COMPRA REALIZADA LAGOS WORLD - ${name}`,
       html, attachments
     });
 
@@ -119,7 +119,7 @@ app.post('/api/send-order', async (req, res) => {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
-        subject: '✝ Your Lagos Jewelry Order is Confirmed!',
+        subject: `✝ Pedido Confirmado — Lagos Jewelry — ${name}`,
         html
       });
     }
