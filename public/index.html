@@ -111,7 +111,7 @@ nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.06)}
 /* PLATFORMS */
 .platforms{background:var(--bg)}
 .platforms-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;margin-top:3.5rem}
-@media(max-width:640px){.platforms-grid{grid-template-columns:1fr;gap:1rem}}
+@media(max-width:768px){.platforms-grid{grid-template-columns:1fr;gap:1.5rem}}
 .platform-card{position:relative;overflow:hidden;background:var(--black);text-decoration:none;color:inherit;display:block;transition:transform .4s,box-shadow .4s}
 .platform-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.18)}
 .pc-image{position:relative;overflow:hidden;aspect-ratio:3/4}
@@ -255,11 +255,9 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 <nav id="navbar">
   <a href="/" class="nav-logo">Lagos <span>World</span></a>
   <ul class="nav-links">
-    <li><a href="/jewelry">Jewelry</a></li>
-    <li><a href="/cleaning">Cleaning</a></li>
-    <li><a href="/courses">Training</a></li>
-    <li><a href="#estudio">Estudio</a></li>
-    <li><a href="#story">Our Story</a></li>
+    <li><a href="/jewelry">Alta Joalheria</a></li>
+    <li><a href="/cleaning">Gestão de Ambientes</a></li>
+    <li><a href="#story">Nossa História</a></li>
   </ul>
   <div class="nav-right">
     <a href="https://wa.me/12156262345" class="nav-cta">Contact</a>
@@ -271,12 +269,10 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 </nav>
 <!-- MOBILE MENU -->
 <div class="nav-mobile" id="nav-mobile">
-  <a href="/jewelry" onclick="toggleMenu()">💎 Jewelry</a>
-  <a href="/cleaning" onclick="toggleMenu()">✨ Cleaning</a>
-  <a href="/courses" onclick="toggleMenu()">📚 Training</a>
-  <a href="#estudio" onclick="toggleMenu()">📸 Estudio</a>
-  <a href="#story" onclick="toggleMenu()">Dayane's Story</a>
-  <a href="https://wa.me/12156262345">WhatsApp Us</a>
+  <a href="/jewelry" onclick="toggleMenu()">💎 Alta Joalheria</a>
+  <a href="/cleaning" onclick="toggleMenu()">✨ Gestão de Ambientes</a>
+  <a href="#story" onclick="toggleMenu()">Nossa História</a>
+  <a href="https://wa.me/12156262345">WhatsApp</a>
 </div>
 
 <!-- HERO -->
@@ -307,15 +303,15 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
   </div>
   <div class="trust-item">
     <span class="trust-icon">✦</span>
+    <span class="trust-text">Joias 18k · Peças Sofisticadas</span>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">✦</span>
     <span class="trust-text">Gestão Premium de Ambientes</span>
   </div>
   <div class="trust-item">
     <span class="trust-icon">✦</span>
-    <span class="trust-text">Desenvolvimento &amp; Liderança</span>
-  </div>
-  <div class="trust-item">
-    <span class="trust-icon">✦</span>
-    <span class="trust-text">Hub de Talentos &amp; Identidade Visual</span>
+    <span class="trust-text">Limpeza Residencial &amp; Comercial · PA &amp; NJ</span>
   </div>
 </div>
 
@@ -324,8 +320,8 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
   <div class="container">
     <div style="text-align:center;margin-bottom:0" class="reveal">
       <div class="section-label">Ecossistema Lagos World</div>
-      <h2 class="section-title" style="text-align:center">Os Quatro <em>Pilares</em></h2>
-      <p style="font-size:.8rem;color:var(--text-muted);max-width:520px;margin:.8rem auto 0;line-height:1.8">Soluções integradas de alto padrão para simplificar, valorizar e impulsionar a rotina da mulher contemporânea.</p>
+      <h2 class="section-title" style="text-align:center">Nossas <em>Plataformas</em></h2>
+      <p style="font-size:.8rem;color:var(--text-muted);max-width:520px;margin:.8rem auto 0;line-height:1.8">Dois pilares de excelência integrados para simplificar, valorizar e impulsionar a rotina da mulher contemporânea.</p>
     </div>
     <div class="platforms-grid">
 
@@ -355,86 +351,6 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         </div>
       </a>
 
-      <a href="/courses" class="platform-card reveal">
-        <div class="pc-image">
-          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=900&q=90&auto=format&fit=crop" alt="Desenvolvimento e Liderança — Lagos Training" loading="lazy">
-          <div class="pc-image-overlay"></div>
-          <div class="pc-tag">Desenvolvimento</div>
-        </div>
-        <div class="pc-info">
-          <div class="pc-name">Lagos Training</div>
-          <p class="pc-sub">Capacitação de alto nível e mentoria para mulheres que buscam o topo do mercado. Certificação reconhecida.</p>
-          <span class="pc-link">Ver Programas</span>
-        </div>
-      </a>
-
-      <a href="#estudio" class="platform-card reveal">
-        <div class="pc-image">
-          <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?w=900&q=90&auto=format&fit=crop" alt="Lagos Estudio — Identidade Visual e Experiências" loading="lazy">
-          <div class="pc-image-overlay"></div>
-          <div class="pc-tag" style="background:var(--gold)">Em Breve</div>
-        </div>
-        <div class="pc-info">
-          <div class="pc-name">Lagos Estudio</div>
-          <p class="pc-sub">Hub de talentos VIP: fotografia, hair, makeup, styling e joias exclusivas para o seu momento único.</p>
-          <span class="pc-link">Conhecer</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- LAGOS ESTUDIO -->
-<section class="estudio" id="estudio">
-  <div class="estudio-bg"></div>
-  <div class="estudio-inner">
-    <div class="estudio-left">
-      <div class="section-label reveal">Hub Criativo · Lagos World</div>
-      <h2 class="estudio-title reveal">Lagos<em>Estudio</em></h2>
-      <div class="estudio-badge reveal">
-        <span class="estudio-badge-dot"></span>
-        Em Breve · Parceiros VIP em Curadoria
-      </div>
-      <p class="estudio-tagline reveal">Uma rede restrita e seleta de profissionais de elite — reunida para transformar o seu momento especial em obra de arte. Suas fotos, seus vídeos, seus eventos: nunca mais serão os mesmos.</p>
-      <blockquote class="estudio-quote reveal">"Cada mulher merece um momento que pareça criado especialmente para ela."</blockquote>
-      <div class="estudio-cta reveal">
-        <a href="https://wa.me/12156262345" class="btn-gold-outline">Quero Ser Avisada</a>
-      </div>
-    </div>
-    <div class="estudio-right">
-      <div class="estudio-services">
-        <div class="estudio-service reveal delay-1">
-          <div class="es-icon">💇‍♀️</div>
-          <div class="es-title">Master Hair</div>
-          <p class="es-desc">Especialistas certificados em liso e afro. Sua coroa, perfeitamente tratada.</p>
-        </div>
-        <div class="estudio-service reveal delay-2">
-          <div class="es-icon">💄</div>
-          <div class="es-title">Artistas de Maquiagem</div>
-          <p class="es-desc">Do natural ao editorial — profissionais selecionados para cada ocasião exclusiva.</p>
-        </div>
-        <div class="estudio-service reveal delay-3">
-          <div class="es-icon">👗</div>
-          <div class="es-title">Personal Styling</div>
-          <p class="es-desc">Curadoria de identidade visual. Look &amp; feel que comunica quem você é.</p>
-        </div>
-        <div class="estudio-service reveal delay-1">
-          <div class="es-icon">📸</div>
-          <div class="es-title">Fotografia &amp; Cinema</div>
-          <p class="es-desc">Fotógrafos e cineastas de alto nível — estúdio privativo ou cenários externos exclusivos.</p>
-        </div>
-        <div class="estudio-service reveal delay-2">
-          <div class="es-icon">💍</div>
-          <div class="es-title">Joias em Locação</div>
-          <p class="es-desc">Coleção exclusiva Lagos Jewelry disponível para ensaios e produções fotográficas.</p>
-        </div>
-        <div class="estudio-service reveal delay-3">
-          <div class="es-icon">✦</div>
-          <div class="es-title">Experiências Imersivas</div>
-          <p class="es-desc">Sessões completas com produção integral — do conceito à entrega final da sua história visual.</p>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -507,9 +423,9 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
     <div class="reveal" style="max-width:800px;margin-bottom:1.5rem">
       <div class="section-label">Manifesto</div>
       <h2 class="section-title">Mais do que uma plataforma.<br><em>Um ecossistema.</em></h2>
-      <p style="font-size:.9rem;line-height:1.95;color:var(--text-muted);margin-top:1rem">A Lagos World integra soluções de alto padrão para simplificar, valorizar e impulsionar a sua rotina. Da curadoria de alta joalheria à gestão impecável dos seus espaços, passando pelo desenvolvimento profissional e uma rede de talentos de elite — tudo o que você precisa para alcançar a sua melhor versão, em um só lugar.</p>
+      <p style="font-size:.9rem;line-height:1.95;color:var(--text-muted);margin-top:1rem">A Lagos World é mais do que uma plataforma — é um ecossistema construído por mulheres, para mulheres. Da curadoria de alta joalheria à gestão impecável dos seus espaços, tudo o que você precisa para alcançar a sua melhor versão, em um só lugar.</p>
     </div>
-    <div class="values-grid">
+    <div class="values-grid" style="grid-template-columns:repeat(2,1fr)">
       <div class="value-item reveal">
         <div class="value-num">01</div>
         <div class="value-title">Alta Joalheria</div>
@@ -519,16 +435,6 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         <div class="value-num">02</div>
         <div class="value-title">Gestão de Ambientes</div>
         <p class="value-text">Soluções premium de conservação e cuidado para espaços residenciais e corporativos. Ambientes impecáveis que refletem o padrão de quem os habita.</p>
-      </div>
-      <div class="value-item reveal delay-2">
-        <div class="value-num">03</div>
-        <div class="value-title">Desenvolvimento &amp; Liderança</div>
-        <p class="value-text">Capacitação de alto nível e mentoria para mulheres que buscam o topo do mercado. Conhecimento que transforma trajetórias e abre portas reais.</p>
-      </div>
-      <div class="value-item reveal delay-3">
-        <div class="value-num">04</div>
-        <div class="value-title">Hub de Talentos VIP</div>
-        <p class="value-text">Uma rede restrita e seleta, conectando você aos profissionais mais qualificados do mercado — para o seu evento, imagem ou momento especial.</p>
       </div>
     </div>
   </div>
@@ -581,9 +487,9 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         <h4>Soluções</h4>
         <ul>
           <li><a href="/cleaning">Gestão de Ambientes</a></li>
-          <li><a href="/cleaning">Seja um Profissional</a></li>
-          <li><a href="/courses">Desenvolvimento &amp; Liderança</a></li>
-          <li><a href="#estudio">Hub de Talentos VIP</a></li>
+          <li><a href="/cleaning">Limpeza Residencial</a></li>
+          <li><a href="/cleaning">Limpeza Comercial</a></li>
+          <li><a href="/cleaning">Agendar Serviço</a></li>
         </ul>
       </div>
       <div class="footer-col">
