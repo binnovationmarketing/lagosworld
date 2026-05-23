@@ -130,6 +130,55 @@ textarea.field-inp{resize:vertical;min-height:90px;line-height:1.6}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);font-weight:700}
 .stat-label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-top:.2rem}
 
+
+/* ── DASHBOARD ── */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);margin-bottom:1px}
+.kpi{background:var(--dark2);padding:1.1rem 1.3rem;position:relative;overflow:hidden}
+.kpi-label{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
+.kpi-val.green{color:var(--green)}
+.kpi-val.blue{color:#4a9eff}
+.kpi-sub{font-size:.6rem;color:var(--text-muted);margin-top:.3rem}
+.kpi-trend{font-size:.62rem;font-weight:600;margin-top:.3rem}
+.kpi-trend.up{color:var(--green)}
+.kpi-trend.down{color:var(--red)}
+.kpi-accent{position:absolute;bottom:-10px;right:-10px;font-size:3rem;opacity:.06}
+.dash-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:1px}
+@media(max-width:700px){.dash-row{grid-template-columns:1fr}}
+.dash-panel{background:var(--dark2);padding:1.3rem 1.5rem}
+.dash-panel-title{font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.dash-refresh{font-size:.55rem;color:var(--text-muted);letter-spacing:.05em;text-transform:none}
+canvas#rev-chart{width:100%!important;height:130px!important;display:block}
+.area-bars{display:flex;flex-direction:column;gap:.5rem;margin-top:.3rem}
+.area-bar-row{display:flex;align-items:center;gap:.6rem;font-size:.7rem}
+.area-bar-label{width:130px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.area-bar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.area-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .8s ease}
+.area-bar-val{font-size:.65rem;color:var(--gold);font-weight:700;width:50px;text-align:right;flex-shrink:0}
+.client-list{display:flex;flex-direction:column;gap:1px;background:var(--border);margin-top:1px}
+.client-row{background:var(--dark2);display:grid;grid-template-columns:1fr auto;gap:1rem;padding:.9rem 1.2rem;align-items:start;transition:background .2s;cursor:default}
+.client-row:hover{background:var(--dark3)}
+.client-name{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.client-meta{font-size:.65rem;color:var(--text-muted);line-height:1.5}
+.client-strat{margin-top:.6rem}
+.strat-label{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;font-weight:700;margin-bottom:.35rem}
+.strat-actions{display:flex;flex-direction:column;gap:.2rem}
+.strat-action{font-size:.65rem;color:rgba(255,255,255,.6);padding-left:.8rem;position:relative;line-height:1.4}
+.strat-action::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:.6rem}
+.tier-badge{padding:.25rem .7rem;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;white-space:nowrap;border-radius:2px}
+.tier-elite{background:rgba(184,146,46,.18);color:var(--gold);border:1px solid rgba(184,146,46,.35)}
+.tier-premium{background:rgba(76,175,121,.15);color:var(--green);border:1px solid rgba(76,175,121,.3)}
+.tier-standard{background:rgba(74,158,255,.12);color:#4a9eff;border:1px solid rgba(74,158,255,.25)}
+.tier-new{background:rgba(255,255,255,.06);color:var(--text-muted);border:1px solid rgba(255,255,255,.12)}
+.strat-tag{font-size:.55rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.4rem}
+.week-pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.week-pill{padding:.3rem .8rem;font-size:.6rem;letter-spacing:.1em;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all .2s}
+.week-pill.active{background:var(--gold);color:var(--black);border-color:var(--gold);font-weight:700}
+.dash-divider{height:1px;background:var(--border);margin:0}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.dash-header h2{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text)}
+.dash-header h2 em{color:var(--gold);font-style:italic}
+.last-update{font-size:.58rem;color:var(--text-muted);letter-spacing:.1em}
 /* EMPTY STATE */
 .empty{text-align:center;padding:4rem 2rem;color:var(--text-muted);font-size:.8rem}
 .empty-icon{font-size:2.5rem;margin-bottom:1rem;opacity:.5}
@@ -176,15 +225,72 @@ textarea.field-inp{resize:vertical;min-height:90px;line-height:1.6}
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('products',this)">Products <span id="tab-count"></span></button>
+    <button class="tab active" id="tab-btn-dashboard" onclick="switchTab('dashboard',this)">📊 Dashboard</button>
+    <button class="tab" onclick="switchTab('products',this)">Products <span id="tab-count"></span></button>
     <button class="tab" onclick="switchTab('orders',this)">Orders</button>
     <button class="tab" onclick="switchTab('cleaning',this)">Cleaning Leads</button>
   </div>
 
   <div class="content">
 
+    <!-- DASHBOARD TAB -->
+    <div id="tab-dashboard">
+      <div class="dash-header">
+        <h2>Business <em>Overview</em></h2>
+        <div class="last-update" id="dash-last-update">Updating...</div>
+      </div>
+
+      <!-- KPI STRIP -->
+      <div class="dash-grid" id="kpi-strip">
+        <div class="kpi"><div class="kpi-label">Total Revenue</div><div class="kpi-val" id="kpi-total-rev">—</div><div class="kpi-sub" id="kpi-total-rev-sub"></div><div class="kpi-accent">$</div></div>
+        <div class="kpi"><div class="kpi-label">This Month</div><div class="kpi-val green" id="kpi-month-rev">—</div><div class="kpi-sub" id="kpi-month-sub"></div><div class="kpi-accent">📅</div></div>
+        <div class="kpi"><div class="kpi-label">This Week</div><div class="kpi-val blue" id="kpi-week-rev">—</div><div class="kpi-sub" id="kpi-week-sub"></div><div class="kpi-accent">📆</div></div>
+        <div class="kpi"><div class="kpi-label">Total Bookings</div><div class="kpi-val" id="kpi-bookings">—</div><div class="kpi-sub" id="kpi-bookings-sub"></div><div class="kpi-accent">📋</div></div>
+        <div class="kpi"><div class="kpi-label">Avg. Ticket</div><div class="kpi-val" id="kpi-avg">—</div><div class="kpi-sub">per transaction</div><div class="kpi-accent">✦</div></div>
+        <div class="kpi"><div class="kpi-label">New This Week</div><div class="kpi-val blue" id="kpi-new-week">—</div><div class="kpi-sub">new clients</div><div class="kpi-accent">🆕</div></div>
+      </div>
+
+      <div class="dash-divider"></div>
+
+      <!-- CHARTS ROW -->
+      <div class="dash-row">
+        <div class="dash-panel">
+          <div class="dash-panel-title">
+            Weekly Revenue (last 8 weeks)
+            <span class="dash-refresh" id="dash-refresh-ts"></span>
+          </div>
+          <canvas id="rev-chart"></canvas>
+        </div>
+        <div class="dash-panel">
+          <div class="dash-panel-title">Top Service Areas</div>
+          <div class="area-bars" id="area-bars">
+            <div class="empty" style="padding:1rem">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-divider"></div>
+
+      <!-- CLIENT STRATEGY LIST -->
+      <div style="padding:1.2rem 0 .5rem">
+        <div class="dash-panel-title" style="padding:0 0 .8rem">
+          Client Strategies — Personalized by Spend Tier
+        </div>
+        <div class="week-pills" id="strat-filters">
+          <button class="week-pill active" onclick="filterStrat('all',this)">All Clients</button>
+          <button class="week-pill" onclick="filterStrat('ELITE',this)">★ Elite</button>
+          <button class="week-pill" onclick="filterStrat('PREMIUM',this)">Premium</button>
+          <button class="week-pill" onclick="filterStrat('STANDARD',this)">Standard</button>
+          <button class="week-pill" onclick="filterStrat('NEW',this)">New</button>
+        </div>
+      </div>
+      <div class="client-list" id="client-list">
+        <div class="empty"><div class="empty-icon">⏳</div>Loading client data...</div>
+      </div>
+    </div>
+
     <!-- PRODUCTS TAB -->
-    <div id="tab-products">
+    <div id="tab-products" style="display:none">
       <div class="stats-bar">
         <div class="stat-card">
           <div class="stat-num" id="stat-total">—</div>
@@ -326,6 +432,7 @@ function initApp() {
 
   updateStats();
   filterProducts();
+  loadDashboard();
 }
 
 function updateStats() {
@@ -632,6 +739,7 @@ function switchTab(name, el) {
   el.classList.add('active');
   document.querySelectorAll('[id^="tab-"]').forEach(t => t.style.display = 'none');
   document.getElementById('tab-' + name).style.display = 'block';
+  if (name === 'dashboard') loadDashboard();
   if (name === 'orders') loadOrders();
   if (name === 'cleaning') loadCleaning();
 }
@@ -696,6 +804,409 @@ async function loadCleaning() {
   } catch(err) {
     el.innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>Could not load requests: ${err.message}</div>`;
   }
+}
+
+
+// ════════════════════════════════════════════
+// DASHBOARD ENGINE
+// ════════════════════════════════════════════
+
+// Pricing reference from market research
+const PRICING = {
+  cleaning: {
+    standard:   { min: 160, max: 420,  tier: 'STANDARD' },
+    deep:       { min: 300, max: 850,  tier: 'PREMIUM' },
+    move:       { min: 250, max: 600,  tier: 'PREMIUM' },
+    power:      { min: 199, max: 900,  tier: 'STANDARD' },
+    complete:   { min: 699, max: 1800, tier: 'ELITE' },
+  }
+};
+
+const AREAS_META = {
+  'Lower Merion':   { income: 176512, county: 'Montgomery Co', state: 'PA' },
+  'Easttown':       { income: 214861, county: 'Chester Co',    state: 'PA' },
+  'Berwyn':         { income: 214861, county: 'Chester Co',    state: 'PA' },
+  'Devon':          { income: 214861, county: 'Chester Co',    state: 'PA' },
+  'Radnor':         { income: 164359, county: 'Delaware Co',   state: 'PA' },
+  'Wayne':          { income: 164359, county: 'Delaware Co',   state: 'PA' },
+  'Haddonfield':    { income: 200400, county: 'Camden Co',     state: 'NJ' },
+  'Moorestown':     { income: 159700, county: 'Burlington Co', state: 'NJ' },
+  'Medford':        { income: 157969, county: 'Burlington Co', state: 'NJ' },
+  'Cherry Hill':    { income: 121502, county: 'Camden Co',     state: 'NJ' },
+  'Mount Laurel':   { income: 118802, county: 'Burlington Co', state: 'NJ' },
+  'Voorhees':       { income: 105473, county: 'Camden Co',     state: 'NJ' },
+  'Chestnut Hill':  { income: 135000, county: 'Philadelphia',  state: 'PA' },
+  'Bryn Mawr':      { income: 176512, county: 'Montgomery Co', state: 'PA' },
+  'Villanova':      { income: 176512, county: 'Montgomery Co', state: 'PA' },
+  'Gladwyne':       { income: 176512, county: 'Montgomery Co', state: 'PA' },
+};
+
+// ── TIER SYSTEM ──
+function getClientTier(totalSpend) {
+  if (totalSpend >= 700) return 'ELITE';
+  if (totalSpend >= 350) return 'PREMIUM';
+  if (totalSpend >= 160) return 'STANDARD';
+  return 'NEW';
+}
+
+const TIER_STRATEGIES = {
+  ELITE: {
+    label: 'Elite Client',
+    badge: 'tier-elite',
+    emoji: '★',
+    color: '#b8922e',
+    actions: [
+      'Offer dedicated weekly slot — 15% recurring discount',
+      'Propose Complete Inside + Exterior Package ($1,200–$1,800)',
+      'Send seasonal "Spring Refresh" quote proactively',
+      'WhatsApp follow-up within 24h of each service',
+      'Priority scheduling — never double-book this client',
+    ],
+    upsell: 'Complete Package $699–$1,800',
+  },
+  PREMIUM: {
+    label: 'Premium Client',
+    badge: 'tier-premium',
+    emoji: '◆',
+    color: '#4caf79',
+    actions: [
+      'Convert to bi-weekly recurring — offer 10% loyalty discount',
+      'Upsell: Deep Cleaning next visit ($300–$850)',
+      'Bundle interior + driveway power wash ($199–$399 add-on)',
+      'Send referral card — $50 credit for each new client referred',
+      'Follow up within 3 weeks of last visit',
+    ],
+    upsell: 'Bi-weekly recurring + power washing bundle',
+  },
+  STANDARD: {
+    label: 'Standard Client',
+    badge: 'tier-standard',
+    emoji: '●',
+    color: '#4a9eff',
+    actions: [
+      'Offer monthly recurring service (standard clean $160–$420)',
+      'Upsell to Deep Cleaning on second visit',
+      'Send first-time referral incentive ($25 credit)',
+      'Capture Google review after first completed service',
+      'Email follow-up 1 week after service',
+    ],
+    upsell: 'Monthly recurring + deep clean upgrade',
+  },
+  NEW: {
+    label: 'New Lead',
+    badge: 'tier-new',
+    emoji: '○',
+    color: '#7a7268',
+    actions: [
+      'Send welcome quote within 2 hours of inquiry',
+      'Offer first-time Deep Cleaning promo ($299–$399)',
+      'WhatsApp greeting — introduce the Lagos brand',
+      'Qualify: home size, frequency preference, area',
+      'Book initial visit to convert to recurring',
+    ],
+    upsell: 'First-time deep clean intro offer',
+  },
+};
+
+// ── DATA CACHE ──
+let dashData = { orders: [], cleaning: [], loadedAt: null };
+let stratFilter = 'all';
+let revChartRef = null;
+
+// ── LOAD DASHBOARD ──
+async function loadDashboard() {
+  const now = new Date();
+  document.getElementById('dash-last-update').textContent = 'Loading...';
+
+  try {
+    // Parallel fetch
+    const [ordRes, cleanRes] = await Promise.allSettled([
+      fetch('/api/jewelry/orders'),
+      fetch('/api/cleaning/requests'),
+    ]);
+
+    dashData.orders   = ordRes.status === 'fulfilled' && ordRes.value.ok   ? await ordRes.value.json()   : [];
+    dashData.cleaning = cleanRes.status === 'fulfilled' && cleanRes.value.ok ? await cleanRes.value.json() : [];
+    dashData.loadedAt = now;
+
+    renderKPIs();
+    renderRevenueChart();
+    renderAreaBars();
+    renderClientList();
+
+    const ts = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('dash-last-update').textContent = `Last updated: ${ts}`;
+    document.getElementById('dash-refresh-ts').textContent = `Auto-refresh every 5 min`;
+
+    // Auto refresh every 5 minutes
+    setTimeout(loadDashboard, 5 * 60 * 1000);
+
+  } catch (err) {
+    document.getElementById('dash-last-update').textContent = 'Error loading data';
+    console.error('Dashboard error:', err);
+  }
+}
+
+// ── KPIs ──
+function renderKPIs() {
+  const now = new Date();
+  const weekStart = new Date(now); weekStart.setDate(now.getDate() - 7);
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  // Combine all transactions
+  const allTx = [
+    ...dashData.orders.map(o => ({
+      total: Number(o.total || 0),
+      date: new Date(o.created_at),
+      type: 'jewelry',
+      name: o.customer_name || '—',
+    })),
+    ...dashData.cleaning.map(c => ({
+      total: Number(c.estimated_price || c.price || 0),
+      date: new Date(c.created_at),
+      type: 'cleaning',
+      name: c.customer_name || '—',
+    })),
+  ].filter(t => !isNaN(t.date));
+
+  const totalRev   = allTx.reduce((s, t) => s + t.total, 0);
+  const monthTx    = allTx.filter(t => t.date >= monthStart);
+  const weekTx     = allTx.filter(t => t.date >= weekStart);
+  const monthRev   = monthTx.reduce((s, t) => s + t.total, 0);
+  const weekRev    = weekTx.reduce((s, t) => s + t.total, 0);
+  const avgTicket  = allTx.length ? totalRev / allTx.length : 0;
+
+  // Unique clients this week
+  const weekClients = new Set(weekTx.map(t => t.name));
+
+  const fmt = n => n >= 1000 ? '$' + (n/1000).toFixed(1) + 'k' : '$' + n.toFixed(0);
+
+  set('kpi-total-rev', fmt(totalRev));
+  set('kpi-total-rev-sub', `${allTx.length} total transactions`);
+  set('kpi-month-rev', fmt(monthRev));
+  set('kpi-month-sub', `${monthTx.length} transactions this month`);
+  set('kpi-week-rev', fmt(weekRev));
+  set('kpi-week-sub', `${weekTx.length} transactions this week`);
+  set('kpi-bookings', String(allTx.length));
+  set('kpi-bookings-sub', `${dashData.orders.length} jewelry · ${dashData.cleaning.length} cleaning`);
+  set('kpi-avg', fmt(avgTicket));
+  set('kpi-new-week', String(weekClients.size));
+
+  function set(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+}
+
+// ── REVENUE CHART ──
+function renderRevenueChart() {
+  const canvas = document.getElementById('rev-chart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // Build 8 weeks of data
+  const weeks = [];
+  const now = new Date();
+  for (let i = 7; i >= 0; i--) {
+    const wEnd   = new Date(now); wEnd.setDate(now.getDate() - i * 7);
+    const wStart = new Date(wEnd); wStart.setDate(wEnd.getDate() - 7);
+    const label  = wStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const rev    = [
+      ...dashData.orders,
+      ...dashData.cleaning,
+    ].filter(x => {
+      const d = new Date(x.created_at);
+      return d >= wStart && d < wEnd;
+    }).reduce((s, x) => s + Number(x.total || x.estimated_price || 0), 0);
+    weeks.push({ label, rev });
+  }
+
+  const W = canvas.offsetWidth || 400;
+  const H = 130;
+  canvas.width = W * devicePixelRatio;
+  canvas.height = H * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+
+  const maxRev = Math.max(...weeks.map(w => w.rev), 1);
+  const pad = { l: 42, r: 10, t: 10, b: 28 };
+  const chartW = W - pad.l - pad.r;
+  const chartH = H - pad.t - pad.b;
+  const barW = chartW / weeks.length;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.t + (chartH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+    const val = maxRev * (1 - i / 4);
+    ctx.fillStyle = 'rgba(255,255,255,.35)';
+    ctx.font = `${9 * devicePixelRatio}px Montserrat`;
+    ctx.textAlign = 'right';
+    ctx.fillText(val >= 1000 ? '$' + (val/1000).toFixed(1) + 'k' : '$' + Math.round(val), pad.l - 4, y + 3.5);
+  }
+
+  // Bars
+  weeks.forEach((w, i) => {
+    const x = pad.l + i * barW + barW * 0.1;
+    const bw = barW * 0.8;
+    const bh = (w.rev / maxRev) * chartH;
+    const y = pad.t + chartH - bh;
+
+    const isLast = i === weeks.length - 1;
+    const grad = ctx.createLinearGradient(0, y, 0, pad.t + chartH);
+    grad.addColorStop(0, isLast ? 'rgba(184,146,46,.9)' : 'rgba(184,146,46,.5)');
+    grad.addColorStop(1, 'rgba(184,146,46,.1)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, y, bw, bh);
+
+    // Label
+    ctx.fillStyle = 'rgba(255,255,255,.35)';
+    ctx.font = `${8 * devicePixelRatio}px Montserrat`;
+    ctx.textAlign = 'center';
+    ctx.fillText(w.label.slice(0, 6), pad.l + i * barW + barW / 2, H - 8);
+
+    // Value on bar
+    if (w.rev > 0) {
+      ctx.fillStyle = isLast ? '#b8922e' : 'rgba(184,146,46,.7)';
+      ctx.font = `bold ${8 * devicePixelRatio}px Montserrat`;
+      ctx.textAlign = 'center';
+      ctx.fillText('$' + Math.round(w.rev), pad.l + i * barW + barW / 2, y - 4);
+    }
+  });
+}
+
+// ── AREA BARS ──
+function renderAreaBars() {
+  const el = document.getElementById('area-bars');
+  if (!el) return;
+
+  // Count bookings per city
+  const cityCounts = {};
+  dashData.cleaning.forEach(c => {
+    const city = (c.city || 'Unknown').trim();
+    cityCounts[city] = (cityCounts[city] || 0) + 1;
+  });
+
+  // Merge with known area data
+  const cityRevs = {};
+  dashData.cleaning.forEach(c => {
+    const city = (c.city || 'Unknown').trim();
+    cityRevs[city] = (cityRevs[city] || 0) + Number(c.estimated_price || c.price || 0);
+  });
+
+  // Top 6 areas by count + known priority areas
+  const priorityAreas = ['Lower Merion', 'Easttown', 'Haddonfield', 'Radnor', 'Wayne', 'Moorestown'];
+  const cityData = {};
+  [...priorityAreas, ...Object.keys(cityCounts)].forEach(city => {
+    if (!cityData[city]) {
+      cityData[city] = { count: cityCounts[city] || 0, rev: cityRevs[city] || 0 };
+    }
+  });
+
+  const sorted = Object.entries(cityData)
+    .sort((a, b) => (b[1].count + b[1].rev / 1000) - (a[1].count + a[1].rev / 1000))
+    .slice(0, 6);
+
+  const maxCount = Math.max(...sorted.map(s => s[1].count), 1);
+
+  el.innerHTML = sorted.map(([city, d]) => {
+    const pct = (d.count / maxCount) * 100;
+    const meta = AREAS_META[city];
+    const label = meta ? `${city} · ${meta.state}` : city;
+    return `<div class="area-bar-row">
+      <div class="area-bar-label" title="${city}">${label}</div>
+      <div class="area-bar-track"><div class="area-bar-fill" style="width:${pct}%"></div></div>
+      <div class="area-bar-val">${d.count ? d.count + ' job' + (d.count !== 1 ? 's' : '') : '—'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── CLIENT STRATEGY LIST ──
+let allClients = [];
+function renderClientList() {
+  // Build unified client records
+  const clientMap = {};
+
+  dashData.jewelry && dashData.orders && dashData.orders.forEach(o => {
+    const key = (o.customer_email || o.customer_name || '').toLowerCase().trim();
+    if (!key) return;
+    if (!clientMap[key]) clientMap[key] = { name: o.customer_name || '—', email: o.customer_email || '', phone: o.customer_phone || '', totalSpend: 0, services: [], lastDate: null, type: 'jewelry' };
+    clientMap[key].totalSpend += Number(o.total || 0);
+    clientMap[key].lastDate = !clientMap[key].lastDate || new Date(o.created_at) > clientMap[key].lastDate ? new Date(o.created_at) : clientMap[key].lastDate;
+    const items = Array.isArray(o.items) ? o.items.map(i => i.title || i.name || 'Item').join(', ') : '';
+    clientMap[key].services.push({ type: 'Jewelry Order', detail: items, date: new Date(o.created_at), amount: Number(o.total || 0) });
+  });
+
+  dashData.cleaning && dashData.cleaning.forEach(c => {
+    const key = (c.customer_email || c.customer_name || '').toLowerCase().trim();
+    if (!key) return;
+    if (!clientMap[key]) clientMap[key] = { name: c.customer_name || '—', email: c.customer_email || '', phone: c.customer_phone || '', totalSpend: 0, services: [], lastDate: null, type: 'cleaning' };
+    clientMap[key].totalSpend += Number(c.estimated_price || c.price || 0);
+    clientMap[key].lastDate = !clientMap[key].lastDate || new Date(c.created_at) > clientMap[key].lastDate ? new Date(c.created_at) : clientMap[key].lastDate;
+    clientMap[key].services.push({ type: c.service_type || 'Cleaning', detail: c.city || '', date: new Date(c.created_at), amount: Number(c.estimated_price || c.price || 0) });
+  });
+
+  allClients = Object.values(clientMap)
+    .map(c => ({ ...c, tier: getClientTier(c.totalSpend) }))
+    .sort((a, b) => {
+      const tierOrder = { ELITE: 0, PREMIUM: 1, STANDARD: 2, NEW: 3 };
+      return (tierOrder[a.tier] - tierOrder[b.tier]) || b.totalSpend - a.totalSpend;
+    });
+
+  displayClients(allClients);
+}
+
+function displayClients(clients) {
+  const el = document.getElementById('client-list');
+  if (!el) return;
+
+  if (!clients.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">👥</div>No client data available yet. Bookings will appear here as they come in.</div>';
+    return;
+  }
+
+  el.innerHTML = clients.map(c => {
+    const strat = TIER_STRATEGIES[c.tier];
+    const lastSvc = c.lastDate ? c.lastDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+    const daysSince = c.lastDate ? Math.floor((Date.now() - c.lastDate) / 86400000) : null;
+    const urgency = daysSince !== null && daysSince > 30 ? `<span style="color:var(--red);font-size:.6rem;margin-left:.4rem">● ${daysSince}d since last visit</span>` : '';
+    const spendFmt = c.totalSpend >= 1000 ? '$' + (c.totalSpend/1000).toFixed(1) + 'k' : '$' + c.totalSpend.toFixed(0);
+    const svcList = c.services.map(s => `${s.type}${s.detail ? ' · ' + s.detail : ''}`).slice(0, 3).join(' | ');
+
+    return `<div class="client-row" data-tier="${c.tier}">
+      <div>
+        <div class="client-name">${c.name}</div>
+        <div class="client-meta">
+          ${c.email ? c.email + ' · ' : ''}${c.phone || ''}${c.phone && c.email ? '' : ''}<br>
+          Last service: <strong>${lastSvc}</strong>${urgency}<br>
+          ${svcList || 'No service details'}
+        </div>
+        <div class="client-strat">
+          <div class="strat-label" style="color:${strat.color}">${strat.emoji} ${strat.label} · Total spend: ${spendFmt}</div>
+          <div class="strat-tag">Recommended upsell: ${strat.upsell}</div>
+          <div class="strat-actions">
+            ${strat.actions.map(a => `<div class="strat-action">${a}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <span class="tier-badge ${strat.badge}">${c.tier}</span>
+        <div style="font-size:.65rem;color:var(--gold);font-weight:700;margin-top:.5rem">${spendFmt}</div>
+        <div style="font-size:.58rem;color:var(--text-muted);margin-top:.2rem">${c.services.length} visit${c.services.length !== 1 ? 's' : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterStrat(tier, el) {
+  document.querySelectorAll('.week-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  stratFilter = tier;
+  const filtered = tier === 'all' ? allClients : allClients.filter(c => c.tier === tier);
+  displayClients(filtered);
 }
 
 // ── TOAST ──
