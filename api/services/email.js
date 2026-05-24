@@ -150,6 +150,31 @@ async function processDueEmails(supabase) {
   return { sent, total: due.length };
 }
 
+// ── Google Calendar link builder ──────────────────────────────────────────────
+function buildCalendarLink({ title, location, description, date, durationHours = 2 }) {
+  // date: 'YYYY-MM-DD' or null — default to next 9am if missing
+  let start, end;
+  if (date && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    // 9am–11am on requested date (local time, no Z — Google treats as local)
+    const d = date.replace(/-/g, '');
+    start = `${d}T090000`;
+    end   = `${d}T${String(9 + durationHours).padStart(2,'0')}0000`;
+  } else {
+    // No date — use open-ended template (Google lets user pick)
+    start = '';
+    end   = '';
+  }
+  const params = new URLSearchParams({
+    action:  'TEMPLATE',
+    text:    title,
+    details: description,
+    location: location || '',
+    add:     'admin.lagosworld@gmail.com',
+  });
+  if (start) { params.set('dates', `${start}/${end}`); }
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
 // ── Cleaning request confirmation ─────────────────────────────────────────────
 async function sendCleaningConfirmation(requestData) {
   const {
@@ -162,6 +187,15 @@ async function sendCleaningConfirmation(requestData) {
   const transporter = createTransporter();
   const from = FROM();
 
+  // Build calendar link
+  const fullAddress = [address, city].filter(Boolean).join(', ');
+  const calLink = buildCalendarLink({
+    title:       `🧹 ${service_type} — ${customer_name}`,
+    location:    fullAddress,
+    description: `Phone: ${customer_phone || '—'}\nEmail: ${customer_email}\nFrequency: ${recurrence || 'One-time'}\nNotes: ${description || '—'}`,
+    date:        preferred_date || null,
+  });
+
   const customerHtml = `
 <!DOCTYPE html><html><body style="font-family:Arial,sans-serif;background:#f0fdff;padding:20px">
 <div style="max-width:560px;margin:0 auto;background:#fff;padding:2rem;border-radius:8px;border-top:4px solid #20B2AA">
@@ -171,7 +205,7 @@ async function sendCleaningConfirmation(requestData) {
   <table style="width:100%;font-size:.9rem;border-collapse:collapse;margin:1rem 0">
     <tr style="background:#f0fdff"><td style="padding:8px 12px;font-weight:bold">Service</td><td style="padding:8px 12px">${service_type}</td></tr>
     <tr><td style="padding:8px 12px;font-weight:bold">Frequency</td><td style="padding:8px 12px">${recurrence || 'One-time'}</td></tr>
-    <tr style="background:#f0fdff"><td style="padding:8px 12px;font-weight:bold">Address</td><td style="padding:8px 12px">${address || '—'}${city ? ', ' + city : ''}</td></tr>
+    <tr style="background:#f0fdff"><td style="padding:8px 12px;font-weight:bold">Address</td><td style="padding:8px 12px">${fullAddress || '—'}</td></tr>
     <tr><td style="padding:8px 12px;font-weight:bold">Preferred Date</td><td style="padding:8px 12px">${preferred_date || 'Flexible'}</td></tr>
   </table>
   <p style="color:#666;font-size:.85rem">Questions? Call or text us: <strong>+1 (215) 626-2345</strong></p>
@@ -187,9 +221,12 @@ async function sendCleaningConfirmation(requestData) {
   <p><strong>Phone:</strong> ${customer_phone || '—'}</p>
   <p><strong>Service:</strong> ${service_type}</p>
   <p><strong>Frequency:</strong> ${recurrence || 'One-time'}</p>
-  <p><strong>Address:</strong> ${address || '—'}${city ? ', ' + city : ''}</p>
+  <p><strong>Address:</strong> ${fullAddress || '—'}</p>
   <p><strong>Date:</strong> ${preferred_date || 'Flexible'}</p>
   <p><strong>Notes:</strong> ${description || '—'}</p>
+  <div style="margin-top:1.5rem">
+    <a href="${calLink}" target="_blank" style="display:inline-block;background:#20B2AA;color:#fff;text-decoration:none;padding:.75rem 1.5rem;border-radius:6px;font-weight:bold;font-size:.9rem">📅 Add to Google Calendar</a>
+  </div>
 </div></body></html>`;
 
   // Admin notification

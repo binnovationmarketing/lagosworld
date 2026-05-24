@@ -1027,6 +1027,19 @@ async function loadCleaning() {
     const reqs = await r.json();
     if (!reqs || !reqs.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🧹</div>No cleaning requests yet.</div>'; return; }
 
+    // ── Google Calendar link builder ───────────────────────────────────────
+    function gcalLink(r) {
+      const title = encodeURIComponent(`🧹 ${r.service_type||'Cleaning'} — ${r.customer_name||''}`);
+      const loc   = encodeURIComponent([r.address, r.city].filter(Boolean).join(', '));
+      const desc  = encodeURIComponent(`Phone: ${r.customer_phone||'—'}\nEmail: ${r.customer_email||'—'}\nFrequency: ${r.recurrence||'One-time'}\nNotes: ${r.description||'—'}`);
+      let dates = '';
+      if (r.preferred_date && /^\d{4}-\d{2}-\d{2}$/.test(r.preferred_date)) {
+        const d = r.preferred_date.replace(/-/g,'');
+        dates = `&dates=${d}T090000/${d}T110000`;
+      }
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&location=${loc}&details=${desc}&add=admin.lagosworld@gmail.com${dates}`;
+    }
+
     // ── KPI summary ────────────────────────────────────────────────────────
     const total = reqs.length;
     const recurring = reqs.filter(r => r.recurrence && r.recurrence !== 'one-time').length;
@@ -1051,6 +1064,7 @@ async function loadCleaning() {
       const phone = r.customer_phone || '—';
       const addr = [r.address, r.city].filter(Boolean).join(', ') || '—';
       const recur = r.recurrence || '—';
+      const cal = gcalLink(r);
       return `<tr>
         <td style="white-space:nowrap">${d}</td>
         <td><div>${r.customer_name||'—'}</div><div style="font-size:.65rem;color:var(--text-muted)">${phone}</div></td>
@@ -1059,12 +1073,13 @@ async function loadCleaning() {
         <td style="font-size:.7rem;color:var(--text-muted)">${addr}</td>
         <td style="font-size:.7rem">${recur}</td>
         <td><select class="status-select" onchange="updateOrderStatus('${r.id}',this.value,'${safeEmail}','${safeName}','cleaning')">${opts}</select></td>
+        <td><a href="${cal}" target="_blank" style="font-size:.65rem;color:#20B2AA;text-decoration:none;white-space:nowrap" title="Add to Google Calendar">📅 Calendar</a></td>
       </tr>`;
     }).join('');
 
     el.innerHTML = kpiHtml + `<table class="orders-table">
       <thead><tr>
-        <th>Date</th><th>Name / Phone</th><th>Email</th><th>Service</th><th>Address</th><th>Recurrence</th><th>Status</th>
+        <th>Date</th><th>Name / Phone</th><th>Email</th><th>Service</th><th>Address</th><th>Recurrence</th><th>Status</th><th></th>
       </tr></thead>
       <tbody>${tableRows}</tbody>
     </table>`;
