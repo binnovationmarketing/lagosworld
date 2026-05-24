@@ -130,8 +130,8 @@ app.post('/api/send-order', async (req, res) => {
         product_name: i.name,
         variant_desc: i.variant || '',
         quantity:     Number(i.qty) || 1,
-        unit_price:   Number(i.price) || 0,
-        line_total:   (Number(i.qty) || 1) * (Number(i.price) || 0)
+        unit_price:   Number(i.price) || 0
+        // line_total is GENERATED ALWAYS — omit from insert
       }));
       if (lineItems.length > 0) {
         await supabase.from('order_items').insert(lineItems);

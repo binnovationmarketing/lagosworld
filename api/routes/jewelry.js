@@ -38,8 +38,8 @@ router.post('/orders', async (req, res) => {
         product_name: i.title || i.name || '',
         variant_desc: i.sku   || '',
         quantity:     Number(i.quantity || i.qty) || 1,
-        unit_price:   Number(i.price) || 0,
-        line_total:   (Number(i.quantity || i.qty) || 1) * (Number(i.price) || 0)
+        unit_price:   Number(i.price) || 0
+        // line_total is GENERATED ALWAYS — omit from insert
       }));
       await req.supabase.from('order_items').insert(lineItems);
     }
