@@ -156,9 +156,28 @@ nav{position:sticky;top:0;z-index:300;background:#fff;border-bottom:1px solid va
 .promo-banner a:hover{background:#FEF3C7}
 
 /* SECTIONS */
-.section{padding:5rem 2rem}
+.section{padding:4rem 2rem}
+@media(max-width:768px){.section{padding:3rem 1.5rem}}
+@media(max-width:480px){.section{padding:2.5rem 1.2rem}}
 .section-alt{background:var(--bg-soft)}
 .section-teal{background:var(--bg-teal)}
+/* BEFORE / AFTER GALLERY */
+.ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:2.5rem}
+@media(max-width:768px){.ba-grid{grid-template-columns:1fr}}
+.ba-card{border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;box-shadow:var(--shadow);transition:box-shadow .3s}
+.ba-card:hover{box-shadow:var(--shadow-lg)}
+.ba-images{display:grid;grid-template-columns:1fr 1fr;position:relative}
+.ba-side{position:relative;overflow:hidden;aspect-ratio:4/3}
+.ba-side img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.ba-card:hover .ba-side img{transform:scale(1.04)}
+.ba-label{position:absolute;top:.6rem;left:.6rem;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;border-radius:999px;z-index:2}
+.ba-label.before{background:rgba(0,0,0,.6);color:#fff}
+.ba-label.after{background:var(--teal);color:#fff}
+.ba-divider{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;z-index:3;transform:translateX(-50%)}
+.ba-divider::after{content:'↔';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border:2px solid var(--teal);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--teal);font-weight:700;line-height:28px;text-align:center}
+.ba-info{padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.ba-service{font-size:.75rem;font-weight:700;color:var(--text)}
+.ba-tag{font-size:.62rem;background:var(--teal-bg);color:var(--teal-d);padding:.2rem .6rem;border-radius:999px;border:1px solid var(--border-teal);font-weight:600}
 .container{max-width:1200px;margin:0 auto}
 .section-label{display:inline-block;background:var(--teal-bg);color:var(--teal-d);padding:.3rem .8rem;border-radius:999px;font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:.8rem;border:1px solid var(--border-teal)}
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;color:var(--text);margin-bottom:.8rem;line-height:1.25}
@@ -294,7 +313,7 @@ nav{position:sticky;top:0;z-index:300;background:#fff;border-bottom:1px solid va
 .booking-perks li{display:flex;align-items:center;gap:.6rem;font-size:.83rem;opacity:.9}
 .booking-perks li::before{content:'✓';width:22px;height:22px;background:rgba(74,222,128,.25);border:1px solid rgba(74,222,128,.5);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#4ADE80;flex-shrink:0}
 .booking-form{background:#fff;border-radius:12px;padding:2.2rem;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.booking-form h3{font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom.2rem}
+.booking-form h3{font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
 .booking-form>p{font-size:.78rem;color:var(--text-muted);margin-bottom:1.5rem}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
 @media(max-width:560px){.form-row{grid-template-columns:1fr}}
@@ -852,6 +871,90 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
   </div>
 </section>
 
+<!-- BEFORE / AFTER GALLERY -->
+<section class="section section-teal" id="results">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-label">Real Results</span>
+      <h2 class="section-title">Before <span>&amp; After</span></h2>
+      <p class="section-sub text-center">Real homes. Real transformations. See what Lagos Cleaning delivers.</p>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card fade-up">
+        <div class="ba-images">
+          <div class="ba-side">
+            <span class="ba-label before">Before</span>
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=85&auto=format&fit=crop" alt="Kitchen before cleaning" loading="lazy">
+          </div>
+          <div class="ba-side">
+            <span class="ba-label after">After</span>
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=85&auto=format&fit=crop" alt="Kitchen after cleaning" loading="lazy">
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-info">
+          <span class="ba-service">🍳 Kitchen Deep Clean</span>
+          <span class="ba-tag">Philadelphia, PA</span>
+        </div>
+      </div>
+      <div class="ba-card fade-up">
+        <div class="ba-images">
+          <div class="ba-side">
+            <span class="ba-label before">Before</span>
+            <img src="https://images.unsplash.com/photo-1589568235773-9e2ad58d5ff4?w=600&q=85&auto=format&fit=crop" alt="Bathroom before cleaning" loading="lazy">
+          </div>
+          <div class="ba-side">
+            <span class="ba-label after">After</span>
+            <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=85&auto=format&fit=crop" alt="Bathroom after cleaning" loading="lazy">
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-info">
+          <span class="ba-service">🚿 Bathroom Sanitizing</span>
+          <span class="ba-tag">Cherry Hill, NJ</span>
+        </div>
+      </div>
+      <div class="ba-card fade-up">
+        <div class="ba-images">
+          <div class="ba-side">
+            <span class="ba-label before">Before</span>
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=85&auto=format&fit=crop" alt="Driveway before power wash" loading="lazy">
+          </div>
+          <div class="ba-side">
+            <span class="ba-label after">After</span>
+            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=85&auto=format&fit=crop" alt="Driveway after power wash" loading="lazy">
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-info">
+          <span class="ba-service">💦 CH ELITE Power Wash</span>
+          <span class="ba-tag">Norristown, PA</span>
+        </div>
+      </div>
+      <div class="ba-card fade-up">
+        <div class="ba-images">
+          <div class="ba-side">
+            <span class="ba-label before">Before</span>
+            <img src="https://images.unsplash.com/photo-1493951534030-7a2b08c30b8c?w=600&q=85&auto=format&fit=crop" alt="Living room before cleaning" loading="lazy">
+          </div>
+          <div class="ba-side">
+            <span class="ba-label after">After</span>
+            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=85&auto=format&fit=crop" alt="Living room after cleaning" loading="lazy">
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-info">
+          <span class="ba-service">🛋 Living Room Reset</span>
+          <span class="ba-tag">King of Prussia, PA</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem" class="fade-up">
+      <a href="#booking" class="btn btn-primary btn-lg">Book Your Transformation →</a>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="section section-alt" id="faq">
   <div class="container" style="max-width:800px">
@@ -1066,7 +1169,7 @@ function toggleFaq(el) {
 }
 
 // BOOKING FORM
-async async function submitBooking(e) {
+async function submitBooking(e) {
   e.preventDefault();
   const btn = e.target.querySelector('.form-submit');
   btn.textContent = 'Sending...';

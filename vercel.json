@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "npm install --production",
+  "buildCommand": "npm install --production --ignore-scripts",
   "outputDirectory": "public",
   "functions": {
     "api/index.js": {
-      "memory": 1024,
+      "memory": 512,
       "maxDuration": 30
     }
   },

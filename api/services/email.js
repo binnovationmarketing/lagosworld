@@ -3,11 +3,18 @@ const t = require('./emailTemplates');
 
 const ADMINS = ['binnovationmarketing@gmail.com'];
 
+// Singleton transporter — reused across warm function instances
+let _transporter = null;
 function createTransporter() {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-  });
+  if (!_transporter) {
+    _transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+      pool: true,
+      maxConnections: 3
+    });
+  }
+  return _transporter;
 }
 
 const FROM = () => `"Lagos World" <${process.env.EMAIL_USER}>`;

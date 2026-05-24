@@ -216,6 +216,8 @@ nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.06)}
 .gallery-caption{position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;transform:translateY(8px);opacity:0;transition:all .4s}
 .gallery-item:hover .gallery-caption{opacity:1;transform:translateY(0)}
 .gallery-caption p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:#f5f2ec;letter-spacing:.1em}
+.gallery-shop-btn{display:inline-block;margin-top:.6rem;background:rgba(184,146,46,.85);color:#fff;padding:.35rem .9rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:background .25s}
+.gallery-shop-btn:hover{background:var(--gold)}
 
 /* FOOTER */
 footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
@@ -394,24 +396,34 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 <section class="gallery section">
   <div class="container">
     <div style="text-align:center" class="reveal">
-      <div class="section-label">Dayane Lago</div>
-      <h2 class="section-title" style="text-align:center">Founder · <em>Lagos World</em></h2>
+      <div class="section-label">Shop The Look</div>
+      <h2 class="section-title" style="text-align:center">Dayane Lago · <em>Lagos World</em></h2>
+      <p style="font-size:.78rem;color:var(--text-muted);text-align:center;margin:.5rem auto 0;max-width:420px;line-height:1.7">Click any photo to shop the jewelry Dayane is wearing — curated 18k gold-plated pieces.</p>
     </div>
     <div class="gallery-grid">
       <div class="gallery-item reveal">
-        <img src="images/dayane-1.png" alt="Dayane Lago — Lagos Jewelry">
+        <img src="images/dayane-1.png" alt="Dayane Lago — Lagos Jewelry Founder">
         <div class="gallery-overlay"></div>
-        <div class="gallery-caption"><p>Lagos Jewelry · Philadelphia</p></div>
+        <div class="gallery-caption">
+          <p>Pearl Drop Pendant · Gold 18k</p>
+          <a href="/jewelry" class="gallery-shop-btn">Shop This Look →</a>
+        </div>
       </div>
-      <div class="gallery-item reveal">
-        <img src="images/dayane-2.png" alt="Dayane Lago — Founder">
+      <div class="gallery-item reveal delay-1">
+        <img src="images/dayane-2.png" alt="Dayane Lago — Lagos Jewelry">
         <div class="gallery-overlay"></div>
-        <div class="gallery-caption"><p>De Mulher para Mulher</p></div>
+        <div class="gallery-caption">
+          <p>Statement Chain · Gold 18k</p>
+          <a href="/jewelry" class="gallery-shop-btn">Shop This Look →</a>
+        </div>
       </div>
-      <div class="gallery-item reveal">
-        <img src="images/dayane-3.png" alt="Dayane Lago — Lagos World">
+      <div class="gallery-item reveal delay-2">
+        <img src="images/dayane-3.png" alt="Dayane Lago — Lagos Jewelry Silver">
         <div class="gallery-overlay"></div>
-        <div class="gallery-caption"><p>Lagos World · Centro de Estilo</p></div>
+        <div class="gallery-caption">
+          <p>Ribbed Hoop Set · Silver</p>
+          <a href="/jewelry" class="gallery-shop-btn">Shop This Look →</a>
+        </div>
       </div>
     </div>
   </div>

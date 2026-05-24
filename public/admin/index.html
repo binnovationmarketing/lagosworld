@@ -142,6 +142,36 @@ textarea.field-inp{resize:vertical;min-height:90px;line-height:1.6}
 .ecb-btn{padding:.55rem 1.5rem;font-size:.65rem;letter-spacing:.2em;font-family:'Montserrat',sans-serif;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text);transition:.2s}
 .ecb-btn.primary{background:var(--gold);border-color:var(--gold);color:#0a0a0a;font-weight:600}
 .ecb-btn:hover{opacity:.85}
+/* TEMPLATES TAB */
+.tpl-card{background:var(--dark2);border:1px solid var(--border);padding:1.2rem 1.4rem;border-radius:2px}
+.tpl-card-name{color:var(--gold);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.4rem}
+.tpl-card-subject{color:var(--text);font-size:.8rem;margin-bottom:.8rem;line-height:1.4}
+.tpl-card-actions{display:flex;gap:.5rem}
+.tpl-send-btn{background:rgba(184,146,46,.15);border:1px solid var(--border);color:var(--gold);font-size:.6rem;letter-spacing:.15em;padding:.3rem .8rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.2s}
+.tpl-send-btn:hover{background:rgba(184,146,46,.3)}
+.tpl-email-input{background:var(--dark3);border:1px solid var(--border);color:var(--text);font-size:.7rem;padding:.28rem .6rem;font-family:'Montserrat',sans-serif;flex:1;outline:none}
+.tpl-email-input:focus{border-color:var(--gold)}
+/* CALENDARIO */
+.cal-month{margin-bottom:2.5rem}
+.cal-month-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold);margin-bottom:1rem;letter-spacing:.05em}
+.cal-events{display:flex;flex-direction:column;gap:.6rem}
+.cal-event{background:var(--dark2);border:1px solid var(--border);padding:.85rem 1.2rem;display:flex;align-items:center;gap:1.2rem;border-radius:2px}
+.cal-event.jewelry{border-left:3px solid var(--gold)}
+.cal-event.cleaning{border-left:3px solid #0891B2}
+.cal-event.both{border-left:3px solid #4caf79}
+.cal-event.urgent{border-left:3px solid #e05252}
+.cal-date{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--text);min-width:44px;text-align:center;line-height:1.1}
+.cal-date span{display:block;font-size:.55rem;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.cal-info{flex:1}
+.cal-info h4{font-size:.8rem;color:var(--text);margin-bottom:.15rem}
+.cal-info p{font-size:.68rem;color:var(--text-muted);line-height:1.5}
+.cal-badge{font-size:.52rem;padding:.18rem .55rem;border-radius:2px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.badge-jewelry{background:rgba(184,146,46,.2);color:var(--gold)}
+.badge-cleaning{background:rgba(8,145,178,.15);color:#67E8F9}
+.badge-both{background:rgba(76,175,121,.15);color:#4caf79}
+.badge-urgent{background:rgba(224,82,82,.15);color:#e05252}
+.cal-campaign-btn{background:transparent;border:1px solid var(--border);color:var(--text-muted);font-size:.58rem;letter-spacing:.12em;padding:.3rem .7rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.2s;white-space:nowrap}
+.cal-campaign-btn:hover{border-color:var(--gold);color:var(--gold)}
 
 /* TOAST */
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--dark2);border:1px solid var(--gold);color:var(--text);padding:.7rem 1.3rem;font-size:.72rem;letter-spacing:.1em;z-index:999;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none}
@@ -253,6 +283,8 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
     <button class="tab" onclick="switchTab('orders',this)">Orders</button>
     <button class="tab" onclick="switchTab('cleaning',this)">Cleaning Leads</button>
     <button class="tab" onclick="switchTab('cart',this)">🛒 Cart Activity</button>
+    <button class="tab" onclick="switchTab('templates',this)">📧 Templates</button>
+    <button class="tab" onclick="switchTab('calendario',this)">📅 Calendário</button>
   </div>
 
   <div class="content">
@@ -359,6 +391,18 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
     <!-- CART ACTIVITY TAB -->
     <div id="tab-cart" style="display:none">
       <div id="cart-content"><div class="empty"><div class="empty-icon">🛒</div>Loading cart activity...</div></div>
+    </div>
+
+    <!-- TEMPLATES TAB -->
+    <div id="tab-templates" style="display:none">
+      <div class="dash-header"><h2>Email <em>Templates</em></h2><div class="last-update">Manage & test all email campaigns</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;padding:.5rem 0" id="templates-grid"></div>
+    </div>
+
+    <!-- CALENDARIO TAB -->
+    <div id="tab-calendario" style="display:none">
+      <div class="dash-header"><h2>Calendário <em>Promocional 2026</em></h2><div class="last-update">Datas estratégicas para campanhas</div></div>
+      <div id="calendario-content" style="padding:.5rem 0"></div>
     </div>
 
   </div>
@@ -851,6 +895,8 @@ function switchTab(name, el) {
   if (name === 'orders') loadOrders();
   if (name === 'cleaning') loadCleaning();
   if (name === 'cart') loadCartActivity();
+  if (name === 'templates') loadTemplates();
+  if (name === 'calendario') loadCalendario();
 }
 
 // ── ORDERS ──
@@ -1514,6 +1560,136 @@ async function confirmSendEmail() {
 function closeEmailConfirm() {
   document.getElementById('email-confirm-modal').classList.remove('open');
   _pendingEmail = null;
+}
+
+// ── TEMPLATES TAB ─────────────────────────────────────────────────────────────
+const EMAIL_TEMPLATES = [
+  { type: 'welcome',    name: 'Welcome',           subject: '✝ Bem-vinda à Lagos — sua joia especial espera por você', desc: 'Sent to new subscribers / manual dispatch' },
+  { type: 'firstoffer', name: 'First Purchase Offer', subject: 'A special offer — just for you', desc: 'New subscriber incentive — 10% off code WELCOME10' },
+  { type: 'brand',      name: 'Brand Story',        subject: 'The story behind every Lagos piece', desc: 'Trust-building sequence email' },
+  { type: 'care',       name: 'Jewelry Care (Day 3)', subject: 'How to keep your jewelry beautiful for longer', desc: 'Post-purchase — auto-sent day 3 via cron' },
+  { type: 'crosssell',  name: 'Cross-Sell (Day 7)',  subject: 'Complete your look with these matching pieces', desc: 'Post-purchase — auto-sent day 7 via cron' },
+  { type: 'review',     name: 'Review Request (Day 10)', subject: 'How did you feel wearing your Lagos Jewelry piece?', desc: 'Post-purchase — auto-sent day 10 via cron' },
+  { type: 'referral',   name: 'Referral (Day 21)',   subject: 'Share Lagos Jewelry with a woman you love', desc: 'Post-purchase — auto-sent day 21 via cron' },
+  { type: 'gift',       name: 'Gift Campaign',       subject: 'The perfect gift for the woman in your life', desc: 'Seasonal campaign — Mother\'s Day, Christmas, etc.' },
+  { type: 'vip',        name: 'VIP Invitation',      subject: '✝ You\'ve been invited to the Lagos VIP Circle', desc: 'Loyalty reward — send after 2+ purchases' },
+];
+
+function loadTemplates() {
+  const grid = document.getElementById('templates-grid');
+  grid.innerHTML = EMAIL_TEMPLATES.map(tpl => `
+    <div class="tpl-card">
+      <div class="tpl-card-name">${tpl.name}</div>
+      <div class="tpl-card-subject">${tpl.subject}</div>
+      <div style="font-size:.65rem;color:var(--text-muted);margin-bottom:.8rem;line-height:1.4">${tpl.desc}</div>
+      <div class="tpl-card-actions">
+        <input class="tpl-email-input" type="email" id="tpl-email-${tpl.type}" placeholder="test@email.com">
+        <button class="tpl-send-btn" onclick="sendTestEmail('${tpl.type}','${tpl.name}')">▶ Send Test</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function sendTestEmail(type, name) {
+  const input = document.getElementById('tpl-email-' + type);
+  const to = input.value.trim();
+  if (!to || !to.includes('@')) { showToast('⚠ Enter a valid email'); return; }
+  showToast('Sending ' + name + '...');
+  try {
+    const r = await fetch('/api/cron/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, to, name: to.split('@')[0] })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      showToast('✓ ' + name + ' sent to ' + to);
+      input.value = '';
+    } else {
+      showToast('⚠ ' + (d.error || 'Send failed'));
+    }
+  } catch (e) {
+    showToast('⚠ Error: ' + e.message);
+  }
+}
+
+// ── CALENDARIO TAB ────────────────────────────────────────────────────────────
+const PROMO_CALENDAR = [
+  { month: 'June 2026', events: [
+    { day: '15', dow: 'Mon', name: 'Father\'s Day', desc: 'Gift jewelry for the women who love them. Campaign: "For the man who loves a strong woman."', badge: 'jewelry', type: 'jewelry' },
+    { day: '19', dow: 'Fri', name: 'Juneteenth', desc: 'Celebrate with a cleaning special — "Fresh start, free home."', badge: 'cleaning', type: 'cleaning' },
+  ]},
+  { month: 'July 2026', events: [
+    { day: '4',  dow: 'Sat', name: 'Independence Day', desc: 'Summer sale — 15% off jewelry, discount on deep clean bookings.', badge: 'both', type: 'both' },
+    { day: '13', dow: 'Mon', name: 'Summer Promo Start', desc: 'Launch summer collection email campaign + cleaning summer refresh.', badge: 'both', type: 'both' },
+  ]},
+  { month: 'August 2026', events: [
+    { day: '1',  dow: 'Sat', name: 'Back to School Season', desc: 'Target professional women — "Start the semester looking like yourself."', badge: 'jewelry', type: 'jewelry' },
+    { day: '15', dow: 'Sat', name: 'Airbnb Season Peak', desc: 'Target hosts — "Keep your rental spotless all summer." Push cleaning bookings.', badge: 'cleaning', type: 'cleaning' },
+  ]},
+  { month: 'September 2026', events: [
+    { day: '7',  dow: 'Mon', name: 'Labor Day', desc: 'End-of-summer flash sale on jewelry + home reset cleaning packages.', badge: 'both', type: 'both' },
+    { day: '22', dow: 'Tue', name: 'Fall Collection Launch', desc: 'Introduce autumn jewelry collection — gold, warm tones, layering pieces.', badge: 'jewelry', type: 'jewelry' },
+  ]},
+  { month: 'October 2026', events: [
+    { day: '1',  dow: 'Thu', name: 'Breast Cancer Awareness', desc: 'Run a cause campaign — portion of jewelry sales donated. Drives brand trust.', badge: 'both', type: 'both' },
+    { day: '31', dow: 'Sat', name: 'Halloween / Fall Push', desc: 'Cleaning: "Seasonal deep clean before the holidays." Book early.', badge: 'cleaning', type: 'cleaning' },
+  ]},
+  { month: 'November 2026', events: [
+    { day: '26', dow: 'Thu', name: 'Thanksgiving', desc: 'Gratitude email to all clients — soft touch, brand story, VIP invite.', badge: 'both', type: 'both' },
+    { day: '27', dow: 'Fri', name: '🔥 Black Friday', desc: 'BIGGEST jewelry sale of year. Flash deals, abandoned cart recovery, limited pieces.', badge: 'urgent', type: 'urgent' },
+    { day: '28', dow: 'Sat', name: 'Small Business Saturday', desc: 'Push Lagos brand story — "Buy local, buy from a woman-owned business."', badge: 'jewelry', type: 'jewelry' },
+    { day: '30', dow: 'Mon', name: 'Cyber Monday', desc: 'Final 48h sale push. Jewelry + cleaning gift card offers.', badge: 'urgent', type: 'urgent' },
+  ]},
+  { month: 'December 2026', events: [
+    { day: '1',  dow: 'Tue', name: 'Holiday Season Opens', desc: 'Gift guide email — "Best jewelry gifts for women you love." Push gift wrapping.', badge: 'jewelry', type: 'jewelry' },
+    { day: '15', dow: 'Tue', name: 'Holiday Cleaning Rush', desc: 'Last chance to book pre-Christmas deep clean. Scarcity messaging.', badge: 'cleaning', type: 'cleaning' },
+    { day: '20', dow: 'Sun', name: 'Last Gift Shipping Date', desc: 'Urgency email — "Order today to receive before Christmas."', badge: 'urgent', type: 'urgent' },
+    { day: '25', dow: 'Fri', name: '🎄 Christmas', desc: 'Send warm holiday message to all customers — no hard sell, brand love.', badge: 'both', type: 'both' },
+    { day: '31', dow: 'Thu', name: 'New Year\'s Eve', desc: 'New year campaign — "Renew your space, renew your style." Jan preview.', badge: 'both', type: 'both' },
+  ]},
+  { month: 'January 2027', events: [
+    { day: '1',  dow: 'Fri', name: 'New Year', desc: 'New collection drop + cleaning "fresh start" campaign. Re-engage dormant clients.', badge: 'both', type: 'both' },
+    { day: '14', dow: 'Thu', name: 'Valentine\'s Season Start', desc: 'Begin 2-week Valentine\'s push for jewelry. Gift bundles, love letters, urgency.', badge: 'jewelry', type: 'jewelry' },
+  ]},
+];
+
+function loadCalendario() {
+  const cont = document.getElementById('calendario-content');
+  const badgeMap = { jewelry: 'badge-jewelry', cleaning: 'badge-cleaning', both: 'badge-both', urgent: 'badge-urgent' };
+  const labelMap = { jewelry: 'Jewelry', cleaning: 'Cleaning', both: 'Jewelry + Cleaning', urgent: '🔥 Priority' };
+  cont.innerHTML = PROMO_CALENDAR.map(m => `
+    <div class="cal-month">
+      <div class="cal-month-title">${m.month}</div>
+      <div class="cal-events">
+        ${m.events.map(ev => `
+          <div class="cal-event ${ev.type}">
+            <div class="cal-date">${ev.day}<span>${ev.dow}</span></div>
+            <div class="cal-info">
+              <h4>${ev.name} &nbsp;<span class="cal-badge ${badgeMap[ev.type]}">${labelMap[ev.type]}</span></h4>
+              <p>${ev.desc}</p>
+            </div>
+            <button class="cal-campaign-btn" onclick="openCampaignEmail('${ev.name}')">✉ Campaign</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openCampaignEmail(eventName) {
+  _pendingEmail = null;
+  const to = prompt(`Send "${eventName}" campaign email to:`, '');
+  if (!to || !to.includes('@')) return;
+  const type = eventName.toLowerCase().includes('christmas') || eventName.toLowerCase().includes('new year') ? 'brand'
+    : eventName.toLowerCase().includes('vip') ? 'vip'
+    : eventName.toLowerCase().includes('gift') || eventName.toLowerCase().includes('valentine') || eventName.toLowerCase().includes('father') ? 'gift'
+    : 'welcome';
+  fetch('/api/cron/send', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type, to, name: to.split('@')[0] })
+  }).then(r => r.json()).then(d => showToast(d.ok ? '✓ Campaign sent to ' + to : '⚠ Failed: ' + d.error))
+    .catch(e => showToast('⚠ ' + e.message));
 }
 </script>
 
