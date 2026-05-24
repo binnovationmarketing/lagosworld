@@ -32,39 +32,34 @@
 
 ## Feito Nesta Sessao
 
-- Ajustes visuais no Jewelry, Cleaning e Admin:
-  - removida foto da Dayane no hero do Jewelry;
-  - corrigido contraste do filtro ativo preto no Jewelry;
-  - refinada hero do Jewelry com fundo premium e tipografia mais controlada;
-  - trocados simbolos de cruz visiveis por `LW`/`✦` em pontos graficos do Jewelry;
-  - melhorado visual dos cards de contato do Cleaning;
-  - melhorados selects de status e cards de email template no Admin.
+- Criado fluxo de Preview/Staging na Vercel:
+  - `VERCEL_PREVIEW_WORKFLOW.md`
+  - define `main` como producao e branches `codex/binnovationmarketing/*` como ambiente de teste;
+  - documenta como gerar Preview URL, testar e promover para producao.
 
 ## Arquivos Alterados
 
 - `AI_HANDOFF.md`
-- `public/jewelry/index.html`
-- `public/cleaning/index.html`
-- `public/admin/index.html`
+- `VERCEL_PREVIEW_WORKFLOW.md`
 
 ## Testes/Validacoes
 
-- `npm run build`: ok
-- Preview local via `http://127.0.0.1:4177/public/jewelry/index.html#top`: hero sem foto validada visualmente.
-- Preview local dos filtros Jewelry: filtro ativo agora com texto branco legivel.
-- Preview local do Admin Templates: cards e inputs mais legiveis.
-- Preview local da barra de contato Cleaning: cards refinados.
+- Pendente nesta sessao:
+  - commit do workflow de preview;
+  - push de um branch de teste para acionar Preview Deployment da Vercel.
 
 ## Pendencias
 
-- Verificar em producao apos deploy Vercel.
+- Criar e publicar branch de teste `codex/binnovationmarketing/preview-lab`.
+- Verificar no dashboard da Vercel se Preview Deployment foi criado.
 
 ## Proximo Melhor Passo
 
-- Fazer commit/push dos ajustes visuais.
-- Depois do deploy, conferir `https://lagosworld.app/jewelry`.
+- Commitar `VERCEL_PREVIEW_WORKFLOW.md`.
+- Fazer push para `main` para registrar o processo.
+- Fazer push de branch preview para testar o fluxo.
 
 ## Riscos
 
-- Diff do `public/jewelry/index.html` ficou grande porque muitos cards repetidos trocaram simbolo visual em `View Details`.
-- Vercel CLI local ainda pode exigir `npx vercel login` para logs.
+- Sem `.vercel/project.json` local, nao da para recuperar URL exata do preview via CLI nesta maquina.
+- Vercel CLI local ainda pode exigir `npx vercel login` para logs e `vercel ls`.

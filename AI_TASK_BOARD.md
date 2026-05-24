@@ -16,6 +16,7 @@
 |---|---|---|
 | Replicar estrutura no Notion | Claude Code | Criar pagina curta com protocolo de colaboracao |
 | Criar checklist de deploy final | Codex | Comandos + verificacoes de producao |
+| Linkar Vercel CLI local | Henrique/Codex | Rodar `npx vercel login` e `npx vercel link` |
 
 ---
 
@@ -23,7 +24,7 @@
 
 | Tarefa | Dono recomendado | Status |
 |---|---|---|
-| _Nenhuma no momento_ | - | - |
+| Fluxo de Preview Vercel | Codex | Criar doc, commit e branch de teste |
 
 ---
 
@@ -54,6 +55,7 @@
 | Melhorar Admin templates/status select | Codex | Preview local validado |
 | Refinar barra de contato Cleaning | Codex | Preview local validado |
 | Ajustes visuais Jewelry/Admin/Cleaning | Codex | Validado localmente, pendente publicacao |
+| Criar workflow de Preview Vercel | Codex | `VERCEL_PREVIEW_WORKFLOW.md` criado |
 
 ---
 
