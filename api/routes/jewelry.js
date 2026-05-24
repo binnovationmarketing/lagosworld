@@ -21,8 +21,10 @@ router.post('/orders', async (req, res) => {
         customer_phone,
         delivery_method,
         address,
-        total:  Number(total) || 0,
-        status: 'pending',
+        total:         Number(total) || 0,
+        subtotal:      Number(total) || 0,
+        shipping_cost: 0,
+        status:        'pending',
         payment_method: delivery_method || ''
       }])
       .select('id');
