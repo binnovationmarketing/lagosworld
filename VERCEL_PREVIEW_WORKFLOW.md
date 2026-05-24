@@ -38,6 +38,30 @@ Nunca usar `main` como area de experimentacao.
 | Preview Vercel | qualquer branch que nao seja `main` | URL gerada pela Vercel | Teste visual, copy, checkout, emails |
 | Local | maquina do Henrique | `http://127.0.0.1:PORT/...` | Desenvolvimento rapido |
 
+## Preview Atual
+
+Preview criado para teste:
+
+```text
+https://lagosworld-4ezii88ml-binnovationmarketings-projects.vercel.app
+```
+
+Status:
+
+```text
+Ready
+Target: preview
+Project: lagosworld
+Created: May 24, 2026
+```
+
+Observacao importante:
+
+- O preview esta protegido por **Vercel Authentication**.
+- Isso e bom para testar ideias antes de publicar.
+- Para abrir, use o navegador logado na conta Vercel/B Innovation Marketing.
+- Se quiser compartilhar com alguem sem login, crie um bypass token na Vercel ou desative Deployment Protection para Preview.
+
 ---
 
 ## Fluxo Recomendado para Novas Ideias
@@ -99,6 +123,8 @@ O link aparece em:
 2. GitHub -> branch/commit -> checks/deployments
 3. Pull Request, se um PR for criado
 
+Se o preview estiver protegido, o visitante vera uma tela de autenticacao da Vercel. Isso nao significa que o deploy falhou; significa que a protecao esta ativa.
+
 ---
 
 ## Como Criar um Link de Teste Manualmente
@@ -110,6 +136,12 @@ npx vercel login
 npx vercel pull --yes --environment preview
 npx vercel build
 npx vercel deploy --prebuilt
+```
+
+Ou, para um preview simples direto:
+
+```bash
+npx vercel deploy
 ```
 
 Isso retorna uma URL parecida com:
@@ -150,6 +182,14 @@ Exemplo:
 ```bash
 npx vercel promote https://lagosworld-git-jewelry-hero-polish-binnovationmarketing.vercel.app
 ```
+
+No preview atual, o comando seria:
+
+```bash
+npx vercel promote https://lagosworld-4ezii88ml-binnovationmarketings-projects.vercel.app
+```
+
+Use esse comando somente depois de aprovacao visual e funcional.
 
 ---
 
@@ -276,4 +316,3 @@ Use este padrao:
 6. So entao vai para `main`.
 
 Isso reduz risco, melhora qualidade e evita que producao vire laboratorio.
-

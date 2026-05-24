@@ -24,7 +24,7 @@
 
 | Tarefa | Dono recomendado | Status |
 |---|---|---|
-| Fluxo de Preview Vercel | Codex | Criar doc, commit e branch de teste |
+| _Nenhuma no momento_ | - | - |
 
 ---
 
@@ -56,6 +56,8 @@
 | Refinar barra de contato Cleaning | Codex | Preview local validado |
 | Ajustes visuais Jewelry/Admin/Cleaning | Codex | Validado localmente, pendente publicacao |
 | Criar workflow de Preview Vercel | Codex | `VERCEL_PREVIEW_WORKFLOW.md` criado |
+| Criar Preview Deployment Vercel | Codex | `https://lagosworld-4ezii88ml-binnovationmarketings-projects.vercel.app` Ready |
+| Fluxo de Preview Vercel | Codex | Documentado, branch de teste criado, preview Ready |
 
 ---
 

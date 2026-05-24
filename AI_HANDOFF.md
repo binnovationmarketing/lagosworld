@@ -36,30 +36,36 @@
   - `VERCEL_PREVIEW_WORKFLOW.md`
   - define `main` como producao e branches `codex/binnovationmarketing/*` como ambiente de teste;
   - documenta como gerar Preview URL, testar e promover para producao.
+- Criado Preview Deployment no projeto Vercel correto `lagosworld`:
+  - `https://lagosworld-4ezii88ml-binnovationmarketings-projects.vercel.app`
+  - target: `preview`
+  - status: `Ready`
+  - protegido por Vercel Authentication.
 
 ## Arquivos Alterados
 
 - `AI_HANDOFF.md`
 - `VERCEL_PREVIEW_WORKFLOW.md`
+- `.gitignore`
 
 ## Testes/Validacoes
 
-- Pendente nesta sessao:
-  - commit do workflow de preview;
-  - push de um branch de teste para acionar Preview Deployment da Vercel.
+- `npm run build`: ok
+- `npx vercel inspect lagosworld-4ezii88ml-binnovationmarketings-projects.vercel.app`: Ready / target preview
+- `curl` publico no preview retornou tela de Vercel Authentication, indicando Deployment Protection ativa.
 
 ## Pendencias
 
-- Criar e publicar branch de teste `codex/binnovationmarketing/preview-lab`.
-- Verificar no dashboard da Vercel se Preview Deployment foi criado.
+- Commitar atualizacao final do workflow com a URL de preview.
+- Se Henrique quiser abrir sem login, configurar bypass token ou ajustar Deployment Protection.
 
 ## Proximo Melhor Passo
 
-- Commitar `VERCEL_PREVIEW_WORKFLOW.md`.
-- Fazer push para `main` para registrar o processo.
-- Fazer push de branch preview para testar o fluxo.
+- Usar o preview para revisar mudancas antes de promover.
+- Para producao, usar `npx vercel promote <preview-url>` ou merge/push em `main`.
 
 ## Riscos
 
 - Sem `.vercel/project.json` local, nao da para recuperar URL exata do preview via CLI nesta maquina.
 - Vercel CLI local ainda pode exigir `npx vercel login` para logs e `vercel ls`.
+- Preview protegido exige login Vercel para abrir no navegador.
