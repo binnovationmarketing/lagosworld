@@ -60,21 +60,21 @@ module.exports = app;
 const nodemailer = require('nodemailer');
 
 app.post('/api/send-order', async (req, res) => {
-  try {
-    const { name, phone, email, address, zip, city, state, payment,
-            items, total, shipping, deliveryType, zelle_proof, notes } = req.body;
+  const { name, phone, email, address, zip, city, state, payment,
+          items, total, shipping, deliveryType, zelle_proof, notes } = req.body;
 
-    if (!email && !phone) return res.status(400).json({ error: 'email or phone required' });
+  if (!email && !phone) return res.status(400).json({ error: 'email or phone required' });
 
-    const itemRows = (items || []).map(i =>
-      `<tr><td style="padding:6px 12px">${i.name} ${i.variant ? '('+i.variant+')' : ''} ×${i.qty}</td><td style="padding:6px 12px;text-align:right">$${(i.price*i.qty).toFixed(2)}</td></tr>`
-    ).join('');
+  // ── 1. Build email HTML ────────────────────────────────────────────────────
+  const itemRows = (items || []).map(i =>
+    `<tr><td style="padding:6px 12px">${i.name} ${i.variant ? '('+i.variant+')' : ''} ×${i.qty}</td><td style="padding:6px 12px;text-align:right">$${(i.price*i.qty).toFixed(2)}</td></tr>`
+  ).join('');
 
-    const payInfo = payment === 'zelle'
-      ? `<p><strong>💸 Zelle:</strong> +1 (215) 626-2345 — Dayane Lago<br>Send proof to: dayane@lagosjewelry.com</p>`
-      : `<p><strong>💵 Cash:</strong> ${deliveryType === 'local' ? 'Same city — 4h delivery ($10 fee)' : 'Outside city — 6h delivery ($20 fee)'}</p>`;
+  const payInfo = payment === 'zelle'
+    ? `<p><strong>💸 Zelle:</strong> +1 (215) 626-2345 — Dayane Lago<br>Send proof to: dayane@lagosjewelry.com</p>`
+    : `<p><strong>💵 Cash:</strong> ${deliveryType === 'local' ? 'Same city — 4h delivery ($10 fee)' : 'Outside city — 6h delivery ($20 fee)'}</p>`;
 
-    const html = `
+  const html = `
 <!DOCTYPE html><html><body style="font-family:Georgia,serif;background:#faf6ee;padding:20px">
 <div style="max-width:580px;margin:0 auto;background:#111;color:#e4ddd0;padding:2rem;border:1px solid rgba(201,168,76,.3)">
   <div style="text-align:center;margin-bottom:1.5rem">
@@ -99,6 +99,55 @@ app.post('/api/send-order', async (req, res) => {
   <p style="font-size:.7rem;color:#8a8070;text-align:center">Lagos Jewelry · Philadelphia, PA · +1 (215) 626-2345</p>
 </div></body></html>`;
 
+  // ── 2. Save order to Supabase (non-blocking) ───────────────────────────────
+  try {
+    const subtotal = Number(total) - Number(shipping || 0);
+    const { data: orderData, error: orderErr } = await supabase
+      .from('jewelry_orders')
+      .insert([{
+        customer_name:  name,
+        customer_email: email  || '',
+        customer_phone: phone  || '',
+        delivery_method: deliveryType || payment || 'standard',
+        address,
+        city:    city  || '',
+        state:   state || '',
+        zip:     zip   || '',
+        payment_method:  payment || '',
+        shipping_cost:   Number(shipping) || 0,
+        subtotal:        subtotal > 0 ? subtotal : Number(total) || 0,
+        total:           Number(total)    || 0,
+        status: 'pending',
+        notes:  notes || ''
+      }])
+      .select('id')
+      .single();
+
+    if (!orderErr && orderData?.id) {
+      // Insert line items into order_items
+      const lineItems = (items || []).map(i => ({
+        order_id:     orderData.id,
+        product_name: i.name,
+        variant_desc: i.variant || '',
+        quantity:     Number(i.qty) || 1,
+        unit_price:   Number(i.price) || 0,
+        line_total:   (Number(i.qty) || 1) * (Number(i.price) || 0)
+      }));
+      if (lineItems.length > 0) {
+        await supabase.from('order_items').insert(lineItems);
+      }
+    } else if (orderErr) {
+      console.error('DB order save failed:', orderErr.message);
+    }
+  } catch (dbErr) {
+    console.error('DB save exception:', dbErr.message);
+  }
+
+  // ── 3. Respond immediately — email is fire-and-forget ──────────────────────
+  res.json({ ok: true, message: 'Order confirmed. Check your email!' });
+
+  // ── 4. Send emails non-blocking ────────────────────────────────────────────
+  try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
@@ -110,7 +159,6 @@ app.post('/api/send-order', async (req, res) => {
       if (matches) attachments.push({ filename: 'zelle_proof.jpg', content: matches[2], encoding: 'base64' });
     }
 
-    // Send to all admins
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: ['binnovationmarketing@gmail.com', 'dayanelago22@gmail.com'],
@@ -118,7 +166,6 @@ app.post('/api/send-order', async (req, res) => {
       html, attachments
     });
 
-    // Send confirmation to customer
     if (email) {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
@@ -127,31 +174,7 @@ app.post('/api/send-order', async (req, res) => {
         html
       });
     }
-
-    // Save order to Supabase (non-blocking — email always goes through)
-    try {
-      const orderItems = (items || []).map(i => ({
-        name: i.name, variant: i.variant || '', qty: i.qty, price: Number(i.price) || 0
-      }));
-      await supabase.from('jewelry_orders').insert([{
-        customer_name: name,
-        customer_email: email || '',
-        customer_phone: phone || '',
-        delivery_method: deliveryType || payment || 'standard',
-        address: [address, city, state, zip].filter(Boolean).join(', '),
-        items: orderItems,
-        total: Number(total) || 0,
-        status: 'pending',
-        payment_method: payment || '',
-        notes: notes || ''
-      }]);
-    } catch (dbErr) {
-      console.error('DB save failed (order still sent):', dbErr.message);
-    }
-
-    res.json({ ok: true, message: 'Order confirmed. Check your email!' });
-  } catch (err) {
-    console.error('send-order error:', err);
-    res.status(500).json({ error: 'Failed to send email. Order received via WhatsApp.' });
+  } catch (mailErr) {
+    console.error('Email failed (order already saved):', mailErr.message);
   }
 });

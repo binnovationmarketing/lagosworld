@@ -12,7 +12,7 @@ router.post('/orders', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Salvar no banco
+    // Salvar no banco — mapeia para schema correto (sem coluna items)
     const { data, error } = await req.supabase
       .from('jewelry_orders')
       .insert([{
@@ -21,13 +21,26 @@ router.post('/orders', async (req, res) => {
         customer_phone,
         delivery_method,
         address,
-        items: items,
-        total,
-        status: 'pending'
+        total:  Number(total) || 0,
+        status: 'pending',
+        payment_method: delivery_method || ''
       }])
-      .select();
+      .select('id');
 
     if (error) throw error;
+
+    // Salvar itens na tabela order_items
+    if (data?.[0]?.id && Array.isArray(items) && items.length > 0) {
+      const lineItems = items.map(i => ({
+        order_id:     data[0].id,
+        product_name: i.title || i.name || '',
+        variant_desc: i.sku   || '',
+        quantity:     Number(i.quantity || i.qty) || 1,
+        unit_price:   Number(i.price) || 0,
+        line_total:   (Number(i.quantity || i.qty) || 1) * (Number(i.price) || 0)
+      }));
+      await req.supabase.from('order_items').insert(lineItems);
+    }
 
     // Enviar email
     const htmlContent = `
@@ -41,20 +54,20 @@ router.post('/orders', async (req, res) => {
           ${address ? `<p><strong>Endereço:</strong> ${address}</p>` : ''}
           <h3>Itens:</h3>
           <ul>
-            ${items.map(item => `
+            ${(items || []).map(item => `
               <li>
-                ${item.title} (SKU: ${item.sku})
-                <br>Qty: ${item.quantity} x $${item.price.toFixed(2)}
-                <br>Subtotal: $${(item.quantity * item.price).toFixed(2)}
+                ${item.title || item.name} ${item.sku ? '(SKU: '+item.sku+')' : ''}
+                <br>Qty: ${item.quantity || item.qty} x $${Number(item.price).toFixed(2)}
+                <br>Subtotal: $${((item.quantity || item.qty) * item.price).toFixed(2)}
               </li>
             `).join('')}
           </ul>
-          <h3>Total: $${total.toFixed(2)}</h3>
+          <h3>Total: $${Number(total).toFixed(2)}</h3>
         </body>
       </html>
     `;
 
-    res.json({ success: true, order: data[0] });
+    res.json({ success: true, order: { ...data[0], customer_name, customer_email, total } });
 
     // Non-blocking — email failure never kills the response
     sendEmail(customer_email, 'New Jewelry Order', htmlContent, data)
