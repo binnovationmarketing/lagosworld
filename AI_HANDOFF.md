@@ -30,39 +30,49 @@
   - `🏗️ Como Criar um Negócio do Zero — Claude Code + Supabase + Vercel`
   - URL: `https://www.notion.so/36ad8cec1ce281428ae4dc0c4f0223d0?pvs=1`
 
-## Feito Nesta Sessao
+## Feito Nesta Sessao (2026-05-24)
 
-- Criado fluxo de Preview/Staging na Vercel:
-  - `VERCEL_PREVIEW_WORKFLOW.md`
-  - define `main` como producao e branches `codex/binnovationmarketing/*` como ambiente de teste;
-  - documenta como gerar Preview URL, testar e promover para producao.
-- Criado Preview Deployment no projeto Vercel correto `lagosworld`:
-  - `https://lagosworld-4ezii88ml-binnovationmarketings-projects.vercel.app`
-  - target: `preview`
-  - status: `Ready`
-  - protegido por Vercel Authentication.
+- Criado `/powerwashing` landing page para CH Elite Washing (v1 + v2):
+  - Commit v1: `b77fe2f` — pagina base com Motion.js, laranja + navy, logo SVG
+  - Commit v2: `fe3b45a` — UI/UX Pro Max upgrade completo:
+    - Split hero: texto esquerda / mosaic 2x2 direita (fotos reais Unsplash)
+    - Ticker marquee de trust signals no topo
+    - Todos emojis removidos → SVG inline
+    - Glassmorphism trust pills no hero
+    - Galeria de 5 fotos com hover overlay (driveway, house, deck, property, garage)
+    - Before/After drag slider interativo (clip-path)
+    - Mobile sticky bottom CTA bar (Quote + WhatsApp)
+    - Motion.js scroll animations (inView + stagger)
+  - `vercel.json` atualizado com rewrite `/powerwashing`
+  - WhatsApp: 2407806473
+  - Form endpoint: `/api/cleaning/requests` com `business: 'power_washing'`
+- Sincronizado local `main` com `origin/main` (git pull ff-only)
+- GitHub ruleset configurado: protect-main (restrict deletions + block force pushes)
 
 ## Arquivos Alterados
 
+- `public/powerwashing/index.html` (criado e reescrito v2)
+- `vercel.json` (adicionado rewrite /powerwashing)
 - `AI_HANDOFF.md`
-- `VERCEL_PREVIEW_WORKFLOW.md`
-- `.gitignore`
 
 ## Testes/Validacoes
 
-- `npm run build`: ok
-- `npx vercel inspect lagosworld-4ezii88ml-binnovationmarketings-projects.vercel.app`: Ready / target preview
-- `curl` publico no preview retornou tela de Vercel Authentication, indicando Deployment Protection ativa.
+- `git push origin main` OK — Vercel auto-deploy ativado em producao
+- URL em producao: `https://lagosworld.app/powerwashing`
 
-## Pendencias
+## Pendencias CRITICAS
 
-- Commitar atualizacao final do workflow com a URL de preview.
-- Se Henrique quiser abrir sem login, configurar bypass token ou ajustar Deployment Protection.
+- **Meta Pixel**: aguardando Pixel ID de Henrique (Facebook Business → Events Manager → Pixels)
+- **Google Business Profile**: acao manual de Henrique em business.google.com
+- **Cart tracking → Supabase**: localStorage atual nao funciona em producao. Requer endpoint POST + cron abandoned cart
+- **Stripe para Lagos Jewelry**: carrinho existe, sem pagamento. CRITICO para receita.
+- **Database reset**: Henrique decide — Opcao A (TRUNCATE data) ou Opcao B (DROP + recreate)
 
 ## Proximo Melhor Passo
 
-- Usar o preview para revisar mudancas antes de promover.
-- Para producao, usar `npx vercel promote <preview-url>` ou merge/push em `main`.
+- Stripe para Lagos Jewelry (maior impacto em receita)
+- Ou: Meta Pixel (Henrique fornece Pixel ID)
+- Ou: backend cart events para Supabase
 
 ## Riscos
 

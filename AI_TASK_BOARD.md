@@ -44,6 +44,9 @@
 
 | Tarefa | Dono | Evidencia |
 |---|---|---|
+| Landing page CH Elite Washing /powerwashing v1+v2 | Claude Code | Commit fe3b45a, live em lagosworld.app/powerwashing |
+| GitHub ruleset protect-main | Henrique/Claude Code | Restrict deletions + block force pushes ativo |
+| Sync main com origin/main | Claude Code | git pull ff-only ok |
 | Documentacao de replicacao Lagos World | Claude Code | 9 arquivos `.md` publicados |
 | Guia Notion zero-to-business | Claude Code | `https://www.notion.so/36ad8cec1ce281428ae4dc0c4f0223d0?pvs=1` |
 | Reconciliar worktree atrasado com `origin/main` | Codex | Commit `b6cb750` publicado |
