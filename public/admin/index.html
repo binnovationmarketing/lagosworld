@@ -255,6 +255,11 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
 /* EMPTY STATE */
 .empty{text-align:center;padding:4rem 2rem;color:var(--text-muted);font-size:.8rem}
 .empty-icon{font-size:2.5rem;margin-bottom:1rem;opacity:.5}
+/* PAGINATION */
+.pg-btn{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text-muted);width:32px;height:32px;font-size:.72rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .15s;display:inline-flex;align-items:center;justify-content:center}
+.pg-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.pg-btn:disabled{opacity:.3;cursor:default}
+.pg-btn.pg-active{background:var(--gold);color:var(--black);border-color:var(--gold);font-weight:700}
 
 @media(max-width:600px){
   .login-box{width:calc(100vw - 2rem);padding:1.8rem 1.5rem}
@@ -426,6 +431,7 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
       </div>
 
       <div class="products-grid" id="products-grid"></div>
+      <div id="pagination-wrap"></div>
     </div>
 
     <!-- ORDERS TAB -->
@@ -573,6 +579,8 @@ let imgsOv   = {};
 let videoOv  = {};
 let editingId = null;
 let filteredProducts = [];
+let currentPage = 1;
+const PAGE_SIZE = 50;
 
 // ── LOGIN ──
 function doLogin() {
@@ -660,6 +668,7 @@ function filterProducts() {
     const matchCat = !cat || p.cat === cat;
     return matchQ && matchCat;
   });
+  currentPage = 1;
   renderGrid();
 }
 
@@ -688,9 +697,15 @@ function renderGrid() {
   const grid = document.getElementById('products-grid');
   if (!filteredProducts.length) {
     grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🔍</div>No products match your search.</div>';
+    renderPagination();
     return;
   }
-  grid.innerHTML = filteredProducts.map(p => {
+  const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);
+  currentPage = Math.max(1, Math.min(currentPage, totalPages));
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filteredProducts.slice(start, start + PAGE_SIZE);
+
+  grid.innerHTML = pageItems.map(p => {
     const img = getProductImg(p);
     const price = getProductPrice(p);
     const mod = isModified(p);
@@ -705,6 +720,46 @@ function renderGrid() {
       ${mod ? `<div style="font-size:.55rem;color:var(--gold);margin-top:.4rem;letter-spacing:.1em">✎ Modified</div>` : ''}
     </div>`;
   }).join('');
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const wrap = document.getElementById('pagination-wrap');
+  if (!wrap) return;
+  const total = filteredProducts.length;
+  const totalPages = Math.ceil(total / PAGE_SIZE);
+  if (totalPages <= 1) { wrap.innerHTML = ''; return; }
+
+  const start = (currentPage - 1) * PAGE_SIZE + 1;
+  const end = Math.min(currentPage * PAGE_SIZE, total);
+
+  let pages = '';
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+      pages += `<button class="pg-btn${i===currentPage?' pg-active':''}" onclick="goPage(${i})">${i}</button>`;
+    } else if (Math.abs(i - currentPage) === 3) {
+      pages += `<span style="color:var(--text-muted);padding:0 .3rem">…</span>`;
+    }
+  }
+
+  wrap.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;padding:1rem 0">
+      <span style="font-size:.7rem;color:var(--text-muted)">Showing <strong style="color:var(--text)">${start}–${end}</strong> of <strong style="color:var(--gold)">${total}</strong> products</span>
+      <div style="display:flex;gap:.3rem;align-items:center">
+        <button class="pg-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>
+        ${pages}
+        <button class="pg-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>
+      </div>
+    </div>`;
+}
+
+function goPage(n) {
+  const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);
+  if (n < 1 || n > totalPages) return;
+  currentPage = n;
+  renderGrid();
+  document.getElementById('tab-products')?.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 // ── EDIT MODAL ──
