@@ -147,7 +147,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--tex
 .modal-x:hover{background:var(--gold);color:var(--black)}
 .modal-media{background:#0c0c0c;display:flex;flex-direction:column}
 .modal-img-wrap{position:relative;overflow:hidden;flex:1;min-height:300px}
-.modal-img-wrap::after{content:'✝ LAGOS JEWELRY';position:absolute;bottom:12px;left:12px;font-family:'Montserrat',sans-serif;font-size:.5rem;letter-spacing:.3em;color:rgba(255,255,255,.55);font-weight:600;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.8);z-index:2}
+.modal-img-wrap::after{content:'LW LAGOS JEWELRY';position:absolute;bottom:12px;left:12px;font-family:'Montserrat',sans-serif;font-size:.5rem;letter-spacing:.3em;color:rgba(255,255,255,.55);font-weight:600;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.8);z-index:2}
 .modal-main-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;cursor:zoom-in;min-height:300px}
 .modal-main-img.zoomed{transform:scale(1.8);cursor:zoom-out}
 .modal-nav{position:absolute;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;width:100%;padding:0 .5rem;pointer-events:none;z-index:5}
@@ -349,15 +349,23 @@ body{background:#ffffff!important;color:#2c2822!important}
 .nav-back-home:hover{color:#b8922e}
 
 /* HERO */
-.hero{background:#f5f2ec!important;min-height:75vh!important}
+.hero{background:
+  radial-gradient(circle at 50% 12%,rgba(212,168,76,.16),transparent 26%),
+  linear-gradient(180deg,#fbfaf7 0%,#f5f2ec 64%,#efe9de 100%)!important;
+  min-height:76vh!important}
 .hero-grid,.hero-glow,.particle,.hero-cross{display:none!important}
-.hero-title{background:linear-gradient(135deg,#8a6820,#b8922e,#d4a84c)!important;background-size:200% 200%!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important}
+.hero::before{content:'';position:absolute;inset:0;background:
+  linear-gradient(90deg,transparent 0%,rgba(184,146,46,.07) 50%,transparent 100%),
+  radial-gradient(ellipse at center bottom,rgba(184,146,46,.14),transparent 48%);
+  pointer-events:none}
+.hero-content{max-width:980px!important;padding:2rem 1.5rem!important}
+.hero-title{background:linear-gradient(135deg,#7c5b16,#a77d20,#d4a84c,#916b1b)!important;background-size:200% 200%!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;text-shadow:0 10px 42px rgba(184,146,46,.08);font-size:clamp(3.7rem,9.4vw,7.35rem)!important;letter-spacing:.13em!important;line-height:.98!important;padding-left:.13em!important}
 .hero-subtitle{color:#b8922e!important;opacity:1!important}
 .hero-verse{color:#7a7268!important}
 .hero-eyebrow{color:#b8922e!important}
 .hero-line{display:none!important}
-.hero-cta{border-color:#1a1a1a!important;color:#1a1a1a!important}
-.hero-cta::before{background:#1a1a1a!important}
+.hero-cta{border-color:#1a1a1a!important;color:#1a1a1a!important;background:rgba(255,255,255,.28)!important;box-shadow:0 10px 30px rgba(0,0,0,.04)!important}
+.hero-cta::before{background:linear-gradient(135deg,#151515,#2b251a)!important}
 .hero-cta:hover{color:#ffffff!important}
 .hero-scroll span{color:#7a7268!important}
 .hero-scroll-line{background:linear-gradient(#7a7268,transparent)!important}
@@ -382,9 +390,11 @@ body{background:#ffffff!important;color:#2c2822!important}
 .res-count{color:#7a7268!important}
 
 /* FILTERS */
-.fp{background:#ffffff!important;border-color:#e8e4dc!important;color:#7a7268!important}
+.filters{gap:.6rem!important}
+.fp{background:#ffffff!important;border-color:#e8e4dc!important;color:#7a7268!important;min-height:38px!important;box-shadow:0 6px 16px rgba(0,0,0,.025)!important}
 .fp::before{background:#1a1a1a!important}
 .fp:hover,.fp.active{border-color:#1a1a1a!important}
+.fp:hover span,.fp.active span{color:#ffffff!important}
 
 /* CARDS */
 .card{background:#ffffff!important;border:1px solid #e8e4dc!important}
@@ -484,13 +494,6 @@ body{background:#ffffff!important;color:#2c2822!important}
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
 
-  <!-- Dayane founder photo — left side -->
-  <div style="position:absolute;bottom:0;left:0;width:clamp(220px,28vw,400px);height:100%;z-index:1;pointer-events:none;display:flex;align-items:flex-end">
-    <img src="/images/dayane-1.png" alt="Dayane Lagos"
-         style="width:100%;height:auto;object-fit:cover;object-position:top center;mask-image:linear-gradient(to right,rgba(0,0,0,.85) 60%,transparent 100%);-webkit-mask-image:linear-gradient(to right,rgba(0,0,0,.85) 60%,transparent 100%)"
-         onerror="this.style.display='none'">
-  </div>
-
   <div class="hero-content">
     <p class="hero-eyebrow">Gold 18k · Hypoallergenic · 1 Year Warranty</p>
     <h1 class="hero-title">Lagos<br>Jewelry</h1>
@@ -531,17 +534,17 @@ body{background:#ffffff!important;color:#2c2822!important}
 <!-- CATALOG -->
 <div class="catalog-wrap" id="catalog">
   <div class="section-hero animate-in">
-    <span class="section-cross">✝</span>
+    <span class="section-cross">✦</span>
     <span class="section-eyebrow">✦ Full Collection ✦</span>
     <h2 class="section-title">Our Collection</h2>
     <span class="section-italic">Cada peça conta uma história de fé e elegância</span>
-    <div class="orn"><span></span><i>✝</i><span></span></div>
+    <div class="orn"><span></span><i>✦</i><span></span></div>
     <p class="section-verse">"Favor is deceitful, and beauty is vain: but a woman that feareth the Lord, she shall be praised." — Proverbs 31:30</p>
     <br>
     <p class="section-desc">Gold 18k semi-joias with rhodium plating, hypoallergenic process. 1 year warranty. Founded by Dayane Lago — from woman to woman.</p>
   </div>
 
-  <div class="ship-banner animate-in">✝ FREE SHIPPING on all orders over $200 · Anywhere in the United States ✝</div>
+  <div class="ship-banner animate-in">✦ FREE SHIPPING on all orders over $200 · Anywhere in the United States ✦</div>
 
   <div class="toolbar">
     <div class="search-wrap">
@@ -552,7 +555,7 @@ body{background:#ffffff!important;color:#2c2822!important}
   </div>
 
   <div class="filters">
-    <button class="fp active" onclick="filterCat('ALL',this)"><span>✝ All (512)</span></button>
+    <button class="fp active" onclick="filterCat('ALL',this)"><span>✦ All (512)</span></button>
     <button class="fp" onclick="filterCat('BRINCOS',this)"><span>💎 BRINCOS (183)</span></button>
     <button class="fp" onclick="filterCat('ANÉIS',this)"><span>💍 ANÉIS (101)</span></button>
     <button class="fp" onclick="filterCat('COLARES',this)"><span>📿 COLARES (84)</span></button>
@@ -574,7 +577,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9796197)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -595,7 +598,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(8974758)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -616,7 +619,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(8974874)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -637,7 +640,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9043384)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -658,7 +661,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9103257)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -679,7 +682,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9105593)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -700,7 +703,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9182678)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -721,7 +724,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9182680)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -742,7 +745,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9249080)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -763,7 +766,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9249112)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -784,7 +787,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9368857)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -805,7 +808,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9456991)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -826,7 +829,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9457018)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -847,7 +850,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9457020)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -868,7 +871,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-new">New</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9457022)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -889,7 +892,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9457028)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -910,7 +913,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9460711)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -931,7 +934,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9569665)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -952,7 +955,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9569679)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -973,7 +976,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9569689)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -994,7 +997,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9569813)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1015,7 +1018,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9574962)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1036,7 +1039,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9575069)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1057,7 +1060,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9575092)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1078,7 +1081,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9575099)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1099,7 +1102,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9666790)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1120,7 +1123,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9796204)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1141,7 +1144,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9828242)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1162,7 +1165,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9828657)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1183,7 +1186,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9828673)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1204,7 +1207,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9829341)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1225,7 +1228,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9829433)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1246,7 +1249,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9831380)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1267,7 +1270,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9249113)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1288,7 +1291,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9868225)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1309,7 +1312,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9868238)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1330,7 +1333,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9869180)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1351,7 +1354,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9869205)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1372,7 +1375,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9870001)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1393,7 +1396,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9870743)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1414,7 +1417,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9976088)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1435,7 +1438,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9976114)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1456,7 +1459,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9986244)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1477,7 +1480,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9986250)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1498,7 +1501,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10002304)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1519,7 +1522,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10002496)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1540,7 +1543,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10002513)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1561,7 +1564,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10002637)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1582,7 +1585,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10002969)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1603,7 +1606,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10083331)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1624,7 +1627,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10083448)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1645,7 +1648,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10083454)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1666,7 +1669,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10084372)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1687,7 +1690,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10084406)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1708,7 +1711,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10084554)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1729,7 +1732,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10137956)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1750,7 +1753,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10249009)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1771,7 +1774,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10249162)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1792,7 +1795,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-hot">Premium</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10249511)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1813,7 +1816,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10249567)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1834,7 +1837,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10250876)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1855,7 +1858,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10250880)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1876,7 +1879,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10251501)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1897,7 +1900,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10255644)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1918,7 +1921,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9574826)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1939,7 +1942,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10279045)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1960,7 +1963,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10350046)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -1981,7 +1984,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10410923)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2002,7 +2005,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10410934)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2023,7 +2026,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10411026)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2044,7 +2047,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10411051)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2065,7 +2068,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10411149)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2086,7 +2089,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10411158)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2107,7 +2110,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413249)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2128,7 +2131,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413332)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2149,7 +2152,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413368)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2170,7 +2173,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413391)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2191,7 +2194,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413438)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2212,7 +2215,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413467)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2233,7 +2236,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413470)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2254,7 +2257,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413509)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2275,7 +2278,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413513)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2296,7 +2299,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413552)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2317,7 +2320,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413593)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2338,7 +2341,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413598)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2359,7 +2362,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413778)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2380,7 +2383,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413864)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2401,7 +2404,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413945)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2422,7 +2425,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10414802)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2443,7 +2446,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10414820)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2464,7 +2467,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10414861)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2485,7 +2488,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10415346)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2506,7 +2509,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10511424)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2527,7 +2530,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10511535)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2548,7 +2551,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530045)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2569,7 +2572,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530086)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2590,7 +2593,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530602)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2611,7 +2614,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530609)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2632,7 +2635,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530637)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2653,7 +2656,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530650)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2674,7 +2677,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9573020)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2695,7 +2698,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-hot">Premium</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586343)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2716,7 +2719,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586414)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2737,7 +2740,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586562)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2758,7 +2761,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586619)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2779,7 +2782,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586643)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2800,7 +2803,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586670)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2821,7 +2824,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586693)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2842,7 +2845,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586705)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2863,7 +2866,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586737)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2884,7 +2887,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10586739)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2905,7 +2908,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10587818)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2926,7 +2929,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10587842)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2947,7 +2950,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10587844)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2968,7 +2971,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10587972)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -2989,7 +2992,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588016)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3010,7 +3013,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588343)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3031,7 +3034,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588361)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3052,7 +3055,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588384)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3073,7 +3076,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588409)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3094,7 +3097,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588424)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3115,7 +3118,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588431)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3136,7 +3139,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588440)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3157,7 +3160,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671110)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3178,7 +3181,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671120)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3199,7 +3202,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671175)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3220,7 +3223,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671179)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3241,7 +3244,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671182)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3262,7 +3265,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671186)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3283,7 +3286,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671187)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3304,7 +3307,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671194)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3325,7 +3328,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671198)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3346,7 +3349,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671204)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3367,7 +3370,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671263)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3388,7 +3391,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671285)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3409,7 +3412,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671300)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3430,7 +3433,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671306)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3451,7 +3454,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671309)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3472,7 +3475,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10671372)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3493,7 +3496,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10704275)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3514,7 +3517,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10704301)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3535,7 +3538,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10704943)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3556,7 +3559,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705002)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3577,7 +3580,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705139)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3598,7 +3601,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705145)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3619,7 +3622,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705165)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3640,7 +3643,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705222)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3661,7 +3664,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705262)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3682,7 +3685,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705275)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3703,7 +3706,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705303)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3724,7 +3727,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705306)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3745,7 +3748,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705386)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3766,7 +3769,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705406)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3787,7 +3790,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705423)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3808,7 +3811,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705711)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3829,7 +3832,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705746)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3850,7 +3853,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705750)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3871,7 +3874,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705765)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3892,7 +3895,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705822)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3913,7 +3916,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705832)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3934,7 +3937,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705881)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3955,7 +3958,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705905)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3976,7 +3979,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705932)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -3997,7 +4000,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10706010)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4018,7 +4021,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10706106)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4039,7 +4042,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10706212)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4060,7 +4063,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10706379)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4081,7 +4084,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10706396)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4102,7 +4105,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10706403)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4123,7 +4126,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10710454)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4144,7 +4147,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10084511)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4165,7 +4168,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10934403)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4186,7 +4189,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10934604)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4207,7 +4210,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10934605)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4228,7 +4231,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10934706)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4249,7 +4252,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10934807)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4270,7 +4273,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10935008)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4291,7 +4294,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10963585)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4312,7 +4315,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10963868)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4333,7 +4336,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10964575)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4354,7 +4357,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10966048)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4375,7 +4378,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10967507)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4396,7 +4399,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10967900)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4417,7 +4420,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10968101)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4438,7 +4441,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10968300)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4459,7 +4462,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10968780)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4480,7 +4483,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10968962)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4501,7 +4504,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10969560)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4522,7 +4525,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10970152)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4543,7 +4546,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10970353)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4564,7 +4567,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10970454)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4585,7 +4588,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10971619)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4606,7 +4609,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10971913)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4627,7 +4630,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10972098)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4648,7 +4651,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10972285)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4669,7 +4672,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10972482)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4690,7 +4693,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10972680)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4711,7 +4714,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10973200)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4732,7 +4735,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10973501)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4753,7 +4756,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10973803)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4774,7 +4777,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10974867)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4795,7 +4798,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10975056)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4816,7 +4819,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10975661)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4837,7 +4840,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10975845)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4858,7 +4861,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10976137)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4879,7 +4882,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9249079)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4900,7 +4903,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093720)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4921,7 +4924,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093722)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4942,7 +4945,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093727)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4963,7 +4966,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093730)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -4984,7 +4987,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093731)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5005,7 +5008,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093736)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5026,7 +5029,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093739)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5047,7 +5050,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093741)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5068,7 +5071,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093747)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5089,7 +5092,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093756)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5110,7 +5113,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093759)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5131,7 +5134,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093766)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5152,7 +5155,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093776)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5173,7 +5176,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093780)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5194,7 +5197,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093786)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5215,7 +5218,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093788)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5236,7 +5239,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093803)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5257,7 +5260,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093809)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5278,7 +5281,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093813)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5299,7 +5302,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093815)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5320,7 +5323,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093822)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5341,7 +5344,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093920)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5362,7 +5365,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093906)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5383,7 +5386,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11094016)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5404,7 +5407,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11094019)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5425,7 +5428,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11094022)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5446,7 +5449,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11094025)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5467,7 +5470,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11094028)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5488,7 +5491,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150210)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5509,7 +5512,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150215)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5530,7 +5533,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150218)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5551,7 +5554,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150221)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5572,7 +5575,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150244)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5593,7 +5596,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150248)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5614,7 +5617,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150283)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5635,7 +5638,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150305)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5656,7 +5659,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150312)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5677,7 +5680,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150319)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5698,7 +5701,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150403)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5719,7 +5722,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150407)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5740,7 +5743,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150438)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5761,7 +5764,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150505)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5782,7 +5785,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150547)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5803,7 +5806,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150580)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5824,7 +5827,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150731)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5845,7 +5848,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150743)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5866,7 +5869,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150802)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5887,7 +5890,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150824)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5908,7 +5911,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150830)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5929,7 +5932,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11150985)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5950,7 +5953,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151027)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5971,7 +5974,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151196)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -5992,7 +5995,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151217)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6013,7 +6016,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151219)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6034,7 +6037,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151422)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6055,7 +6058,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151506)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6076,7 +6079,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151511)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6097,7 +6100,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151539)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6118,7 +6121,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151584)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6139,7 +6142,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151593)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6160,7 +6163,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151600)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6181,7 +6184,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151827)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6202,7 +6205,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151837)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6223,7 +6226,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151857)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6244,7 +6247,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151871)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6265,7 +6268,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11151944)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6286,7 +6289,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11152123)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6307,7 +6310,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11152226)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6328,7 +6331,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11152631)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6349,7 +6352,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11152700)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6370,7 +6373,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11152779)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6391,7 +6394,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11152934)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6412,7 +6415,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11152939)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6433,7 +6436,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11153238)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6454,7 +6457,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203714)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6475,7 +6478,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203718)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6496,7 +6499,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203744)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6517,7 +6520,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203749)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6538,7 +6541,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203760)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6559,7 +6562,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203778)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6580,7 +6583,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203785)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6601,7 +6604,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203791)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6622,7 +6625,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203848)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6643,7 +6646,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203863)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6664,7 +6667,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203895)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6685,7 +6688,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203903)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6706,7 +6709,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203910)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6727,7 +6730,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203928)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6748,7 +6751,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203944)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6769,7 +6772,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11203995)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6790,7 +6793,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204144)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6811,7 +6814,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204171)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6832,7 +6835,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204178)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6853,7 +6856,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204194)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6874,7 +6877,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204202)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6895,7 +6898,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204457)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6916,7 +6919,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204718)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6937,7 +6940,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204724)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6958,7 +6961,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204726)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -6979,7 +6982,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204728)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7000,7 +7003,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204729)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7021,7 +7024,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204730)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7042,7 +7045,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204731)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7063,7 +7066,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204733)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7084,7 +7087,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204735)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7105,7 +7108,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204737)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7126,7 +7129,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204739)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7147,7 +7150,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204741)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7168,7 +7171,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204742)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7189,7 +7192,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204745)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7210,7 +7213,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204746)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7231,7 +7234,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11204749)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7252,7 +7255,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11223486)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7273,7 +7276,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11223500)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7294,7 +7297,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11223640)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7315,7 +7318,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225677)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7336,7 +7339,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225679)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7357,7 +7360,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225685)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7378,7 +7381,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225712)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7399,7 +7402,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225746)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7420,7 +7423,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225765)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7441,7 +7444,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11294159)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7462,7 +7465,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11294862)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7483,7 +7486,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11294952)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7504,7 +7507,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11294997)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7525,7 +7528,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295114)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7546,7 +7549,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-hot">Premium</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295117)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7567,7 +7570,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295129)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7588,7 +7591,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295241)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7609,7 +7612,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295630)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7630,7 +7633,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295768)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7651,7 +7654,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295815)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7672,7 +7675,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295848)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7693,7 +7696,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296005)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7714,7 +7717,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296037)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7735,7 +7738,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296118)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7756,7 +7759,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296163)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7777,7 +7780,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296310)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7798,7 +7801,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296588)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7819,7 +7822,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296610)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7840,7 +7843,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296648)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7861,7 +7864,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296656)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7882,7 +7885,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296796)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7903,7 +7906,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296802)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7924,7 +7927,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296878)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7945,7 +7948,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296892)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7966,7 +7969,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296902)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -7987,7 +7990,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298617)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8008,7 +8011,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298637)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8029,7 +8032,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298645)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8050,7 +8053,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298689)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8071,7 +8074,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298716)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8092,7 +8095,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298723)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8113,7 +8116,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298728)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8134,7 +8137,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298740)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8155,7 +8158,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298767)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8176,7 +8179,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298792)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8197,7 +8200,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11298809)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8218,7 +8221,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11300795)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8239,7 +8242,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313532)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8260,7 +8263,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313555)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8281,7 +8284,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313560)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8302,7 +8305,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-hot">Premium</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313567)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8323,7 +8326,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313572)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8344,7 +8347,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313584)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8365,7 +8368,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313594)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8386,7 +8389,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313647)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8407,7 +8410,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313654)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8428,7 +8431,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11313692)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8449,7 +8452,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329051)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8470,7 +8473,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329127)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8491,7 +8494,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329133)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8512,7 +8515,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329137)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8533,7 +8536,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329139)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8554,7 +8557,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329171)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8575,7 +8578,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329176)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8596,7 +8599,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329197)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8617,7 +8620,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329202)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8638,7 +8641,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329212)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8659,7 +8662,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329341)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8680,7 +8683,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329346)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8701,7 +8704,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329355)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8722,7 +8725,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329362)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8743,7 +8746,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329372)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8764,7 +8767,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329475)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8785,7 +8788,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329488)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8806,7 +8809,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329521)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8827,7 +8830,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329555)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8848,7 +8851,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11329493)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8869,7 +8872,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349399)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8890,7 +8893,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349417)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8911,7 +8914,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349419)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8932,7 +8935,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349444)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8953,7 +8956,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349449)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8974,7 +8977,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349452)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -8995,7 +8998,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349454)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9016,7 +9019,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349455)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9037,7 +9040,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349507)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9058,7 +9061,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349512)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9079,7 +9082,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349669)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9100,7 +9103,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349670)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9121,7 +9124,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349677)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9142,7 +9145,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349681)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9163,7 +9166,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349685)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9184,7 +9187,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349692)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9205,7 +9208,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349693)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9226,7 +9229,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349695)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9247,7 +9250,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373538)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9268,7 +9271,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373548)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9289,7 +9292,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373594)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9310,7 +9313,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-hot">Premium</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373610)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9331,7 +9334,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-hot">Premium</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373623)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9352,7 +9355,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373631)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9373,7 +9376,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373646)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9394,7 +9397,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373661)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9415,7 +9418,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373666)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9436,7 +9439,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373671)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9457,7 +9460,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373674)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9478,7 +9481,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11373681)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9499,7 +9502,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11379432)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9520,7 +9523,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11379498)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9541,7 +9544,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11349542)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9562,7 +9565,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10974381)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9583,7 +9586,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10410831)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9604,7 +9607,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225742)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9625,7 +9628,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9868194)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9646,7 +9649,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530606)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9667,7 +9670,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10587814)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9688,7 +9691,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295413)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9709,7 +9712,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10511422)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9730,7 +9733,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10963262)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9751,7 +9754,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11394203)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9772,7 +9775,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11394206)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9793,7 +9796,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395218)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9814,7 +9817,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395241)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9835,7 +9838,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395256)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9856,7 +9859,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395276)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9877,7 +9880,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395290)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9898,7 +9901,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395397)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9919,7 +9922,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395469)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9940,7 +9943,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395477)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9961,7 +9964,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395488)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -9982,7 +9985,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395501)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10003,7 +10006,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395639)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10024,7 +10027,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395643)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10045,7 +10048,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395834)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10066,7 +10069,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11396147)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10087,7 +10090,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397253)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10108,7 +10111,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397260)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10129,7 +10132,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397282)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10150,7 +10153,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397493)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10171,7 +10174,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397268)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10192,7 +10195,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11395848)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10213,7 +10216,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397494)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10234,7 +10237,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397495)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10255,7 +10258,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397496)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10276,7 +10279,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397497)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10297,7 +10300,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397498)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10318,7 +10321,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397499)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10339,7 +10342,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397500)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10360,7 +10363,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397502)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10381,7 +10384,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397504)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10402,7 +10405,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397506)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10423,7 +10426,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397507)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10444,7 +10447,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397508)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10465,7 +10468,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11397510)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10486,7 +10489,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11422666)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10507,7 +10510,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11422677)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10528,7 +10531,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11433047)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10549,7 +10552,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11437151)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10570,7 +10573,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9460676)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10591,7 +10594,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9571977)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10612,7 +10615,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9796203)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10633,7 +10636,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9868236)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10654,7 +10657,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-hot">Premium</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10346443)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10675,7 +10678,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10410913)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10696,7 +10699,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10413375)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10717,7 +10720,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10415460)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10738,7 +10741,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10415505)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10759,7 +10762,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530074)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10780,7 +10783,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10530246)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10801,7 +10804,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9182644)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10822,7 +10825,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9182657)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10843,7 +10846,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588416)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10864,7 +10867,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588439)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10885,7 +10888,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588445)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10906,7 +10909,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10588451)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10927,7 +10930,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10704686)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10948,7 +10951,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705321)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10969,7 +10972,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705860)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -10990,7 +10993,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10706203)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11011,7 +11014,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(9182665)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11032,7 +11035,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10966425)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11053,7 +11056,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10971318)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11074,7 +11077,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10974774)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11095,7 +11098,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10975258)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11116,7 +11119,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10083456)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11137,7 +11140,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(10705292)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11158,7 +11161,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11093795)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11179,7 +11182,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225658)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11200,7 +11203,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225662)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11221,7 +11224,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11225709)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11242,7 +11245,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11294160)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11263,7 +11266,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <span class="card-badge badge-set">Set</span>
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11295227)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11284,7 +11287,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296818)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
@@ -11305,7 +11308,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     
     <div class="card-action">
       <button class="quick-add" onclick="event.stopPropagation();openModal(11296832)">
-        <span>✝</span><span>View Details</span>
+        <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>

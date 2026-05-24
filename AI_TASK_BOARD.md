@@ -49,6 +49,11 @@
 | Confirmar API em producao | Codex | `/api/health` retornou 200 |
 | Criar `SESSION_START_PROMPT.md` | Codex | Prompt rapido para abrir qualquer nova janela |
 | Estrutura Claude Code + Codex no repo | Codex | `AI_COLLABORATION_SYSTEM.md`, `AI_HANDOFF.md`, `AI_TASK_BOARD.md` criados |
+| Remover foto da Dayane do hero Jewelry | Codex | Hero validada localmente sem foto |
+| Corrigir contraste dos filtros Jewelry | Codex | Botao ativo preto agora usa texto branco |
+| Melhorar Admin templates/status select | Codex | Preview local validado |
+| Refinar barra de contato Cleaning | Codex | Preview local validado |
+| Ajustes visuais Jewelry/Admin/Cleaning | Codex | Validado localmente, pendente publicacao |
 
 ---
 

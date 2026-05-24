@@ -32,38 +32,39 @@
 
 ## Feito Nesta Sessao
 
-- Criado sistema de colaboracao Claude Code + Codex:
-  - `AI_COLLABORATION_SYSTEM.md`
-  - `AI_HANDOFF.md`
-  - `AI_TASK_BOARD.md`
-  - `SESSION_START_PROMPT.md`
+- Ajustes visuais no Jewelry, Cleaning e Admin:
+  - removida foto da Dayane no hero do Jewelry;
+  - corrigido contraste do filtro ativo preto no Jewelry;
+  - refinada hero do Jewelry com fundo premium e tipografia mais controlada;
+  - trocados simbolos de cruz visiveis por `LW`/`✦` em pontos graficos do Jewelry;
+  - melhorado visual dos cards de contato do Cleaning;
+  - melhorados selects de status e cards de email template no Admin.
 
 ## Arquivos Alterados
 
-- `AI_COLLABORATION_SYSTEM.md`
 - `AI_HANDOFF.md`
-- `AI_TASK_BOARD.md`
-- `SESSION_START_PROMPT.md`
+- `public/jewelry/index.html`
+- `public/cleaning/index.html`
+- `public/admin/index.html`
 
 ## Testes/Validacoes
 
-- Pendente apos criacao destes arquivos:
-  - `git status --short --branch`
-  - commit e push dos documentos de colaboracao
+- `npm run build`: ok
+- Preview local via `http://127.0.0.1:4177/public/jewelry/index.html#top`: hero sem foto validada visualmente.
+- Preview local dos filtros Jewelry: filtro ativo agora com texto branco legivel.
+- Preview local do Admin Templates: cards e inputs mais legiveis.
+- Preview local da barra de contato Cleaning: cards refinados.
 
 ## Pendencias
 
-- Confirmar se Henrique quer tambem replicar esta estrutura no Notion.
-- Opcional: criar template de issue/task por fase no GitHub.
-- Opcional: criar uma pagina Notion espelhando o protocolo.
+- Verificar em producao apos deploy Vercel.
 
 ## Proximo Melhor Passo
 
-- Commitar e publicar estes arquivos.
-- Em toda proxima sessao, iniciar lendo `AI_COLLABORATION_SYSTEM.md`, `AI_HANDOFF.md` e `AI_TASK_BOARD.md`.
+- Fazer commit/push dos ajustes visuais.
+- Depois do deploy, conferir `https://lagosworld.app/jewelry`.
 
 ## Riscos
 
-- Duas IAs editarem o mesmo arquivo sem commit intermediario.
-- Uma janela antiga estar atrasada em relacao ao `origin/main`.
-- Deploy depender de Vercel CLI local; se o token estiver invalido, usar GitHub push + dashboard Vercel.
+- Diff do `public/jewelry/index.html` ficou grande porque muitos cards repetidos trocaram simbolo visual em `View Details`.
+- Vercel CLI local ainda pode exigir `npx vercel login` para logs.
