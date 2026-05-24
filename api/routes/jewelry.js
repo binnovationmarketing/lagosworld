@@ -54,9 +54,11 @@ router.post('/orders', async (req, res) => {
       </html>
     `;
 
-    await sendEmail(customer_email, 'New Jewelry Order', htmlContent, data);
-
     res.json({ success: true, order: data[0] });
+
+    // Non-blocking — email failure never kills the response
+    sendEmail(customer_email, 'New Jewelry Order', htmlContent, data)
+      .catch(e => console.error('Email failed (order saved):', e.message));
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });

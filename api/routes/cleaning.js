@@ -46,9 +46,11 @@ router.post('/requests', async (req, res) => {
       </html>
     `;
 
-    await sendEmail(customer_email, 'Cleaning Service Request Received', htmlContent, data);
-
     res.json({ success: true, request: data[0] });
+
+    // Non-blocking — email failure never kills the response
+    sendEmail(customer_email, 'Cleaning Service Request Received', htmlContent, data)
+      .catch(e => console.error('Email failed (request saved):', e.message));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -105,9 +107,11 @@ router.post('/professionals', async (req, res) => {
       </html>
     `;
 
-    await sendEmail(email, 'Professional Registration Received', htmlContent, data);
-
     res.json({ success: true, professional: data[0] });
+
+    // Non-blocking — email failure never kills the response
+    sendEmail(email, 'Professional Registration Received', htmlContent, data)
+      .catch(e => console.error('Email failed (professional saved):', e.message));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
