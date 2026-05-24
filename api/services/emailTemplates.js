@@ -8,6 +8,22 @@ const BASE_URL = 'https://lagosworld.app';
 
 // ── Shared wrapper ────────────────────────────────────────────────────────────
 function wrap(content, previewText = '') {
+  // LW monogram circle — inline SVG encoded as data URI (no external dependency)
+  const lwCircle = `
+    <!-- LW Circle Logo -->
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 18px">
+      <tr><td style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#b8922e 0%,#e8c96a 50%,#b8922e 100%);text-align:center;vertical-align:middle;border:1px solid rgba(201,168,76,.6);box-shadow:0 0 24px rgba(201,168,76,.25)">
+        <span style="display:block;font-size:26px;color:#0d0d0d;font-family:Georgia,serif;font-weight:bold;letter-spacing:-1px;line-height:72px">LW</span>
+      </td></tr>
+    </table>`;
+
+  // Subtle LW watermark — repeated in body background
+  const watermarkRow = `
+    <!-- LW Watermark strip -->
+    <tr><td style="padding:0 40px 6px;text-align:center">
+      <div style="font-size:72px;color:rgba(201,168,76,.05);font-family:Georgia,serif;font-weight:bold;letter-spacing:8px;line-height:1;user-select:none;pointer-events:none;overflow:hidden;height:70px">LW&nbsp;&nbsp;LW&nbsp;&nbsp;LW</div>
+    </td></tr>`;
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,37 +36,30 @@ ${previewText ? `<span style="display:none;max-height:0;overflow:hidden;mso-hide
 <body style="margin:0;padding:0;background:#f5f0e8;font-family:Georgia,serif">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f0e8;padding:32px 16px">
   <tr><td align="center">
-    <table role="presentation" width="100%" style="max-width:580px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:2px">
+    <table role="presentation" width="100%" style="max-width:580px;background:#0d0d0d;border:1px solid rgba(201,168,76,.3);border-radius:2px;box-shadow:0 8px 40px rgba(0,0,0,.6)">
 
       <!-- HEADER -->
-      <tr><td style="padding:32px 40px 20px;text-align:center;border-bottom:1px solid rgba(201,168,76,.15)">
-        <!-- LW Monogram Logo -->
-        <div style="margin-bottom:14px">
-          <img src="https://lagosworld.app/images/lw-logo.png" alt="LW" width="64" height="64"
-               style="display:inline-block;width:64px;height:64px;border:0"
-               onerror="this.style.display='none'">
-          <!--[if !mso]><!-->
-          <div style="display:none;font-size:0;max-height:0" aria-hidden="true">
-            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto">
-              <tr><td style="width:64px;height:64px;background:#0d0d0d;border:1px solid rgba(201,168,76,.3);text-align:center;vertical-align:middle">
-                <span style="font-size:32px;color:#c9a84c;font-family:Georgia,serif;font-style:italic;font-weight:bold;letter-spacing:-2px">LW</span>
-              </td></tr>
-            </table>
-          </div>
-          <!--<![endif]-->
-        </div>
-        <div style="font-size:11px;letter-spacing:4px;color:#8a7a5e;font-family:Georgia,serif;margin-bottom:8px">✝</div>
-        <div style="font-size:26px;letter-spacing:6px;color:#c9a84c;font-family:Georgia,serif;font-weight:normal">LAGOS</div>
-        <div style="font-size:9px;letter-spacing:8px;color:#8a7a5e;margin-top:4px;font-family:Georgia,serif">J E W E L R Y</div>
+      <tr><td style="padding:36px 40px 24px;text-align:center;border-bottom:1px solid rgba(201,168,76,.15);background:linear-gradient(180deg,#141414 0%,#0d0d0d 100%)">
+        ${lwCircle}
+        <div style="font-size:26px;letter-spacing:7px;color:#c9a84c;font-family:Georgia,serif;font-weight:normal;text-transform:uppercase">Lagos</div>
+        <div style="font-size:9px;letter-spacing:9px;color:#8a7a5e;margin-top:5px;font-family:Georgia,serif;text-transform:uppercase">J&nbsp;E&nbsp;W&nbsp;E&nbsp;L&nbsp;R&nbsp;Y</div>
+        <div style="margin-top:14px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5),transparent)"></div>
       </td></tr>
 
+      <!-- LW WATERMARK (top of body) -->
+      ${watermarkRow}
+
       <!-- BODY -->
-      <tr><td style="padding:36px 40px">
+      <tr><td style="padding:10px 40px 36px">
         ${content}
       </td></tr>
 
+      <!-- LW WATERMARK (bottom of body) -->
+      ${watermarkRow}
+
       <!-- FOOTER -->
-      <tr><td style="padding:24px 40px 36px;border-top:1px solid rgba(201,168,76,.15);text-align:center">
+      <tr><td style="padding:20px 40px 36px;border-top:1px solid rgba(201,168,76,.15);text-align:center;background:linear-gradient(0deg,#141414 0%,#0d0d0d 100%)">
+        <div style="font-size:18px;color:rgba(201,168,76,.3);letter-spacing:4px;font-family:Georgia,serif;margin-bottom:12px">✦ LW ✦</div>
         <p style="font-size:11px;color:#5a4e3c;letter-spacing:1px;margin:0 0 8px;font-family:Georgia,serif;font-style:italic">
           "She is clothed with strength and dignity" — Proverbs 31:25
         </p>
