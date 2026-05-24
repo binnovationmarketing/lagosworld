@@ -11478,7 +11478,7 @@ body{background:#ffffff!important;color:#2c2822!important}
       <!-- ZELLE INFO -->
       <div class="pay-info" id="info-zelle">
         <strong>💸 Zelle — Instant Transfer</strong><br>
-        Send to: <strong>+1 (215) 626-2345 — Dayane Lago</strong><br>
+        Send to: <strong>+12156262345 — Dayane Lago</strong><br>
         After confirmation, your order ships immediately.<br>
         Please upload your payment proof below.
       </div>
@@ -11933,7 +11933,7 @@ async function submitOrder(){
   document.getElementById('co-success').style.display='block';
   document.getElementById('suc-name').textContent=name;
   document.getElementById('suc-pay-info').innerHTML=selPayment==='zelle'
-    ?'💸 Send via Zelle to: <strong>+1 (215) 626-2345 — Dayane Lago</strong>'
+    ?'💸 Send via Zelle to: <strong>+12156262345 — Dayane Lago</strong>'
     :'💵 Cash payment on delivery.';
   setTimeout(()=>window.open('https://wa.me/12156262345?text='+waMsg,'_blank'),800);
 }

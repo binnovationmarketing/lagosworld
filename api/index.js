@@ -71,7 +71,7 @@ app.post('/api/send-order', async (req, res) => {
   ).join('');
 
   const payInfo = payment === 'zelle'
-    ? `<p><strong>💸 Zelle:</strong> +1 (215) 626-2345 — Dayane Lago<br>Send proof to: dayane@lagosjewelry.com</p>`
+    ? `<p><strong>💸 Zelle:</strong> +1 (215) 626-2345 — Dayane Lago<br>Send proof via WhatsApp: <strong>+1 (215) 626-2345</strong> or email: binnovationmarketing@gmail.com</p>`
     : `<p><strong>💵 Cash:</strong> ${deliveryType === 'local' ? 'Same city — 4h delivery ($10 fee)' : 'Outside city — 6h delivery ($20 fee)'}</p>`;
 
   const html = `
@@ -96,7 +96,7 @@ app.post('/api/send-order', async (req, res) => {
   ${notes ? `<p><strong>Notes:</strong> ${notes}</p>` : ''}
   ${zelle_proof ? `<p><strong>Zelle proof attached.</strong></p>` : ''}
   <hr style="border:none;border-top:1px solid rgba(201,168,76,.2);margin:1rem 0">
-  <p style="font-size:.7rem;color:#8a8070;text-align:center">Lagos Jewelry · Philadelphia, PA · +1 (215) 626-2345</p>
+  <p style="font-size:.7rem;color:#8a8070;text-align:center">Lagos Jewelry · Philadelphia, PA · +12156262345 · binnovationmarketing@gmail.com</p>
 </div></body></html>`;
 
   // ── 2. Save order to Supabase (non-blocking) ───────────────────────────────
