@@ -42,6 +42,30 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Lagos Platform API running' });
 });
 
+// Newsletter subscribe
+app.post('/api/newsletter/subscribe', async (req, res) => {
+  const { email, name, source } = req.body;
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ error: 'Valid email required' });
+  }
+  try {
+    const { error } = await supabase
+      .from('newsletter_subscribers')
+      .upsert([{
+        email: email.toLowerCase().trim(),
+        name: name || null,
+        source: source || 'website',
+        subscribed_at: new Date().toISOString(),
+        active: true
+      }], { onConflict: 'email' });
+    if (error) throw error;
+    res.json({ ok: true, message: 'Subscribed!' });
+  } catch (err) {
+    console.error('Newsletter subscribe error:', err.message);
+    res.status(500).json({ error: 'Could not save subscription' });
+  }
+});
+
 // Error Handler
 app.use((err, req, res, next) => {
   console.error(err);

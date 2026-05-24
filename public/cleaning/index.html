@@ -1043,7 +1043,7 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
         <div class="ba-images">
           <div class="ba-side">
             <span class="ba-label before">Before</span>
-            <img src="https://images.unsplash.com/photo-1595433706256-8b1f3a2d4cc9?w=600&h=450&q=85&auto=format&fit=crop" alt="Bathroom before cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?w=600&h=450&q=85&auto=format&fit=crop" alt="Bathroom before cleaning" loading="lazy">
           </div>
           <div class="ba-side">
             <span class="ba-label after">After</span>
@@ -1077,7 +1077,7 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
         <div class="ba-images">
           <div class="ba-side">
             <span class="ba-label before">Before</span>
-            <img src="https://images.unsplash.com/photo-1493951534030-7a2b08c30b8c?w=600&h=450&q=85&auto=format&fit=crop" alt="Living room before cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=600&h=450&q=85&auto=format&fit=crop" alt="Living room before cleaning" loading="lazy">
           </div>
           <div class="ba-side">
             <span class="ba-label after">After</span>
@@ -1193,6 +1193,7 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
             <option value="power_full">CH ELITE Full Property Package</option>
           </select>
         </div>
+        <div class="fg"><label>Street Address (optional)</label><input type="text" name="street_address" placeholder="123 Main St"></div>
         <div class="form-row">
           <div class="fg"><label>City / Zip *</label><input type="text" name="city" required placeholder="Philadelphia / 19103"></div>
           <div class="fg"><label>State *</label>
@@ -1202,6 +1203,17 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
               <option value="NJ">New Jersey (NJ)</option>
             </select>
           </div>
+        </div>
+        <div class="fg"><label>Service Recurrence</label>
+          <select name="recurrence">
+            <option value="">One-time service</option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Bi-weekly (every 2 weeks)</option>
+            <option value="monthly">Monthly</option>
+            <option value="quarterly">Quarterly</option>
+            <option value="semi-annual">Semi-annual</option>
+            <option value="annual">Annual</option>
+          </select>
         </div>
         <div class="fg"><label>Preferred Date</label><input type="date" name="preferred_date"></div>
         <div class="fg"><label>Additional Details</label><textarea name="notes" placeholder="Home size, specific areas, access instructions, questions..."></textarea></div>
@@ -1294,6 +1306,35 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
   <a href="#booking" class="btn btn-primary">📅 Book Now</a>
 </div>
 
+<!-- NEWSLETTER POPUP -->
+<div id="newsletter-popup" style="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;transition:opacity .4s;pointer-events:none">
+  <div style="background:#fff;max-width:480px;width:100%;border-radius:12px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.3);position:relative;transform:translateY(20px);transition:transform .4s">
+    <!-- Image header -->
+    <div style="height:200px;overflow:hidden;position:relative">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&h=400&q=85&auto=format&fit=crop" alt="Clean home" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,116,144,.85) 0%,rgba(0,0,0,.2) 100%)"></div>
+      <div style="position:absolute;bottom:1rem;left:1.5rem;right:1.5rem;color:#fff">
+        <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;opacity:.9;margin-bottom:.3rem">🏡 Lagos Cleaning — PA & NJ</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;line-height:1.2">Your Home Deserves to Feel Like New</div>
+      </div>
+      <button onclick="closeNewsletter()" style="position:absolute;top:.75rem;right:.75rem;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">×</button>
+    </div>
+    <!-- Body -->
+    <div style="padding:1.5rem 1.8rem 1.8rem">
+      <p style="font-size:.88rem;color:#374151;line-height:1.65;margin-bottom:1.2rem">Join <strong>500+ PA & NJ homeowners</strong> getting exclusive cleaning deals, seasonal tips, and first-access offers — straight to their inbox. No spam, ever.</p>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <input type="text" id="nl-name" placeholder="Your first name" style="padding:.75rem 1rem;border:1.5px solid #E5E7EB;border-radius:6px;font-family:'Inter',sans-serif;font-size:.83rem;outline:none;width:100%;transition:border-color .2s" onfocus="this.style.borderColor='#0891B2'" onblur="this.style.borderColor='#E5E7EB'">
+        <input type="email" id="nl-email" placeholder="your@email.com" style="padding:.75rem 1rem;border:1.5px solid #E5E7EB;border-radius:6px;font-family:'Inter',sans-serif;font-size:.83rem;outline:none;width:100%;transition:border-color .2s" onfocus="this.style.borderColor='#0891B2'" onblur="this.style.borderColor='#E5E7EB'">
+        <button onclick="submitNewsletter()" id="nl-btn" style="padding:.85rem;background:#0891B2;color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s" onmouseover="this.style.background='#0E7490'" onmouseout="this.style.background='#0891B2'">
+          🎉 Yes! Send Me Exclusive Deals
+        </button>
+      </div>
+      <p style="font-size:.65rem;color:#9CA3AF;text-align:center;margin-top:.75rem">🔒 No spam. Unsubscribe anytime. We respect your privacy.</p>
+      <button onclick="closeNewsletter()" style="display:block;width:100%;background:none;border:none;color:#9CA3AF;font-size:.7rem;cursor:pointer;margin-top:.4rem;font-family:'Inter',sans-serif">No thanks, I don't want deals</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // FAQ TOGGLE
 function toggleFaq(el) {
@@ -1322,7 +1363,9 @@ async function submitBooking(e) {
     customer_email: form.get('email'),
     customer_phone: form.get('phone'),
     service_type: form.get('service_type'),
-    address: form.get('city') + ', ' + form.get('state'),
+    street_address: form.get('street_address') || null,
+    recurrence: form.get('recurrence') || null,
+    address: (form.get('street_address') ? form.get('street_address') + ', ' : '') + form.get('city') + ', ' + form.get('state'),
     description: form.get('notes') || null,
     preferred_date: form.get('preferred_date') || null,
     promo_code: form.get('promo_code') || null
@@ -1352,6 +1395,47 @@ window.addEventListener('scroll', () => {
   document.querySelector('nav').style.boxShadow = window.scrollY > 20
     ? '0 4px 20px rgba(0,0,0,.1)' : '0 1px 3px rgba(0,0,0,.06)';
 });
+
+// NEWSLETTER POPUP
+(function(){
+  if (localStorage.getItem('nl_shown')) return;
+  setTimeout(() => {
+    const popup = document.getElementById('newsletter-popup');
+    const inner = popup.querySelector('div');
+    popup.style.opacity = '1';
+    popup.style.pointerEvents = 'all';
+    inner.style.transform = 'translateY(0)';
+  }, 2500);
+})();
+
+function closeNewsletter() {
+  const popup = document.getElementById('newsletter-popup');
+  popup.style.opacity = '0';
+  popup.style.pointerEvents = 'none';
+  localStorage.setItem('nl_shown', '1');
+}
+
+async function submitNewsletter() {
+  const name = document.getElementById('nl-name').value.trim();
+  const email = document.getElementById('nl-email').value.trim();
+  const btn = document.getElementById('nl-btn');
+  if (!email || !email.includes('@')) {
+    document.getElementById('nl-email').style.borderColor = '#DC2626';
+    return;
+  }
+  btn.textContent = 'Subscribing...';
+  btn.disabled = true;
+  try {
+    await fetch('/api/newsletter/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, source: 'cleaning-popup' })
+    });
+  } catch(e) { /* silent — subscriber still gets closed */ }
+  btn.textContent = '✅ You\'re In! Check your inbox.';
+  btn.style.background = '#16A34A';
+  setTimeout(closeNewsletter, 2000);
+}
 </script>
 </body>
 </html>

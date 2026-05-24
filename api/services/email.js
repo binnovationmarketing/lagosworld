@@ -150,4 +150,65 @@ async function processDueEmails(supabase) {
   return { sent, total: due.length };
 }
 
-module.exports = { sendEmail, sendOrderEmails, processDueEmails, ADMINS, FROM };
+// ── Cleaning request confirmation ─────────────────────────────────────────────
+async function sendCleaningConfirmation(requestData) {
+  const {
+    customer_name, customer_email, customer_phone,
+    service_type, recurrence, address, city,
+    preferred_date, description
+  } = requestData;
+
+  const firstName = (customer_name || '').split(' ')[0];
+  const transporter = createTransporter();
+  const from = FROM();
+
+  const customerHtml = `
+<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;background:#f0fdff;padding:20px">
+<div style="max-width:560px;margin:0 auto;background:#fff;padding:2rem;border-radius:8px;border-top:4px solid #20B2AA">
+  <h2 style="color:#20B2AA">🧹 Request Confirmed!</h2>
+  <p>Hi <strong>${firstName}</strong>,</p>
+  <p>We received your cleaning request and will contact you within <strong>2 hours</strong> to confirm your appointment.</p>
+  <table style="width:100%;font-size:.9rem;border-collapse:collapse;margin:1rem 0">
+    <tr style="background:#f0fdff"><td style="padding:8px 12px;font-weight:bold">Service</td><td style="padding:8px 12px">${service_type}</td></tr>
+    <tr><td style="padding:8px 12px;font-weight:bold">Frequency</td><td style="padding:8px 12px">${recurrence || 'One-time'}</td></tr>
+    <tr style="background:#f0fdff"><td style="padding:8px 12px;font-weight:bold">Address</td><td style="padding:8px 12px">${address || '—'}${city ? ', ' + city : ''}</td></tr>
+    <tr><td style="padding:8px 12px;font-weight:bold">Preferred Date</td><td style="padding:8px 12px">${preferred_date || 'Flexible'}</td></tr>
+  </table>
+  <p style="color:#666;font-size:.85rem">Questions? Call or text us: <strong>+1 (215) 626-2345</strong></p>
+  <p style="color:#20B2AA;font-weight:bold">— Lagos Cleaning Team</p>
+</div></body></html>`;
+
+  const adminHtml = `
+<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;background:#f4f4f4;padding:20px">
+<div style="max-width:560px;margin:0 auto;background:#fff;padding:2rem;border-radius:8px;border-top:4px solid #20B2AA">
+  <h2 style="color:#20B2AA">🔔 New Cleaning Lead</h2>
+  <p><strong>Name:</strong> ${customer_name}</p>
+  <p><strong>Email:</strong> ${customer_email}</p>
+  <p><strong>Phone:</strong> ${customer_phone || '—'}</p>
+  <p><strong>Service:</strong> ${service_type}</p>
+  <p><strong>Frequency:</strong> ${recurrence || 'One-time'}</p>
+  <p><strong>Address:</strong> ${address || '—'}${city ? ', ' + city : ''}</p>
+  <p><strong>Date:</strong> ${preferred_date || 'Flexible'}</p>
+  <p><strong>Notes:</strong> ${description || '—'}</p>
+</div></body></html>`;
+
+  // Admin notification
+  await transporter.sendMail({
+    from, to: ADMINS,
+    subject: `🧹 New Cleaning Request — ${customer_name}`,
+    html: adminHtml
+  });
+
+  // Customer confirmation
+  if (customer_email && !ADMINS.includes(customer_email)) {
+    await transporter.sendMail({
+      from, to: customer_email,
+      subject: '🧹 Your Cleaning Request — Lagos Cleaning',
+      html: customerHtml
+    });
+  }
+
+  console.log(`Cleaning emails sent — ${customer_name} (${customer_email})`);
+}
+
+module.exports = { sendEmail, sendOrderEmails, processDueEmails, sendCleaningConfirmation, ADMINS, FROM };

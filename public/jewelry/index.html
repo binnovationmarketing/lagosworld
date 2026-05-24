@@ -12016,6 +12016,72 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')modalPrev();
   else if(e.key==='ArrowRight')modalNext();
 });
+
+// NEWSLETTER POPUP
+(function(){
+  if (localStorage.getItem('nl_shown')) return;
+  setTimeout(() => {
+    const popup = document.getElementById('newsletter-popup');
+    const inner = popup.querySelector('div');
+    popup.style.opacity = '1';
+    popup.style.pointerEvents = 'all';
+    inner.style.transform = 'translateY(0)';
+  }, 2500);
+})();
+
+function closeNewsletter() {
+  const popup = document.getElementById('newsletter-popup');
+  popup.style.opacity = '0';
+  popup.style.pointerEvents = 'none';
+  localStorage.setItem('nl_shown', '1');
+}
+
+async function submitNewsletter() {
+  const name = document.getElementById('nl-name').value.trim();
+  const email = document.getElementById('nl-email').value.trim();
+  const btn = document.getElementById('nl-btn');
+  if (!email || !email.includes('@')) {
+    document.getElementById('nl-email').style.borderColor = '#c9a84c';
+    return;
+  }
+  btn.textContent = 'Subscribing...';
+  btn.disabled = true;
+  try {
+    await fetch('/api/newsletter/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, source: 'jewelry-popup' })
+    });
+  } catch(e) { /* silent */ }
+  btn.textContent = "✅ You're In! Welcome to the VIP List!";
+  btn.style.background = '#16A34A';
+  btn.style.color = '#fff';
+  setTimeout(closeNewsletter, 2000);
+}
 </script>
+
+<!-- NEWSLETTER POPUP -->
+<div id="newsletter-popup" style="position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;transition:opacity .4s;pointer-events:none;backdrop-filter:blur(4px)">
+  <div style="background:#0c0c0c;border:1px solid rgba(201,168,76,.25);max-width:440px;width:100%;position:relative;transform:translateY(20px);transition:transform .4s">
+    <div style="height:3px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.8),transparent)"></div>
+    <div style="padding:2rem 2rem 2.2rem">
+      <button onclick="closeNewsletter()" style="position:absolute;top:.75rem;right:.75rem;width:32px;height:32px;background:none;border:1px solid rgba(201,168,76,.25);color:rgba(201,168,76,.7);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>
+      <div style="text-align:center;margin-bottom:1.2rem">
+        <div style="font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(201,168,76,.7);margin-bottom:.6rem">Lagos Jewelry</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:#c9a84c;line-height:1.2;margin-bottom:.5rem">Wear What Speaks to Your Soul</div>
+        <p style="font-size:.78rem;color:#9a9080;line-height:1.7">Be the first to discover new collections, exclusive VIP offers, and styling inspiration crafted for women who know their worth.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <input type="text" id="nl-name" placeholder="Your first name" style="padding:.75rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);color:#e4ddd0;font-family:'Montserrat',sans-serif;font-size:.8rem;outline:none;width:100%">
+        <input type="email" id="nl-email" placeholder="your@email.com" style="padding:.75rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);color:#e4ddd0;font-family:'Montserrat',sans-serif;font-size:.8rem;outline:none;width:100%">
+        <button onclick="submitNewsletter()" id="nl-btn" style="padding:.85rem;background:#c9a84c;color:#0a0a0a;border:none;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s" onmouseover="this.style.background='#d4b86a'" onmouseout="this.style.background='#c9a84c'">
+          ✦ Unlock VIP Access
+        </button>
+      </div>
+      <p style="font-size:.6rem;color:#5a5248;text-align:center;margin-top:.75rem;letter-spacing:.05em">No spam. Only pieces worth your attention. Unsubscribe anytime.</p>
+      <button onclick="closeNewsletter()" style="display:block;width:100%;background:none;border:none;color:#5a5248;font-size:.62rem;cursor:pointer;margin-top:.3rem;font-family:'Montserrat',sans-serif;letter-spacing:.05em">No thanks</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

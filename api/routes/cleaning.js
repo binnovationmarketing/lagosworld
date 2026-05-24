@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { sendEmail } = require('../services/email');
+const { sendEmail, sendCleaningConfirmation } = require('../services/email');
 
 // POST: Criar solicitação de limpeza (Cliente)
 router.post('/requests', async (req, res) => {
   try {
-    const { customer_name, customer_email, customer_phone, service_type, employment_type, address, description, preferred_date, estimated_hours } = req.body;
+    const {
+      customer_name, customer_email, customer_phone,
+      service_type, employment_type,
+      address, city, recurrence,
+      description, preferred_date, estimated_hours
+    } = req.body;
 
-    if (!customer_name || !customer_email || !service_type || !address) {
+    if (!customer_name || !customer_email || !service_type) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
@@ -20,6 +25,8 @@ router.post('/requests', async (req, res) => {
         service_type,
         employment_type,
         address,
+        city,
+        recurrence,
         description,
         preferred_date,
         estimated_hours,
@@ -29,27 +36,10 @@ router.post('/requests', async (req, res) => {
 
     if (error) throw error;
 
-    const htmlContent = `
-      <html>
-        <body style="font-family: Arial, sans-serif;">
-          <h2>Nova Solicitação de Limpeza</h2>
-          <p><strong>Cliente:</strong> ${customer_name}</p>
-          <p><strong>Email:</strong> ${customer_email}</p>
-          <p><strong>Telefone:</strong> ${customer_phone}</p>
-          <p><strong>Tipo de Serviço:</strong> ${service_type}</p>
-          <p><strong>Tipo de Emprego:</strong> ${employment_type || 'N/A'}</p>
-          <p><strong>Endereço:</strong> ${address}</p>
-          <p><strong>Descrição:</strong> ${description || 'N/A'}</p>
-          <p><strong>Data Preferida:</strong> ${preferred_date || 'N/A'}</p>
-          <p><strong>Horas Estimadas:</strong> ${estimated_hours || 'N/A'}</p>
-        </body>
-      </html>
-    `;
-
     res.json({ success: true, request: data[0] });
 
     // Non-blocking — email failure never kills the response
-    sendEmail(customer_email, 'Cleaning Service Request Received', htmlContent, data)
+    sendCleaningConfirmation({ customer_name, customer_email, customer_phone, service_type, recurrence, address, city, preferred_date, description })
       .catch(e => console.error('Email failed (request saved):', e.message));
   } catch (error) {
     res.status(500).json({ error: error.message });
