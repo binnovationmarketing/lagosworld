@@ -13,5 +13,8 @@
     { "source": "/jewelry", "destination": "/jewelry/index.html" },
     { "source": "/cleaning", "destination": "/cleaning/index.html" },
     { "source": "/courses", "destination": "/courses/index.html" }
+  ],
+  "crons": [
+    { "path": "/api/cron/emails", "schedule": "0 13 * * *" }
   ]
 }

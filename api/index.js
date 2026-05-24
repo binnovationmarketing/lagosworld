@@ -5,6 +5,7 @@ const { createClient } = require('@supabase/supabase-js');
 const jewelryRoutes = require('./routes/jewelry');
 const cleaningRoutes = require('./routes/cleaning');
 const coursesRoutes = require('./routes/courses');
+const cronRoutes = require('./routes/cron');
 const { sendEmail } = require('./services/email');
 
 const app = express();
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 app.use('/api/jewelry', jewelryRoutes);
 app.use('/api/cleaning', cleaningRoutes);
 app.use('/api/courses', coursesRoutes);
+app.use('/api/cron', cronRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -57,7 +59,7 @@ if (require.main === module) {
 module.exports = app;
 
 // Order email confirmation
-const nodemailer = require('nodemailer');
+const { sendOrderEmails } = require('./services/email');
 
 app.post('/api/send-order', async (req, res) => {
   const { name, phone, email, address, zip, city, state, payment,
@@ -99,43 +101,42 @@ app.post('/api/send-order', async (req, res) => {
   <p style="font-size:.7rem;color:#8a8070;text-align:center">Lagos Jewelry · Philadelphia, PA · +12156262345 · binnovationmarketing@gmail.com</p>
 </div></body></html>`;
 
-  // ── 2. Save order to Supabase (non-blocking) ───────────────────────────────
+  // ── 2. Save order to Supabase ─────────────────────────────────────────────
+  let orderId = null;
   try {
     const subtotal = Number(total) - Number(shipping || 0);
     const { data: orderData, error: orderErr } = await supabase
       .from('jewelry_orders')
       .insert([{
-        customer_name:  name,
-        customer_email: email  || '',
-        customer_phone: phone  || '',
+        customer_name:   name,
+        customer_email:  email  || '',
+        customer_phone:  phone  || '',
         delivery_method: deliveryType || payment || 'standard',
         address,
-        city:    city  || '',
-        state:   state || '',
-        zip:     zip   || '',
+        city:            city  || '',
+        state:           state || '',
+        zip:             zip   || '',
         payment_method:  payment || '',
         shipping_cost:   Number(shipping) || 0,
         subtotal:        subtotal > 0 ? subtotal : Number(total) || 0,
-        total:           Number(total)    || 0,
-        status: 'pending',
-        notes:  notes || ''
+        total:           Number(total) || 0,
+        status:          'pending',
+        notes:           notes || ''
       }])
       .select('id')
       .single();
 
     if (!orderErr && orderData?.id) {
-      // Insert line items into order_items
+      orderId = orderData.id;
       const lineItems = (items || []).map(i => ({
-        order_id:     orderData.id,
+        order_id:     orderId,
         product_name: i.name,
         variant_desc: i.variant || '',
         quantity:     Number(i.qty) || 1,
         unit_price:   Number(i.price) || 0
-        // line_total is GENERATED ALWAYS — omit from insert
+        // line_total is GENERATED ALWAYS — omit
       }));
-      if (lineItems.length > 0) {
-        await supabase.from('order_items').insert(lineItems);
-      }
+      if (lineItems.length) await supabase.from('order_items').insert(lineItems);
     } else if (orderErr) {
       console.error('DB order save failed:', orderErr.message);
     }
@@ -143,42 +144,12 @@ app.post('/api/send-order', async (req, res) => {
     console.error('DB save exception:', dbErr.message);
   }
 
-  // ── 3. Respond immediately — email is fire-and-forget ──────────────────────
+  // ── 3. Respond immediately ────────────────────────────────────────────────
   res.json({ ok: true, message: 'Order confirmed. Check your email!' });
 
-  // ── 4. Send emails non-blocking ────────────────────────────────────────────
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-    });
-
-    const attachments = [];
-    if (zelle_proof) {
-      const matches = zelle_proof.match(/^data:(.+);base64,(.+)$/);
-      if (matches) attachments.push({ filename: 'zelle_proof.jpg', content: matches[2], encoding: 'base64' });
-    }
-
-    const from = `"Lagos World Pedidos" <${process.env.EMAIL_USER}>`;
-    const ADMINS = ['binnovationmarketing@gmail.com'];
-
-    await transporter.sendMail({
-      from,
-      to: ADMINS,
-      subject: `COMPRA REALIZADA LAGOS WORLD - ${name}`,
-      html, attachments
-    });
-
-    // Customer confirmation — only if email differs from admin list
-    if (email && !ADMINS.includes(email)) {
-      await transporter.sendMail({
-        from,
-        to: email,
-        subject: `✝ Pedido Confirmado — Lagos Jewelry — ${name}`,
-        html
-      });
-    }
-  } catch (mailErr) {
-    console.error('Email failed (order already saved):', mailErr.message);
-  }
+  // ── 4. Send premium emails + queue post-purchase sequence (non-blocking) ──
+  sendOrderEmails({
+    name, phone, email, address, city, state, zip,
+    payment, items, total, shipping, deliveryType, notes, orderId
+  }, supabase).catch(e => console.error('Email dispatch failed:', e.message));
 });
