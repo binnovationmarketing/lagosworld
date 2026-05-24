@@ -593,7 +593,8 @@ function logout() {
 document.getElementById('pw-inp').focus();
 
 // ── INIT ──
-function initApp() {
+async function initApp() {
+  // Load from localStorage first (instant render)
   priceOv      = JSON.parse(localStorage.getItem(LS_PRICES)         || '{}');
   descOv       = JSON.parse(localStorage.getItem(LS_DESC)           || '{}');
   imgsOv       = JSON.parse(localStorage.getItem(LS_IMGS)           || '{}');
@@ -607,6 +608,28 @@ function initApp() {
   updateStats();
   filterProducts();
   loadDashboard();
+
+  // Then sync from Supabase (source of truth) — overrides localStorage
+  try {
+    const r = await fetch('/api/jewelry/overrides');
+    if (r.ok) {
+      const rows = await r.json();
+      rows.forEach(row => {
+        const pid = row.product_id;
+        if (row.price_overrides) Object.assign(priceOv, row.price_overrides);
+        if (row.description !== null && row.description !== undefined) descOv[pid] = row.description;
+        if (Array.isArray(row.images) && row.images.length) imgsOv[pid] = row.images;
+        if (row.video_url) videoOv[pid] = row.video_url;
+      });
+      // Sync back to localStorage as cache
+      localStorage.setItem(LS_PRICES, JSON.stringify(priceOv));
+      localStorage.setItem(LS_DESC,   JSON.stringify(descOv));
+      localStorage.setItem(LS_IMGS,   JSON.stringify(imgsOv));
+      localStorage.setItem(LS_VIDEOS, JSON.stringify(videoOv));
+      updateStats();
+      filterProducts();
+    }
+  } catch(e) { console.warn('Override sync from API failed, using localStorage:', e.message); }
 }
 
 function updateStats() {
@@ -877,7 +900,28 @@ function saveProduct() {
   else { delete videoOv[editingId]; }
   localStorage.setItem(LS_VIDEOS, JSON.stringify(videoOv));
 
-  showToast('✓ Product saved successfully');
+  // Persist to Supabase (source of truth for all devices)
+  const thisProductPrices = {};
+  const p2 = (window.PRODUCTS_ADMIN || []).find(x => x.id === editingId);
+  if (p2) {
+    (p2.variacoes || []).forEach(v => {
+      const key = editingId + '_' + v.id;
+      if (priceOv[key] !== undefined) thisProductPrices[key] = priceOv[key];
+    });
+  }
+  fetch(`/api/jewelry/overrides/${editingId}`, {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      price_overrides: thisProductPrices,
+      description:     descOv[editingId] ?? null,
+      images:          imgsOv[editingId] || [],
+      video_url:       videoOv[editingId] || null
+    })
+  }).then(r => r.ok ? console.log('Override saved to Supabase') : r.json().then(e => console.warn('Supabase save failed:', e.error)))
+    .catch(e => console.warn('Override sync failed:', e.message));
+
+  showToast('✓ Product saved — synced to all devices');
   closeModal();
   updateStats();
   filterProducts();

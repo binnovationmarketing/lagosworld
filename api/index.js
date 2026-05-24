@@ -48,11 +48,14 @@ app.post('/api/newsletter/subscribe', async (req, res) => {
   if (!email || !email.includes('@')) {
     return res.status(400).json({ error: 'Valid email required' });
   }
+  const cleanEmail = email.toLowerCase().trim();
+  const firstName = (name || cleanEmail.split('@')[0]).split(' ')[0];
+
   try {
     const { error } = await supabase
       .from('newsletter_subscribers')
       .upsert([{
-        email: email.toLowerCase().trim(),
+        email: cleanEmail,
         name: name || null,
         source: source || 'website',
         subscribed_at: new Date().toISOString(),
@@ -60,6 +63,35 @@ app.post('/api/newsletter/subscribe', async (req, res) => {
       }], { onConflict: 'email' });
     if (error) throw error;
     res.json({ ok: true, message: 'Subscribed!' });
+
+    // Non-blocking: welcome email to subscriber + admin notification
+    const { sendEmail } = require('./services/email');
+    const { FROM } = require('./services/email');
+    const nodemailer = require('nodemailer');
+    const t = require('./services/emailTemplates');
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+      pool: true
+    });
+    const from = `"Lagos World" <${process.env.EMAIL_USER}>`;
+
+    // Welcome email to subscriber
+    transporter.sendMail({
+      from, to: cleanEmail,
+      subject: '✝ Welcome to Lagos — Your World of Jewelry Begins Here',
+      html: t.welcome(firstName)
+    }).catch(e => console.error('Newsletter welcome email failed:', e.message));
+
+    // Admin notification
+    transporter.sendMail({
+      from,
+      to: 'binnovationmarketing@gmail.com',
+      subject: `📧 New Newsletter Subscriber — ${cleanEmail}`,
+      html: `<p><strong>New subscriber:</strong> ${name || '(no name)'} &lt;${cleanEmail}&gt;</p><p><strong>Source:</strong> ${source || 'website'}</p>`
+    }).catch(e => console.error('Newsletter admin notify failed:', e.message));
+
   } catch (err) {
     console.error('Newsletter subscribe error:', err.message);
     res.status(500).json({ error: 'Could not save subscription' });

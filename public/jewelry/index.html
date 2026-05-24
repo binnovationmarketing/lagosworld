@@ -11547,6 +11547,64 @@ let priceOv = JSON.parse(localStorage.getItem('lj_prices')||'{}');
 let descOv  = JSON.parse(localStorage.getItem('lj_desc')  ||'{}');
 let imgsOv  = JSON.parse(localStorage.getItem('lj_imgs')  ||'{}');
 let videoOv = JSON.parse(localStorage.getItem('lj_videos')||'{}');
+
+// ── Sync overrides from Supabase (source of truth) ───────────────────────────
+(async function syncOverrides() {
+  try {
+    const r = await fetch('/api/jewelry/overrides');
+    if (!r.ok) return;
+    const rows = await r.json();
+    if (!rows.length) return;
+
+    rows.forEach(row => {
+      const pid = row.product_id;
+      if (row.price_overrides) Object.assign(priceOv, row.price_overrides);
+      if (row.description !== null && row.description !== undefined) descOv[pid] = row.description;
+      if (Array.isArray(row.images) && row.images.length) imgsOv[pid] = row.images;
+      if (row.video_url) videoOv[pid] = row.video_url;
+    });
+
+    // Update localStorage cache
+    localStorage.setItem('lj_prices', JSON.stringify(priceOv));
+    localStorage.setItem('lj_desc',   JSON.stringify(descOv));
+    localStorage.setItem('lj_imgs',   JSON.stringify(imgsOv));
+    localStorage.setItem('lj_videos', JSON.stringify(videoOv));
+
+    // Patch card thumbnails and prices in DOM
+    document.querySelectorAll('.card').forEach(card => {
+      const btn = card.querySelector('[onclick*="openModal"]');
+      if (!btn) return;
+      const m = (btn.getAttribute('onclick') || '').match(/\d+/);
+      if (!m) return;
+      const pid = Number(m[0]);
+
+      // Update card thumbnail if admin set custom images
+      const imgs = imgsOv[pid];
+      if (imgs && imgs.length) {
+        const main = card.querySelector('.card-img');
+        const hover = card.querySelector('.card-img-b');
+        if (main) main.src = imgs[0];
+        if (hover) hover.src = imgs[1] || imgs[0];
+        const countEl = card.querySelector('.img-count');
+        if (countEl) countEl.textContent = `📷 ${imgs.length} foto${imgs.length > 1 ? 's' : ''}`;
+      }
+
+      // Update card price display
+      const prod = PRODUCTS.find(p => p.id === pid);
+      if (prod) {
+        const varPrices = prod.variacoes.map(v => priceOv[pid+'_'+v.id] ?? v.price);
+        const minPrice = Math.min(...varPrices);
+        const maxPrice = Math.max(...varPrices);
+        const priceEl = card.querySelector('.price-val');
+        if (priceEl) {
+          priceEl.textContent = minPrice === maxPrice
+            ? `$${minPrice.toFixed(2)}`
+            : `$${minPrice.toFixed(2)} – $${maxPrice.toFixed(2)}`;
+        }
+      }
+    });
+  } catch(e) { /* silent fallback to localStorage */ }
+})();
 let cart = [];
 let curCat = 'ALL', curSearch = '';
 let modalProd = null, modalImgIdx = 0, selVar = null;

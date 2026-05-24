@@ -112,4 +112,42 @@ router.patch('/orders/:id', async (req, res) => {
   }
 });
 
+// ── Product overrides (prices, images, description, video) ───────────────────
+// GET /api/jewelry/overrides — return all rows
+router.get('/overrides', async (req, res) => {
+  try {
+    const { data, error } = await req.supabase
+      .from('product_overrides')
+      .select('*');
+    if (error) throw error;
+    res.json(data || []);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT /api/jewelry/overrides/:id — upsert one product
+router.put('/overrides/:id', async (req, res) => {
+  try {
+    const product_id = Number(req.params.id);
+    const { price_overrides, description, images, video_url, sort_order } = req.body;
+    const { data, error } = await req.supabase
+      .from('product_overrides')
+      .upsert([{
+        product_id,
+        price_overrides: price_overrides || {},
+        description:     description ?? null,
+        images:          images || [],
+        video_url:       video_url || null,
+        sort_order:      sort_order ?? null,
+        updated_at:      new Date().toISOString()
+      }], { onConflict: 'product_id' })
+      .select();
+    if (error) throw error;
+    res.json({ ok: true, data: data?.[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
