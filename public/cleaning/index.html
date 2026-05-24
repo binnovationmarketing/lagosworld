@@ -362,6 +362,44 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
 /* ANIMATIONS */
 .fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
 .fade-up.vis{opacity:1;transform:translateY(0)}
+
+/* PRESSURE WASH SURFACE CARDS */
+.pw-surfaces{display:grid;grid-template-columns:repeat(5,1fr);gap:.85rem;margin-top:2rem}
+@media(max-width:1000px){.pw-surfaces{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.pw-surfaces{grid-template-columns:repeat(2,1fr)}}
+.pw-card{position:relative;border-radius:10px;overflow:hidden;display:block;cursor:pointer;text-decoration:none;box-shadow:var(--shadow);transition:box-shadow .3s,transform .3s}
+.pw-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.pw-card-img{aspect-ratio:3/4;overflow:hidden}
+.pw-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease;display:block}
+.pw-card:hover .pw-card-img img{transform:scale(1.09)}
+.pw-card-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,89,133,.92) 0%,rgba(0,0,0,.08) 58%,transparent 100%)}
+.pw-card-content{position:absolute;bottom:0;left:0;right:0;padding:.9rem .85rem}
+.pw-card-icon{font-size:1.5rem;line-height:1;margin-bottom:.3rem}
+.pw-card-name{color:#fff;font-weight:800;font-size:.92rem;line-height:1.2;margin-bottom:.45rem}
+.pw-card-cta{color:rgba(255,255,255,.95);font-size:.62rem;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:.22rem .7rem;display:inline-block;font-weight:700;transition:background .25s}
+.pw-card:hover .pw-card-cta{background:rgba(255,255,255,.38)}
+
+/* MARKET AREA CARDS */
+.market-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:all .3s}
+.market-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.market-card-img{height:130px;overflow:hidden}
+.market-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
+.market-card:hover .market-card-img img{transform:scale(1.07)}
+.market-bar{height:3px}
+.market-bar-pa{background:var(--green)}
+.market-bar-nj{background:#3B82F6}
+.market-card-body{padding:1rem 1.1rem 0}
+.market-card-title{font-weight:700;color:var(--text);font-size:.87rem;margin-bottom:.25rem;line-height:1.3}
+.market-card-county{font-size:.67rem;color:var(--text-muted);margin-bottom:.55rem;font-weight:500;letter-spacing:.01em}
+.market-card-income{font-size:.7rem;color:var(--text-mid);line-height:1.65;padding-bottom:.9rem}
+.market-card-cta{display:block;text-align:center;padding:.58rem;background:var(--teal-bg);color:var(--teal-d);font-size:.67rem;font-weight:700;border-top:1px solid var(--border-teal);transition:background .2s,color .2s}
+.market-card-cta:hover{background:var(--teal);color:#fff}
+.market-card-cta.nj{background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE}
+.market-card-cta.nj:hover{background:#1D4ED8;color:#fff}
+
+/* BEFORE/AFTER KEN BURNS */
+@keyframes ba-ken-burns{from{transform:scale(1.06)}to{transform:scale(1)}}
+.ba-card.vis .ba-side img{animation:ba-ken-burns 1.4s ease forwards}
 </style>
 </head>
 <body>
@@ -497,15 +535,77 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
 
     </div>
 
-    <!-- PRESSURE WASH SUB-SERVICES -->
-    <div style="margin-top:2rem;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:10px;padding:1.8rem">
-      <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1.2rem">💧 Pressure Washing — Available Surfaces</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:.6rem">
-        <span style="background:#fff;border:1.5px solid #FDE68A;color:#D97706;padding:.35rem .9rem;border-radius:999px;font-size:.75rem;font-weight:600">🏡 Deck</span>
-        <span style="background:#fff;border:1.5px solid #FDE68A;color:#D97706;padding:.35rem .9rem;border-radius:999px;font-size:.75rem;font-weight:600">🏛️ Porch</span>
-        <span style="background:#fff;border:1.5px solid #FDE68A;color:#D97706;padding:.35rem .9rem;border-radius:999px;font-size:.75rem;font-weight:600">☀️ Patio</span>
-        <span style="background:#fff;border:1.5px solid #FDE68A;color:#D97706;padding:.35rem .9rem;border-radius:999px;font-size:.75rem;font-weight:600">🚗 Driveway</span>
-        <span style="background:#fff;border:1.5px solid #FDE68A;color:#D97706;padding:.35rem .9rem;border-radius:999px;font-size:.75rem;font-weight:600">🏠 Siding</span>
+    <!-- PRESSURE WASH SURFACE CARDS -->
+    <div style="margin-top:3rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.4rem">
+        <div>
+          <h3 style="font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.2rem">💧 Pressure Washing — Available Surfaces</h3>
+          <p style="font-size:.75rem;color:var(--text-muted)">Click any surface to request a quote instantly</p>
+        </div>
+        <span style="font-size:.7rem;font-weight:700;color:var(--amber-d);background:#FFFBEB;border:1px solid #FDE68A;padding:.3rem .85rem;border-radius:999px">🏆 CH ELITE Power Wash</span>
+      </div>
+      <div class="pw-surfaces">
+
+        <a href="#booking" class="pw-card">
+          <div class="pw-card-img">
+            <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=400&h=533&q=82&auto=format&fit=crop" alt="Deck pressure washing service" loading="lazy">
+          </div>
+          <div class="pw-card-overlay"></div>
+          <div class="pw-card-content">
+            <div class="pw-card-icon">🏡</div>
+            <div class="pw-card-name">Deck</div>
+            <span class="pw-card-cta">Request Quote →</span>
+          </div>
+        </a>
+
+        <a href="#booking" class="pw-card">
+          <div class="pw-card-img">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&h=533&q=82&auto=format&fit=crop" alt="Porch pressure washing service" loading="lazy">
+          </div>
+          <div class="pw-card-overlay"></div>
+          <div class="pw-card-content">
+            <div class="pw-card-icon">🏛️</div>
+            <div class="pw-card-name">Porch</div>
+            <span class="pw-card-cta">Request Quote →</span>
+          </div>
+        </a>
+
+        <a href="#booking" class="pw-card">
+          <div class="pw-card-img">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=533&q=82&auto=format&fit=crop" alt="Patio pressure washing service" loading="lazy">
+          </div>
+          <div class="pw-card-overlay"></div>
+          <div class="pw-card-content">
+            <div class="pw-card-icon">☀️</div>
+            <div class="pw-card-name">Patio</div>
+            <span class="pw-card-cta">Request Quote →</span>
+          </div>
+        </a>
+
+        <a href="#booking" class="pw-card">
+          <div class="pw-card-img">
+            <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400&h=533&q=82&auto=format&fit=crop" alt="Driveway pressure washing service" loading="lazy">
+          </div>
+          <div class="pw-card-overlay"></div>
+          <div class="pw-card-content">
+            <div class="pw-card-icon">🚗</div>
+            <div class="pw-card-name">Driveway</div>
+            <span class="pw-card-cta">Request Quote →</span>
+          </div>
+        </a>
+
+        <a href="#booking" class="pw-card">
+          <div class="pw-card-img">
+            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=533&q=82&auto=format&fit=crop" alt="Siding pressure washing service" loading="lazy">
+          </div>
+          <div class="pw-card-overlay"></div>
+          <div class="pw-card-content">
+            <div class="pw-card-icon">🏠</div>
+            <div class="pw-card-name">Siding</div>
+            <span class="pw-card-cta">Request Quote →</span>
+          </div>
+        </a>
+
       </div>
     </div>
 
@@ -647,43 +747,85 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
 
     <!-- TOP PRIORITY MARKETS -->
     <div style="margin:2.5rem 0 1rem" class="fade-up">
-      <h3 style="font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--green);margin-bottom:1.5rem">★ Our Top Service Markets</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem">
+      <p style="font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--teal-d);font-weight:700;margin-bottom:1.5rem">★ Our Top Service Markets</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem">
 
-        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-left:3px solid var(--green);padding:1.2rem 1.4rem;border-radius:4px">
-          <div style="font-weight:700;color:#fff;font-size:.9rem;margin-bottom:.3rem">Lower Merion / Bryn Mawr / Gladwyne / Villanova</div>
-          <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.6rem">Montgomery County · Main Line</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.7)">Median household income: <strong style="color:var(--green)">$176,512</strong> · Large homes, high-frequency recurring clients</div>
+        <div class="market-card">
+          <div class="market-card-img">
+            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=260&q=80&auto=format&fit=crop" alt="Lower Merion Main Line luxury home" loading="lazy">
+          </div>
+          <div class="market-bar market-bar-pa"></div>
+          <div class="market-card-body">
+            <div class="market-card-title">Lower Merion / Bryn Mawr / Gladwyne / Villanova</div>
+            <div class="market-card-county">Montgomery County · Main Line</div>
+            <div class="market-card-income">Median income: <strong style="color:var(--green)">$176,512</strong><br>Large homes, high-frequency recurring clients</div>
+          </div>
+          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
         </div>
 
-        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-left:3px solid var(--green);padding:1.2rem 1.4rem;border-radius:4px">
-          <div style="font-weight:700;color:#fff;font-size:.9rem;margin-bottom:.3rem">Easttown / Berwyn / Devon</div>
-          <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.6rem">Chester County</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.7)">Median household income: <strong style="color:var(--green)">$214,861</strong> · Premium clientele, estate-level properties</div>
+        <div class="market-card">
+          <div class="market-card-img">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&h=260&q=80&auto=format&fit=crop" alt="Easttown Chester County estate home" loading="lazy">
+          </div>
+          <div class="market-bar market-bar-pa"></div>
+          <div class="market-card-body">
+            <div class="market-card-title">Easttown / Berwyn / Devon</div>
+            <div class="market-card-county">Chester County</div>
+            <div class="market-card-income">Median income: <strong style="color:var(--green)">$214,861</strong><br>Premium clientele, estate-level properties</div>
+          </div>
+          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
         </div>
 
-        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-left:3px solid var(--green);padding:1.2rem 1.4rem;border-radius:4px">
-          <div style="font-weight:700;color:#fff;font-size:.9rem;margin-bottom:.3rem">Radnor / Wayne / Villanova</div>
-          <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.6rem">Delaware County</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.7)">Median household income: <strong style="color:var(--green)">$164,359</strong> · Upscale suburban families, strong referral market</div>
+        <div class="market-card">
+          <div class="market-card-img">
+            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=500&h=260&q=80&auto=format&fit=crop" alt="Radnor Wayne Delaware County upscale home" loading="lazy">
+          </div>
+          <div class="market-bar market-bar-pa"></div>
+          <div class="market-card-body">
+            <div class="market-card-title">Radnor / Wayne / Villanova</div>
+            <div class="market-card-county">Delaware County</div>
+            <div class="market-card-income">Median income: <strong style="color:var(--green)">$164,359</strong><br>Upscale suburban families, strong referral market</div>
+          </div>
+          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
         </div>
 
-        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-left:3px solid #4a9eff;padding:1.2rem 1.4rem;border-radius:4px">
-          <div style="font-weight:700;color:#fff;font-size:.9rem;margin-bottom:.3rem">Haddonfield</div>
-          <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.6rem">Camden County, NJ</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.7)">Median household income: <strong style="color:#4a9eff">$200,400</strong> · Top South Jersey market, premium homes</div>
+        <div class="market-card">
+          <div class="market-card-img">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=500&h=260&q=80&auto=format&fit=crop" alt="Haddonfield Camden County NJ home" loading="lazy">
+          </div>
+          <div class="market-bar market-bar-nj"></div>
+          <div class="market-card-body">
+            <div class="market-card-title">Haddonfield</div>
+            <div class="market-card-county">Camden County, NJ</div>
+            <div class="market-card-income">Median income: <strong style="color:#2563EB">$200,400</strong><br>Top South Jersey market, premium homes</div>
+          </div>
+          <a href="#booking" class="market-card-cta nj">Request a Quote for This Area →</a>
         </div>
 
-        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-left:3px solid #4a9eff;padding:1.2rem 1.4rem;border-radius:4px">
-          <div style="font-weight:700;color:#fff;font-size:.9rem;margin-bottom:.3rem">Moorestown</div>
-          <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.6rem">Burlington County, NJ</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.7)">Median household income: <strong style="color:#4a9eff">$159,700</strong> · Large family homes, excellent for power washing</div>
+        <div class="market-card">
+          <div class="market-card-img">
+            <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&h=260&q=80&auto=format&fit=crop" alt="Moorestown Burlington County NJ large home" loading="lazy">
+          </div>
+          <div class="market-bar market-bar-nj"></div>
+          <div class="market-card-body">
+            <div class="market-card-title">Moorestown</div>
+            <div class="market-card-county">Burlington County, NJ</div>
+            <div class="market-card-income">Median income: <strong style="color:#2563EB">$159,700</strong><br>Large family homes, excellent for power washing</div>
+          </div>
+          <a href="#booking" class="market-card-cta nj">Request a Quote for This Area →</a>
         </div>
 
-        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-left:3px solid var(--green);padding:1.2rem 1.4rem;border-radius:4px">
-          <div style="font-weight:700;color:#fff;font-size:.9rem;margin-bottom:.3rem">Chestnut Hill · Philadelphia</div>
-          <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.6rem">Philadelphia County</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.7)">Median home sale price: <strong style="color:var(--green)">$751,000</strong> · Most expensive neighborhood in Philadelphia (2024)</div>
+        <div class="market-card">
+          <div class="market-card-img">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=500&h=260&q=80&auto=format&fit=crop" alt="Chestnut Hill Philadelphia premium home" loading="lazy">
+          </div>
+          <div class="market-bar market-bar-pa"></div>
+          <div class="market-card-body">
+            <div class="market-card-title">Chestnut Hill · Philadelphia</div>
+            <div class="market-card-county">Philadelphia County</div>
+            <div class="market-card-income">Median home price: <strong style="color:var(--green)">$751,000</strong><br>Most expensive neighborhood in Philadelphia (2024)</div>
+          </div>
+          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
         </div>
 
       </div>
@@ -884,11 +1026,11 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
         <div class="ba-images">
           <div class="ba-side">
             <span class="ba-label before">Before</span>
-            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=85&auto=format&fit=crop" alt="Kitchen before cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&h=450&q=85&auto=format&fit=crop" alt="Kitchen before cleaning" loading="lazy">
           </div>
           <div class="ba-side">
             <span class="ba-label after">After</span>
-            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=85&auto=format&fit=crop" alt="Kitchen after cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=450&q=85&auto=format&fit=crop" alt="Kitchen after cleaning" loading="lazy">
           </div>
           <div class="ba-divider"></div>
         </div>
@@ -901,11 +1043,11 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
         <div class="ba-images">
           <div class="ba-side">
             <span class="ba-label before">Before</span>
-            <img src="https://images.unsplash.com/photo-1589568235773-9e2ad58d5ff4?w=600&q=85&auto=format&fit=crop" alt="Bathroom before cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1595433706256-8b1f3a2d4cc9?w=600&h=450&q=85&auto=format&fit=crop" alt="Bathroom before cleaning" loading="lazy">
           </div>
           <div class="ba-side">
             <span class="ba-label after">After</span>
-            <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=85&auto=format&fit=crop" alt="Bathroom after cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=450&q=85&auto=format&fit=crop" alt="Bathroom after cleaning" loading="lazy">
           </div>
           <div class="ba-divider"></div>
         </div>
@@ -918,11 +1060,11 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
         <div class="ba-images">
           <div class="ba-side">
             <span class="ba-label before">Before</span>
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=85&auto=format&fit=crop" alt="Driveway before power wash" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=450&q=85&auto=format&fit=crop" alt="Driveway before power wash" loading="lazy">
           </div>
           <div class="ba-side">
             <span class="ba-label after">After</span>
-            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=85&auto=format&fit=crop" alt="Driveway after power wash" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&h=450&q=85&auto=format&fit=crop" alt="Driveway after power wash" loading="lazy">
           </div>
           <div class="ba-divider"></div>
         </div>
@@ -935,11 +1077,11 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
         <div class="ba-images">
           <div class="ba-side">
             <span class="ba-label before">Before</span>
-            <img src="https://images.unsplash.com/photo-1493951534030-7a2b08c30b8c?w=600&q=85&auto=format&fit=crop" alt="Living room before cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1493951534030-7a2b08c30b8c?w=600&h=450&q=85&auto=format&fit=crop" alt="Living room before cleaning" loading="lazy">
           </div>
           <div class="ba-side">
             <span class="ba-label after">After</span>
-            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=85&auto=format&fit=crop" alt="Living room after cleaning" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=450&q=85&auto=format&fit=crop" alt="Living room after cleaning" loading="lazy">
           </div>
           <div class="ba-divider"></div>
         </div>
