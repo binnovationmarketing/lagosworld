@@ -39,8 +39,11 @@ router.post('/requests', async (req, res) => {
     res.json({ success: true, request: data[0] });
 
     // Non-blocking — email failure never kills the response
-    sendCleaningConfirmation({ customer_name, customer_email, customer_phone, service_type, recurrence, address, city, preferred_date, description })
-      .catch(e => console.error('Email failed (request saved):', e.message));
+    const requestId = data?.[0]?.id || null;
+    sendCleaningConfirmation(
+      { customer_name, customer_email, customer_phone, service_type, recurrence, address, city, preferred_date, description, requestId },
+      req.supabase
+    ).catch(e => console.error('Email failed (request saved):', e.message));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
-const t = require('./emailTemplates');
+const t  = require('./emailTemplates');
+const ct = require('./cleaningEmailTemplates');
 
 const ADMINS = ['binnovationmarketing@gmail.com'];
 
@@ -63,7 +64,7 @@ async function sendOrderEmails(orderData, supabase) {
   if (email && !ADMINS.includes(email)) {
     await transporter.sendMail({
       from, to: email,
-      subject: `✝ Pedido Confirmado — Lagos Jewelry — ${name}`,
+      subject: `✦ LW ✦ Pedido Confirmado — Lagos Jewelry — ${name}`,
       html: t.orderConfirmation(orderData)
     });
 
@@ -114,21 +115,39 @@ async function processDueEmails(supabase) {
     let html, subject;
 
     switch (row.email_type) {
+      // ── Jewelry sequence ──────────────────────────────────────────────────
       case 'care':
-        html = t.jewelryCare(firstName);
-        subject = 'How to keep your jewelry beautiful for longer';
+        html    = t.jewelryCare(firstName);
+        subject = 'LW · How to keep your jewelry beautiful for longer';
         break;
       case 'crosssell':
-        html = t.crossSell(firstName);
-        subject = 'Complete your look with these matching pieces';
+        html    = t.crossSell(firstName);
+        subject = 'LW · Complete your look with these matching pieces';
         break;
       case 'review':
-        html = t.reviewRequest(firstName);
-        subject = 'How did you feel wearing your Lagos Jewelry piece?';
+        html    = t.reviewRequest(firstName);
+        subject = 'LW · How did you feel wearing your Lagos Jewelry piece?';
         break;
       case 'referral':
-        html = t.referral(firstName);
-        subject = 'Share Lagos Jewelry with a woman you love';
+        html    = t.referral(firstName);
+        subject = 'LW · Share Lagos Jewelry with a woman you love';
+        break;
+      // ── Cleaning sequence ─────────────────────────────────────────────────
+      case 'clean_followup':
+        html    = ct.cleaningFollowup24h(firstName);
+        subject = 'Lagos Cleaning · Did you get our message?';
+        break;
+      case 'clean_reengagement':
+        html    = ct.cleaningReengagement(firstName);
+        subject = 'Lagos Cleaning · Your home deserves the best';
+        break;
+      case 'clean_review':
+        html    = ct.cleaningReview(firstName);
+        subject = 'Lagos Cleaning · How was your experience?';
+        break;
+      case 'clean_referral':
+        html    = ct.cleaningReferral(firstName);
+        subject = 'Lagos Cleaning · Know someone who needs a clean home?';
         break;
       default:
         continue;
@@ -175,12 +194,12 @@ function buildCalendarLink({ title, location, description, date, durationHours =
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
-// ── Cleaning request confirmation ─────────────────────────────────────────────
-async function sendCleaningConfirmation(requestData) {
+// ── Cleaning request confirmation (VIP templates + queue sequence) ────────────
+async function sendCleaningConfirmation(requestData, supabase = null) {
   const {
     customer_name, customer_email, customer_phone,
     service_type, recurrence, address, city,
-    preferred_date, description
+    preferred_date, description, requestId
   } = requestData;
 
   const firstName = (customer_name || '').split(' ')[0];
@@ -196,53 +215,50 @@ async function sendCleaningConfirmation(requestData) {
     date:        preferred_date || null,
   });
 
-  const customerHtml = `
-<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;background:#f0fdff;padding:20px">
-<div style="max-width:560px;margin:0 auto;background:#fff;padding:2rem;border-radius:8px;border-top:4px solid #20B2AA">
-  <h2 style="color:#20B2AA">🧹 Request Confirmed!</h2>
-  <p>Hi <strong>${firstName}</strong>,</p>
-  <p>We received your cleaning request and will contact you within <strong>2 hours</strong> to confirm your appointment.</p>
-  <table style="width:100%;font-size:.9rem;border-collapse:collapse;margin:1rem 0">
-    <tr style="background:#f0fdff"><td style="padding:8px 12px;font-weight:bold">Service</td><td style="padding:8px 12px">${service_type}</td></tr>
-    <tr><td style="padding:8px 12px;font-weight:bold">Frequency</td><td style="padding:8px 12px">${recurrence || 'One-time'}</td></tr>
-    <tr style="background:#f0fdff"><td style="padding:8px 12px;font-weight:bold">Address</td><td style="padding:8px 12px">${fullAddress || '—'}</td></tr>
-    <tr><td style="padding:8px 12px;font-weight:bold">Preferred Date</td><td style="padding:8px 12px">${preferred_date || 'Flexible'}</td></tr>
-  </table>
-  <p style="color:#666;font-size:.85rem">Questions? Call or text us: <strong>+1 (215) 626-2345</strong></p>
-  <p style="color:#20B2AA;font-weight:bold">— Lagos Cleaning Team</p>
-</div></body></html>`;
-
-  const adminHtml = `
-<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;background:#f4f4f4;padding:20px">
-<div style="max-width:560px;margin:0 auto;background:#fff;padding:2rem;border-radius:8px;border-top:4px solid #20B2AA">
-  <h2 style="color:#20B2AA">🔔 New Cleaning Lead</h2>
-  <p><strong>Name:</strong> ${customer_name}</p>
-  <p><strong>Email:</strong> ${customer_email}</p>
-  <p><strong>Phone:</strong> ${customer_phone || '—'}</p>
-  <p><strong>Service:</strong> ${service_type}</p>
-  <p><strong>Frequency:</strong> ${recurrence || 'One-time'}</p>
-  <p><strong>Address:</strong> ${fullAddress || '—'}</p>
-  <p><strong>Date:</strong> ${preferred_date || 'Flexible'}</p>
-  <p><strong>Notes:</strong> ${description || '—'}</p>
-  <div style="margin-top:1.5rem">
-    <a href="${calLink}" target="_blank" style="display:inline-block;background:#20B2AA;color:#fff;text-decoration:none;padding:.75rem 1.5rem;border-radius:6px;font-weight:bold;font-size:.9rem">📅 Add to Google Calendar</a>
-  </div>
-</div></body></html>`;
-
-  // Admin notification
+  // Admin — VIP teal template
   await transporter.sendMail({
     from, to: ADMINS,
     subject: `🧹 New Cleaning Request — ${customer_name}`,
-    html: adminHtml
+    html: ct.cleaningAdminNotification({
+      customer_name, customer_email, customer_phone,
+      service_type, recurrence, address, city,
+      preferred_date, description, calLink
+    })
   });
 
-  // Customer confirmation
+  // Customer — VIP confirmed template
   if (customer_email && !ADMINS.includes(customer_email)) {
     await transporter.sendMail({
       from, to: customer_email,
-      subject: '🧹 Your Cleaning Request — Lagos Cleaning',
-      html: customerHtml
+      subject: '✔ Lagos Cleaning · Your request is confirmed',
+      html: ct.cleaningConfirmed(firstName, {
+        service_type, recurrence, address, city, preferred_date
+      })
     });
+
+    // Queue cleaning follow-up sequence in email_queue
+    if (supabase) {
+      const now = new Date();
+      const queue = [
+        { email_type: 'clean_followup',     days: 1  },
+        { email_type: 'clean_reengagement', days: 7  },
+        { email_type: 'clean_review',       days: 30 },
+        { email_type: 'clean_referral',     days: 45 }
+      ].map(({ email_type, days }) => {
+        const d = new Date(now);
+        d.setDate(d.getDate() + days);
+        return {
+          order_id:       null,
+          customer_email,
+          customer_name,
+          email_type,
+          scheduled_at:   d.toISOString(),
+          status:         'pending'
+        };
+      });
+      await supabase.from('email_queue').insert(queue)
+        .then(({ error }) => { if (error) console.error('Cleaning queue error:', error.message); });
+    }
   }
 
   console.log(`Cleaning emails sent — ${customer_name} (${customer_email})`);

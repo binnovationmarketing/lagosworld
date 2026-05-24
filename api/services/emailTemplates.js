@@ -8,12 +8,13 @@ const BASE_URL = 'https://lagosworld.app';
 
 // ── Shared wrapper ────────────────────────────────────────────────────────────
 function wrap(content, previewText = '') {
-  // LW monogram circle — inline SVG encoded as data URI (no external dependency)
+  // LW monogram — hosted SVG (works in Gmail, Apple Mail, iOS, Outlook shows alt="LW")
   const lwCircle = `
-    <!-- LW Circle Logo -->
+    <!-- LW Logo -->
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 18px">
-      <tr><td style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#b8922e 0%,#e8c96a 50%,#b8922e 100%);text-align:center;vertical-align:middle;border:1px solid rgba(201,168,76,.6);box-shadow:0 0 24px rgba(201,168,76,.25)">
-        <span style="display:block;font-size:26px;color:#0d0d0d;font-family:Georgia,serif;font-weight:bold;letter-spacing:-1px;line-height:72px">LW</span>
+      <tr><td style="text-align:center;padding:4px">
+        <img src="https://lagosworld.app/images/lw-logo.svg" alt="LW" width="72" height="72"
+             style="display:block;width:72px;height:72px;border:1px solid rgba(201,168,76,.4)">
       </td></tr>
     </table>`;
 

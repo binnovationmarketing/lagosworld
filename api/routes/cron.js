@@ -6,7 +6,8 @@ const express = require('express');
 const router = express.Router();
 const { processDueEmails } = require('../services/email');
 const nodemailer = require('nodemailer');
-const t = require('../services/emailTemplates');
+const t  = require('../services/emailTemplates');
+const ct = require('../services/cleaningEmailTemplates');
 
 router.get('/emails', async (req, res) => {
   // Basic auth: only Vercel cron (or CRON_SECRET header) can trigger
@@ -40,15 +41,22 @@ router.post('/send', async (req, res) => {
   const firstName = (name || to.split('@')[0]).split(' ')[0];
 
   const templates = {
-    welcome:    { html: t.welcome(firstName),            subject: '✝ Bem-vinda à Lagos — sua joia especial espera por você' },
-    care:       { html: t.jewelryCare(firstName),        subject: 'How to keep your jewelry beautiful for longer' },
-    crosssell:  { html: t.crossSell(firstName),          subject: 'Complete your look with these matching pieces' },
-    review:     { html: t.reviewRequest(firstName),      subject: 'How did you feel wearing your Lagos Jewelry piece?' },
-    referral:   { html: t.referral(firstName),           subject: 'Share Lagos Jewelry with a woman you love' },
-    vip:        { html: t.vipInvitation(firstName),      subject: '✝ You\'ve been invited to the Lagos VIP Circle' },
-    gift:       { html: t.giftCampaign(firstName),       subject: 'The perfect gift for the woman in your life' },
-    brand:      { html: t.brandStory(firstName),         subject: 'The story behind every Lagos piece' },
-    firstoffer: { html: t.firstPurchaseOffer(firstName), subject: 'A special offer — just for you' },
+    // ── Jewelry ──────────────────────────────────────────────────────────────
+    welcome:    { html: t.welcome(firstName),            subject: '✦ LW ✦ Welcome to Lagos World — Your Jewelry Journey Begins' },
+    care:       { html: t.jewelryCare(firstName),        subject: 'LW · How to keep your jewelry beautiful for longer' },
+    crosssell:  { html: t.crossSell(firstName),          subject: 'LW · Complete your look with these matching pieces' },
+    review:     { html: t.reviewRequest(firstName),      subject: 'LW · How did you feel wearing your Lagos Jewelry piece?' },
+    referral:   { html: t.referral(firstName),           subject: 'LW · Share Lagos Jewelry with a woman you love' },
+    vip:        { html: t.vipInvitation(firstName),      subject: '✦ LW ✦ You have been invited to the Lagos VIP Circle' },
+    gift:       { html: t.giftCampaign(firstName),       subject: 'LW · The perfect gift for the woman in your life' },
+    brand:      { html: t.brandStory(firstName),         subject: 'LW · The story behind every Lagos piece' },
+    firstoffer: { html: t.firstPurchaseOffer(firstName), subject: 'LW · A special welcome offer — just for you' },
+    // ── Cleaning ─────────────────────────────────────────────────────────────
+    clean_confirmed:    { html: ct.cleaningConfirmed(firstName),    subject: '✔ Lagos Cleaning · Your request is confirmed' },
+    clean_followup:     { html: ct.cleaningFollowup24h(firstName),  subject: 'Lagos Cleaning · Did you get our message?' },
+    clean_reengagement: { html: ct.cleaningReengagement(firstName), subject: 'Lagos Cleaning · Your home deserves the best' },
+    clean_review:       { html: ct.cleaningReview(firstName),       subject: 'Lagos Cleaning · How was your experience?' },
+    clean_referral:     { html: ct.cleaningReferral(firstName),     subject: 'Lagos Cleaning · Know someone who needs a clean home?' },
   };
 
   const tpl = templates[type.toLowerCase()];
