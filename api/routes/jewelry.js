@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { sendEmail } = require('../services/email');
+const { sendEmail, sendOrderEmails } = require('../services/email');
 
 // POST: Criar novo pedido de jewelry
 router.post('/orders', async (req, res) => {
@@ -44,36 +44,29 @@ router.post('/orders', async (req, res) => {
       await req.supabase.from('order_items').insert(lineItems);
     }
 
-    // Enviar email
-    const htmlContent = `
-      <html>
-        <body style="font-family: Arial, sans-serif;">
-          <h2>Nova Ordem de Jewelry</h2>
-          <p><strong>Cliente:</strong> ${customer_name}</p>
-          <p><strong>Email:</strong> ${customer_email}</p>
-          <p><strong>Telefone:</strong> ${customer_phone}</p>
-          <p><strong>Método Entrega:</strong> ${delivery_method}</p>
-          ${address ? `<p><strong>Endereço:</strong> ${address}</p>` : ''}
-          <h3>Itens:</h3>
-          <ul>
-            ${(items || []).map(item => `
-              <li>
-                ${item.title || item.name} ${item.sku ? '(SKU: '+item.sku+')' : ''}
-                <br>Qty: ${item.quantity || item.qty} x $${Number(item.price).toFixed(2)}
-                <br>Subtotal: $${((item.quantity || item.qty) * item.price).toFixed(2)}
-              </li>
-            `).join('')}
-          </ul>
-          <h3>Total: $${Number(total).toFixed(2)}</h3>
-        </body>
-      </html>
-    `;
-
+    const orderId = data?.[0]?.id || null;
     res.json({ success: true, order: { ...data[0], customer_name, customer_email, total } });
 
-    // Non-blocking — email failure never kills the response
-    sendEmail(customer_email, 'New Jewelry Order', htmlContent, data)
-      .catch(e => console.error('Email failed (order saved):', e.message));
+    // Non-blocking premium emails (admin + customer + post-purchase queue)
+    sendOrderEmails({
+      name: customer_name,
+      phone: customer_phone,
+      email: customer_email,
+      address,
+      city: '', state: '', zip: '',
+      payment: delivery_method,
+      deliveryType: delivery_method,
+      items: (items || []).map(i => ({
+        name: i.title || i.name || '',
+        variant: i.sku || '',
+        qty: Number(i.quantity || i.qty) || 1,
+        price: Number(i.price) || 0
+      })),
+      total,
+      shipping: 0,
+      notes: '',
+      orderId
+    }, req.supabase).catch(e => console.error('Email failed (order saved):', e.message));
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -92,6 +85,29 @@ router.get('/orders', async (req, res) => {
     if (error) throw error;
     res.json(data);
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// PATCH: Update order status
+router.patch('/orders/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const allowed = ['pending', 'confirmed', 'paid', 'shipped', 'delivered', 'cancelled'];
+    if (!status || !allowed.includes(status)) {
+      return res.status(400).json({ error: `status must be one of: ${allowed.join(', ')}` });
+    }
+    const { data, error } = await req.supabase
+      .from('jewelry_orders')
+      .update({ status })
+      .eq('id', id)
+      .select('id, status, customer_name, customer_email')
+      .single();
+    if (error) throw error;
+    res.json({ ok: true, order: data });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 });

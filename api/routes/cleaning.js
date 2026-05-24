@@ -133,4 +133,27 @@ router.get('/professionals', async (req, res) => {
   }
 });
 
+// PATCH: Update request status
+router.patch('/requests/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const allowed = ['pending', 'confirmed', 'scheduled', 'completed', 'cancelled'];
+    if (!status || !allowed.includes(status)) {
+      return res.status(400).json({ error: `status must be one of: ${allowed.join(', ')}` });
+    }
+    const { data, error } = await req.supabase
+      .from('cleaning_requests')
+      .update({ status })
+      .eq('id', id)
+      .select('id, status, customer_name, customer_email')
+      .single();
+    if (error) throw error;
+    res.json({ ok: true, request: data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

@@ -23,10 +23,25 @@ ${previewText ? `<span style="display:none;max-height:0;overflow:hidden;mso-hide
     <table role="presentation" width="100%" style="max-width:580px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:2px">
 
       <!-- HEADER -->
-      <tr><td style="padding:36px 40px 24px;text-align:center;border-bottom:1px solid rgba(201,168,76,.15)">
-        <div style="font-size:11px;letter-spacing:4px;color:#8a7a5e;font-family:Georgia,serif;margin-bottom:10px">✝</div>
-        <div style="font-size:28px;letter-spacing:6px;color:#c9a84c;font-family:Georgia,serif;font-weight:normal">LAGOS</div>
-        <div style="font-size:10px;letter-spacing:8px;color:#8a7a5e;margin-top:4px;font-family:Georgia,serif">J E W E L R Y</div>
+      <tr><td style="padding:32px 40px 20px;text-align:center;border-bottom:1px solid rgba(201,168,76,.15)">
+        <!-- LW Monogram Logo -->
+        <div style="margin-bottom:14px">
+          <img src="https://lagosworld.app/images/lw-logo.png" alt="LW" width="64" height="64"
+               style="display:inline-block;width:64px;height:64px;border:0"
+               onerror="this.style.display='none'">
+          <!--[if !mso]><!-->
+          <div style="display:none;font-size:0;max-height:0" aria-hidden="true">
+            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto">
+              <tr><td style="width:64px;height:64px;background:#0d0d0d;border:1px solid rgba(201,168,76,.3);text-align:center;vertical-align:middle">
+                <span style="font-size:32px;color:#c9a84c;font-family:Georgia,serif;font-style:italic;font-weight:bold;letter-spacing:-2px">LW</span>
+              </td></tr>
+            </table>
+          </div>
+          <!--<![endif]-->
+        </div>
+        <div style="font-size:11px;letter-spacing:4px;color:#8a7a5e;font-family:Georgia,serif;margin-bottom:8px">✝</div>
+        <div style="font-size:26px;letter-spacing:6px;color:#c9a84c;font-family:Georgia,serif;font-weight:normal">LAGOS</div>
+        <div style="font-size:9px;letter-spacing:8px;color:#8a7a5e;margin-top:4px;font-family:Georgia,serif">J E W E L R Y</div>
       </td></tr>
 
       <!-- BODY -->
@@ -109,7 +124,19 @@ function welcome(firstName) {
     ${p('"To help you feel beautiful, confident and intentional."', 'color:#c9a84c;font-style:italic;font-size:16px')}
     ${btn('Shop Lagos Jewelry', BASE_URL + '/jewelry')}
     ${hr}
-    ${p('With love,<br>Dayane Lago<br>Lagos World', 'font-size:13px;color:#8a7a5e')}
+    <!-- Founder signature -->
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 4px">
+      <tr>
+        <td style="padding-right:16px;vertical-align:middle">
+          <img src="https://lagosworld.app/images/dayane-1.png" alt="Dayane Lago" width="64" height="64"
+               style="border-radius:50%;width:64px;height:64px;border:1px solid rgba(201,168,76,.3);object-fit:cover;display:block">
+        </td>
+        <td style="vertical-align:middle">
+          <div style="color:#c9a84c;font-size:14px;font-family:Georgia,serif;font-style:italic">Dayane Lago</div>
+          <div style="color:#8a7a5e;font-size:10px;letter-spacing:2px;margin-top:3px">FOUNDER · LAGOS WORLD</div>
+        </td>
+      </tr>
+    </table>
   `, 'Discover jewelry made for women who carry beauty, strength and identity.');
 }
 
@@ -161,7 +188,12 @@ function brandStory(firstName) {
     ${p('Lagos Jewelry is for women who value beauty, strength and purpose.')}
     ${btn('Discover the Collection', BASE_URL + '/jewelry')}
     ${hr}
-    ${p('With purpose,<br>Dayane Lago', 'font-size:13px;color:#8a7a5e')}
+    <!-- Founder photo - brand story -->
+    <div style="text-align:center;margin:20px 0 0">
+      <img src="https://lagosworld.app/images/dayane-2.png" alt="Dayane Lago — Lagos World"
+           width="280" style="width:280px;max-width:100%;border:1px solid rgba(201,168,76,.2);display:inline-block">
+      <div style="color:#8a7a5e;font-size:10px;letter-spacing:3px;margin-top:8px">DAYANE LAGO · FOUNDER</div>
+    </div>
   `, 'This is more than jewelry. This is identity, beauty and purpose.');
 }
 
