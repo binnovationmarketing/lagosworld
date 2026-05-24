@@ -159,16 +159,20 @@ app.post('/api/send-order', async (req, res) => {
       if (matches) attachments.push({ filename: 'zelle_proof.jpg', content: matches[2], encoding: 'base64' });
     }
 
+    const from = `"Lagos World Pedidos" <${process.env.EMAIL_USER}>`;
+    const ADMINS = ['binnovationmarketing@gmail.com', 'dayanelago22@gmail.com'];
+
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: ['binnovationmarketing@gmail.com', 'dayanelago22@gmail.com'],
+      from,
+      to: ADMINS,
       subject: `COMPRA REALIZADA LAGOS WORLD - ${name}`,
       html, attachments
     });
 
-    if (email) {
+    // Customer confirmation — only if email differs from admin list
+    if (email && !ADMINS.includes(email)) {
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from,
         to: email,
         subject: `✝ Pedido Confirmado — Lagos Jewelry — ${name}`,
         html

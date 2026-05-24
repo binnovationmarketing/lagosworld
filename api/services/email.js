@@ -8,29 +8,32 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Admin recipients — always notified on every event
+const ADMINS = ['binnovationmarketing@gmail.com', 'dayanelago22@gmail.com'];
+
 async function sendEmail(to, subject, htmlContent, orderData) {
   try {
-    const adminEmail = process.env.ADMIN_EMAIL || 'binnovationmarketing@gmail.com';
+    const from = `"Lagos World" <${process.env.EMAIL_USER}>`;
 
-    // Email para admin
+    // Notify both admins
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: adminEmail,
+      from,
+      to: ADMINS,
       subject: `[LAGOS] ${subject}`,
       html: htmlContent
     });
 
-    // Email de confirmação para cliente
-    if (to) {
+    // Confirmation to customer (skip if customer is one of the admins — avoid duplicate)
+    if (to && !ADMINS.includes(to)) {
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: to,
-        subject: `[Lagos] ${subject}`,
+        from,
+        to,
+        subject: `[Lagos World] ${subject}`,
         html: generateCustomerEmail(subject, orderData)
       });
     }
 
-    console.log(`Email sent to admin and ${to}`);
+    console.log(`Emails sent — admins notified, customer: ${to}`);
     return { success: true, message: 'Emails sent' };
   } catch (error) {
     console.error('Email send error:', error);
