@@ -8,8 +8,8 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Admin recipients — always notified on every event
-const ADMINS = ['binnovationmarketing@gmail.com', 'dayanelago22@gmail.com'];
+// Admin recipient — single inbox for all notifications
+const ADMINS = ['binnovationmarketing@gmail.com'];
 
 async function sendEmail(to, subject, htmlContent, orderData) {
   try {

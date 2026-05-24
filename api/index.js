@@ -160,7 +160,7 @@ app.post('/api/send-order', async (req, res) => {
     }
 
     const from = `"Lagos World Pedidos" <${process.env.EMAIL_USER}>`;
-    const ADMINS = ['binnovationmarketing@gmail.com', 'dayanelago22@gmail.com'];
+    const ADMINS = ['binnovationmarketing@gmail.com'];
 
     await transporter.sendMail({
       from,
