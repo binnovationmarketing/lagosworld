@@ -101,11 +101,21 @@ textarea.field-inp{resize:vertical;min-height:90px;line-height:1.6}
 
 /* IMAGE MANAGER */
 .img-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem;align-items:flex-start}
-.img-thumb-wrap{position:relative;width:80px}
-.img-thumb{width:80px;height:80px;object-fit:cover;background:var(--dark3);display:block;border:1px solid var(--border)}
+.img-thumb-wrap{position:relative;width:80px;cursor:grab;transition:opacity .2s,transform .15s}
+.img-thumb-wrap.dragging{opacity:.4;transform:scale(.95)}
+.img-thumb-wrap.drag-over{border:2px dashed var(--gold);background:rgba(184,146,46,.08)}
+.img-thumb{width:80px;height:80px;object-fit:cover;background:var(--dark3);display:block;border:1px solid var(--border);pointer-events:none}
 .img-del{position:absolute;top:2px;right:2px;width:18px;height:18px;background:rgba(224,82,82,.9);border:none;color:#fff;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.add-img-btn{width:80px;height:80px;border:1px dashed var(--border);background:none;color:var(--text-muted);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.2rem;font-family:'Montserrat',sans-serif;font-size:.55rem;letter-spacing:.1em;transition:border-color .2s}
+.img-drag-handle{position:absolute;bottom:2px;left:2px;width:18px;height:12px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;opacity:.5;pointer-events:none}
+.img-drag-handle span{width:10px;height:1px;background:var(--gold);display:block}
+.add-img-btn{width:80px;height:80px;border:1px dashed var(--border);background:none;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.2rem;font-family:'Montserrat',sans-serif;font-size:.55rem;letter-spacing:.1em;transition:border-color .2s}
 .add-img-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* MANUAL CLIENT REGISTRATION */
+.reg-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:600;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.reg-modal-overlay.open{opacity:1;pointer-events:all}
+.reg-modal{background:var(--dark2);border:1px solid var(--border);width:100%;max-width:520px;padding:2rem;position:relative}
+.reg-modal-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);margin-bottom:1.5rem}
 
 /* VIDEO FIELD */
 .video-preview{width:100%;height:140px;background:var(--dark3);border:1px solid var(--border);margin-top:.5rem;display:flex;align-items:center;justify-content:center;font-size:.72rem;color:var(--text-muted)}
@@ -229,6 +239,7 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
     <button class="tab" onclick="switchTab('products',this)">Products <span id="tab-count"></span></button>
     <button class="tab" onclick="switchTab('orders',this)">Orders</button>
     <button class="tab" onclick="switchTab('cleaning',this)">Cleaning Leads</button>
+    <button class="tab" onclick="switchTab('cart',this)">🛒 Cart Activity</button>
   </div>
 
   <div class="content">
@@ -275,6 +286,7 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
       <div style="padding:1.2rem 0 .5rem">
         <div class="dash-panel-title" style="padding:0 0 .8rem">
           Client Strategies — Personalized by Spend Tier
+          <button class="topbar-btn primary" onclick="openRegModal()" style="font-size:.58rem;padding:.35rem .8rem">+ Register Client</button>
         </div>
         <div class="week-pills" id="strat-filters">
           <button class="week-pill active" onclick="filterStrat('all',this)">All Clients</button>
@@ -331,6 +343,11 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
       <div id="cleaning-content"><div class="empty"><div class="empty-icon">🧹</div>Loading cleaning requests...</div></div>
     </div>
 
+    <!-- CART ACTIVITY TAB -->
+    <div id="tab-cart" style="display:none">
+      <div id="cart-content"><div class="empty"><div class="empty-icon">🛒</div>Loading cart activity...</div></div>
+    </div>
+
   </div>
 </div>
 
@@ -380,6 +397,55 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
   </div>
 </div>
 
+<!-- REGISTER CLIENT MODAL -->
+<div class="reg-modal-overlay" id="reg-modal">
+  <div class="reg-modal">
+    <button class="modal-close" onclick="closeRegModal()" style="position:absolute;top:1rem;right:1rem">✕</button>
+    <div class="reg-modal-title">Register Client Manually</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+      <div class="field-group">
+        <label class="field-label">Full Name *</label>
+        <input class="field-inp" type="text" id="reg-name" placeholder="Ana Silva">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Phone</label>
+        <input class="field-inp" type="tel" id="reg-phone" placeholder="+1 (215) 000-0000">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input class="field-inp" type="email" id="reg-email" placeholder="client@email.com">
+      </div>
+      <div class="field-group">
+        <label class="field-label">City / Area</label>
+        <input class="field-inp" type="text" id="reg-city" placeholder="Cherry Hill, NJ">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Service Type</label>
+        <select class="field-inp" id="reg-service">
+          <option value="Jewelry Order">Jewelry Order</option>
+          <option value="Standard Cleaning">Standard Cleaning</option>
+          <option value="Deep Cleaning">Deep Cleaning</option>
+          <option value="Move-In/Out Cleaning">Move-In/Out Cleaning</option>
+          <option value="Power Washing">Power Washing</option>
+          <option value="Complete Package">Complete Package</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Amount Paid ($)</label>
+        <input class="field-inp" type="number" id="reg-amount" placeholder="0.00" min="0" step="0.01">
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Notes</label>
+      <textarea class="field-inp" id="reg-notes" rows="2" placeholder="First visit, referral source, preferences..."></textarea>
+    </div>
+    <div style="display:flex;gap:.8rem;justify-content:flex-end;margin-top:1rem">
+      <button class="topbar-btn" onclick="closeRegModal()">Cancel</button>
+      <button class="topbar-btn primary" onclick="saveRegClient()">✓ Save Client</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -421,10 +487,11 @@ document.getElementById('pw-inp').focus();
 
 // ── INIT ──
 function initApp() {
-  priceOv  = JSON.parse(localStorage.getItem(LS_PRICES) || '{}');
-  descOv   = JSON.parse(localStorage.getItem(LS_DESC)   || '{}');
-  imgsOv   = JSON.parse(localStorage.getItem(LS_IMGS)   || '{}');
-  videoOv  = JSON.parse(localStorage.getItem(LS_VIDEOS) || '{}');
+  priceOv      = JSON.parse(localStorage.getItem(LS_PRICES)         || '{}');
+  descOv       = JSON.parse(localStorage.getItem(LS_DESC)           || '{}');
+  imgsOv       = JSON.parse(localStorage.getItem(LS_IMGS)           || '{}');
+  videoOv      = JSON.parse(localStorage.getItem(LS_VIDEOS)         || '{}');
+  manualClients= JSON.parse(localStorage.getItem(LS_MANUAL_CLIENTS) || '[]');
 
   const cats = [...new Set((window.PRODUCTS_ADMIN || []).map(p => p.cat).filter(Boolean))].sort();
   const sel = document.getElementById('cat-filter');
@@ -551,18 +618,7 @@ function closeModal() {
 
 function renderImgManager(pid, p) {
   const curImgs = imgsOv[pid] ? [...imgsOv[pid]] : [...(p.imgs || (p.img ? [p.img] : []))];
-  const row = document.getElementById('m-imgs');
-  row.innerHTML = curImgs.map((url, i) => `
-    <div class="img-thumb-wrap" data-idx="${i}">
-      <img class="img-thumb" src="${url}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect fill=%22%23222%22 width=%2280%22 height=%2280%22/%3E%3Ctext x=%2240%22 y=%2250%22 text-anchor=%22middle%22 fill=%22%23555%22 font-size=%2228%22%3E?%3C/text%3E%3C/svg%3E'">
-      <button class="img-del" onclick="delImg(${i},event)" title="Remove">✕</button>
-    </div>
-  `).join('') + `
-    <button class="add-img-btn" onclick="addImgPrompt(event)">
-      <span style="font-size:1.4rem">+</span>
-      <span>Add Image</span>
-    </button>`;
-  row._imgs = curImgs;
+  renderImgManagerFromState(pid, curImgs);
 }
 
 function addImgPrompt(e) {
@@ -608,17 +664,56 @@ function delImg(idx, e) {
 
 function renderImgManagerFromState(pid, imgs) {
   const row = document.getElementById('m-imgs');
-  row.innerHTML = imgs.map((url, i) => `
-    <div class="img-thumb-wrap" data-idx="${i}">
-      <img class="img-thumb" src="${url}" onerror="this.style.opacity='.3'">
+  const ts = Date.now(); // cache-bust parameter
+  row.innerHTML = imgs.map((url, i) => {
+    // Add cache-bust to data URIs or already-modified URLs only if it's an external URL without params
+    const srcUrl = url.startsWith('data:') ? url : (url.includes('?') ? url : url + '?v=' + ts);
+    return `<div class="img-thumb-wrap" data-idx="${i}" draggable="true">
+      <img class="img-thumb" src="${srcUrl}" onerror="this.style.opacity='.3'">
       <button class="img-del" onclick="delImg(${i},event)" title="Remove">✕</button>
-    </div>
-  `).join('') + `
+      <div class="img-drag-handle"><span></span><span></span><span></span></div>
+    </div>`;
+  }).join('') + `
     <button class="add-img-btn" onclick="addImgPrompt(event)">
       <span style="font-size:1.4rem">+</span>
       <span>Add Image</span>
     </button>`;
   row._imgs = imgs;
+  initImgDragDrop(row);
+}
+
+// ── DRAG & DROP IMAGE REORDER ──
+let _dragSrcIdx = null;
+function initImgDragDrop(row) {
+  row.querySelectorAll('.img-thumb-wrap').forEach(wrap => {
+    wrap.addEventListener('dragstart', e => {
+      _dragSrcIdx = parseInt(wrap.dataset.idx);
+      wrap.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    wrap.addEventListener('dragend', () => {
+      row.querySelectorAll('.img-thumb-wrap').forEach(w => {
+        w.classList.remove('dragging','drag-over');
+      });
+    });
+    wrap.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      row.querySelectorAll('.img-thumb-wrap').forEach(w => w.classList.remove('drag-over'));
+      wrap.classList.add('drag-over');
+    });
+    wrap.addEventListener('dragleave', () => wrap.classList.remove('drag-over'));
+    wrap.addEventListener('drop', e => {
+      e.preventDefault();
+      const toIdx = parseInt(wrap.dataset.idx);
+      if (_dragSrcIdx === null || _dragSrcIdx === toIdx) return;
+      const imgs = [...(row._imgs || [])];
+      const [moved] = imgs.splice(_dragSrcIdx, 1);
+      imgs.splice(toIdx, 0, moved);
+      renderImgManagerFromState(editingId, imgs);
+      _dragSrcIdx = null;
+    });
+  });
 }
 
 function previewVideo() {
@@ -742,6 +837,7 @@ function switchTab(name, el) {
   if (name === 'dashboard') loadDashboard();
   if (name === 'orders') loadOrders();
   if (name === 'cleaning') loadCleaning();
+  if (name === 'cart') loadCartActivity();
 }
 
 // ── ORDERS ──
@@ -1149,6 +1245,17 @@ function renderClientList() {
     clientMap[key].services.push({ type: c.service_type || 'Cleaning', detail: c.city || '', date: new Date(c.created_at), amount: Number(c.estimated_price || c.price || 0) });
   });
 
+  // Merge manually registered clients
+  manualClients.forEach(c => {
+    const key = (c.customer_email || c.customer_name || '').toLowerCase().trim();
+    if (!key) return;
+    if (!clientMap[key]) clientMap[key] = { name: c.customer_name || '—', email: c.customer_email || '', phone: c.customer_phone || '', totalSpend: 0, services: [], lastDate: null, type: 'manual' };
+    clientMap[key].totalSpend += Number(c.amount || 0);
+    clientMap[key].lastDate = !clientMap[key].lastDate || new Date(c.created_at) > clientMap[key].lastDate ? new Date(c.created_at) : clientMap[key].lastDate;
+    clientMap[key].services.push({ type: c.service_type || 'Manual Entry', detail: c.city || '', date: new Date(c.created_at), amount: Number(c.amount || 0) });
+    if (c.notes && !clientMap[key].notes) clientMap[key].notes = c.notes;
+  });
+
   allClients = Object.values(clientMap)
     .map(c => ({ ...c, tier: getClientTier(c.totalSpend) }))
     .sort((a, b) => {
@@ -1207,6 +1314,88 @@ function filterStrat(tier, el) {
   stratFilter = tier;
   const filtered = tier === 'all' ? allClients : allClients.filter(c => c.tier === tier);
   displayClients(filtered);
+}
+
+// ── CART ACTIVITY ──
+function loadCartActivity() {
+  const el = document.getElementById('cart-content');
+  const LS_CART = 'lj_cart_events';
+  let events = [];
+  try { events = JSON.parse(localStorage.getItem(LS_CART) || '[]'); } catch(e) {}
+
+  if (!events.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🛒</div>No cart activity recorded yet.<br><small style="font-size:.65rem;margin-top:.5rem;display:block">Events are captured when visitors add items, open cart, abandon, or purchase on the jewelry store.</small></div>';
+    return;
+  }
+
+  const typeLabel = { add:'➕ Add to Cart', cart_abandon:'⚠️ Cart Abandoned', purchase:'✅ Purchase', cart_open:'🛒 Cart Opened' };
+  const typeBadge = { add:'status-pending', cart_abandon:'', purchase:'status-completed', cart_open:'status-pending' };
+  const typeColor  = { add:'var(--gold)', cart_abandon:'var(--red)', purchase:'var(--green)', cart_open:'var(--text-muted)' };
+
+  const summary = events.reduce((acc,e)=>{ acc[e.type]=(acc[e.type]||0)+1; return acc; }, {});
+
+  el.innerHTML = `
+    <div class="stats-bar" style="margin-bottom:1.5rem">
+      <div class="stat-card"><div class="stat-num" style="color:var(--green)">${summary.purchase||0}</div><div class="stat-label">Purchases</div></div>
+      <div class="stat-card"><div class="stat-num">${summary.add||0}</div><div class="stat-label">Add to Cart</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--red)">${summary.cart_abandon||0}</div><div class="stat-label">Abandoned</div></div>
+      <div class="stat-card"><div class="stat-num">${events.length}</div><div class="stat-label">Total Events</div></div>
+    </div>
+    <table class="orders-table">
+      <thead><tr><th>Time</th><th>Event</th><th>Customer</th><th>Items</th><th>Cart Total</th></tr></thead>
+      <tbody>${events.map(e => {
+        const d = new Date(e.timestamp);
+        const timeStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+        const itemStr = (e.items||[]).map(i=>`${i.name} ×${i.qty}`).slice(0,3).join(', ') + ((e.items||[]).length>3?'…':'');
+        const customer = [e.name!=='—'?e.name:'',e.email,e.phone].filter(Boolean).join(' · ') || '—';
+        return `<tr>
+          <td style="white-space:nowrap;color:var(--text-muted);font-size:.68rem">${timeStr}</td>
+          <td><span style="font-weight:700;color:${typeColor[e.type]||'var(--text)'};font-size:.7rem">${typeLabel[e.type]||e.type}</span></td>
+          <td style="font-size:.72rem">${customer}</td>
+          <td style="font-size:.68rem;color:var(--text-muted);max-width:200px">${itemStr||'—'}</td>
+          <td style="color:var(--gold);font-weight:700">$${Number(e.total||0).toFixed(2)}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>`;
+}
+
+// ── MANUAL CLIENT REGISTRATION ──
+const LS_MANUAL_CLIENTS = 'lj_manual_clients';
+let manualClients = JSON.parse(localStorage.getItem(LS_MANUAL_CLIENTS) || '[]');
+
+function openRegModal() {
+  document.getElementById('reg-modal').classList.add('open');
+  document.getElementById('reg-name').focus();
+}
+function closeRegModal() {
+  document.getElementById('reg-modal').classList.remove('open');
+  ['reg-name','reg-phone','reg-email','reg-city','reg-notes','reg-amount'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+function saveRegClient() {
+  const name = document.getElementById('reg-name').value.trim();
+  if (!name) { showToast('⚠ Name is required'); return; }
+  const client = {
+    id: 'manual_' + Date.now(),
+    customer_name: name,
+    customer_email: document.getElementById('reg-email').value.trim(),
+    customer_phone: document.getElementById('reg-phone').value.trim(),
+    city: document.getElementById('reg-city').value.trim(),
+    service_type: document.getElementById('reg-service').value,
+    amount: parseFloat(document.getElementById('reg-amount').value) || 0,
+    notes: document.getElementById('reg-notes').value.trim(),
+    created_at: new Date().toISOString(),
+    status: 'open',
+    source: 'manual',
+  };
+  manualClients.push(client);
+  localStorage.setItem(LS_MANUAL_CLIENTS, JSON.stringify(manualClients));
+  closeRegModal();
+  showToast('✓ Client registered successfully');
+  // Reload dashboard so new client appears
+  renderClientList();
 }
 
 // ── TOAST ──

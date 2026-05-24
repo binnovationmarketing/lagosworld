@@ -124,6 +124,27 @@ app.post('/api/send-order', async (req, res) => {
       });
     }
 
+    // Save order to Supabase (non-blocking — email always goes through)
+    try {
+      const orderItems = (items || []).map(i => ({
+        name: i.name, variant: i.variant || '', qty: i.qty, price: Number(i.price) || 0
+      }));
+      await supabase.from('jewelry_orders').insert([{
+        customer_name: name,
+        customer_email: email || '',
+        customer_phone: phone || '',
+        delivery_method: deliveryType || payment || 'standard',
+        address: [address, city, state, zip].filter(Boolean).join(', '),
+        items: orderItems,
+        total: Number(total) || 0,
+        status: 'pending',
+        payment_method: payment || '',
+        notes: notes || ''
+      }]);
+    } catch (dbErr) {
+      console.error('DB save failed (order still sent):', dbErr.message);
+    }
+
     res.json({ ok: true, message: 'Order confirmed. Check your email!' });
   } catch (err) {
     console.error('send-order error:', err);

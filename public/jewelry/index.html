@@ -103,7 +103,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--tex
 @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr);gap:1rem}}
 
 /* CARD */
-.card{background:var(--dark);border:1px solid rgba(201,168,76,.07);position:relative;cursor:pointer;overflow:hidden;transition:transform .45s cubic-bezier(.25,.8,.25,1),border-color .45s,box-shadow .45s;animation:fade-up .5s ease both}
+.card{background:var(--dark);border:1px solid rgba(201,168,76,.07);position:relative;cursor:pointer;overflow:hidden;transition:transform .45s cubic-bezier(.25,.8,.25,1),border-color .45s,box-shadow .45s;animation:fade-up .5s ease both;content-visibility:auto;contain-intrinsic-size:auto 340px}
 .card:hover{transform:translateY(-6px);border-color:rgba(201,168,76,.45);box-shadow:0 24px 70px rgba(0,0,0,.6),0 0 40px rgba(201,168,76,.08)}
 .card::before{content:'';position:absolute;top:0;left:0;width:60%;height:100%;background:linear-gradient(120deg,transparent,rgba(201,168,76,.07),transparent);transform:translateX(-200%) skewX(-15deg);transition:transform 0s;z-index:2;pointer-events:none}
 .card:hover::before{transform:translateX(300%) skewX(-15deg);transition:transform .7s ease}
@@ -147,6 +147,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--tex
 .modal-x:hover{background:var(--gold);color:var(--black)}
 .modal-media{background:#0c0c0c;display:flex;flex-direction:column}
 .modal-img-wrap{position:relative;overflow:hidden;flex:1;min-height:300px}
+.modal-img-wrap::after{content:'✝ LAGOS JEWELRY';position:absolute;bottom:12px;left:12px;font-family:'Montserrat',sans-serif;font-size:.5rem;letter-spacing:.3em;color:rgba(255,255,255,.55);font-weight:600;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.8);z-index:2}
 .modal-main-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;cursor:zoom-in;min-height:300px}
 .modal-main-img.zoomed{transform:scale(1.8);cursor:zoom-out}
 .modal-nav{position:absolute;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;width:100%;padding:0 .5rem;pointer-events:none;z-index:5}
@@ -11579,13 +11580,25 @@ function filterCat(cat,btn){
   if(window.scrollY>200)document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function doSearch(q){curSearch=q.toLowerCase().trim();applyFilters()}
+let _filterRaf=null;
 function applyFilters(){
-  const cards=document.querySelectorAll('.card');let n=0;
-  cards.forEach(c=>{
-    const ok=(curCat==='ALL'||c.dataset.cat===curCat)&&(!curSearch||c.dataset.name.includes(curSearch)||c.dataset.cat.toLowerCase().includes(curSearch));
-    c.classList.toggle('hidden',!ok);if(ok)n++;
+  if(_filterRaf)cancelAnimationFrame(_filterRaf);
+  _filterRaf=requestAnimationFrame(()=>{
+    const cards=document.querySelectorAll('.card');let n=0;
+    // Batch in chunks to avoid long frame
+    const CHUNK=60;let i=0;
+    function processChunk(){
+      const end=Math.min(i+CHUNK,cards.length);
+      for(;i<end;i++){
+        const c=cards[i];
+        const ok=(curCat==='ALL'||c.dataset.cat===curCat)&&(!curSearch||c.dataset.name.includes(curSearch)||c.dataset.cat.toLowerCase().includes(curSearch));
+        c.classList.toggle('hidden',!ok);if(ok)n++;
+      }
+      if(i<cards.length){requestAnimationFrame(processChunk)}
+      else{document.getElementById('res-n').textContent=n}
+    }
+    processChunk();
   });
-  document.getElementById('res-n').textContent=n;
 }
 
 // ── MODAL ──
@@ -11617,13 +11630,15 @@ function openModal(id){
     const descEl=document.getElementById('m-desc');
     descEl.parentNode.insertBefore(vWrap,descEl.nextSibling);
   }
-  // Thumbs
+  // Thumbs — defer to next frame so modal open animation isn't blocked
   const th=document.getElementById('m-thumbs');th.innerHTML='';
-  activeImgs.forEach((img,i)=>{
-    const im=document.createElement('img');im.className='modal-thumb'+(i===0?' on':'');
-    im.src=img;im.loading='lazy';
-    im.onclick=()=>setModalImg(i);
-    th.appendChild(im);
+  requestAnimationFrame(()=>{
+    activeImgs.forEach((img,i)=>{
+      const im=document.createElement('img');im.className='modal-thumb'+(i===0?' on':'');
+      im.src=img;im.loading='lazy';im.decoding='async';
+      im.onclick=()=>setModalImg(i);
+      th.appendChild(im);
+    });
   });
   // Variants
   const vd=document.getElementById('m-vars');vd.innerHTML='';
@@ -11674,6 +11689,7 @@ function addToCart(prod,v){
   const cartImg=(imgsOv[prod.id]&&imgsOv[prod.id].length?imgsOv[prod.id]:prod.imgs)[0]||'';
   if(ex)ex.qty++;else cart.push({key,prod,v,qty:1,img:cartImg});
   updateCart();showToast('✝ '+prod.name+' added!');
+  trackCartEvent('add',{product:prod.name,variant:v.desc||''});
 }
 function rmFromCart(key){cart=cart.filter(i=>i.key!==key);updateCart()}
 function clearCart(){cart=[];updateCart()}
@@ -11703,9 +11719,32 @@ function updateCart(){
     </div>`).join('');
 }
 function toggleCart(){
-  document.getElementById('cart').classList.toggle('on');
+  const cartEl=document.getElementById('cart');
+  const wasOpen=cartEl.classList.contains('on');
+  cartEl.classList.toggle('on');
   document.getElementById('cart-veil').classList.toggle('on');
-  document.body.style.overflow=document.getElementById('cart').classList.contains('on')?'hidden':'';
+  document.body.style.overflow=cartEl.classList.contains('on')?'hidden':'';
+  // Track cart abandon when closing with items in cart
+  if(wasOpen && cart.length>0){
+    trackCartEvent('cart_abandon');
+  }
+}
+
+// ── CART EVENT TRACKING ──
+const LS_CART_EVENTS='lj_cart_events';
+function trackCartEvent(type,extraData){
+  try{
+    const events=JSON.parse(localStorage.getItem(LS_CART_EVENTS)||'[]');
+    const total=cart.reduce((s,i)=>s+(i.v.price*i.qty),0);
+    const itemList=cart.map(i=>({name:i.prod.name,variant:i.v.desc||'',qty:i.qty,price:i.v.price}));
+    // Try to get customer info from checkout form if open
+    const name=(document.getElementById('fn')&&document.getElementById('fn').value.trim())||'—';
+    const email=(document.getElementById('fe')&&document.getElementById('fe').value.trim())||'';
+    const phone=(document.getElementById('fp')&&document.getElementById('fp').value.trim())||'';
+    events.unshift({type,name,email,phone,items:itemList,total,timestamp:new Date().toISOString(),...(extraData||{})});
+    // Keep last 200 events
+    localStorage.setItem(LS_CART_EVENTS,JSON.stringify(events.slice(0,200)));
+  }catch(e){}
 }
 
 // ── ZIP LOOKUP & SHIPPING ──
@@ -11887,6 +11926,8 @@ async function submitOrder(){
       })
     });
   }catch(e){console.warn('Email API unavailable, continuing with WhatsApp')}
+  // Track purchase event
+  trackCartEvent('purchase',{name,email,phone,address:`${address}, ${city}, ${state} ${zip}`,payment:selPayment,total:grandTotal});
   // Show success
   document.getElementById('co-form').style.display='none';
   document.getElementById('co-success').style.display='block';
