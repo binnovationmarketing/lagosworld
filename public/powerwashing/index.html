@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CH Elite Washing — Premium Pressure Washing PA & NJ</title>
-  <meta name="description" content="Elite pressure washing for homes, driveways, decks & commercial properties in Pennsylvania and New Jersey. Licensed, insured, same-day available. Call (240) 780-6473.">
+  <meta name="description" content="Elite pressure washing for homes, driveways, decks & commercial properties in Pennsylvania and New Jersey. Licensed, insured, same-day available. (240) 780-6473.">
   <meta name="keywords" content="pressure washing Philadelphia PA, power washing NJ, driveway cleaning Main Line, deck washing Pennsylvania, house exterior cleaning New Jersey, soft wash roof">
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="CH Elite Washing — Premium Pressure Washing PA & NJ">
@@ -13,993 +13,972 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --orange:    #F97316;
-      --orange-d:  #C2410C;
-      --orange-l:  #FB923C;
-      --orange-bg: rgba(249,115,22,.1);
-      --orange-glow: rgba(249,115,22,.3);
-      --navy:      #080F1C;
-      --navy-mid:  #0D1A2E;
-      --navy-card: #111E33;
-      --navy-light:#1A2E4A;
-      --white:     #FFFFFF;
-      --text-mid:  rgba(255,255,255,.72);
-      --text-muted:rgba(255,255,255,.42);
-      --border:    rgba(255,255,255,.07);
-      --radius:    14px;
-      --shadow:    0 8px 40px rgba(0,0,0,.4);
+      --o:      #F97316;
+      --o-d:    #C2410C;
+      --o-l:    #FB923C;
+      --o-bg:   rgba(249,115,22,.1);
+      --o-glow: rgba(249,115,22,.28);
+      --navy:   #060C18;
+      --navy2:  #0A1220;
+      --navy3:  #0E1A2D;
+      --card:   rgba(14,26,45,.85);
+      --glass:  rgba(255,255,255,.04);
+      --border: rgba(255,255,255,.07);
+      --b-o:    rgba(249,115,22,.22);
+      --white:  #FFFFFF;
+      --mid:    rgba(255,255,255,.68);
+      --muted:  rgba(255,255,255,.38);
+      --r:      12px;
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--navy);
-      color: var(--white);
-      overflow-x: hidden;
-    }
+    /* ── PROGRESS ── */
+    #progress { position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--o),#FCD34D);z-index:1000;width:0;transition:width .08s; }
 
-    /* ─── TOP BAR ─── */
-    .topbar {
-      background: var(--orange-d);
-      text-align: center;
-      padding: .55rem 1rem;
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .topbar a { color: #fff; text-decoration: none; }
+    /* ── TICKER ── */
+    .ticker-wrap { background:var(--o-d);overflow:hidden;height:36px;display:flex;align-items:center; }
+    .ticker-track { display:flex;gap:0;white-space:nowrap;animation:ticker 28s linear infinite; }
+    .ticker-track span { padding:0 3rem;font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff;opacity:.9; }
+    .ticker-track span::before { content:'⬡ ';color:rgba(255,255,255,.6); }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    /* ─── NAV ─── */
+    /* ── NAV ── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(8,15,28,.92);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 clamp(1.5rem,5vw,4rem);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 72px;
+      position:sticky;top:0;z-index:200;
+      background:rgba(6,12,24,.88);
+      backdrop-filter:blur(20px) saturate(180%);
+      -webkit-backdrop-filter:blur(20px) saturate(180%);
+      border-bottom:1px solid var(--border);
+      height:70px;
+      padding:0 clamp(1.25rem,5vw,4rem);
+      display:flex;align-items:center;justify-content:space-between;
+      transition:box-shadow .3s;
     }
-    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo svg { flex-shrink: 0; }
-    .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-    .nav-logo-name { font-family: 'Oswald', sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: .08em; color: #fff; }
-    .nav-logo-sub { font-size: .55rem; letter-spacing: .25em; text-transform: uppercase; color: var(--orange-l); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--text-mid); text-decoration: none; transition: color .2s; }
-    .nav-links a:hover { color: var(--orange); }
-    .btn-nav { background: var(--orange); color: #fff; border: none; padding: .65rem 1.5rem; font-family: 'Montserrat', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; border-radius: 6px; text-decoration: none; transition: all .25s; }
-    .btn-nav:hover { background: var(--orange-d); transform: translateY(-1px); box-shadow: 0 6px 24px var(--orange-glow); }
+    nav.scrolled { box-shadow:0 4px 32px rgba(0,0,0,.5); }
+    .logo { display:flex;align-items:center;gap:11px;text-decoration:none; }
+    .logo-text { display:flex;flex-direction:column;line-height:1.15; }
+    .logo-name { font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.1em;color:#fff; }
+    .logo-sub { font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--o-l); }
+    .nav-links { display:flex;gap:1.75rem;list-style:none; }
+    .nav-links a { font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s; }
+    .nav-links a:hover { color:var(--o); }
+    .btn-cta {
+      background:linear-gradient(135deg,var(--o),var(--o-d));
+      color:#fff;border:none;padding:.65rem 1.4rem;
+      font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;
+      cursor:pointer;border-radius:8px;text-decoration:none;
+      transition:all .25s;box-shadow:0 4px 16px var(--o-glow);
+    }
+    .btn-cta:hover { transform:translateY(-2px);box-shadow:0 8px 28px var(--o-glow); }
     @media(max-width:768px){ .nav-links{display:none} }
 
-    /* ─── HERO ─── */
+    /* ── HERO ── */
     .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
+      position:relative;min-height:100vh;
+      display:grid;grid-template-columns:1fr 1fr;
+      overflow:hidden;
     }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(135deg, rgba(8,15,28,.95) 0%, rgba(8,15,28,.7) 50%, rgba(12,20,40,.92) 100%),
-        url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=80') center/cover no-repeat;
+    @media(max-width:900px){ .hero{grid-template-columns:1fr} }
+
+    /* LEFT — text */
+    .hero-left {
+      position:relative;z-index:3;
+      display:flex;align-items:center;
+      padding:7rem clamp(1.5rem,5vw,5rem) 5rem;
+      background:linear-gradient(135deg,rgba(6,12,24,1) 0%,rgba(6,12,24,.96) 70%,rgba(6,12,24,.7) 100%);
     }
-    .hero-particles {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
+    .hero-inner { max-width:540px; }
+    .hero-badge {
+      display:inline-flex;align-items:center;gap:.55rem;
+      background:rgba(249,115,22,.12);
+      border:1px solid rgba(249,115,22,.28);
+      border-radius:40px;padding:.38rem .95rem;
+      font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--o-l);margin-bottom:1.75rem;
+      opacity:0;
     }
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background: var(--orange);
-      opacity: 0;
-      animation: float-particle 6s ease-in-out infinite;
+    .pulse-dot { width:6px;height:6px;background:var(--o);border-radius:50%;display:inline-block;animation:pdot 2s ease-in-out infinite; }
+    @keyframes pdot{ 0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:.4} }
+
+    .hero-h1 {
+      font-family:'Oswald',sans-serif;
+      font-size:clamp(2.8rem,5.5vw,5.5rem);
+      font-weight:800;line-height:.95;letter-spacing:-.01em;
+      margin-bottom:1.5rem;opacity:0;
     }
-    @keyframes float-particle {
-      0%   { transform: translateY(0) scale(1);   opacity: 0; }
-      20%  { opacity: .35; }
-      80%  { opacity: .15; }
-      100% { transform: translateY(-120px) scale(.4); opacity: 0; }
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 0 clamp(1.5rem,6vw,5rem);
-      padding-top: 6rem;
-      padding-bottom: 6rem;
-    }
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      background: var(--orange-bg);
-      border: 1px solid rgba(249,115,22,.3);
-      border-radius: 40px;
-      padding: .4rem 1rem;
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--orange-l);
-      margin-bottom: 1.8rem;
-      opacity: 0;
-    }
-    .hero-eyebrow span { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; display: inline-block; animation: pulse-dot 2s ease-in-out infinite; }
-    @keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.6);opacity:.5} }
-    .hero-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(3rem,7vw,6.5rem);
-      font-weight: 700;
-      line-height: .95;
-      letter-spacing: -.01em;
-      margin-bottom: 1.6rem;
-      opacity: 0;
-      max-width: 750px;
-    }
-    .hero-title .accent { color: var(--orange); }
-    .hero-title .outline {
-      -webkit-text-stroke: 2px var(--orange);
-      color: transparent;
-    }
-    .hero-sub {
-      font-size: clamp(.9rem,1.5vw,1.1rem);
-      color: var(--text-mid);
-      max-width: 520px;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-      font-weight: 500;
-      opacity: 0;
-    }
-    .hero-ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-      opacity: 0;
-    }
+    .hero-h1 em { font-style:normal;color:var(--o); }
+    .hero-h1 .stroke { -webkit-text-stroke:2px var(--o);color:transparent; }
+    .hero-sub { font-size:.95rem;color:var(--mid);line-height:1.75;margin-bottom:2.25rem;font-weight:400;opacity:0; }
+    .hero-btns { display:flex;flex-wrap:wrap;gap:.85rem;margin-bottom:3rem;opacity:0; }
     .btn-primary {
-      background: linear-gradient(135deg, var(--orange), var(--orange-d));
-      color: #fff;
-      border: none;
-      padding: 1rem 2.2rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 8px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      transition: all .3s;
-      box-shadow: 0 8px 32px var(--orange-glow);
-      position: relative;
-      overflow: hidden;
+      display:inline-flex;align-items:center;gap:.55rem;
+      background:linear-gradient(135deg,var(--o),var(--o-d));
+      color:#fff;border:none;padding:.95rem 2rem;
+      font-family:'Inter',sans-serif;font-size:.78rem;font-weight:700;
+      letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;border-radius:8px;text-decoration:none;
+      transition:all .3s;box-shadow:0 6px 28px var(--o-glow);
+      position:relative;overflow:hidden;
     }
-    .btn-primary::after {
-      content:'';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 60%; height: 100%;
-      background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
-      transition: left .5s;
-    }
-    .btn-primary:hover::after { left: 150%; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px var(--orange-glow); }
+    .btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transition:left .5s}
+    .btn-primary:hover::after{left:160%}
+    .btn-primary:hover { transform:translateY(-2px);box-shadow:0 10px 36px var(--o-glow); }
     .btn-ghost {
-      background: transparent;
-      color: var(--white);
-      border: 1.5px solid rgba(255,255,255,.25);
-      padding: 1rem 2rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 8px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      transition: all .3s;
+      display:inline-flex;align-items:center;gap:.55rem;
+      background:rgba(255,255,255,.04);
+      border:1.5px solid rgba(255,255,255,.15);
+      color:var(--white);padding:.95rem 1.75rem;
+      font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;
+      letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;border-radius:8px;text-decoration:none;
+      transition:all .3s;backdrop-filter:blur(8px);
     }
-    .btn-ghost:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
-    .hero-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2.5rem;
-      opacity: 0;
-    }
-    .hero-stat { }
-    .hero-stat-num {
-      font-family: 'Oswald', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--orange);
-      line-height: 1;
-    }
-    .hero-stat-label { font-size: .62rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-muted); margin-top: .3rem; }
+    .btn-ghost:hover { border-color:var(--o);color:var(--o);transform:translateY(-2px); }
+    .hero-stats { display:flex;gap:2.25rem;flex-wrap:wrap;opacity:0; }
+    .hs { display:flex;flex-direction:column; }
+    .hs-num { font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;color:var(--o);line-height:1; }
+    .hs-label { font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.3rem; }
 
-    /* ─── TRUST STRIP ─── */
-    .trust {
-      background: var(--navy-mid);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem clamp(1.5rem,5vw,4rem);
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 2.5rem;
+    /* Trust badges floating over hero */
+    .hero-trust {
+      position:absolute;bottom:2.5rem;left:clamp(1.5rem,5vw,5rem);
+      display:flex;gap:.75rem;flex-wrap:wrap;
+      z-index:4;opacity:0;
     }
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--text-mid);
+    .trust-pill {
+      display:flex;align-items:center;gap:.5rem;
+      background:rgba(6,12,24,.75);
+      border:1px solid var(--border);
+      backdrop-filter:blur(12px);
+      border-radius:40px;padding:.4rem .9rem;
+      font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--mid);
     }
-    .trust-icon { font-size: 1.3rem; }
+    .trust-pill svg { width:12px;height:12px;fill:var(--o);flex-shrink:0; }
 
-    /* ─── SECTIONS SHARED ─── */
-    section { padding: 6rem clamp(1.5rem,5vw,4rem); }
-    .section-label {
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: .8rem;
+    /* RIGHT — photo mosaic */
+    .hero-right {
+      position:relative;overflow:hidden;
     }
-    .section-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(2rem,4vw,3.2rem);
-      font-weight: 700;
-      letter-spacing: .02em;
-      line-height: 1.05;
-      margin-bottom: 1rem;
+    @media(max-width:900px){ .hero-right{height:55vw;min-height:300px} }
+    .hero-photo-grid {
+      position:absolute;inset:0;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:1fr 1fr;
+      gap:3px;
     }
-    .section-sub {
-      font-size: .95rem;
-      color: var(--text-mid);
-      max-width: 520px;
-      line-height: 1.7;
-      margin-bottom: 3.5rem;
+    .hp {
+      overflow:hidden;position:relative;
+    }
+    .hp img {
+      width:100%;height:100%;object-fit:cover;
+      transition:transform 8s ease;
+      transform:scale(1.08);
+    }
+    .hp:hover img { transform:scale(1.14); }
+    .hp-label {
+      position:absolute;bottom:.6rem;left:.6rem;
+      background:rgba(6,12,24,.8);backdrop-filter:blur(8px);
+      border:1px solid var(--border);border-radius:6px;
+      padding:.3rem .65rem;font-size:.58rem;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;color:var(--mid);
+    }
+    /* Dark gradient over left edge of photo grid */
+    .hero-right::after {
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(90deg,rgba(6,12,24,.85) 0%,rgba(6,12,24,.1) 40%,transparent 100%);
+      pointer-events:none;z-index:2;
     }
 
-    /* ─── SERVICES ─── */
-    .services { background: var(--navy-mid); }
+    /* ── TRUST STRIP ── */
+    .trust-strip {
+      background:var(--navy2);
+      border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+      padding:1.4rem clamp(1.25rem,5vw,4rem);
+      display:flex;justify-content:center;flex-wrap:wrap;gap:2.5rem;
+    }
+    .ti {
+      display:flex;align-items:center;gap:.65rem;
+      font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);
+    }
+    .ti svg { width:16px;height:16px;fill:var(--o);flex-shrink:0; }
+
+    /* ── SECTION SHARED ── */
+    section { padding:6rem clamp(1.25rem,5vw,4rem); }
+    .s-eye { font-size:.62rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--o);margin-bottom:.6rem; }
+    .s-title { font-family:'Oswald',sans-serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;letter-spacing:.02em;line-height:1.05;margin-bottom:.85rem; }
+    .s-sub { font-size:.9rem;color:var(--mid);max-width:500px;line-height:1.75;margin-bottom:3.5rem; }
+
+    /* ── ACTION GALLERY ── */
+    .gallery-section { background:var(--navy2);padding-bottom:0; }
+    .gallery-grid {
+      display:grid;
+      grid-template-columns:1.4fr 1fr 1fr;
+      grid-template-rows:280px 280px;
+      gap:4px;
+      margin-top:0;
+    }
+    @media(max-width:900px){ .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:200px 200px 200px} }
+    @media(max-width:540px){ .gallery-grid{grid-template-columns:1fr;grid-template-rows:220px 220px 220px 220px} }
+    .gp {
+      position:relative;overflow:hidden;
+      cursor:pointer;
+    }
+    .gp:first-child { grid-row:1/3; }
+    @media(max-width:900px){ .gp:first-child{grid-row:1/1} }
+    .gp img {
+      width:100%;height:100%;object-fit:cover;
+      transition:transform .6s cubic-bezier(.25,.46,.45,.94);
+      filter:brightness(.85) saturate(1.1);
+    }
+    .gp:hover img { transform:scale(1.06);filter:brightness(.7) saturate(1.3); }
+    .gp-overlay {
+      position:absolute;inset:0;
+      background:linear-gradient(180deg,transparent 40%,rgba(6,12,24,.88) 100%);
+      display:flex;flex-direction:column;justify-content:flex-end;
+      padding:1.25rem;
+      opacity:0;transition:opacity .35s;
+    }
+    .gp:hover .gp-overlay { opacity:1; }
+    .gp-tag {
+      position:absolute;top:1rem;left:1rem;
+      background:var(--o);border-radius:6px;
+      padding:.28rem .7rem;font-size:.6rem;font-weight:800;
+      letter-spacing:.15em;text-transform:uppercase;color:#fff;
+    }
+    .gp-name { font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;color:#fff; }
+    .gp-loc { font-size:.68rem;color:rgba(255,255,255,.65);margin-top:.25rem; }
+
+    /* ── SERVICES ── */
+    .services-section { background:var(--navy); }
     .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-      gap: 1.5rem;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.25rem;
     }
-    .service-card {
-      background: var(--navy-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      transition: all .35s;
-      position: relative;
-      overflow: hidden;
-      cursor: default;
-      opacity: 0;
+    @media(max-width:900px){ .services-grid{grid-template-columns:repeat(2,1fr)} }
+    @media(max-width:540px){ .services-grid{grid-template-columns:1fr} }
+    .sc {
+      background:var(--glass);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      padding:1.75rem;
+      transition:all .3s;
+      position:relative;overflow:hidden;
+      opacity:0;
     }
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--orange), var(--orange-d));
-      transform: scaleX(0);
-      transition: transform .35s;
+    .sc::before {
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--o),var(--o-d));
+      transform:scaleX(0);transform-origin:left;transition:transform .35s;
     }
-    .service-card:hover { border-color: rgba(249,115,22,.35); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.35), 0 0 0 1px rgba(249,115,22,.1); }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-icon {
-      width: 54px; height: 54px;
-      background: var(--orange-bg);
-      border: 1px solid rgba(249,115,22,.2);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      margin-bottom: 1.25rem;
-      transition: all .35s;
+    .sc:hover { border-color:var(--b-o);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.3),0 0 0 1px var(--b-o); }
+    .sc:hover::before { transform:scaleX(1); }
+    .sc-ico {
+      width:48px;height:48px;
+      background:var(--o-bg);border:1px solid var(--b-o);
+      border-radius:10px;display:flex;align-items:center;justify-content:center;
+      margin-bottom:1.1rem;transition:all .3s;
     }
-    .service-card:hover .service-icon { background: var(--orange); border-color: var(--orange); }
-    .service-name {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      margin-bottom: .6rem;
-    }
-    .service-desc { font-size: .8rem; color: var(--text-mid); line-height: 1.65; }
-    .service-price {
-      margin-top: 1.25rem;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--orange-l);
-    }
+    .sc:hover .sc-ico { background:var(--o);border-color:var(--o); }
+    .sc-ico svg { width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s; }
+    .sc:hover .sc-ico svg { stroke:#fff; }
+    .sc-name { font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:.04em;margin-bottom:.5rem; }
+    .sc-desc { font-size:.78rem;color:var(--mid);line-height:1.65; }
+    .sc-price { margin-top:1.1rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--o-l); }
 
-    /* ─── BEFORE / AFTER ─── */
-    .ba-section { background: var(--navy); }
-    .ba-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-      gap: 1.5rem;
+    /* ── BEFORE / AFTER SLIDER ── */
+    .ba-section { background:var(--navy2);overflow:hidden; }
+    .ba-wrap {
+      display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center;
     }
-    .ba-card {
-      border-radius: var(--radius);
-      overflow: hidden;
-      position: relative;
-      aspect-ratio: 4/3;
-      opacity: 0;
+    @media(max-width:900px){ .ba-wrap{grid-template-columns:1fr} }
+    .ba-slider-wrap {
+      position:relative;border-radius:14px;overflow:hidden;
+      aspect-ratio:4/3;cursor:col-resize;user-select:none;
+      box-shadow:0 24px 64px rgba(0,0,0,.5);
     }
-    .ba-img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform .6s ease;
+    .ba-before, .ba-after { position:absolute;inset:0; }
+    .ba-before img, .ba-after img { width:100%;height:100%;object-fit:cover;display:block; }
+    .ba-after { clip-path:inset(0 50% 0 0);transition:clip-path .05s; }
+    .ba-divider {
+      position:absolute;top:0;bottom:0;left:50%;
+      width:3px;background:var(--o);
+      transform:translateX(-50%);z-index:10;
+      pointer-events:none;
     }
-    .ba-card:hover .ba-img { transform: scale(1.04); }
-    .ba-label {
-      position: absolute;
-      bottom: 1rem; left: 1rem;
-      background: rgba(8,15,28,.85);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(8px);
-      border-radius: 8px;
-      padding: .5rem 1rem;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
+    .ba-handle {
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:44px;height:44px;border-radius:50%;
+      background:var(--o);border:3px solid #fff;
+      box-shadow:0 4px 20px rgba(0,0,0,.4);
+      z-index:11;display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
     }
-    .ba-badge {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      background: var(--orange);
-      border-radius: 6px;
-      padding: .3rem .75rem;
-      font-size: .62rem;
-      font-weight: 800;
-      letter-spacing: .15em;
-      text-transform: uppercase;
+    .ba-handle svg { width:20px;height:20px;fill:#fff; }
+    .ba-label-b, .ba-label-a {
+      position:absolute;bottom:1rem;
+      background:rgba(6,12,24,.8);backdrop-filter:blur(8px);
+      border:1px solid var(--border);border-radius:6px;
+      padding:.35rem .8rem;font-size:.62rem;font-weight:800;
+      letter-spacing:.15em;text-transform:uppercase;z-index:9;
     }
+    .ba-label-b { left:1rem; }
+    .ba-label-a { right:1rem;color:var(--o); }
+    .ba-info { }
+    .ba-list { list-style:none;display:flex;flex-direction:column;gap:1rem;margin-top:2rem; }
+    .ba-item {
+      display:flex;align-items:flex-start;gap:.85rem;
+      padding:1rem 1.1rem;
+      background:var(--glass);border:1px solid var(--border);border-radius:10px;
+    }
+    .ba-item svg { width:20px;height:20px;fill:var(--o);flex-shrink:0;margin-top:.1rem; }
+    .ba-item-text { font-size:.82rem;color:var(--mid);line-height:1.6; }
+    .ba-item-text strong { color:var(--white);display:block;font-size:.78rem;margin-bottom:.2rem; }
 
-    /* ─── HOW IT WORKS ─── */
-    .how { background: var(--navy-mid); }
+    /* ── HOW IT WORKS ── */
+    .how-section { background:var(--navy); }
     .how-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 2rem;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+      position:relative;
     }
-    .how-step {
-      text-align: center;
-      opacity: 0;
+    @media(max-width:900px){ .how-grid{grid-template-columns:repeat(2,1fr)} }
+    @media(max-width:540px){ .how-grid{grid-template-columns:1fr} }
+    .how-grid::before {
+      content:'';position:absolute;top:32px;left:10%;right:10%;height:1px;
+      background:linear-gradient(90deg,transparent,var(--b-o),transparent);
     }
-    .how-num {
-      font-family: 'Oswald', sans-serif;
-      font-size: 4.5rem;
-      font-weight: 700;
-      color: rgba(249,115,22,.12);
-      line-height: 1;
-      margin-bottom: -.8rem;
+    @media(max-width:900px){ .how-grid::before{display:none} }
+    .hs-step { text-align:center;opacity:0; }
+    .hs-num-wrap {
+      width:64px;height:64px;border-radius:50%;
+      background:var(--o-bg);border:1.5px solid var(--b-o);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 1.25rem;
+      font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--o);
+      position:relative;z-index:1;
     }
-    .how-icon {
-      font-size: 2.2rem;
-      display: block;
-      margin-bottom: .9rem;
-    }
-    .how-name {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      margin-bottom: .5rem;
-    }
-    .how-desc { font-size: .8rem; color: var(--text-mid); line-height: 1.65; }
+    .hs-name { font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:.04em;margin-bottom:.5rem; }
+    .hs-desc { font-size:.78rem;color:var(--mid);line-height:1.65; }
 
-    /* ─── STATS ─── */
-    .stats-section {
-      background: linear-gradient(135deg, var(--orange-d) 0%, var(--orange) 50%, #F59E0B 100%);
-      padding: 4rem clamp(1.5rem,5vw,4rem);
+    /* ── STATS BANNER ── */
+    .stats-banner {
+      background:linear-gradient(135deg,#7C2D12 0%,var(--o-d) 40%,var(--o) 70%,#FCD34D 100%);
+      padding:4rem clamp(1.25rem,5vw,4rem);
+      position:relative;overflow:hidden;
     }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
-      gap: 2rem;
-      text-align: center;
+    .stats-banner::before {
+      content:'ELITE';
+      position:absolute;right:-2rem;top:50%;transform:translateY(-50%);
+      font-family:'Oswald',sans-serif;font-size:12rem;font-weight:800;
+      color:rgba(255,255,255,.06);letter-spacing:.1em;pointer-events:none;
     }
-    .stat-num {
-      font-family: 'Oswald', sans-serif;
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1;
-    }
-    .stat-lbl { font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.75); margin-top: .4rem; }
+    .stats-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center; }
+    @media(max-width:768px){ .stats-grid{grid-template-columns:repeat(2,1fr)} }
+    .sb-num { font-family:'Oswald',sans-serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:800;color:#fff;line-height:1; }
+    .sb-lbl { font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-top:.4rem; }
 
-    /* ─── SERVICE AREAS ─── */
-    .areas { background: var(--navy); }
-    .areas-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-      gap: 1.5rem;
-    }
+    /* ── AREAS ── */
+    .areas-section { background:var(--navy2); }
+    .areas-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem; }
+    @media(max-width:768px){ .areas-grid{grid-template-columns:1fr} }
     .area-card {
-      background: var(--navy-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      opacity: 0;
+      background:var(--glass);border:1px solid var(--border);border-radius:var(--r);
+      padding:1.75rem;opacity:0;transition:border-color .3s;
     }
-    .area-state {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--orange);
-      margin-bottom: 1rem;
-      letter-spacing: .06em;
-    }
-    .area-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
-    .area-list li { font-size: .8rem; color: var(--text-mid); display: flex; align-items: center; gap: .5rem; }
-    .area-list li::before { content: '⚡'; font-size: .7rem; }
+    .area-card:hover { border-color:var(--b-o); }
+    .area-state { font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;color:var(--o);margin-bottom:1rem;letter-spacing:.06em; }
+    .area-ul { list-style:none;display:flex;flex-direction:column;gap:.55rem; }
+    .area-ul li { font-size:.8rem;color:var(--mid);display:flex;align-items:center;gap:.5rem; }
+    .area-ul li svg { width:10px;height:10px;fill:var(--o);flex-shrink:0; }
 
-    /* ─── REVIEWS ─── */
-    .reviews { background: var(--navy-mid); }
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 1.5rem;
+    /* ── REVIEWS ── */
+    .reviews-section { background:var(--navy); }
+    .reviews-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem; }
+    @media(max-width:900px){ .reviews-grid{grid-template-columns:1fr 1fr} }
+    @media(max-width:540px){ .reviews-grid{grid-template-columns:1fr} }
+    .rv {
+      background:var(--glass);border:1px solid var(--border);border-radius:var(--r);
+      padding:1.75rem;opacity:0;transition:all .3s;
     }
-    .review-card {
-      background: var(--navy-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      opacity: 0;
-    }
-    .review-stars { color: var(--orange); font-size: 1rem; margin-bottom: 1rem; letter-spacing: .1em; }
-    .review-text { font-size: .85rem; color: var(--text-mid); line-height: 1.7; font-style: italic; margin-bottom: 1.25rem; }
-    .review-author { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-    .review-location { font-size: .65rem; color: var(--orange-l); margin-top: .2rem; }
+    .rv:hover { border-color:var(--b-o);transform:translateY(-3px); }
+    .rv-stars { display:flex;gap:.25rem;margin-bottom:1rem; }
+    .rv-stars svg { width:14px;height:14px;fill:#FCD34D; }
+    .rv-text { font-size:.83rem;color:var(--mid);line-height:1.72;font-style:italic;margin-bottom:1.25rem; }
+    .rv-author { font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase; }
+    .rv-loc { font-size:.63rem;color:var(--o-l);margin-top:.2rem; }
 
-    /* ─── QUOTE FORM ─── */
-    .quote-section {
-      background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy) 100%);
+    /* ── QUOTE FORM ── */
+    .quote-section { background:linear-gradient(180deg,var(--navy2) 0%,var(--navy) 100%); }
+    .quote-grid { display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:start; }
+    @media(max-width:900px){ .quote-grid{grid-template-columns:1fr} }
+    .q-badge {
+      display:inline-flex;align-items:center;gap:.55rem;
+      background:var(--o-bg);border:1px solid var(--b-o);
+      border-radius:40px;padding:.38rem .95rem;
+      font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--o-l);margin-bottom:1.5rem;
     }
-    .quote-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 4rem;
-      align-items: start;
+    .perks { list-style:none;display:flex;flex-direction:column;gap:.85rem;margin-top:2rem; }
+    .perk { display:flex;align-items:flex-start;gap:.8rem;font-size:.83rem;color:var(--mid);line-height:1.5; }
+    .perk-ico { width:28px;height:28px;flex-shrink:0;background:var(--o-bg);border:1px solid var(--b-o);border-radius:7px;display:flex;align-items:center;justify-content:center; }
+    .perk-ico svg { width:14px;height:14px;fill:var(--o); }
+    .form-card {
+      background:var(--glass);
+      border:1px solid var(--border);
+      border-radius:18px;padding:2.5rem;
+      backdrop-filter:blur(20px);
+      box-shadow:0 24px 64px rgba(0,0,0,.35);
     }
-    @media(max-width:900px){ .quote-wrap{ grid-template-columns: 1fr; } }
-    .quote-info { }
-    .quote-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      background: var(--orange-bg);
-      border: 1px solid rgba(249,115,22,.25);
-      border-radius: 40px;
-      padding: .4rem 1rem;
-      font-size: .62rem;
-      font-weight: 700;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--orange-l);
-      margin-bottom: 1.5rem;
+    .form-title { font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:600;letter-spacing:.04em;margin-bottom:.35rem; }
+    .form-sub { font-size:.75rem;color:var(--muted);margin-bottom:2rem; }
+    .form-row { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+    @media(max-width:480px){ .form-row{grid-template-columns:1fr} }
+    .fg { display:flex;flex-direction:column;gap:.38rem;margin-bottom:.9rem; }
+    .fg label { font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted); }
+    .fg input,.fg select,.fg textarea {
+      background:rgba(255,255,255,.045);border:1px solid var(--border);
+      border-radius:8px;padding:.82rem 1rem;
+      font-family:'Inter',sans-serif;font-size:.83rem;color:var(--white);
+      width:100%;outline:none;transition:border-color .2s,box-shadow .2s;
     }
-    .quote-perks { list-style: none; display: flex; flex-direction: column; gap: .9rem; margin-top: 2rem; }
-    .quote-perk {
-      display: flex;
-      align-items: flex-start;
-      gap: .85rem;
-      font-size: .85rem;
-      color: var(--text-mid);
-      line-height: 1.5;
+    .fg input::placeholder,.fg textarea::placeholder { color:var(--muted); }
+    .fg select option { background:var(--navy3); }
+    .fg input:focus,.fg select:focus,.fg textarea:focus {
+      border-color:var(--o);box-shadow:0 0 0 3px var(--o-bg);
     }
-    .perk-icon {
-      width: 28px; height: 28px; flex-shrink: 0;
-      background: var(--orange-bg);
-      border: 1px solid rgba(249,115,22,.2);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .85rem;
-    }
-    .quote-form-card {
-      background: var(--navy-card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 2.5rem;
-      box-shadow: var(--shadow);
-    }
-    .form-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      margin-bottom: .5rem;
-    }
-    .form-sub { font-size: .78rem; color: var(--text-muted); margin-bottom: 2rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    @media(max-width:540px){ .form-row{ grid-template-columns: 1fr; } }
-    .fg { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
-    .fg label { font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); }
-    .fg input, .fg select, .fg textarea {
-      background: rgba(255,255,255,.04);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: .85rem 1rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: .83rem;
-      color: var(--white);
-      width: 100%;
-      outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .fg input::placeholder, .fg textarea::placeholder { color: var(--text-muted); }
-    .fg select option { background: var(--navy-card); }
-    .fg input:focus, .fg select:focus, .fg textarea:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 3px var(--orange-bg);
-    }
-    .fg textarea { resize: vertical; min-height: 90px; }
+    .fg textarea { resize:vertical;min-height:88px; }
     .btn-submit {
-      width: 100%;
-      background: linear-gradient(135deg, var(--orange), var(--orange-d));
-      color: #fff;
-      border: none;
-      padding: 1.1rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: .82rem;
-      font-weight: 800;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 10px;
-      margin-top: .5rem;
-      transition: all .3s;
-      position: relative;
-      overflow: hidden;
+      width:100%;background:linear-gradient(135deg,var(--o),var(--o-d));
+      color:#fff;border:none;padding:1.1rem;
+      font-family:'Inter',sans-serif;font-size:.8rem;font-weight:800;
+      letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+      border-radius:10px;margin-top:.5rem;transition:all .3s;
+      position:relative;overflow:hidden;
     }
-    .btn-submit:hover { background: linear-gradient(135deg, var(--orange-d), #9A3412); transform: translateY(-1px); box-shadow: 0 10px 36px var(--orange-glow); }
-    .form-note { text-align: center; font-size: .65rem; color: var(--text-muted); margin-top: .9rem; }
-    .form-success { display: none; text-align: center; padding: 2rem; }
-    .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .form-success h3 { font-family: 'Oswald', sans-serif; font-size: 1.5rem; margin-bottom: .5rem; color: var(--orange); }
-    .form-success p { font-size: .85rem; color: var(--text-mid); }
+    .btn-submit::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .5s}
+    .btn-submit:hover::after{left:160%}
+    .btn-submit:hover { transform:translateY(-1px);box-shadow:0 10px 36px var(--o-glow); }
+    .form-note { text-align:center;font-size:.63rem;color:var(--muted);margin-top:.85rem; }
+    #formSuccess { display:none;text-align:center;padding:2.5rem 1rem; }
+    .success-ico { font-size:3rem;display:block;margin-bottom:1rem; }
+    #formSuccess h3 { font-family:'Oswald',sans-serif;font-size:1.6rem;color:var(--o);margin-bottom:.5rem; }
+    #formSuccess p { font-size:.85rem;color:var(--mid);line-height:1.7; }
 
-    /* ─── FOOTER ─── */
+    /* ── FOOTER ── */
     footer {
-      background: #05090F;
-      border-top: 1px solid var(--border);
-      padding: 4rem clamp(1.5rem,5vw,4rem) 2rem;
+      background:#03070E;
+      border-top:1px solid var(--border);
+      padding:4rem clamp(1.25rem,5vw,4rem) 2rem;
     }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-    @media(max-width:768px){ .footer-grid{ grid-template-columns: 1fr; gap: 2rem; } }
-    .footer-brand p { font-size: .82rem; color: var(--text-muted); line-height: 1.7; margin-top: 1rem; max-width: 280px; }
-    .footer-col h4 { font-size: .65rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.1rem; }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
-    .footer-col ul li { font-size: .8rem; color: var(--text-muted); }
-    .footer-col ul li a { color: var(--text-muted); text-decoration: none; transition: color .2s; }
-    .footer-col ul li a:hover { color: var(--orange); }
-    .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: .68rem; color: var(--text-muted); }
+    .footer-grid { display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;margin-bottom:3rem; }
+    @media(max-width:768px){ .footer-grid{grid-template-columns:1fr;gap:2rem} }
+    .footer-brand p { font-size:.8rem;color:var(--muted);line-height:1.7;margin-top:.85rem;max-width:260px; }
+    .footer-col h4 { font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--o);margin-bottom:1rem; }
+    .footer-col ul { list-style:none;display:flex;flex-direction:column;gap:.55rem; }
+    .footer-col ul li { font-size:.78rem;color:var(--muted); }
+    .footer-col ul li a { color:var(--muted);text-decoration:none;transition:color .2s; }
+    .footer-col ul li a:hover { color:var(--o); }
+    .footer-btm { border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.65rem;color:var(--muted); }
+    .footer-btm a { color:var(--o);text-decoration:none; }
 
-    /* ─── WHATSAPP FLOAT ─── */
-    .wa-float {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: .5rem;
-    }
-    .wa-bubble {
-      background: #25D366;
-      width: 60px; height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 32px rgba(37,211,102,.4);
-      cursor: pointer;
-      transition: all .3s;
-      text-decoration: none;
-      animation: wa-pulse 3s ease-in-out infinite;
-    }
-    @keyframes wa-pulse { 0%,100%{box-shadow:0 8px 32px rgba(37,211,102,.4)} 50%{box-shadow:0 8px 48px rgba(37,211,102,.7)} }
-    .wa-bubble:hover { transform: scale(1.1); }
-    .wa-bubble svg { width: 30px; height: 30px; fill: #fff; }
-    .wa-label {
-      background: rgba(8,15,28,.9);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(8px);
-      border-radius: 8px;
-      padding: .4rem .85rem;
-      font-size: .68rem;
-      font-weight: 600;
-      color: var(--white);
-      white-space: nowrap;
-    }
+    /* ── WHATSAPP FLOAT ── */
+    .wa { position:fixed;bottom:1.75rem;right:1.75rem;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem; }
+    .wa-lbl { background:rgba(6,12,24,.85);border:1px solid var(--border);backdrop-filter:blur(8px);border-radius:8px;padding:.38rem .8rem;font-size:.65rem;font-weight:600;color:var(--white);white-space:nowrap; }
+    .wa-btn { width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 28px rgba(37,211,102,.38);text-decoration:none;transition:transform .3s;animation:wapulse 3s ease-in-out infinite; }
+    .wa-btn:hover { transform:scale(1.1); }
+    .wa-btn svg { width:28px;height:28px;fill:#fff; }
+    @keyframes wapulse{ 0%,100%{box-shadow:0 6px 28px rgba(37,211,102,.38)}50%{box-shadow:0 6px 48px rgba(37,211,102,.65)} }
 
-    /* ─── ANIMATIONS INITIAL STATE ─── */
-    .fade-up { opacity: 0; }
-
-    /* ─── SCROLL PROGRESS BAR ─── */
-    .progress-bar {
-      position: fixed;
-      top: 0; left: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--orange), var(--orange-l));
-      z-index: 999;
-      width: 0%;
-      transition: width .1s;
+    /* ── MOBILE STICKY CTA ── */
+    .mobile-cta {
+      display:none;
+      position:fixed;bottom:0;left:0;right:0;z-index:300;
+      background:rgba(6,12,24,.95);backdrop-filter:blur(16px);
+      border-top:1px solid var(--border);
+      padding:1rem 1.5rem;
+      gap:.75rem;
     }
-
-    /* ─── RESPONSIVE ─── */
-    @media(max-width:600px){
-      .hero-stats { gap: 1.5rem; }
-      .hero-stat-num { font-size: 1.5rem; }
-      .trust { gap: 1.2rem; }
+    @media(max-width:768px){ .mobile-cta{display:flex} }
+    .mobile-cta a {
+      flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+      padding:.75rem;border-radius:8px;
+      font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      text-decoration:none;
     }
+    .mobile-cta .m-quote { background:linear-gradient(135deg,var(--o),var(--o-d));color:#fff; }
+    .mobile-cta .m-wa { background:#25D366;color:#fff; }
+
+    @media(max-width:768px){ .wa{bottom:5.5rem} }
   </style>
 </head>
 <body>
 
-<!-- SCROLL PROGRESS -->
-<div class="progress-bar" id="progressBar"></div>
+<div id="progress"></div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  ⚡ Same-Day Quotes Available &nbsp;·&nbsp;
-  <a href="tel:+12407806473">📞 (240) 780-6473</a> &nbsp;·&nbsp;
-  Serving PA &amp; NJ
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>Licensed &amp; Insured</span>
+    <span>PA &amp; NJ Coverage</span>
+    <span>Same-Day Quotes</span>
+    <span>100% Satisfaction Guarantee</span>
+    <span>Eco-Friendly Solutions</span>
+    <span>Commercial &amp; Residential</span>
+    <span>5-Star Rated</span>
+    <span>Licensed &amp; Insured</span>
+    <span>PA &amp; NJ Coverage</span>
+    <span>Same-Day Quotes</span>
+    <span>100% Satisfaction Guarantee</span>
+    <span>Eco-Friendly Solutions</span>
+    <span>Commercial &amp; Residential</span>
+    <span>5-Star Rated</span>
+  </div>
 </div>
 
 <!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <!-- CH ELITE WASHING LOGO SVG -->
-    <svg width="46" height="50" viewBox="0 0 46 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<nav id="mainNav">
+  <a href="#" class="logo">
+    <svg width="44" height="48" viewBox="0 0 44 48" fill="none">
       <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="46" y2="50" gradientUnits="userSpaceOnUse">
+        <linearGradient id="lg1" x1="0" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#FB923C"/>
           <stop offset="100%" stop-color="#C2410C"/>
         </linearGradient>
-        <linearGradient id="dropGrad" x1="0" y1="0" x2="46" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#F97316" stop-opacity=".15"/>
-          <stop offset="100%" stop-color="#C2410C" stop-opacity=".05"/>
-        </linearGradient>
       </defs>
-      <!-- Shield -->
-      <path d="M23 2 L42 10 L42 30 Q42 44 23 48 Q4 44 4 30 L4 10 Z" fill="url(#dropGrad)" stroke="url(#logoGrad)" stroke-width="1.5"/>
-      <!-- Water drop accent top -->
-      <circle cx="23" cy="10" r="3" fill="url(#logoGrad)" opacity=".6"/>
-      <!-- CH Text -->
-      <text x="23" y="31" text-anchor="middle" font-family="Oswald,sans-serif" font-weight="700" font-size="17" fill="url(#logoGrad)">CH</text>
-      <!-- Bottom line -->
-      <line x1="12" y1="36" x2="34" y2="36" stroke="url(#logoGrad)" stroke-width="1" opacity=".4"/>
+      <path d="M22 2 L40 9 L40 29 Q40 43 22 47 Q4 43 4 29 L4 9 Z" fill="rgba(249,115,22,.08)" stroke="url(#lg1)" stroke-width="1.5"/>
+      <circle cx="22" cy="9" r="2.5" fill="url(#lg1)" opacity=".55"/>
+      <text x="22" y="30" text-anchor="middle" font-family="Oswald,sans-serif" font-weight="800" font-size="16" fill="url(#lg1)">CH</text>
+      <line x1="12" y1="35" x2="32" y2="35" stroke="url(#lg1)" stroke-width="1" opacity=".35"/>
     </svg>
-    <div class="nav-logo-text">
-      <span class="nav-logo-name">CH ELITE</span>
-      <span class="nav-logo-sub">Washing</span>
+    <div class="logo-text">
+      <span class="logo-name">CH ELITE</span>
+      <span class="logo-sub">Washing</span>
     </div>
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
+    <li><a href="#results">Results</a></li>
     <li><a href="#areas">Areas</a></li>
     <li><a href="#reviews">Reviews</a></li>
   </ul>
-  <a href="#quote" class="btn-nav">Free Quote</a>
+  <a href="#quote" class="btn-cta">Free Quote</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-particles" id="particles"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow" id="heroEyebrow">
-      <span></span> Licensed &amp; Insured in PA &amp; NJ
+  <div class="hero-left">
+    <div class="hero-inner">
+      <div class="hero-badge" id="hBadge">
+        <span class="pulse-dot"></span>
+        Licensed &amp; Insured · PA &amp; NJ
+      </div>
+      <h1 class="hero-h1" id="hTitle">
+        POWER THAT<br>
+        <em>RESTORES</em><br>
+        <span class="stroke">EVERY SURFACE</span>
+      </h1>
+      <p class="hero-sub" id="hSub">
+        Elite pressure washing for discerning homeowners across Pennsylvania, New Jersey and the DMV. We don't just clean — we transform.
+      </p>
+      <div class="hero-btns" id="hBtns">
+        <a href="#quote" class="btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Get Free Quote
+        </a>
+        <a href="tel:+12407806473" class="btn-ghost">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          (240) 780-6473
+        </a>
+      </div>
+      <div class="hero-stats" id="hStats">
+        <div class="hs">
+          <span class="hs-num" data-count="800">0+</span>
+          <span class="hs-label">Homes Restored</span>
+        </div>
+        <div class="hs">
+          <span class="hs-num">5.0 ★</span>
+          <span class="hs-label">Google Rating</span>
+        </div>
+        <div class="hs">
+          <span class="hs-num">100%</span>
+          <span class="hs-label">Guaranteed</span>
+        </div>
+      </div>
+      <div class="hero-trust" id="hTrust">
+        <div class="trust-pill">
+          <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
+          Licensed &amp; Insured
+        </div>
+        <div class="trust-pill">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Same-Day Available
+        </div>
+        <div class="trust-pill">
+          <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+          Flexible Scheduling
+        </div>
+      </div>
     </div>
-    <h1 class="hero-title" id="heroTitle">
-      POWER THAT<br>
-      <span class="accent">TRANSFORMS</span><br>
-      <span class="outline">EVERY SURFACE</span>
-    </h1>
-    <p class="hero-sub" id="heroSub">
-      Elite pressure washing for discerning homeowners and businesses across Pennsylvania and New Jersey. We don't just clean — we restore.
-    </p>
-    <div class="hero-ctas" id="heroCtas">
-      <a href="#quote" class="btn-primary">⚡ Get Free Quote</a>
-      <a href="tel:+12407806473" class="btn-ghost">📞 Call (240) 780-6473</a>
-    </div>
-    <div class="hero-stats" id="heroStats">
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-count="800">0</div>
-        <div class="hero-stat-label">Homes Restored</div>
+  </div>
+
+  <!-- PHOTO MOSAIC — real action shots -->
+  <div class="hero-right">
+    <div class="hero-photo-grid">
+      <div class="hp">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85" alt="Driveway pressure washing" loading="eager">
+        <div class="hp-label">Driveway Wash</div>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">5.0 ★</div>
-        <div class="hero-stat-label">Google Rating</div>
+      <div class="hp">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=85" alt="House exterior clean" loading="eager">
+        <div class="hp-label">House Exterior</div>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">100%</div>
-        <div class="hero-stat-label">Satisfaction</div>
+      <div class="hp">
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=700&q=85" alt="Deck restoration" loading="eager">
+        <div class="hp-label">Deck Restore</div>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">Same</div>
-        <div class="hero-stat-label">Day Available</div>
+      <div class="hp">
+        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=85" alt="Clean property" loading="eager">
+        <div class="hp-label">Commercial</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- TRUST STRIP -->
-<div class="trust">
-  <div class="trust-item"><span class="trust-icon">🛡️</span> Fully Licensed &amp; Insured</div>
-  <div class="trust-item"><span class="trust-icon">🌿</span> Eco-Friendly Solutions</div>
-  <div class="trust-item"><span class="trust-icon">✅</span> 100% Satisfaction Guarantee</div>
-  <div class="trust-item"><span class="trust-icon">⚡</span> Same-Day Quotes</div>
-  <div class="trust-item"><span class="trust-icon">📅</span> Flexible Scheduling</div>
+<div class="trust-strip">
+  <div class="ti">
+    <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
+    Licensed &amp; Insured
+  </div>
+  <div class="ti">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    100% Satisfaction
+  </div>
+  <div class="ti">
+    <svg viewBox="0 0 24 24"><path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2zM5 22h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2zM5 6h14v2H5V6z"/></svg>
+    Same-Day Quotes
+  </div>
+  <div class="ti">
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm-1 14.5v-9l7 4.5-7 4.5z"/></svg>
+    Eco-Friendly
+  </div>
+  <div class="ti">
+    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+    5-Star Rated
+  </div>
 </div>
 
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="section-label">What We Do</div>
-  <h2 class="section-title">Elite Services for<br>Every Surface</h2>
-  <p class="section-sub">Commercial-grade equipment. Professional-grade results. Every job treated like it's our own home.</p>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">🏠</div>
-      <div class="service-name">House Exterior Wash</div>
-      <div class="service-desc">Full soft-wash treatment for vinyl siding, brick, stucco and painted surfaces. Remove years of algae, mold and grime safely.</div>
-      <div class="service-price">Starting at $250</div>
+<!-- ACTION GALLERY -->
+<section class="gallery-section" id="results">
+  <div class="s-eye">Our Work</div>
+  <h2 class="s-title">Real Jobs.<br>Real Results.</h2>
+  <p class="s-sub">Every surface tells a story. We write the restoration chapter.</p>
+
+  <div class="gallery-grid">
+    <div class="gp">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=85" alt="Driveway pressure washed" loading="lazy">
+      <div class="gp-tag">Before / After</div>
+      <div class="gp-overlay">
+        <div class="gp-name">Driveway &amp; Sidewalk</div>
+        <div class="gp-loc">Delaware County, PA</div>
+      </div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🛣️</div>
-      <div class="service-name">Driveway &amp; Sidewalk</div>
-      <div class="service-desc">High-pressure concrete and paver cleaning. Surface treatment eliminates oil stains, moss, and black marks permanently.</div>
-      <div class="service-price">Starting at $150</div>
+    <div class="gp">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=85" alt="House exterior washed" loading="lazy">
+      <div class="gp-overlay">
+        <div class="gp-name">House Exterior</div>
+        <div class="gp-loc">Main Line, PA</div>
+      </div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🪵</div>
-      <div class="service-name">Deck &amp; Patio Restore</div>
-      <div class="service-desc">Wood, composite and stone deck restoration. Prep for staining or sealing. Transforms weathered surfaces dramatically.</div>
-      <div class="service-price">Starting at $200</div>
+    <div class="gp">
+      <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=85" alt="Property after wash" loading="lazy">
+      <div class="gp-overlay">
+        <div class="gp-name">Full Property</div>
+        <div class="gp-loc">Cherry Hill, NJ</div>
+      </div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🏘️</div>
-      <div class="service-name">Roof Soft Wash</div>
-      <div class="service-desc">Low-pressure soft wash removes black streaks, algae and lichen from shingles and tiles without damage.</div>
-      <div class="service-price">Starting at $350</div>
+    <div class="gp">
+      <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=700&q=85" alt="Deck restored" loading="lazy">
+      <div class="gp-overlay">
+        <div class="gp-name">Deck Restoration</div>
+        <div class="gp-loc">Bryn Mawr, PA</div>
+      </div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🏢</div>
-      <div class="service-name">Commercial Properties</div>
-      <div class="service-desc">Storefronts, parking lots, HOA communities and commercial buildings. Scheduled maintenance contracts available.</div>
-      <div class="service-price">Custom Quote</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🌧️</div>
-      <div class="service-name">Gutter Cleaning</div>
-      <div class="service-desc">Full gutter flush and downspout clearing. Prevent water damage before it starts. In and out in under 90 minutes.</div>
-      <div class="service-price">Starting at $120</div>
+    <div class="gp">
+      <img src="https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=700&q=85" alt="Garage and driveway" loading="lazy">
+      <div class="gp-overlay">
+        <div class="gp-name">Garage &amp; Concrete</div>
+        <div class="gp-loc">Bethesda, MD</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- BEFORE / AFTER -->
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="s-eye">What We Do</div>
+  <h2 class="s-title">Elite Services for<br>Every Surface</h2>
+  <p class="s-sub">Commercial-grade equipment. Trained technicians. Every job treated like our own home.</p>
+  <div class="services-grid">
+    <div class="sc">
+      <div class="sc-ico">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="sc-name">House Exterior Wash</div>
+      <div class="sc-desc">Soft-wash treatment for vinyl siding, brick, stucco and painted surfaces. Remove years of algae, mold and grime without damage.</div>
+      <div class="sc-price">Starting at $250</div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="sc-name">Driveway &amp; Sidewalk</div>
+      <div class="sc-desc">High-pressure concrete and paver cleaning. Oil stains, moss, black streaks and tire marks removed permanently.</div>
+      <div class="sc-price">Starting at $150</div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="sc-name">Deck &amp; Patio Restore</div>
+      <div class="sc-desc">Wood, composite and stone restoration. Prep for staining or sealing. Transforms weathered decks dramatically in hours.</div>
+      <div class="sc-price">Starting at $200</div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico">
+        <svg viewBox="0 0 24 24"><path d="M3 17l9-13 9 13"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </div>
+      <div class="sc-name">Roof Soft Wash</div>
+      <div class="sc-desc">Low-pressure removal of black streaks, algae and lichen from shingles and tiles. Extends roof life by years.</div>
+      <div class="sc-price">Starting at $350</div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      </div>
+      <div class="sc-name">Commercial Properties</div>
+      <div class="sc-desc">Storefronts, parking lots, HOA communities and commercial buildings. Maintenance contracts available.</div>
+      <div class="sc-price">Custom Quote</div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/><circle cx="9" cy="7" r="4"/></svg>
+      </div>
+      <div class="sc-name">Gutter Cleaning</div>
+      <div class="sc-desc">Full gutter flush and downspout clearing. Prevent water damage before it starts. In and out in under 90 minutes.</div>
+      <div class="sc-price">Starting at $120</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER INTERACTIVE SLIDER -->
 <section class="ba-section">
-  <div class="section-label">The Results</div>
-  <h2 class="section-title">See the Difference</h2>
-  <p class="section-sub">Real transformations. No filters. No editing. Just elite pressure washing results.</p>
-  <div class="ba-grid">
-    <div class="ba-card">
-      <img class="ba-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Driveway after pressure washing" loading="lazy">
-      <div class="ba-label">🛣️ Driveway — Delaware County, PA</div>
-      <div class="ba-badge">AFTER</div>
+  <div class="ba-wrap">
+    <div>
+      <!-- Interactive slider -->
+      <div class="ba-slider-wrap" id="baSlider">
+        <div class="ba-before">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&sat=-60&bri=-30" alt="Before pressure washing" loading="lazy">
+        </div>
+        <div class="ba-after" id="baAfter">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="After pressure washing" loading="lazy">
+        </div>
+        <div class="ba-divider" id="baDivider"></div>
+        <div class="ba-handle" id="baHandle">
+          <svg viewBox="0 0 24 24"><path d="M8 4l-4 4 4 4M16 4l4 4-4 4"/></svg>
+        </div>
+        <div class="ba-label-b">BEFORE</div>
+        <div class="ba-label-a">AFTER</div>
+      </div>
     </div>
-    <div class="ba-card">
-      <img class="ba-img" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80" alt="House exterior after wash" loading="lazy">
-      <div class="ba-label">🏠 House Exterior — Cherry Hill, NJ</div>
-      <div class="ba-badge">AFTER</div>
-    </div>
-    <div class="ba-card">
-      <img class="ba-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Deck after power washing" loading="lazy">
-      <div class="ba-label">🪵 Deck Restore — Bryn Mawr, PA</div>
-      <div class="ba-badge">AFTER</div>
+    <div class="ba-info">
+      <div class="s-eye">Transformations</div>
+      <h2 class="s-title">Drag to See<br><span style="color:var(--o)">The Difference</span></h2>
+      <p style="font-size:.9rem;color:var(--mid);line-height:1.75;margin-bottom:0">Slide left or right to see real before and after results from our driveway restoration service.</p>
+      <ul class="ba-list">
+        <li class="ba-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <div class="ba-item-text"><strong>Job Duration</strong>Under 2 hours for a standard driveway</div>
+        </li>
+        <li class="ba-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
+          <div class="ba-item-text"><strong>100% Guaranteed</strong>Not satisfied? We come back at no charge</div>
+        </li>
+        <li class="ba-item">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="ba-item-text"><strong>Your Area</strong>Serving PA, NJ and the greater DMV region</div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="how">
-  <div class="section-label">Our Process</div>
-  <h2 class="section-title">Simple. Fast.<br>Guaranteed.</h2>
-  <p class="section-sub">From first contact to a spotless property in as little as 24 hours.</p>
+<section class="how-section">
+  <div class="s-eye" style="text-align:center">Our Process</div>
+  <h2 class="s-title" style="text-align:center">Simple. Fast.<br>Guaranteed.</h2>
+  <p class="s-sub" style="margin:0 auto 3.5rem;text-align:center">From first contact to a spotless property in as little as 24 hours.</p>
   <div class="how-grid">
-    <div class="how-step">
-      <div class="how-num">01</div>
-      <span class="how-icon">📋</span>
-      <div class="how-name">Request Quote</div>
-      <div class="how-desc">Fill out our form or call. We respond within 2 hours with a transparent, no-surprise estimate.</div>
+    <div class="hs-step">
+      <div class="hs-num-wrap">01</div>
+      <div class="hs-name">Request Quote</div>
+      <div class="hs-desc">Fill out our form or call. We respond within 2 hours with a transparent, no-surprise estimate.</div>
     </div>
-    <div class="how-step">
-      <div class="how-num">02</div>
-      <span class="how-icon">📍</span>
-      <div class="how-name">We Assess</div>
-      <div class="how-desc">Our team visits or reviews photos of your property and sends a detailed scope of work.</div>
+    <div class="hs-step">
+      <div class="hs-num-wrap">02</div>
+      <div class="hs-name">We Assess</div>
+      <div class="hs-desc">Our team reviews your property and confirms the scope, timeline and everything included.</div>
     </div>
-    <div class="how-step">
-      <div class="how-num">03</div>
-      <span class="how-icon">⚡</span>
-      <div class="how-name">We Execute</div>
-      <div class="how-desc">Licensed crew arrives on schedule. Commercial-grade equipment. Zero shortcuts. Always protected.</div>
+    <div class="hs-step">
+      <div class="hs-num-wrap">03</div>
+      <div class="hs-name">We Execute</div>
+      <div class="hs-desc">Licensed crew arrives on schedule. Commercial-grade equipment. Zero shortcuts.</div>
     </div>
-    <div class="how-step">
-      <div class="how-num">04</div>
-      <span class="how-icon">✨</span>
-      <div class="how-name">You Approve</div>
-      <div class="how-desc">Walk-through with your team. 100% satisfaction or we come back — no questions asked.</div>
+    <div class="hs-step">
+      <div class="hs-num-wrap">04</div>
+      <div class="hs-name">You Approve</div>
+      <div class="hs-desc">Walk-through with your team. 100% satisfaction or we come back — no questions asked.</div>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-section">
+<!-- STATS BANNER -->
+<div class="stats-banner">
   <div class="stats-grid">
-    <div>
-      <div class="stat-num" data-count="800">0+</div>
-      <div class="stat-lbl">Properties Cleaned</div>
-    </div>
-    <div>
-      <div class="stat-num">5.0 ★</div>
-      <div class="stat-lbl">Average Rating</div>
-    </div>
-    <div>
-      <div class="stat-num" data-count="6">0</div>
-      <div class="stat-lbl">Years of Experience</div>
-    </div>
-    <div>
-      <div class="stat-num">100%</div>
-      <div class="stat-lbl">Guaranteed Results</div>
-    </div>
+    <div><div class="sb-num" data-count="800">0+</div><div class="sb-lbl">Properties Restored</div></div>
+    <div><div class="sb-num">5.0★</div><div class="sb-lbl">Google Rating</div></div>
+    <div><div class="sb-num" data-count="6">0</div><div class="sb-lbl">Years Experience</div></div>
+    <div><div class="sb-num">100%</div><div class="sb-lbl">Satisfaction Rate</div></div>
   </div>
 </div>
 
-<!-- SERVICE AREAS -->
-<section class="areas" id="areas">
-  <div class="section-label">Coverage</div>
-  <h2 class="section-title">We Come to You</h2>
-  <p class="section-sub">Serving prime residential and commercial areas across Pennsylvania and New Jersey.</p>
+<!-- AREAS -->
+<section class="areas-section" id="areas">
+  <div class="s-eye">Coverage</div>
+  <h2 class="s-title">We Come to You</h2>
+  <p class="s-sub">Serving prime residential and commercial areas across PA, NJ and the DMV.</p>
   <div class="areas-grid">
     <div class="area-card">
-      <div class="area-state">📍 Pennsylvania</div>
-      <ul class="area-list">
-        <li>Philadelphia</li>
-        <li>Main Line (Villanova, Bryn Mawr, Wayne)</li>
-        <li>Delaware County</li>
-        <li>Montgomery County</li>
-        <li>Chester County</li>
-        <li>Bucks County</li>
+      <div class="area-state">Pennsylvania</div>
+      <ul class="area-ul">
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Philadelphia &amp; suburbs</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Main Line — Villanova, Bryn Mawr, Wayne</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Delaware County</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Montgomery County</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Chester &amp; Bucks County</li>
       </ul>
     </div>
     <div class="area-card">
-      <div class="area-state">📍 New Jersey</div>
-      <ul class="area-list">
-        <li>Cherry Hill</li>
-        <li>Moorestown</li>
-        <li>Haddonfield</li>
-        <li>Camden County</li>
-        <li>Burlington County</li>
-        <li>Marlton &amp; Voorhees</li>
+      <div class="area-state">New Jersey</div>
+      <ul class="area-ul">
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Cherry Hill</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Moorestown &amp; Haddonfield</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Camden County</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Burlington County</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Marlton &amp; Voorhees</li>
       </ul>
     </div>
     <div class="area-card">
-      <div class="area-state">📍 DMV Area</div>
-      <ul class="area-list">
-        <li>Montgomery County, MD</li>
-        <li>Prince George's County</li>
-        <li>Northern Virginia</li>
-        <li>Washington DC suburbs</li>
-        <li>Rockville &amp; Bethesda</li>
-        <li>Potomac &amp; Chevy Chase</li>
+      <div class="area-state">DMV Area</div>
+      <ul class="area-ul">
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Montgomery County, MD</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Rockville, Bethesda, Potomac</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Prince George's County</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Northern Virginia</li>
+        <li><svg viewBox="0 0 6 6"><circle cx="3" cy="3" r="3"/></svg>Washington DC suburbs</li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- REVIEWS -->
-<section class="reviews" id="reviews">
-  <div class="section-label">Client Testimonials</div>
-  <h2 class="section-title">What Our Clients Say</h2>
-  <p class="section-sub">Over 800 satisfied homeowners and businesses across PA, NJ and the DMV area.</p>
+<section class="reviews-section" id="reviews">
+  <div class="s-eye">Testimonials</div>
+  <h2 class="s-title">What Our Clients Say</h2>
+  <p class="s-sub">Over 800 satisfied homeowners and businesses across PA, NJ and the DMV.</p>
   <div class="reviews-grid">
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"Our driveway looked brand new after CH Elite came through. They were on time, professional, and the results blew us away. Already scheduled them for the deck next month."</div>
-      <div class="review-author">Michael T.</div>
-      <div class="review-location">Villanova, PA — Driveway &amp; Sidewalk</div>
+    <div class="rv">
+      <div class="rv-stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="rv-text">"Our driveway looked brand new. They were on time, professional, and the results blew us away. Already scheduled for the deck next month."</div>
+      <div class="rv-author">Michael T.</div>
+      <div class="rv-loc">Villanova, PA — Driveway &amp; Sidewalk</div>
     </div>
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"I've used three other pressure washing companies before. None of them came close to this level of detail and professionalism. CH Elite is in a different league."</div>
-      <div class="review-author">Sarah K.</div>
-      <div class="review-location">Cherry Hill, NJ — House Exterior</div>
+    <div class="rv">
+      <div class="rv-stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="rv-text">"I've used three other companies before. None came close to this level of detail. CH Elite is in a different league altogether."</div>
+      <div class="rv-author">Sarah K.</div>
+      <div class="rv-loc">Cherry Hill, NJ — House Exterior</div>
     </div>
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"Got a quote the same day, service the next. The crew was respectful of our property, cleaned up after themselves, and my deck looks like it was just installed. Incredible."</div>
-      <div class="review-author">James &amp; Patricia L.</div>
-      <div class="review-location">Bethesda, MD — Deck Restoration</div>
+    <div class="rv">
+      <div class="rv-stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="rv-text">"Quoted same day, service next morning. My deck looks like it was just installed. Crew was respectful, fast and completely thorough."</div>
+      <div class="rv-author">James &amp; Patricia L.</div>
+      <div class="rv-loc">Bethesda, MD — Deck Restoration</div>
     </div>
   </div>
 </section>
 
 <!-- QUOTE FORM -->
 <section class="quote-section" id="quote">
-  <div class="quote-wrap">
-    <div class="quote-info">
-      <div class="quote-badge">⚡ Free Estimates · No Obligation</div>
-      <div class="section-label">Get Your Quote</div>
-      <h2 class="section-title">Ready for a<br><span style="color:var(--orange)">Spotless Property?</span></h2>
-      <p class="section-sub">Tell us what you need. We'll get back to you within 2 hours with a detailed, transparent estimate.</p>
-      <ul class="quote-perks">
-        <li class="quote-perk"><div class="perk-icon">⚡</div>Same-day quotes on most jobs</li>
-        <li class="quote-perk"><div class="perk-icon">💰</div>Transparent pricing — no hidden fees</li>
-        <li class="quote-perk"><div class="perk-icon">🛡️</div>Fully licensed and insured crew</li>
-        <li class="quote-perk"><div class="perk-icon">✅</div>100% satisfaction guarantee</li>
-        <li class="quote-perk"><div class="perk-icon">📅</div>Flexible scheduling including weekends</li>
+  <div class="quote-grid">
+    <div>
+      <div class="q-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#FB923C"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Free Estimates · No Obligation
+      </div>
+      <div class="s-eye">Get Your Quote</div>
+      <h2 class="s-title">Ready for a<br><span style="color:var(--o)">Spotless Property?</span></h2>
+      <p style="font-size:.9rem;color:var(--mid);line-height:1.75;margin-bottom:0">Tell us what you need. We'll respond within 2 hours with a detailed, transparent estimate.</p>
+      <ul class="perks">
+        <li class="perk"><div class="perk-ico"><svg viewBox="0 0 24 24" fill="var(--o)"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>Same-day quotes on most jobs</li>
+        <li class="perk"><div class="perk-ico"><svg viewBox="0 0 24 24" fill="var(--o)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>Transparent pricing — no hidden fees</li>
+        <li class="perk"><div class="perk-ico"><svg viewBox="0 0 24 24" fill="var(--o)"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>Fully licensed and insured crew</li>
+        <li class="perk"><div class="perk-ico"><svg viewBox="0 0 24 24" fill="var(--o)"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>100% satisfaction guarantee</li>
+        <li class="perk"><div class="perk-ico"><svg viewBox="0 0 24 24" fill="var(--o)"><path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2zM5 22h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2zM5 6h14v2H5V6z"/></svg></div>Flexible scheduling including weekends</li>
       </ul>
     </div>
-    <div class="quote-form-card">
-      <div id="quoteFormInner">
-        <div class="form-title">Request a Free Quote</div>
-        <div class="form-sub">We'll respond within 2 hours.</div>
+    <div class="form-card">
+      <div id="formInner">
+        <div class="form-title">Request Free Quote</div>
+        <div class="form-sub">We respond within 2 hours.</div>
         <form id="quoteForm">
           <div class="form-row">
-            <div class="fg"><label>First Name *</label><input type="text" name="customer_name" placeholder="Your name" required></div>
-            <div class="fg"><label>Phone / WhatsApp *</label><input type="tel" name="customer_phone" placeholder="(240) 000-0000" required></div>
+            <div class="fg"><label>Name *</label><input name="customer_name" placeholder="Your name" required></div>
+            <div class="fg"><label>Phone *</label><input type="tel" name="customer_phone" placeholder="(240) 000-0000" required></div>
           </div>
           <div class="fg"><label>Email *</label><input type="email" name="customer_email" placeholder="your@email.com" required></div>
           <div class="fg">
-            <label>Service Needed *</label>
+            <label>Service *</label>
             <select name="service_type" required>
               <option value="">Select a service</option>
               <option value="house_exterior">House Exterior Wash</option>
@@ -1011,18 +990,16 @@
               <option value="multiple">Multiple Services</option>
             </select>
           </div>
-          <div class="fg"><label>Property Address</label><input type="text" name="address" placeholder="Street address, City, State"></div>
-          <div class="fg"><label>Additional Notes</label><textarea name="message" placeholder="Tell us more about your property or any specific concerns..."></textarea></div>
-          <button type="submit" class="btn-submit" id="submitBtn">⚡ Get My Free Quote</button>
+          <div class="fg"><label>Address</label><input name="address" placeholder="Street address, City, State"></div>
+          <div class="fg"><label>Notes</label><textarea name="message" placeholder="Tell us about your property..."></textarea></div>
+          <button type="submit" class="btn-submit" id="submitBtn">Get My Free Quote</button>
           <div class="form-note">No spam. No obligation. Response within 2 hours.</div>
         </form>
       </div>
-      <div class="form-success" id="formSuccess">
-        <div class="success-icon">⚡</div>
+      <div id="formSuccess">
+        <span class="success-ico">⚡</span>
         <h3>Quote Request Sent!</h3>
-        <p>We'll reach out within 2 hours with your personalized estimate.<br><br>
-        Questions right now? Text us on WhatsApp:<br>
-        <a href="https://wa.me/12407806473" style="color:var(--orange);font-weight:700">(240) 780-6473</a></p>
+        <p>We'll reach out within 2 hours.<br><br>Questions now? Text us:<br><a href="https://wa.me/12407806473" style="color:var(--o);font-weight:700">(240) 780-6473</a></p>
       </div>
     </div>
   </div>
@@ -1032,23 +1009,15 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="#" class="nav-logo" style="text-decoration:none">
-        <svg width="36" height="40" viewBox="0 0 46 50" fill="none">
-          <defs>
-            <linearGradient id="fLogoGrad" x1="0" y1="0" x2="46" y2="50" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#FB923C"/>
-              <stop offset="100%" stop-color="#C2410C"/>
-            </linearGradient>
-          </defs>
-          <path d="M23 2 L42 10 L42 30 Q42 44 23 48 Q4 44 4 30 L4 10 Z" fill="rgba(249,115,22,.08)" stroke="url(#fLogoGrad)" stroke-width="1.5"/>
-          <text x="23" y="31" text-anchor="middle" font-family="Oswald,sans-serif" font-weight="700" font-size="17" fill="url(#fLogoGrad)">CH</text>
+      <div class="logo">
+        <svg width="36" height="40" viewBox="0 0 44 48" fill="none">
+          <defs><linearGradient id="flg" x1="0" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#FB923C"/><stop offset="100%" stop-color="#C2410C"/></linearGradient></defs>
+          <path d="M22 2 L40 9 L40 29 Q40 43 22 47 Q4 43 4 29 L4 9 Z" fill="rgba(249,115,22,.08)" stroke="url(#flg)" stroke-width="1.5"/>
+          <text x="22" y="30" text-anchor="middle" font-family="Oswald,sans-serif" font-weight="800" font-size="16" fill="url(#flg)">CH</text>
         </svg>
-        <div class="nav-logo-text">
-          <span class="nav-logo-name">CH ELITE</span>
-          <span class="nav-logo-sub">Washing</span>
-        </div>
-      </a>
-      <p>Elite pressure washing services for discerning homeowners and businesses across Pennsylvania, New Jersey and the DMV area.</p>
+        <div class="logo-text"><span class="logo-name">CH ELITE</span><span class="logo-sub">Washing</span></div>
+      </div>
+      <p>Elite pressure washing for discerning homeowners and businesses across PA, NJ and the DMV area. Licensed, insured, guaranteed.</p>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
@@ -1064,169 +1033,182 @@
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="tel:+12407806473">📞 (240) 780-6473</a></li>
-        <li><a href="https://wa.me/12407806473">💬 WhatsApp</a></li>
-        <li><a href="mailto:admin.lagosworld@gmail.com">✉️ Email Us</a></li>
+        <li><a href="tel:+12407806473">(240) 780-6473</a></li>
+        <li><a href="https://wa.me/12407806473">WhatsApp</a></li>
+        <li><a href="#quote">Get Free Quote</a></li>
         <li>Serving PA · NJ · DMV</li>
+        <li><a href="https://lagosworld.app/cleaning">Lagos Cleaning</a></li>
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div class="footer-btm">
     <span>© 2026 CH Elite Washing. All rights reserved.</span>
-    <span>Part of the <a href="https://lagosworld.app" style="color:var(--orange);text-decoration:none">Lagos World</a> platform</span>
+    <span>Part of <a href="https://lagosworld.app">Lagos World</a></span>
   </div>
 </footer>
 
-<!-- WHATSAPP FLOAT -->
-<div class="wa-float">
-  <div class="wa-label">💬 WhatsApp us</div>
-  <a href="https://wa.me/12407806473?text=Hi!%20I'd%20like%20a%20free%20pressure%20washing%20quote." class="wa-bubble" target="_blank" rel="noopener">
+<!-- WHATSAPP -->
+<div class="wa">
+  <div class="wa-lbl">Chat on WhatsApp</div>
+  <a class="wa-btn" href="https://wa.me/12407806473?text=Hi!%20I'd%20like%20a%20free%20pressure%20washing%20quote." target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
+</div>
+
+<!-- MOBILE STICKY BAR -->
+<div class="mobile-cta">
+  <a href="#quote" class="m-quote">⚡ Free Quote</a>
+  <a href="https://wa.me/12407806473" class="m-wa" target="_blank">💬 WhatsApp</a>
 </div>
 
 <!-- MOTION.JS + SCRIPTS -->
 <script type="module">
 import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
 
-// ─── SCROLL PROGRESS ───────────────────────────
-const bar = document.getElementById('progressBar');
+// ── SCROLL PROGRESS ──
+const bar = document.getElementById('progress');
 window.addEventListener('scroll', () => {
-  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-  bar.style.width = pct + '%';
+  bar.style.width = (window.scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+// ── HERO ──
+const ease = [.22, 1, .36, 1];
+animate('#hBadge', { opacity:[0,1], y:[20,0] }, { duration:.6, delay:.15, easing:ease });
+animate('#hTitle', { opacity:[0,1], y:[70,0] }, { duration:.9, delay:.35, easing:ease });
+animate('#hSub',   { opacity:[0,1], y:[40,0] }, { duration:.75, delay:.6, easing:ease });
+animate('#hBtns',  { opacity:[0,1], y:[30,0] }, { duration:.65, delay:.8, easing:ease });
+animate('#hStats', { opacity:[0,1], y:[20,0] }, { duration:.6, delay:1.0, easing:ease });
+animate('#hTrust', { opacity:[0,1], y:[15,0] }, { duration:.6, delay:1.2, easing:ease });
+
+// Photo grid parallax feel
+document.querySelectorAll('.hp img').forEach((img, i) => {
+  animate(img, { scale:[1.08,1.02] }, { duration:1.2, delay:.2 + i*.15, easing:ease });
 });
 
-// ─── PARTICLES ─────────────────────────────────
-const container = document.getElementById('particles');
-for (let i = 0; i < 18; i++) {
-  const p = document.createElement('div');
-  p.className = 'particle';
-  const size = Math.random() * 6 + 2;
-  p.style.cssText = `
-    width:${size}px; height:${size}px;
-    left:${Math.random() * 100}%;
-    bottom:${Math.random() * 30}%;
-    animation-delay:${Math.random() * 5}s;
-    animation-duration:${4 + Math.random() * 4}s;
-  `;
-  container.appendChild(p);
-}
-
-// ─── HERO ENTRANCE ─────────────────────────────
-animate('#heroEyebrow', { opacity: [0,1], y: [30,0] }, { duration: .7, delay: .2, easing: [.22,1,.36,1] });
-animate('#heroTitle',   { opacity: [0,1], y: [60,0] }, { duration: .9, delay: .4, easing: [.22,1,.36,1] });
-animate('#heroSub',     { opacity: [0,1], y: [40,0] }, { duration: .8, delay: .65, easing: [.22,1,.36,1] });
-animate('#heroCtas',    { opacity: [0,1], y: [30,0] }, { duration: .7, delay: .85, easing: [.22,1,.36,1] });
-animate('#heroStats',   { opacity: [0,1], y: [20,0] }, { duration: .7, delay: 1.05, easing: [.22,1,.36,1] });
-
-// ─── COUNTER ANIMATION ─────────────────────────
-function animateCounter(el, target) {
-  let start = 0;
-  const duration = 1800;
-  const step = timestamp => {
-    if (!start) start = timestamp;
-    const progress = Math.min((timestamp - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.floor(eased * target) + '+';
-    if (progress < 1) requestAnimationFrame(step);
+// ── COUNTER ──
+function counter(el, target) {
+  const start = performance.now();
+  const dur = 1800;
+  const tick = (now) => {
+    const p = Math.min((now - start) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.floor(e * target) + '+';
+    if (p < 1) requestAnimationFrame(tick);
   };
-  requestAnimationFrame(step);
+  requestAnimationFrame(tick);
 }
 
-// ─── SERVICE CARDS ─────────────────────────────
+// ── SERVICE CARDS ──
 inView('.services-grid', () => {
-  animate('.service-card', { opacity: [0,1], y: [50,0], scale: [.96,1] }, {
-    duration: .6,
-    delay: stagger(.1),
-    easing: [.22,1,.36,1]
-  });
-}, { amount: 0.1 });
+  animate('.sc', { opacity:[0,1], y:[48,0], scale:[.96,1] }, { duration:.6, delay:stagger(.08), easing:ease });
+}, { amount:.08 });
 
-// ─── BEFORE/AFTER CARDS ────────────────────────
-inView('.ba-grid', () => {
-  animate('.ba-card', { opacity: [0,1], scale: [.95,1] }, {
-    duration: .7,
-    delay: stagger(.15),
-    easing: [.22,1,.36,1]
-  });
-}, { amount: 0.1 });
+// ── GALLERY ──
+inView('.gallery-grid', () => {
+  animate('.gp', { opacity:[0,1], scale:[.94,1] }, { duration:.65, delay:stagger(.1), easing:ease });
+}, { amount:.08 });
 
-// ─── HOW IT WORKS ──────────────────────────────
+// ── HOW IT WORKS ──
 inView('.how-grid', () => {
-  animate('.how-step', { opacity: [0,1], y: [40,0] }, {
-    duration: .65,
-    delay: stagger(.12),
-    easing: [.22,1,.36,1]
-  });
-}, { amount: 0.1 });
+  animate('.hs-step', { opacity:[0,1], y:[40,0] }, { duration:.6, delay:stagger(.12), easing:ease });
+}, { amount:.1 });
 
-// ─── STATS COUNTER ─────────────────────────────
-inView('.stats-section', () => {
-  document.querySelectorAll('[data-count]').forEach(el => {
-    animateCounter(el, parseInt(el.dataset.count));
-  });
-  animate('.stats-section .stat-num', { opacity: [0,1], scale: [.8,1] }, {
-    duration: .8, delay: stagger(.1), easing: [.22,1,.36,1]
-  });
-}, { amount: 0.3 });
+// ── STATS ──
+inView('.stats-banner', () => {
+  document.querySelectorAll('[data-count]').forEach(el => counter(el, parseInt(el.dataset.count)));
+  animate('.stats-banner .sb-num', { opacity:[0,1], scale:[.75,1] }, { duration:.7, delay:stagger(.1), easing:ease });
+}, { amount:.3 });
 
-// ─── AREAS ─────────────────────────────────────
+// ── AREAS ──
 inView('.areas-grid', () => {
-  animate('.area-card', { opacity: [0,1], x: [-30,0] }, {
-    duration: .6, delay: stagger(.1), easing: [.22,1,.36,1]
-  });
-}, { amount: 0.1 });
+  animate('.area-card', { opacity:[0,1], x:[-24,0] }, { duration:.55, delay:stagger(.1), easing:ease });
+}, { amount:.1 });
 
-// ─── REVIEWS ───────────────────────────────────
+// ── REVIEWS ──
 inView('.reviews-grid', () => {
-  animate('.review-card', { opacity: [0,1], y: [40,0] }, {
-    duration: .65, delay: stagger(.12), easing: [.22,1,.36,1]
-  });
-}, { amount: 0.1 });
+  animate('.rv', { opacity:[0,1], y:[36,0] }, { duration:.6, delay:stagger(.12), easing:ease });
+}, { amount:.1 });
 
-// ─── SECTION TITLES ────────────────────────────
-document.querySelectorAll('.section-title, .section-label, .section-sub').forEach(el => {
+// ── SECTION LABELS ──
+document.querySelectorAll('.s-eye,.s-title,.s-sub').forEach(el => {
   inView(el, () => {
-    animate(el, { opacity: [0,1], y: [25,0] }, { duration: .65, easing: [.22,1,.36,1] });
-  }, { amount: 0.4 });
+    animate(el, { opacity:[0,1], y:[22,0] }, { duration:.6, easing:ease });
+  }, { amount:.4 });
 });
 
-// ─── QUOTE FORM ────────────────────────────────
-inView('.quote-form-card', () => {
-  animate('.quote-form-card', { opacity: [0,1], y: [40,0] }, { duration: .7, easing: [.22,1,.36,1] });
-}, { amount: 0.2 });
+// ── BA SLIDER ──
+inView('.ba-slider-wrap', () => {
+  animate('.ba-slider-wrap', { opacity:[0,1], scale:[.96,1] }, { duration:.7, easing:ease });
+  animate('.ba-info .s-eye,.ba-info .s-title,.ba-info p,.ba-list', { opacity:[0,1], x:[30,0] }, { duration:.7, delay:stagger(.12), easing:ease });
+}, { amount:.2 });
+
+// ── FORM CARD ──
+inView('.form-card', () => {
+  animate('.form-card', { opacity:[0,1], y:[32,0] }, { duration:.65, easing:ease });
+}, { amount:.15 });
 </script>
 
 <script>
-// ─── FORM SUBMIT ───────────────────────────────
-document.getElementById('quoteForm').addEventListener('submit', async (e) => {
+// ── B/A SLIDER DRAG ──
+(function() {
+  const wrap  = document.getElementById('baSlider');
+  const after = document.getElementById('baAfter');
+  const divider = document.getElementById('baDivider');
+  const handle  = document.getElementById('baHandle');
+  let dragging = false;
+
+  function setPos(pct) {
+    pct = Math.max(5, Math.min(95, pct));
+    after.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    divider.style.left = pct + '%';
+    handle.style.left  = pct + '%';
+  }
+
+  function getX(e) { return e.touches ? e.touches[0].clientX : e.clientX; }
+  function calcPct(e) {
+    const r = wrap.getBoundingClientRect();
+    return ((getX(e) - r.left) / r.width) * 100;
+  }
+
+  handle.addEventListener('mousedown',  () => dragging = true);
+  handle.addEventListener('touchstart', () => dragging = true, { passive:true });
+  wrap.addEventListener('mousedown',  e => { dragging = true; setPos(calcPct(e)); });
+  wrap.addEventListener('touchstart', e => { dragging = true; setPos(calcPct(e)); }, { passive:true });
+  window.addEventListener('mousemove',  e => { if (dragging) setPos(calcPct(e)); });
+  window.addEventListener('touchmove',  e => { if (dragging) setPos(calcPct(e)); }, { passive:true });
+  window.addEventListener('mouseup',  () => dragging = false);
+  window.addEventListener('touchend', () => dragging = false);
+
+  // Start at 50%
+  setPos(50);
+})();
+
+// ── FORM SUBMIT ──
+document.getElementById('quoteForm').addEventListener('submit', async e => {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
-  const form = new FormData(e.target);
-  const data = Object.fromEntries(form);
-  // Map power washing to cleaning API
+  const data = Object.fromEntries(new FormData(e.target));
   data.business = 'power_washing';
 
   try {
-    const res = await fetch('/api/cleaning/requests', {
+    const res  = await fetch('/api/cleaning/requests', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
     const json = await res.json();
     if (json.ok) {
-      document.getElementById('quoteFormInner').style.display = 'none';
+      document.getElementById('formInner').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
-    } else {
-      throw new Error(json.error || 'Error');
-    }
-  } catch(err) {
-    btn.textContent = '⚡ Get My Free Quote';
+    } else throw new Error(json.error);
+  } catch {
+    btn.textContent = 'Get My Free Quote';
     btn.disabled = false;
-    alert('Something went wrong. Please call us at (240) 780-6473.');
+    alert('Something went wrong. Please call (240) 780-6473.');
   }
 });
 </script>
