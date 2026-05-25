@@ -1,15 +1,15 @@
 /**
  * milla.js — Autonomous AI agent for Lagos World
- * Handles jewelry, cleaning (residential/commercial), and power washing
- * Channel-agnostic: web widget, SMS (Twilio), WhatsApp (future)
+ * Powered by Google Gemini 1.5 Flash (free tier: 1,500 req/day)
+ * Channel-agnostic: web widget, SMS (Telnyx), WhatsApp (future)
  */
-const Anthropic  = require('@anthropic-ai/sdk');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const nodemailer = require('nodemailer');
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // ── System Prompt ─────────────────────────────────────────────────────────────
-const SYSTEM_PROMPT = `Você é Milla, a secretária virtual da Lagos World. Atende pelo site (chat) e futuramente por WhatsApp/SMS.
+const SYSTEM_PROMPT = `Você é Milla, a secretária executiva virtual da Lagos World. Atende pelo site (chat) e por SMS/WhatsApp.
 
 A Lagos World tem 3 linhas de negócio:
   1. Lagos Jewelry — joias artesanais premium (lagosworld.app/jewelry)
@@ -45,7 +45,7 @@ Serviços: entrada de garagem, deck, pátio, fachada, calçada.
 Para orçar, SEMPRE pergunte:
   1. Cidade
   2. Tipo de superfície (concreto, madeira, tijolo, etc.)
-  3. Tamanho estimado (em pés quadrados ou metros lineares)
+  3. Tamanho estimado
 WhatsApp direto CH Elite: (240) 780-6473
 
 ─── FLUXO DE ATENDIMENTO ───
@@ -61,26 +61,25 @@ WhatsApp direto CH Elite: (240) 780-6473
 • NUNCA invente preços de limpeza sem qualificar o imóvel
 • SEMPRE colete telefone + email antes de fechar agendamento
 • Se não souber → "Vou verificar com nossa equipe e te respondo em breve 🤝"
-• Não discuta concorrentes
-• Não faça promessas de prazo que a equipe não confirmou`;
+• Não discuta concorrentes`;
 
-// ── Tool Definitions ──────────────────────────────────────────────────────────
-const TOOLS = [
+// ── Tool Declarations (Gemini format) ─────────────────────────────────────────
+const TOOL_DECLARATIONS = [
   {
     name: 'book_appointment',
     description: 'Salva agendamento de limpeza ou power washing no sistema. Use quando o cliente confirmar interesse e fornecer dados básicos.',
-    input_schema: {
-      type: 'object',
+    parameters: {
+      type: 'OBJECT',
       properties: {
-        customer_name:  { type: 'string', description: 'Nome completo' },
-        customer_email: { type: 'string', description: 'Email' },
-        customer_phone: { type: 'string', description: 'Telefone (com DDD)' },
-        service_type:   { type: 'string', enum: ['residential','commercial','power_washing'], description: 'Tipo de serviço' },
-        city:           { type: 'string', description: 'Cidade' },
-        address:        { type: 'string', description: 'Endereço completo (se fornecido)' },
-        preferred_date: { type: 'string', description: 'Data preferida YYYY-MM-DD' },
-        message:        { type: 'string', description: 'Detalhes e necessidades do cliente' },
-        recurrence:     { type: 'string', enum: ['once','weekly','biweekly','monthly'], description: 'Frequência' }
+        customer_name:  { type: 'STRING', description: 'Nome completo' },
+        customer_email: { type: 'STRING', description: 'Email' },
+        customer_phone: { type: 'STRING', description: 'Telefone com DDD' },
+        service_type:   { type: 'STRING', description: 'residential | commercial | power_washing' },
+        city:           { type: 'STRING', description: 'Cidade' },
+        address:        { type: 'STRING', description: 'Endereço completo se fornecido' },
+        preferred_date: { type: 'STRING', description: 'Data preferida YYYY-MM-DD' },
+        message:        { type: 'STRING', description: 'Detalhes e necessidades do cliente' },
+        recurrence:     { type: 'STRING', description: 'once | weekly | biweekly | monthly' }
       },
       required: ['customer_name', 'customer_phone', 'service_type']
     }
@@ -88,17 +87,17 @@ const TOOLS = [
   {
     name: 'send_admin_summary',
     description: 'Envia resumo do atendimento para o administrador. Use sempre ao encerrar uma conversa significativa.',
-    input_schema: {
-      type: 'object',
+    parameters: {
+      type: 'OBJECT',
       properties: {
-        customer_name:  { type: 'string' },
-        customer_email: { type: 'string' },
-        customer_phone: { type: 'string' },
-        intent:         { type: 'string', enum: ['jewelry','cleaning','power_washing','general'], description: 'Interesse identificado' },
-        summary:        { type: 'string', description: 'Resumo da conversa em 3-5 linhas' },
-        action_taken:   { type: 'string', description: 'O que foi feito: agendou, orçamento enviado, respondeu dúvida, etc.' },
-        next_step:      { type: 'string', description: 'O que a equipe Lagos precisa fazer agora' },
-        priority:       { type: 'string', enum: ['high','normal','low'], description: 'Alta = agendou ou alto interesse; Normal = lead qualificado; Baixa = dúvida simples' }
+        customer_name:  { type: 'STRING' },
+        customer_email: { type: 'STRING' },
+        customer_phone: { type: 'STRING' },
+        intent:         { type: 'STRING', description: 'jewelry | cleaning | power_washing | general' },
+        summary:        { type: 'STRING', description: 'Resumo da conversa em 3-5 linhas' },
+        action_taken:   { type: 'STRING', description: 'O que foi feito' },
+        next_step:      { type: 'STRING', description: 'O que a equipe Lagos precisa fazer agora' },
+        priority:       { type: 'STRING', description: 'high | normal | low' }
       },
       required: ['summary', 'intent', 'action_taken', 'priority']
     }
@@ -116,74 +115,44 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web')
 
   const history = session?.messages || [];
 
-  // Build messages array for Claude
-  const messages = [
-    ...history,
-    { role: 'user', content: userMessage }
-  ];
-
-  // First Claude call
-  const response = await client.messages.create({
-    model:      'claude-3-5-haiku-20241022',
-    max_tokens: 1024,
-    system:     SYSTEM_PROMPT,
-    tools:      TOOLS,
-    messages
+  // Init Gemini model
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-1.5-flash',
+    systemInstruction: SYSTEM_PROMPT,
+    tools: [{ functionDeclarations: TOOL_DECLARATIONS }],
+    generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
   });
 
+  const chat = model.startChat({ history });
+
+  // Send user message
+  const result = await chat.sendMessage(userMessage);
+  const response = result.response;
+
+  // Check for function/tool calls
+  const functionCalls = response.functionCalls();
   let assistantText = '';
-  const toolCallBlocks = [];
 
-  for (const block of response.content) {
-    if (block.type === 'text')     assistantText += block.text;
-    if (block.type === 'tool_use') toolCallBlocks.push(block);
-  }
-
-  // Execute tools if called
-  if (toolCallBlocks.length > 0) {
-    const toolResults = [];
-    for (const block of toolCallBlocks) {
-      const result = await executeTool(supabase, block.name, block.input, sessionId);
-      toolResults.push({
-        type:        'tool_result',
-        tool_use_id: block.id,
-        content:     JSON.stringify(result)
+  if (functionCalls && functionCalls.length > 0) {
+    // Execute each tool
+    const toolResponses = [];
+    for (const fc of functionCalls) {
+      const toolResult = await executeTool(supabase, fc.name, fc.args, sessionId);
+      toolResponses.push({
+        functionResponse: { name: fc.name, response: toolResult }
       });
     }
 
-    // Second Claude call with tool results
-    const messages2 = [
-      ...messages,
-      { role: 'assistant', content: response.content },
-      { role: 'user',      content: toolResults }
-    ];
-
-    const final = await client.messages.create({
-      model:      'claude-3-5-haiku-20241022',
-      max_tokens: 512,
-      system:     SYSTEM_PROMPT,
-      tools:      TOOLS,
-      messages:   messages2
-    });
-
-    assistantText = final.content.find(b => b.type === 'text')?.text || assistantText;
-
-    // Save full extended history
-    const fullHistory = [
-      ...messages,
-      { role: 'assistant', content: response.content },
-      { role: 'user',      content: toolResults },
-      { role: 'assistant', content: final.content }
-    ];
-    await saveSession(supabase, session, sessionId, channel, fullHistory);
+    // Send tool results back to get final text response
+    const result2 = await chat.sendMessage(toolResponses);
+    assistantText = result2.response.text();
   } else {
-    // No tools — save simple history
-    const fullHistory = [
-      ...messages,
-      { role: 'assistant', content: response.content }
-    ];
-    await saveSession(supabase, session, sessionId, channel, fullHistory);
+    assistantText = response.text();
   }
+
+  // Save full updated history
+  const updatedHistory = await chat.getHistory();
+  await saveSession(supabase, session, sessionId, channel, updatedHistory);
 
   return assistantText || 'Desculpe, não consegui processar. Tente novamente. 🙏';
 }
@@ -274,7 +243,7 @@ async function sendAdminEmail(input) {
     <tr><td style="padding:.45rem .6rem;color:#7a6a5a;vertical-align:top;border-bottom:1px solid #f0ece4">Ação tomada</td><td style="padding:.45rem .6rem;border-bottom:1px solid #f0ece4">${input.action_taken}</td></tr>
     <tr><td style="padding:.45rem .6rem;color:#7a6a5a;vertical-align:top">Próximo passo</td><td style="padding:.45rem .6rem;font-weight:700;color:#b8922e">${input.next_step || '—'}</td></tr>
   </table>
-  <p style="font-size:.62rem;color:#a09890;text-align:center;margin:0;padding-top:.8rem;border-top:1px solid #f0ece4">Lagos World · Milla Agent · ${new Date().toLocaleString('pt-BR', { timeZone: 'America/New_York' })}</p>
+  <p style="font-size:.62rem;color:#a09890;text-align:center;margin:0;padding-top:.8rem;border-top:1px solid #f0ece4">Lagos World · Milla Agent (Gemini) · ${new Date().toLocaleString('pt-BR', { timeZone: 'America/New_York' })}</p>
 </div>
 </body></html>`;
 
@@ -286,10 +255,9 @@ async function sendAdminEmail(input) {
     await transporter.sendMail({
       from:    `"Milla · Lagos World" <${process.env.EMAIL_USER}>`,
       to:      process.env.EMAIL_USER,
-      subject: `🤖 Milla [${(input.priority || 'normal').toUpperCase()}] ${input.intent} — ${input.customer_name || 'Lead novo'} — ${input.action_taken}`,
+      subject: `🤖 Milla [${(input.priority||'normal').toUpperCase()}] ${input.intent} — ${input.customer_name||'Lead novo'} — ${input.action_taken}`,
       html
     });
-    console.log('Milla admin summary sent');
   } catch(e) {
     console.error('Milla email error:', e.message);
   }
