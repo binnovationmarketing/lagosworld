@@ -1,13 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const { body, validationResult } = require('express-validator');
 const { createClient } = require('@supabase/supabase-js');
-const jewelryRoutes = require('./routes/jewelry');
+const jewelryRoutes  = require('./routes/jewelry');
 const cleaningRoutes = require('./routes/cleaning');
-const coursesRoutes = require('./routes/courses');
-const cronRoutes = require('./routes/cron');
-const { sendEmail } = require('./services/email');
+const coursesRoutes  = require('./routes/courses');
+const cronRoutes     = require('./routes/cron');
+const adminRoutes    = require('./routes/admin');
+const { sendEmail }  = require('./services/email');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,9 +34,47 @@ const strictLimiter = rateLimit({
   message: { error: 'Too many submissions. Please slow down.' }
 });
 
+// ── Security Headers (helmet) ─────────────────────────────────────────────────
+// Adds X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, etc.
+// CSP is permissive for our CDN assets (Google Fonts, Unsplash, Motion.js, WhatsApp)
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc:  ["'self'"],
+      scriptSrc:   ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
+      styleSrc:    ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc:     ["'self'", "https://fonts.gstatic.com"],
+      imgSrc:      ["'self'", "data:", "https:", "blob:"],
+      connectSrc:  ["'self'", "https://api.zippopotam.us", "https://wa.me"],
+      frameSrc:    ["'self'", "https://www.youtube.com"],
+      objectSrc:   ["'none'"],
+      upgradeInsecureRequests: []
+    }
+  },
+  crossOriginEmbedderPolicy: false // allow images from external CDNs
+}));
+
+// ── CORS — restrict to our domains only ──────────────────────────────────────
+const ALLOWED_ORIGINS = [
+  'https://lagosworld.app',
+  'https://www.lagosworld.app',
+  'http://localhost:3000',
+  'http://localhost:5500', // Live Server for local dev
+  'http://127.0.0.1:5500'
+];
+app.use(cors({
+  origin: (origin, cb) => {
+    // Allow requests with no origin (Vercel cron, curl, Postman)
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+    cb(new Error(`CORS: origin ${origin} not allowed`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Cron-Secret'],
+  credentials: true
+}));
+
 // ── Middleware ────────────────────────────────────────────────────────────────
-app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '2mb' })); // prevent large payload DoS
 app.use(generalLimiter); // apply to all routes
 
 // Strict rate limit on transactional endpoints
@@ -60,22 +101,35 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api/jewelry', jewelryRoutes);
+app.use('/api/jewelry',  jewelryRoutes);
 app.use('/api/cleaning', cleaningRoutes);
-app.use('/api/courses', coursesRoutes);
-app.use('/api/cron', cronRoutes);
+app.use('/api/courses',  coursesRoutes);
+app.use('/api/cron',     cronRoutes);
+app.use('/api/admin',    adminRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Lagos Platform API running' });
 });
 
-// Newsletter subscribe
-app.post('/api/newsletter/subscribe', async (req, res) => {
-  const { email, name, source } = req.body;
-  if (!email || !email.includes('@')) {
-    return res.status(400).json({ error: 'Valid email required' });
+// ── Input validation helper ───────────────────────────────────────────────────
+function validate(req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ error: errors.array()[0].msg });
+    return false;
   }
+  return true;
+}
+
+// Newsletter subscribe — with validation
+app.post('/api/newsletter/subscribe',
+  body('email').isEmail().normalizeEmail().withMessage('Valid email required'),
+  body('name').optional().trim().isLength({ max: 100 }).escape(),
+  body('source').optional().trim().isLength({ max: 50 }).escape(),
+  async (req, res) => {
+  if (!validate(req, res)) return;
+  const { email, name, source } = req.body;
   const cleanEmail = email.toLowerCase().trim();
   const firstName = (name || cleanEmail.split('@')[0]).split(' ')[0];
 
@@ -145,7 +199,15 @@ module.exports = app;
 // Order email confirmation
 const { sendOrderEmails } = require('./services/email');
 
-app.post('/api/send-order', async (req, res) => {
+app.post('/api/send-order',
+  body('name').notEmpty().trim().isLength({ max: 200 }).escape().withMessage('Name required'),
+  body('email').optional({ checkFalsy: true }).isEmail().normalizeEmail().withMessage('Invalid email'),
+  body('phone').optional({ checkFalsy: true }).trim().isLength({ max: 30 }),
+  body('address').optional().trim().isLength({ max: 500 }).escape(),
+  body('total').isNumeric().withMessage('Total must be a number'),
+  body('items').isArray({ min: 1 }).withMessage('At least one item required'),
+  async (req, res) => {
+  if (!validate(req, res)) return;
   const { name, phone, email, address, zip, city, state, payment,
           items, total, shipping, deliveryType, zelle_proof, notes } = req.body;
 

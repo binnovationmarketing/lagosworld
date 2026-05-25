@@ -12169,7 +12169,10 @@ async function submitOrder(){
 
 // ── ADMIN ──
 let adminUnlocked=false;
-const ADMIN_PASS='lagos2025';
+let adminToken=sessionStorage.getItem('lj_admin_token')||'';
+// Auto-restore session if token still valid
+if(adminToken){adminUnlocked=true;document.getElementById('admin-fab').classList.add('show');}
+
 const SEQ=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight'];
 let seqIdx=0;
 document.addEventListener('keydown',e=>{
@@ -12184,11 +12187,21 @@ document.addEventListener('touchend',e=>{
   const dy=e.changedTouches[0].clientY-touchStartY;
   if(dx>100&&Math.abs(dy)<50&&touchStartX<50)unlockAdmin();
 });
-function unlockAdmin(){
+async function unlockAdmin(){
   if(adminUnlocked)return;
   const pw=prompt('🔐 Admin password:');
-  if(pw===ADMIN_PASS){adminUnlocked=true;document.getElementById('admin-fab').classList.add('show');showToast('✝ Admin mode activated!')}
-  else showToast('⚠ Wrong password');
+  if(!pw)return;
+  try{
+    const r=await fetch('/api/admin/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+    const d=await r.json();
+    if(r.ok&&d.token){
+      adminToken=d.token;
+      sessionStorage.setItem('lj_admin_token',adminToken);
+      adminUnlocked=true;
+      document.getElementById('admin-fab').classList.add('show');
+      showToast('✝ Admin mode activated!');
+    }else{showToast('⚠ '+(d.error||'Wrong password'));}
+  }catch{showToast('⚠ Auth error — check connection');}
 }
 function openAdmin(){
   if(!adminUnlocked)return;
@@ -12228,7 +12241,7 @@ async function savePrice(pid,vid){
   try{
     const r=await fetch(`/api/jewelry/overrides/${pid}`,{
       method:'PUT',
-      headers:{'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+adminToken},
       body:JSON.stringify({price_overrides:prodPriceOv})
     });
     if(r.ok)showToast('✝ Price synced for all users: $'+v.toFixed(2));

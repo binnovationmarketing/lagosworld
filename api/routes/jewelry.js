@@ -1,16 +1,27 @@
 const express = require('express');
 const router = express.Router();
+const { body, validationResult } = require('express-validator');
+const { requireAdmin } = require('../middleware/auth');
 const { sendEmail, sendOrderEmails } = require('../services/email');
 
-// POST: Criar novo pedido de jewelry
-router.post('/orders', async (req, res) => {
+// Input validation helper
+function validate(req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) { res.status(400).json({ error: errors.array()[0].msg }); return false; }
+  return true;
+}
+
+// POST: Criar novo pedido de jewelry — with validation
+router.post('/orders',
+  body('customer_name').notEmpty().trim().isLength({ max: 200 }).escape().withMessage('Name required'),
+  body('customer_email').isEmail().normalizeEmail().withMessage('Valid email required'),
+  body('customer_phone').optional().trim().isLength({ max: 30 }),
+  body('total').isNumeric().withMessage('Total must be a number'),
+  body('items').isArray({ min: 1 }).withMessage('Items required'),
+  async (req, res) => {
+  if (!validate(req, res)) return;
   try {
     const { customer_name, customer_email, customer_phone, delivery_method, address, items, total } = req.body;
-
-    // Validação
-    if (!customer_name || !customer_email || !items || !total) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
 
     // Salvar no banco — mapeia para schema correto (sem coluna items)
     const { data, error } = await req.supabase
@@ -126,8 +137,8 @@ router.get('/overrides', async (req, res) => {
   }
 });
 
-// PUT /api/jewelry/overrides/:id — upsert one product
-router.put('/overrides/:id', async (req, res) => {
+// PUT /api/jewelry/overrides/:id — upsert one product (admin only)
+router.put('/overrides/:id', requireAdmin, async (req, res) => {
   try {
     const product_id = Number(req.params.id);
     const { price_overrides, description, images, video_url, sort_order } = req.body;

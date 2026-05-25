@@ -567,7 +567,9 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
 
 <script src="/js/products-data.js"></script>
 <script>
-const ADMIN_PASS = 'lagos2025';
+// ── Admin token — NEVER hardcode passwords in source. Stored in sessionStorage ─
+let adminToken = sessionStorage.getItem('lj_admin_token') || '';
+
 const LS_PRICES = 'lj_prices';
 const LS_DESC   = 'lj_desc';
 const LS_IMGS   = 'lj_imgs';
@@ -582,23 +584,60 @@ let filteredProducts = [];
 let currentPage = 1;
 const PAGE_SIZE = 50;
 
-// ── LOGIN ──
-function doLogin() {
+// ── LOGIN — validates password via API, stores JWT in sessionStorage ───────────
+async function doLogin() {
   const pw = document.getElementById('pw-inp').value;
-  if (pw === ADMIN_PASS) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').classList.add('show');
-    initApp();
-  } else {
-    document.getElementById('login-err').style.display = 'block';
-    document.getElementById('pw-inp').value = '';
-    document.getElementById('pw-inp').focus();
+  if (!pw) return;
+  const errEl = document.getElementById('login-err');
+  errEl.style.display = 'none';
+  try {
+    const r = await fetch('/api/admin/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    const d = await r.json();
+    if (r.ok && d.token) {
+      adminToken = d.token;
+      sessionStorage.setItem('lj_admin_token', adminToken);
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').classList.add('show');
+      initApp();
+    } else {
+      errEl.textContent = d.error || 'Invalid password';
+      errEl.style.display = 'block';
+      document.getElementById('pw-inp').value = '';
+      document.getElementById('pw-inp').focus();
+    }
+  } catch {
+    errEl.textContent = 'Connection error. Try again.';
+    errEl.style.display = 'block';
   }
 }
+
 function logout() {
-  if (confirm('Sign out of admin panel?')) location.reload();
+  if (confirm('Sign out of admin panel?')) {
+    sessionStorage.removeItem('lj_admin_token');
+    location.reload();
+  }
 }
-document.getElementById('pw-inp').focus();
+
+// Auto-restore session if token saved from previous tab
+(async function checkSession() {
+  if (!adminToken) { document.getElementById('pw-inp').focus(); return; }
+  try {
+    const r = await fetch('/api/jewelry/overrides');
+    if (r.ok) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').classList.add('show');
+      initApp();
+    } else {
+      sessionStorage.removeItem('lj_admin_token');
+      adminToken = '';
+      document.getElementById('pw-inp').focus();
+    }
+  } catch { document.getElementById('pw-inp').focus(); }
+})();
 
 // ── INIT ──
 async function initApp() {
@@ -966,15 +1005,18 @@ function saveProduct() {
   }
   fetch(`/api/jewelry/overrides/${editingId}`, {
     method: 'PUT',
-    headers: {'Content-Type':'application/json'},
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
     body: JSON.stringify({
       price_overrides: thisProductPrices,
       description:     descOv[editingId] ?? null,
       images:          imgsOv[editingId] || [],
       video_url:       videoOv[editingId] || null
     })
-  }).then(r => r.ok ? console.log('Override saved to Supabase') : r.json().then(e => console.warn('Supabase save failed:', e.error)))
-    .catch(e => console.warn('Override sync failed:', e.message));
+  }).then(r => {
+    if (r.status === 401) { alert('Session expired. Please refresh and log in again.'); sessionStorage.removeItem('lj_admin_token'); }
+    else if (!r.ok) r.json().then(e => console.warn('Supabase save failed:', e.error));
+    else console.log('Override saved to Supabase');
+  }).catch(e => console.warn('Override sync failed:', e.message));
 
   showToast('✓ Product saved — synced to all devices');
   closeModal();

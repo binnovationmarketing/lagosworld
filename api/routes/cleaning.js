@@ -1,9 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const { body, validationResult } = require('express-validator');
 const { sendEmail, sendCleaningConfirmation } = require('../services/email');
 
-// POST: Criar solicitação de limpeza (Cliente)
-router.post('/requests', async (req, res) => {
+function validate(req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) { res.status(400).json({ error: errors.array()[0].msg }); return false; }
+  return true;
+}
+
+// POST: Criar solicitação de limpeza (Cliente) — with validation
+router.post('/requests',
+  body('customer_name').notEmpty().trim().isLength({ max: 200 }).escape().withMessage('Name required'),
+  body('customer_email').isEmail().normalizeEmail().withMessage('Valid email required'),
+  body('customer_phone').optional().trim().isLength({ max: 30 }),
+  body('service_type').notEmpty().isIn(['residential','commercial','power_washing']).withMessage('Invalid service type'),
+  body('address').optional().trim().isLength({ max: 500 }).escape(),
+  body('description').optional().trim().isLength({ max: 2000 }).escape(),
+  async (req, res) => {
+  if (!validate(req, res)) return;
   try {
     const {
       customer_name, customer_email, customer_phone,
@@ -11,10 +26,6 @@ router.post('/requests', async (req, res) => {
       address, city, recurrence,
       description, preferred_date, estimated_hours
     } = req.body;
-
-    if (!customer_name || !customer_email || !service_type) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
 
     const { data, error } = await req.supabase
       .from('cleaning_requests')
