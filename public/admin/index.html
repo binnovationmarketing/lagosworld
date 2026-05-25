@@ -737,6 +737,8 @@ async function initApp() {
   updateStats();
   filterProducts();
   loadDashboard();
+  requestNotifPermission();
+  startNotifyPolling();
 
   // Then sync from Supabase (source of truth) — overrides localStorage
   try {
@@ -1164,13 +1166,16 @@ function switchTab(name, el) {
   el.classList.add('active');
   document.querySelectorAll('[id^="tab-"]').forEach(t => t.style.display = 'none');
   document.getElementById('tab-' + name).style.display = 'block';
-  if (name === 'dashboard') loadDashboard();
-  if (name === 'orders') loadOrders();
-  if (name === 'cleaning') loadCleaning();
-  if (name === 'cart') loadCartActivity();
-  if (name === 'templates') loadTemplates();
-  if (name === 'agenda') loadAgenda();
-  if (name === 'calendario') loadCalendario();
+  // INP fix: yield so browser paints tab switch before heavy data load
+  setTimeout(() => {
+    if (name === 'dashboard') loadDashboard();
+    if (name === 'orders') loadOrders();
+    if (name === 'cleaning') loadCleaning();
+    if (name === 'cart') loadCartActivity();
+    if (name === 'templates') loadTemplates();
+    if (name === 'agenda') loadAgenda();
+    if (name === 'calendario') loadCalendario();
+  }, 0);
 }
 
 // ── ORDERS ──
@@ -2256,6 +2261,66 @@ function copyWaMsg() {
 let _agendaYear  = new Date().getFullYear();
 let _agendaMonth = new Date().getMonth();   // 0-indexed
 let _agendaData  = [];                      // cached requests
+let _agendaRefreshTimer = null;             // hourly auto-refresh handle
+let _notifyPollTimer    = null;             // 5-min notification poll handle
+let _notifyLastCount    = { cleaning: 0, orders: 0 }; // baseline for delta detection
+
+// ── Browser Notifications ─────────────────────────────────────────────────────
+async function requestNotifPermission() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'default') {
+    await Notification.requestPermission();
+  }
+}
+
+function sendAdminNotif(title, body, icon) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    new Notification(title, { body, icon: icon || '/images/logo.png', badge: '/images/logo.png' });
+  } catch(e) {}
+}
+
+function startNotifyPolling() {
+  if (_notifyPollTimer) clearInterval(_notifyPollTimer);
+  // Initialize baseline silently on first run
+  _pollNewItems(true);
+  // Poll every 5 minutes
+  _notifyPollTimer = setInterval(() => _pollNewItems(false), 5 * 60 * 1000);
+}
+
+async function _pollNewItems(silent) {
+  if (!adminToken) return;
+  const headers = { 'Authorization': 'Bearer ' + adminToken };
+  try {
+    const [cr, or] = await Promise.all([
+      fetch('/api/cleaning/requests', { headers }),
+      fetch('/api/jewelry/orders',    { headers })
+    ]);
+    const cleaning = cr.ok ? await cr.json() : [];
+    const orders   = or.ok ? await or.json() : [];
+    const cc = Array.isArray(cleaning) ? cleaning.length : 0;
+    const oc = Array.isArray(orders)   ? orders.length   : 0;
+
+    if (!silent) {
+      const newC = cc - _notifyLastCount.cleaning;
+      const newO = oc - _notifyLastCount.orders;
+      if (newC > 0) sendAdminNotif(
+        `Lagos Cleaning — ${newC} novo${newC > 1 ? 's' : ''} pedido${newC > 1 ? 's' : ''}!`,
+        cleaning.slice(0, newC).map(r => `${r.customer_name || r.customer_email} · ${r.city || ''}`).join('\n')
+      );
+      if (newO > 0) sendAdminNotif(
+        `Lagos Jewelry — ${newO} nova${newO > 1 ? 's' : ''} ordem${newO > 1 ? 's' : ''}!`,
+        `${newO} nova${newO > 1 ? 's' : ''} encomenda${newO > 1 ? 's' : ''} recebida${newO > 1 ? 's' : ''}`
+      );
+      // Also refresh agenda data silently if new cleaning requests
+      if (newC > 0) {
+        _agendaData = cleaning;
+        renderAgendaMonth();
+      }
+    }
+    _notifyLastCount = { cleaning: cc, orders: oc };
+  } catch(e) {}
+}
 
 const SERVICE_LABEL = {
   residential:    'Residencial',
@@ -2283,6 +2348,18 @@ async function loadAgenda() {
     _agendaData = [];
   }
   renderAgendaMonth();
+
+  // Auto-refresh every hour while agenda tab is active
+  if (_agendaRefreshTimer) clearInterval(_agendaRefreshTimer);
+  _agendaRefreshTimer = setInterval(async () => {
+    if (document.getElementById('tab-agenda').style.display === 'none') return;
+    try {
+      const r = await fetch('/api/cleaning/requests', {
+        headers: adminToken ? { 'Authorization': 'Bearer ' + adminToken } : {}
+      });
+      if (r.ok) { _agendaData = await r.json(); renderAgendaMonth(); }
+    } catch(e) {}
+  }, 60 * 60 * 1000); // 1 hour
 }
 
 function agendaNav(dir) {
@@ -2353,17 +2430,23 @@ function renderAgendaMonth() {
       const sl = SERVICE_LABEL[req.service_type] || req.service_type || '—';
       const fname = (req.customer_name || '').split(' ')[0];
       const safeReq = JSON.stringify({
-        customer_name: req.customer_name || '',
-        service_type:  req.service_type || '',
+        customer_name:  req.customer_name  || '',
+        service_type:   req.service_type   || '',
         customer_phone: req.customer_phone || '',
-        city: req.city || '',
-        status: req.status || 'open',
+        customer_email: req.customer_email || '',
+        address:        req.address        || '',
+        city:           req.city           || '',
+        state:          req.state          || '',
+        message:        req.message        || '',
+        status:         req.status         || 'open',
         preferred_date: req.preferred_date || '',
-        recurrence: req.recurrence || ''
+        recurrence:     req.recurrence     || ''
       }).replace(/"/g, '&quot;');
       return `<div class="cal-appt ${sc}"
         onmouseenter="showAgendaTooltip(event, ${safeReq})"
-        onmouseleave="hideAgendaTooltip()">${fname} · ${sl}</div>`;
+        onmouseleave="hideAgendaTooltip()"
+        onclick="openAgendaDetail(${safeReq})"
+        style="cursor:pointer">${fname} · ${sl}</div>`;
     }).join('');
     const moreHtml = cell.appts.length > 4
       ? `<div style="font-size:.55rem;color:var(--text-muted);padding:.1rem .4rem">+${cell.appts.length - 4} mais</div>`
@@ -2414,6 +2497,94 @@ document.addEventListener('mousemove', e => {
   const tt = document.getElementById('agenda-tooltip');
   if (tt && tt.style.display !== 'none') _positionTooltip(e, tt);
 });
+
+// ── Agenda Detail Modal ───────────────────────────────────────────────────────
+// MILA_WA: Mila's WhatsApp number (digits only, country code included)
+const MILA_WA = '12156262345'; // ← update to Mila's actual number if different
+
+function openAgendaDetail(req) {
+  if (typeof req === 'string') {
+    try { req = JSON.parse(req.replace(/&quot;/g, '"')); } catch(e) { return; }
+  }
+  hideAgendaTooltip();
+  const existing = document.getElementById('agenda-detail-modal');
+  if (existing) existing.remove();
+
+  const sl = SERVICE_LABEL[req.service_type] || req.service_type || '—';
+  const location = [req.address, req.city, req.state].filter(Boolean).join(', ');
+  const waPhone = req.customer_phone ? req.customer_phone.replace(/\D/g, '') : '';
+  const waLink  = waPhone ? `https://wa.me/1${waPhone}` : '';
+
+  const modal = document.createElement('div');
+  modal.id = 'agenda-detail-modal';
+  modal.className = 'wa-modal-overlay';
+  modal.innerHTML = `
+    <div class="wa-modal" style="max-width:500px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+        <div>
+          <div style="font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.2rem">${req.customer_name || 'Cliente'}</div>
+          <div style="font-size:.68rem;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase">${sl} · ${req.preferred_date || '—'}</div>
+        </div>
+        <button class="wa-close-btn" onclick="document.getElementById('agenda-detail-modal').remove()">✕</button>
+      </div>
+      <div style="display:grid;gap:.55rem;font-size:.82rem;margin-bottom:1rem">
+        ${req.customer_phone ? `<div style="display:flex;align-items:center;gap:.5rem">📞 <a href="tel:${req.customer_phone}" style="color:var(--accent)">${req.customer_phone}</a></div>` : ''}
+        ${req.customer_email ? `<div style="display:flex;align-items:center;gap:.5rem">✉️ <a href="mailto:${req.customer_email}" style="color:var(--accent)">${req.customer_email}</a></div>` : ''}
+        ${location ? `<div style="display:flex;align-items:center;gap:.5rem">📍 <span>${location}</span></div>` : ''}
+        ${req.recurrence ? `<div style="display:flex;align-items:center;gap:.5rem">🔁 <span>${req.recurrence}</span></div>` : ''}
+        ${req.status ? `<div style="display:flex;align-items:center;gap:.5rem">📌 <span class="tt-status ${req.status}" style="pointer-events:none">${req.status}</span></div>` : ''}
+        ${req.message ? `<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:.65rem .75rem;border-radius:6px;line-height:1.55;color:var(--text-muted);margin-top:.2rem;font-size:.78rem">${req.message}</div>` : ''}
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        ${waLink ? `<a href="${waLink}" target="_blank" class="wa-copy-btn" style="background:#25d366;text-decoration:none;text-align:center;flex:1">💬 WhatsApp Cliente</a>` : ''}
+        ${req.customer_email ? `<button class="wa-copy-btn" style="flex:1" onclick="replyToLead('${req.customer_email}','${(req.customer_name||'').replace(/'/g,"\\'")}')">✉️ Responder por Email</button>` : ''}
+        <button class="wa-close-btn" onclick="document.getElementById('agenda-detail-modal').remove()" style="flex:0 0 auto">Fechar</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+async function replyToLead(email, name) {
+  const btn = event?.target;
+  if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+  try {
+    const r = await fetch('/api/cron/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'clean_estimate', to: email, name })
+    });
+    const d = await r.json();
+    showToast(d.ok ? '✓ Email de resposta enviado para ' + email : '✗ Erro: ' + (d.error || 'falha'));
+    if (d.ok) document.getElementById('agenda-detail-modal')?.remove();
+  } catch(e) {
+    showToast('✗ Erro ao enviar: ' + e.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '✉️ Responder por Email'; }
+  }
+}
+</script>
+
+<!-- WhatsApp Mila floating button -->
+<a id="mila-wa-btn" href="https://wa.me/12156262345" target="_blank" title="Falar com Mila (secretária Lagos)"
+   style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;z-index:8000;
+          background:#25d366;color:#fff;border-radius:50%;width:52px;height:52px;
+          align-items:center;justify-content:center;font-size:1.4rem;
+          box-shadow:0 4px 16px rgba(37,211,102,.45);text-decoration:none;
+          transition:transform .15s">💬</a>
+<script>
+  // Show Mila button only when logged in
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mila-wa-btn');
+    const obs = new MutationObserver(() => {
+      const appVisible = document.getElementById('app')?.classList.contains('show');
+      btn.style.display = appVisible ? 'flex' : 'none';
+    });
+    obs.observe(document.getElementById('app') || document.body, { attributes: true, attributeFilter: ['class'] });
+    btn.addEventListener('mouseenter', () => btn.style.transform = 'scale(1.12)');
+    btn.addEventListener('mouseleave', () => btn.style.transform = '');
+  });
 </script>
 
 <!-- Email Confirm Modal -->
