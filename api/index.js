@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const { createClient } = require('@supabase/supabase-js');
 const jewelryRoutes = require('./routes/jewelry');
 const cleaningRoutes = require('./routes/cleaning');
@@ -11,9 +12,36 @@ const { sendEmail } = require('./services/email');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// ── Rate Limiting ─────────────────────────────────────────────────────────────
+// General: 60 req/min per IP
+const generalLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please wait a moment and try again.' }
+});
+
+// Strict: 10 req/min for order/contact/subscribe endpoints
+const strictLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many submissions. Please slow down.' }
+});
+
+// ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
+app.use(generalLimiter); // apply to all routes
+
+// Strict rate limit on transactional endpoints
+app.use('/api/send-order', strictLimiter);
+app.use('/api/jewelry/orders', strictLimiter);
+app.use('/api/cleaning/requests', strictLimiter);
+app.use('/api/newsletter/subscribe', strictLimiter);
+app.use('/api/jewelry/cart-events', rateLimit({ windowMs: 60*1000, max: 120, standardHeaders: true, legacyHeaders: false }));
 
 // Supabase Client — service_role key for backend writes (bypasses RLS)
 const supabase = createClient(

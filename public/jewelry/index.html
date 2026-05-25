@@ -485,6 +485,113 @@ body{background:#ffffff!important;color:#2c2822!important}
 .footer-col a:hover{color:#b8922e!important}
 .footer-col-title{color:#b8922e!important}
 .footer-bottom{border-top-color:rgba(255,255,255,.06)!important;color:#4a4540!important}
+
+/* ═══ RESPONSIVE — TABLET ═══ */
+@media(max-width:1024px){
+  .nav-inner{padding:0 1.25rem;gap:.6rem}
+  .catalog-wrap{padding:1.5rem 1.25rem 5rem}
+  .hero-content{max-width:90%!important}
+}
+
+/* ═══ RESPONSIVE — MOBILE ═══ */
+@media(max-width:768px){
+  /* NAV */
+  .nav-inner{padding:0 .75rem!important;gap:.3rem!important;height:58px!important}
+  .nav-back-home{display:none!important}
+  .nav-brand{font-size:.95rem!important;letter-spacing:.1em!important}
+  .nav-cats{padding:0 .2rem!important;border-left:none!important;border-right:none!important;gap:0!important}
+  .nav-cat{padding:.3rem .5rem!important;font-size:.48rem!important;letter-spacing:.12em!important}
+  .cart-btn{padding:.45rem .7rem!important;font-size:.5rem!important;letter-spacing:.15em!important}
+  .cart-badge{width:15px!important;height:15px!important;font-size:.42rem!important}
+
+  /* HERO */
+  .hero{min-height:80vh!important}
+  .hero-content{padding:1.5rem 1rem!important;max-width:100%!important}
+  .hero-title{font-size:clamp(2.6rem,14vw,4rem)!important;letter-spacing:.07em!important}
+  .hero-subtitle{font-size:clamp(.9rem,3.5vw,1.2rem)!important}
+  .hero-cta{padding:.75rem 1.5rem!important;font-size:.55rem!important;letter-spacing:.25em!important}
+
+  /* CATALOG */
+  .catalog-wrap{padding:1rem .75rem 6rem!important}
+  .section-hero{padding:2rem 0 1.25rem!important}
+  .section-title{font-size:clamp(1.7rem,7vw,2.6rem)!important}
+  .toolbar{flex-direction:column!important;gap:.6rem!important}
+  .search-wrap{max-width:100%!important;width:100%!important}
+  .filters{gap:.35rem!important}
+  .fp{padding:.38rem .9rem!important;font-size:.55rem!important}
+
+  /* GRID */
+  .grid{grid-template-columns:repeat(2,1fr)!important;gap:.65rem!important}
+  .card-info{padding:.75rem!important}
+  .card-name{font-size:.93rem!important}
+  .price-val{font-size:1.1rem!important}
+
+  /* CART PANEL — explicit white, full width on mobile */
+  .cart{
+    width:100vw!important;
+    background:#ffffff!important;
+    border-left:none!important;
+    box-shadow:-4px 0 32px rgba(0,0,0,.18)!important;
+  }
+  .cart-head{background:#ffffff!important;padding:1rem 1.1rem!important;border-bottom:1px solid #e8e4dc!important}
+  .cart-body{background:#ffffff!important;padding:.9rem 1.1rem!important}
+  .cart-foot{background:#ffffff!important;padding:1.1rem!important;border-top:1px solid #e8e4dc!important}
+  .cart-title{color:#1a1a1a!important;font-size:1.2rem!important}
+  .cart-x{background:#f5f2ec!important;border-color:#e8e4dc!important;color:#1a1a1a!important}
+  .ci-name{color:#1a1a1a!important;font-size:.9rem!important}
+  .ci-var{color:#7a7268!important;font-size:.6rem!important}
+  .ci-img{width:60px!important;height:60px!important}
+  .cart-empty,.cart-empty p{color:#a09890!important}
+  .ship-bar-wrap{background:#e8e4dc!important}
+  .ship-msg{color:#7a7268!important}
+  .cart-total-lbl{color:#7a7268!important;font-size:.6rem!important}
+  .cart-total-val{font-size:1.7rem!important;color:#b8922e!important}
+  .co-btn{font-size:.6rem!important;letter-spacing:.25em!important}
+
+  /* CHECKOUT */
+  .co-veil{padding:.5rem!important}
+  .co-box{padding:1.5rem 1rem!important;max-height:96vh!important}
+  .co-title{font-size:1.7rem!important}
+  .addr-row{grid-template-columns:1fr!important}
+  .pay-grid{grid-template-columns:1fr 1fr!important;gap:.5rem!important}
+  .pay-opt{padding:.75rem .4rem!important}
+  .pay-ico{font-size:1.3rem!important}
+  .pay-name{font-size:.53rem!important;letter-spacing:.1em!important}
+  .pay-sub{font-size:.5rem!important}
+  .submit-btn{font-size:.6rem!important;letter-spacing:.3em!important;padding:1rem!important}
+  .co-sum{max-height:110px!important}
+
+  /* MODAL */
+  .modal-bg{padding:.5rem!important}
+  .modal{max-height:96vh!important;grid-template-columns:1fr!important}
+  .modal-body{padding:1.25rem 1rem!important}
+  .modal-name{font-size:1.4rem!important}
+  .modal-price{font-size:1.7rem!important}
+  .modal-add{font-size:.6rem!important;letter-spacing:.25em!important}
+  .modal-perks{font-size:.55rem!important}
+
+  /* FOOTER */
+  .footer{padding:2.5rem 1rem 1.5rem!important}
+  .footer-brand{font-size:1.8rem!important;letter-spacing:.15em!important}
+  .footer-verse{font-size:.8rem!important}
+
+  /* TOAST */
+  .toast{white-space:normal!important;max-width:90vw!important;text-align:center!important;padding:.7rem 1.2rem!important;font-size:.58rem!important}
+}
+
+/* ═══ RESPONSIVE — SMALL PHONES ═══ */
+@media(max-width:390px){
+  .nav-inner{height:54px!important}
+  .nav-brand{font-size:.82rem!important;letter-spacing:.06em!important}
+  .nav-cat{font-size:.42rem!important;padding:.25rem .38rem!important}
+  .hero-title{font-size:clamp(2.2rem,13vw,3.2rem)!important}
+  .grid{gap:.45rem!important}
+  .card-info{padding:.6rem!important}
+  .card-name{font-size:.85rem!important}
+  .pay-grid{grid-template-columns:1fr!important}
+  .co-box{padding:1.1rem .75rem!important}
+  .modal-body{padding:1rem .75rem!important}
+}
 </style>
 </head>
 <body>
@@ -11845,16 +11952,27 @@ function toggleCart(){
 const LS_CART_EVENTS='lj_cart_events';
 function trackCartEvent(type,extraData){
   try{
-    const events=JSON.parse(localStorage.getItem(LS_CART_EVENTS)||'[]');
     const total=cart.reduce((s,i)=>s+(i.v.price*i.qty),0);
     const itemList=cart.map(i=>({name:i.prod.name,variant:i.v.desc||'',qty:i.qty,price:i.v.price}));
     // Try to get customer info from checkout form if open
-    const name=(document.getElementById('fn')&&document.getElementById('fn').value.trim())||'—';
+    const name=(document.getElementById('fn')&&document.getElementById('fn').value.trim())||'';
     const email=(document.getElementById('fe')&&document.getElementById('fe').value.trim())||'';
     const phone=(document.getElementById('fp')&&document.getElementById('fp').value.trim())||'';
-    events.unshift({type,name,email,phone,items:itemList,total,timestamp:new Date().toISOString(),...(extraData||{})});
-    // Keep last 200 events
+    const event={type,name,email,phone,items:itemList,total,timestamp:new Date().toISOString(),...(extraData||{})};
+    // Keep in localStorage (local cache)
+    const events=JSON.parse(localStorage.getItem(LS_CART_EVENTS)||'[]');
+    events.unshift(event);
     localStorage.setItem(LS_CART_EVENTS,JSON.stringify(events.slice(0,200)));
+    // ── Send to Supabase via API (fire & forget) ──
+    // Only track meaningful events to avoid noise
+    const shouldTrack = email || type==='purchase' || type==='cart_abandon' || type==='add';
+    if(shouldTrack){
+      fetch('/api/jewelry/cart-events',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(event)
+      }).catch(()=>{});
+    }
   }catch(e){}
 }
 
@@ -12096,12 +12214,26 @@ function buildAdminTable(){
     });
   });
 }
-function savePrice(pid,vid){
+async function savePrice(pid,vid){
   const v=parseFloat(document.getElementById(`ap_${pid}_${vid}`).value);
   if(isNaN(v)||v<1)return showToast('⚠ Invalid price');
+  // Update local
   priceOv[pid+'_'+vid]=v;
   localStorage.setItem('lj_prices',JSON.stringify(priceOv));
-  showToast('✝ Price saved: $'+v.toFixed(2));
+  // Build price_overrides payload for this product (all variants)
+  const prodKeys=Object.keys(priceOv).filter(k=>k.startsWith(pid+'_'));
+  const prodPriceOv={};
+  prodKeys.forEach(k=>prodPriceOv[k]=priceOv[k]);
+  // Sync to Supabase via API — updates for ALL users immediately
+  try{
+    const r=await fetch(`/api/jewelry/overrides/${pid}`,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({price_overrides:prodPriceOv})
+    });
+    if(r.ok)showToast('✝ Price synced for all users: $'+v.toFixed(2));
+    else showToast('⚠ Saved locally — API sync failed');
+  }catch{showToast('⚠ Saved locally — offline');}
   buildAdminTable();
 }
 function exportPrices(){

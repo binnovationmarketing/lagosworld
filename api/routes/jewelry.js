@@ -150,4 +150,53 @@ router.put('/overrides/:id', async (req, res) => {
   }
 });
 
+// ── Cart Events (abandoned cart recovery) ────────────────────────────────────
+// POST /api/jewelry/cart-events — track add/abandon/purchase from frontend
+router.post('/cart-events', async (req, res) => {
+  try {
+    const { type, name, email, phone, items, total, timestamp, ...extra } = req.body;
+    if (!type) return res.status(400).json({ error: 'type required' });
+
+    const { error } = await req.supabase
+      .from('cart_events')
+      .insert([{
+        event_type:     type,
+        customer_name:  name  || null,
+        customer_email: email || null,
+        customer_phone: phone || null,
+        items:          Array.isArray(items) ? items : [],
+        total:          Number(total) || 0,
+        extra_data:     Object.keys(extra).length ? extra : {},
+        occurred_at:    timestamp || new Date().toISOString()
+      }]);
+
+    if (error) {
+      console.error('Cart event insert error:', error.message);
+      return res.status(500).json({ error: error.message });
+    }
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Cart event error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/jewelry/cart-events — admin: list recent abandon events with email
+router.get('/cart-events', async (req, res) => {
+  try {
+    const { event_type, limit = 100 } = req.query;
+    let q = req.supabase
+      .from('cart_events')
+      .select('*')
+      .order('occurred_at', { ascending: false })
+      .limit(Number(limit));
+    if (event_type) q = q.eq('event_type', event_type);
+    const { data, error } = await q;
+    if (error) throw error;
+    res.json(data || []);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
