@@ -147,12 +147,15 @@
   async function sendMessage() {
     const text = inputEl.value.trim();
     if (!text || isBusy) return;
+    isBusy = true;
+    sendBtn.disabled = true;
+
+    // Yield to browser before DOM mutations — prevents blocking input event
+    await new Promise(r => setTimeout(r, 0));
 
     appendMsg(text, 'user');
     inputEl.value = '';
     inputEl.style.height = 'auto';
-    isBusy = true;
-    sendBtn.disabled = true;
 
     const typing = showTyping();
 
@@ -179,16 +182,18 @@
     inputEl.focus();
   }
 
-  sendBtn.addEventListener('click', sendMessage);
+  sendBtn.addEventListener('click', () => setTimeout(sendMessage, 0));
 
   inputEl.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); setTimeout(sendMessage, 0); }
   });
 
-  // Auto-resize textarea
+  // Auto-resize textarea — rAF defers scrollHeight read, avoids forced reflow on input event
   inputEl.addEventListener('input', () => {
-    inputEl.style.height = 'auto';
-    inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
+    requestAnimationFrame(() => {
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
+    });
   });
 
   // Auto-open after 8s on first visit (not on admin pages)
