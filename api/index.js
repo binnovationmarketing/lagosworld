@@ -10,6 +10,7 @@ const cleaningRoutes = require('./routes/cleaning');
 const coursesRoutes  = require('./routes/courses');
 const cronRoutes     = require('./routes/cron');
 const adminRoutes    = require('./routes/admin');
+const millaRoutes    = require('./routes/milla');
 const { sendEmail }  = require('./services/email');
 
 const app = express();
@@ -106,6 +107,7 @@ app.use('/api/cleaning', cleaningRoutes);
 app.use('/api/courses',  coursesRoutes);
 app.use('/api/cron',     cronRoutes);
 app.use('/api/admin',    adminRoutes);
+app.use('/api/milla',    millaRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
