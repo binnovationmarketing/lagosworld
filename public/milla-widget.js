@@ -64,7 +64,7 @@
     .milla-dot:nth-child(3){animation-delay:.36s}
     @keyframes milla-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
     #milla-input-row{padding:.6rem .75rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.45rem;background:#111;padding-bottom:env(safe-area-inset-bottom,.6rem)}
-    #milla-input{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#e4ddd0;border-radius:8px;padding:.48rem .7rem;font-size:.78rem;font-family:inherit;outline:none;resize:none;max-height:72px;min-height:34px;line-height:1.4;overflow-y:auto;-webkit-appearance:none}
+    #milla-input{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#e4ddd0;border-radius:8px;padding:.48rem .7rem;font-size:.78rem;font-family:inherit;outline:none;resize:none;height:36px;line-height:1.4;overflow-y:auto;-webkit-appearance:none}
     #milla-input:focus{border-color:${ACCENT}}
     #milla-input::placeholder{color:rgba(255,255,255,.28)}
     #milla-send{background:${ACCENT};border:none;border-radius:8px;width:34px;height:34px;min-width:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;color:#fff;font-size:.85rem;align-self:flex-end;-webkit-tap-highlight-color:transparent}
@@ -185,8 +185,6 @@
 
     appendMsg(text, 'user');
     inputEl.value = '';
-    // Reset height in next frame to avoid forced reflow in same task
-    requestAnimationFrame(() => { inputEl.style.height = 'auto'; });
 
     const typing = showTyping();
 
@@ -223,23 +221,17 @@
     inputEl.focus();
   }
 
-  // ── Event listeners — all heavy work deferred via setTimeout(0) ──────────────
+  // ── Event listeners ───────────────────────────────────────────────────────────
   sendBtn.addEventListener('click', () => setTimeout(sendMessage, 0));
 
+  // keydown: only e.preventDefault() is synchronous — sendMessage deferred
   inputEl.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); setTimeout(sendMessage, 0); }
   });
 
-  // Auto-resize: write height='auto' then READ scrollHeight in separate rAF
-  // Splitting write/read across two frames eliminates forced reflow on input event
-  inputEl.addEventListener('input', () => {
-    requestAnimationFrame(() => {
-      inputEl.style.height = 'auto';
-      requestAnimationFrame(() => {
-        inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
-      });
-    });
-  });
+  // NO input event listener — auto-resize removed entirely.
+  // Reading scrollHeight always forces synchronous layout (INP source).
+  // Textarea uses CSS overflow-y:auto + fixed height instead.
 
   // Auto-open after 8s on first visit (skip admin pages)
   if (!PAGE_PATH.includes('admin') && !sessionStorage.getItem('milla_shown')) {
