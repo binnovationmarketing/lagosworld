@@ -141,18 +141,20 @@ router.get('/overrides', async (req, res) => {
 router.put('/overrides/:id', requireAdmin, async (req, res) => {
   try {
     const product_id = Number(req.params.id);
-    const { price_overrides, description, images, video_url, sort_order } = req.body;
+    const { price_overrides, name, description, images, video_url, sort_order } = req.body;
+
+    // Build only the fields that were actually sent — avoids clobbering untouched columns
+    const upsertRow = { product_id, updated_at: new Date().toISOString() };
+    if (price_overrides !== undefined) upsertRow.price_overrides = price_overrides;
+    if (name        !== undefined) upsertRow.name        = name || null;
+    if (description !== undefined) upsertRow.description = description ?? null;
+    if (images      !== undefined) upsertRow.images      = images || [];
+    if (video_url   !== undefined) upsertRow.video_url   = video_url || null;
+    if (sort_order  !== undefined) upsertRow.sort_order  = sort_order ?? null;
+
     const { data, error } = await req.supabase
       .from('product_overrides')
-      .upsert([{
-        product_id,
-        price_overrides: price_overrides || {},
-        description:     description ?? null,
-        images:          images || [],
-        video_url:       video_url || null,
-        sort_order:      sort_order ?? null,
-        updated_at:      new Date().toISOString()
-      }], { onConflict: 'product_id' })
+      .upsert([upsertRow], { onConflict: 'product_id' })
       .select();
     if (error) throw error;
     res.json({ ok: true, data: data?.[0] });
