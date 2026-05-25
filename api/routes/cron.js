@@ -155,12 +155,23 @@ router.post('/send', async (req, res) => {
     gift:       { html: t.giftCampaign(firstName),       subject: 'LW · The perfect gift for the woman in your life' },
     brand:      { html: t.brandStory(firstName),         subject: 'LW · The story behind every Lagos piece' },
     firstoffer: { html: t.firstPurchaseOffer(firstName), subject: 'LW · A special welcome offer — just for you' },
-    // ── Cleaning ─────────────────────────────────────────────────────────────
-    clean_confirmed:    { html: ct.cleaningConfirmed(firstName),    subject: '✔ Lagos Cleaning · Your request is confirmed' },
-    clean_followup:     { html: ct.cleaningFollowup24h(firstName),  subject: 'Lagos Cleaning · Did you get our message?' },
-    clean_reengagement: { html: ct.cleaningReengagement(firstName), subject: 'Lagos Cleaning · Your home deserves the best' },
-    clean_review:       { html: ct.cleaningReview(firstName),       subject: 'Lagos Cleaning · How was your experience?' },
-    clean_referral:     { html: ct.cleaningReferral(firstName),     subject: 'Lagos Cleaning · Know someone who needs a clean home?' },
+    // ── Cleaning — full 12-template funnel ───────────────────────────────────
+    clean_welcome:      { html: ct.welcomeLead(firstName),          subject: 'Welcome to Lagos Cleaning — your free quote is one step away' },
+    clean_firstoffer:   { html: ct.firstTimeOffer(firstName),       subject: 'Claim 15% OFF your first cleaning with LAGOS15' },
+    clean_trust:        { html: ct.trustBuilder(firstName),         subject: 'Why homeowners in PA & NJ trust Lagos Cleaning' },
+    clean_education:    { html: ct.deepCleaningEdu(firstName),      subject: 'Regular cleaning vs. deep cleaning: which one do you need?' },
+    clean_powerwash:    { html: ct.powerWashElite(firstName),       subject: 'Your driveway, patio or deck may need this' },
+    clean_estimate:     { html: ct.estimateFollowup(firstName),     subject: 'Do you want us to hold your quote?' },
+    clean_sameweek:     { html: ct.sameWeekBooking(firstName),      subject: 'We still have limited cleaning spots this week' },
+    clean_objection:    { html: ct.objectionBreaker(firstName),     subject: 'Still thinking about it? Here is what to know first' },
+    clean_postservice:  { html: ct.postServiceCare(firstName),      subject: 'Your Lagos Cleaning service is complete' },
+    clean_review:       { html: ct.reviewRequest(firstName),        subject: 'How did we do?' },
+    clean_referral:     { html: ct.referralProgram(firstName),      subject: 'Give 10%, get $25 credit' },
+    clean_recurring:    { html: ct.recurringCleaning(firstName),    subject: 'Want to keep your home clean every month?' },
+    // Legacy aliases
+    clean_confirmed:    { html: ct.welcomeLead(firstName),          subject: '✔ Lagos Cleaning · Your request is confirmed' },
+    clean_followup:     { html: ct.estimateFollowup(firstName),     subject: 'Lagos Cleaning · Following up on your quote' },
+    clean_reengagement: { html: ct.sameWeekBooking(firstName),      subject: 'Lagos Cleaning · Spots still available this week' },
   };
 
   const tpl = templates[type.toLowerCase()];

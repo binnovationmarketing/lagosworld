@@ -1,13 +1,17 @@
 /**
  * cleaningEmailTemplates.js
- * Lagos Cleaning — 5-email VIP sequence
- * Brand: clean white, teal #1a9e97, dark #0d1f1f, Georgia/Arial
- * Strategy: organic, warm, trust-building — attract VIP homeowners
+ * Lagos Cleaning — 12-template full funnel
+ * Brand: white #fff, teal #1a9e97, dark #0d2c2b, Georgia/Arial
+ * Covers: lead capture → nurture → convert → post-service → referral → recurrence
  */
 
-const BASE_URL = 'https://lagosworld.app';
-const PHONE    = '+12156262345';
-const WA_LINK  = `https://wa.me/12156262345`;
+const BASE_URL     = 'https://lagosworld.app';
+const BOOKING_URL  = `${BASE_URL}/cleaning`;
+const PHONE        = '+1 (215) 626-2345';
+const WA_LINK      = 'https://wa.me/12156262345';
+const REVIEW_LINK  = 'https://g.page/r/lagoscleaning/review'; // update with real Google Place ID
+const REFERRAL_URL = `${BASE_URL}/cleaning?ref=friend`;
+const UNSUBSCRIBE  = `${BASE_URL}/unsubscribe`;
 
 // ── Shared wrapper ────────────────────────────────────────────────────────────
 function wrap(content, previewText = '') {
@@ -27,10 +31,9 @@ ${previewText ? `<span style="display:none;max-height:0;overflow:hidden;mso-hide
 
       <!-- HEADER -->
       <tr><td style="background:linear-gradient(135deg,#0d2c2b 0%,#124f4d 50%,#0d2c2b 100%);padding:36px 40px 28px;text-align:center">
-        <!-- LC Logo mark -->
         <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 16px">
           <tr><td style="text-align:center">
-            <img src="https://lagosworld.app/images/lw-logo.svg" alt="LW" width="56" height="56"
+            <img src="https://lagosworld.app/images/lw-logo.svg" alt="LC" width="56" height="56"
                  style="display:block;width:56px;height:56px;border:1px solid rgba(26,158,151,.5)">
           </td></tr>
         </table>
@@ -53,17 +56,20 @@ ${previewText ? `<span style="display:none;max-height:0;overflow:hidden;mso-hide
       <tr><td style="padding:20px 40px 32px;text-align:center;background:#f7fffe">
         <div style="font-size:11px;letter-spacing:3px;color:#1a9e97;margin-bottom:10px">✦ LAGOS CLEANING ✦</div>
         <p style="font-size:11px;color:#7a9a99;margin:0 0 8px;letter-spacing:.5px">
-          Philadelphia, PA · ${PHONE}
+          Philadelphia, PA &amp; New Jersey · ${PHONE}
         </p>
         <p style="font-size:10px;color:#a0b8b7;margin:0">
-          <a href="${BASE_URL}/cleaning" style="color:#1a9e97;text-decoration:none">Book Now</a>
+          <a href="${BOOKING_URL}" style="color:#1a9e97;text-decoration:none">Book Now</a>
           &nbsp;·&nbsp;
           <a href="${WA_LINK}" style="color:#1a9e97;text-decoration:none">WhatsApp</a>
           &nbsp;·&nbsp;
           <a href="mailto:admin.lagosworld@gmail.com" style="color:#1a9e97;text-decoration:none">Contact</a>
         </p>
-        <p style="font-size:9px;color:#c0d0cf;margin:12px 0 0;letter-spacing:.5px">
-          Lagos World · Professional Cleaning Services
+        <p style="font-size:9px;color:#c0d0cf;margin:12px 0 4px;letter-spacing:.5px">
+          Lagos World · Professional Cleaning Services in PA &amp; NJ
+        </p>
+        <p style="font-size:9px;color:#c0d0cf;margin:0">
+          <a href="${UNSUBSCRIBE}" style="color:#c0d0cf;text-decoration:underline">Unsubscribe</a>
         </p>
       </td></tr>
 
@@ -74,7 +80,7 @@ ${previewText ? `<span style="display:none;max-height:0;overflow:hidden;mso-hide
 </html>`;
 }
 
-// ── Teal CTA button ───────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function btn(text, url) {
   return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:28px auto 0">
     <tr><td style="background:#1a9e97;padding:15px 38px;text-align:center;border-radius:2px">
@@ -83,10 +89,8 @@ function btn(text, url) {
   </table>`;
 }
 
-// ── Divider ───────────────────────────────────────────────────────────────────
 const hr = `<div style="border-top:1px solid #e0f0ef;margin:24px 0"></div>`;
 
-// ── Body text ─────────────────────────────────────────────────────────────────
 function p(text, style = '') {
   return `<p style="color:#2d4a49;font-size:15px;line-height:1.8;margin:0 0 16px;font-family:Arial,sans-serif;${style}">${text}</p>`;
 }
@@ -110,147 +114,377 @@ function highlight(text) {
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// EMAIL 1 — Inquiry Confirmed (immediate — replaces old plain HTML)
-// ═══════════════════════════════════════════════════════════════════════════════
-function cleaningConfirmed(firstName, details = {}) {
-  const { service_type, recurrence, address, city, preferred_date } = details;
-  const fullAddress = [address, city].filter(Boolean).join(', ');
-
-  return wrap(`
-    ${h(`Your request is confirmed, ${firstName}.`)}
-    ${p('Thank you for choosing <strong>Lagos Cleaning</strong>.')}
-    ${p('We received your request and our team will contact you within <strong>2 hours</strong> to confirm your appointment and answer any questions.')}
-    ${hr}
-    ${service_type ? `
-    <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:20px">
-      ${[
-        ['Service', service_type],
-        ['Frequency', recurrence || 'One-time'],
-        ['Location', fullAddress || '—'],
-        ['Preferred Date', preferred_date || 'Flexible']
-      ].map(([k, v]) => `
-      <tr>
-        <td style="color:#7a9a99;font-size:12px;letter-spacing:1px;padding:8px 16px 8px 0;border-bottom:1px solid #e8f4f3;white-space:nowrap">${k.toUpperCase()}</td>
-        <td style="color:#2d4a49;font-size:14px;padding:8px 0 8px;border-bottom:1px solid #e8f4f3;font-weight:bold">${v}</td>
-      </tr>`).join('')}
-    </table>` : ''}
-    ${highlight('Our team is dedicated to making your home shine. Every visit is handled with care, professionalism and attention to detail.')}
-    ${hr}
-    ${p('Need to talk to us right now?', 'font-size:13px;color:#7a9a99;margin-bottom:8px')}
-    ${btn('Message Us on WhatsApp', WA_LINK)}
-    ${p('With care,<br><strong>Lagos Cleaning Team</strong>', 'font-size:13px;color:#7a9a99;margin-top:24px')}
-  `, 'We received your request and will confirm your appointment soon.');
+function promoCode(code, offer) {
+  return `<div style="text-align:center;margin:24px 0;padding:20px;background:#f0fafa;border:2px dashed rgba(26,158,151,.4);border-radius:4px">
+    <div style="font-size:10px;letter-spacing:3px;color:#7a9a99;margin-bottom:8px;font-family:Arial,sans-serif">PROMO CODE</div>
+    <div style="font-size:28px;letter-spacing:6px;color:#1a9e97;font-family:Georgia,serif;font-weight:bold">${code}</div>
+    <div style="font-size:13px;color:#2d4a49;margin-top:8px;font-family:Arial,sans-serif">${offer}</div>
+  </div>`;
 }
 
+function detailRow(label, value) {
+  return `<tr>
+    <td style="color:#7a9a99;font-size:12px;letter-spacing:1px;padding:8px 16px 8px 0;border-bottom:1px solid #e8f4f3;white-space:nowrap;font-family:Arial,sans-serif">${label.toUpperCase()}</td>
+    <td style="color:#2d4a49;font-size:14px;padding:8px 0 8px;border-bottom:1px solid #e8f4f3;font-weight:bold;font-family:Arial,sans-serif">${value}</td>
+  </tr>`;
+}
+
+
 // ═══════════════════════════════════════════════════════════════════════════════
-// EMAIL 2 — 24h Follow-up
+// 1. WELCOME LEAD — sent immediately after new quote request
 // ═══════════════════════════════════════════════════════════════════════════════
-function cleaningFollowup24h(firstName) {
+function welcomeLead(firstName) {
   return wrap(`
-    ${h(`Hi ${firstName}, just checking in.`)}
-    ${p('We wanted to make sure you received our message yesterday.')}
-    ${p('Your home deserves a clean that actually makes a difference — and that\'s exactly what we deliver.')}
+    ${h(`Welcome to Lagos Cleaning, ${firstName}.`)}
+    ${p('Thank you for reaching out.')}
+    ${p('We provide professional house cleaning, apartment cleaning, move-in / move-out cleaning, office cleaning and CH ELITE Power Wash services across <strong>Pennsylvania and New Jersey</strong>.')}
+    ${p('Our team usually responds within <strong>2 hours</strong> with a clear, no-obligation quote.')}
     ${hr}
-    ${p('Here is what you can expect with Lagos Cleaning:')}
+    ${p('Here is what you can expect with every service:', 'margin-bottom:8px')}
     ${bullet([
-      'Professional team — trained, reliable and respectful of your space',
-      'Deep clean on every visit — not just surface-level tidying',
-      'Flexible scheduling to fit your routine',
-      'Clear communication before, during and after each service',
-      'Satisfaction guaranteed — we make it right if anything is missed'
+      'Flat-rate pricing with no hidden fees',
+      'Bonded and insured professionals',
+      'Background-checked team members',
+      'Eco-friendly cleaning products',
+      'Flexible scheduling, including weekends',
+      '100% satisfaction guarantee'
     ])}
     ${hr}
-    ${highlight('"Our goal is simple: you come home and feel immediately at peace. That\'s the Lagos Cleaning standard."')}
-    ${p('Ready to confirm your appointment?')}
-    ${btn('Book My Cleaning Now', BASE_URL + '/cleaning')}
-    ${p('Or reply to this email and we\'ll sort everything out for you.', 'font-size:13px;color:#7a9a99;text-align:center;margin-top:12px')}
-    ${p('With care,<br><strong>Lagos Cleaning Team</strong>', 'font-size:13px;color:#7a9a99;margin-top:20px')}
-  `, 'Your home deserves a clean that makes a real difference.');
+    ${promoCode('LAGOS15', '15% OFF your first cleaning')}
+    ${p('To move faster, reply to this email with your full address or zip code, the service you need, and your preferred date.', 'font-size:13px;color:#5a7a79')}
+    ${btn('Book My Free Quote', BOOKING_URL)}
+    ${p(`Questions? Call or text us: <strong>${PHONE}</strong>`, 'font-size:13px;color:#7a9a99;text-align:center;margin-top:16px')}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:20px')}
+  `, 'We received your request — here is what to expect next.');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// EMAIL 3 — 7-Day Re-engagement
+// 2. FIRST-TIME OFFER — sent 2h after lead
 // ═══════════════════════════════════════════════════════════════════════════════
-function cleaningReengagement(firstName) {
+function firstTimeOffer(firstName) {
   return wrap(`
-    ${h('Your home is waiting, ' + firstName + '.')}
-    ${p('Life gets busy. We understand.')}
-    ${p('But a clean, organized home isn\'t just about appearances — it affects your energy, your focus and how you feel every single day.')}
+    ${h(`${firstName}, your first cleaning comes with an advantage.`)}
+    ${p('Use code <strong>LAGOS15</strong> and receive 15% OFF your first service.')}
+    ${p('You can use this offer for any of our services:')}
+    ${bullet([
+      'House cleaning',
+      'Apartment cleaning',
+      'One-time deep clean',
+      'Move-in / move-out cleaning',
+      'Office cleaning',
+      'Select residential and commercial services'
+    ])}
     ${hr}
-    <div style="text-align:center;margin:28px 0">
-      ${[
-        ['🏠', 'A clean home creates peace of mind'],
-        ['✨', 'Your space reflects who you are'],
-        ['⏱', 'Professional cleaning saves you hours every week'],
-        ['💚', 'Give yourself the gift of a truly clean home']
-      ].map(([icon, text]) => `
-      <div style="margin:12px 0;padding:14px 20px;background:#f0fafa;border-radius:4px">
-        <span style="font-size:20px;margin-right:10px">${icon}</span>
-        <span style="color:#0d2c2b;font-size:14px;font-family:Arial,sans-serif">${text}</span>
-      </div>`).join('')}
-    </div>
-    ${hr}
-    ${p('Lagos Cleaning serves homeowners in Philadelphia who expect the best.')}
-    ${p('Is this week a good time to schedule?')}
-    ${btn('Schedule My Cleaning', BASE_URL + '/cleaning')}
-    <div style="text-align:center;margin-top:12px">
-      <a href="${WA_LINK}" style="color:#1a9e97;font-size:13px;text-decoration:none;letter-spacing:1px">MESSAGE US ON WHATSAPP →</a>
-    </div>
-    ${p('With care,<br><strong>Lagos Cleaning</strong>', 'font-size:13px;color:#7a9a99;margin-top:24px')}
-  `, 'A clean home creates peace of mind — schedule your visit today.');
+    ${p('Our process is simple:')}
+    ${bullet([
+      'Request your free quote',
+      'Get clear flat-rate pricing',
+      'Choose your best date',
+      'Our team shows up with all supplies and equipment',
+      'You enjoy a cleaner, fresher space'
+    ])}
+    ${promoCode('LAGOS15', '15% OFF your first cleaning — use at checkout')}
+    ${btn('Claim My 15% Off', BOOKING_URL)}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Claim 15% OFF your first cleaning with code LAGOS15.');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// EMAIL 4 — 30-Day Review Request
+// 3. TRUST BUILDER — sent Day 1 after lead
 // ═══════════════════════════════════════════════════════════════════════════════
-function cleaningReview(firstName) {
+function trustBuilder(firstName) {
   return wrap(`
-    ${h(`${firstName}, how was your experience?`)}
-    ${p('We hope Lagos Cleaning delivered everything you expected — and more.')}
+    ${h(`Why homeowners in PA & NJ trust Lagos Cleaning.`)}
+    ${p(`Hi ${firstName},`)}
+    ${p('Choosing a cleaning company is not just about price.')}
+    ${p('You are trusting someone with your home, your space and your time.')}
+    ${p('That is why Lagos Cleaning was built around reliability, safety and clear communication.')}
+    ${hr}
+    ${p('Here is what makes us different:', 'margin-bottom:8px')}
+    ${bullet([
+      'Bonded and insured team',
+      'Background-checked professionals',
+      '100% satisfaction guarantee',
+      'Eco-friendly cleaning products',
+      'Clear flat-rate quotes — no hidden fees',
+      'Service across Pennsylvania and New Jersey'
+    ])}
+    ${hr}
+    ${p('We serve homeowners, renters, offices and businesses with different needs:', 'margin-bottom:8px')}
+    ${bullet([
+      'Regular house cleaning',
+      'Apartment cleaning',
+      'Move-in / move-out cleaning',
+      'One-time deep cleaning',
+      'Office and commercial cleaning',
+      'CH ELITE Power Wash — driveways, patios, decks and siding'
+    ])}
+    ${highlight('Every visit is handled by trained, professional cleaners who respect your home and your time.')}
+    ${btn('Request Your Free Quote', BOOKING_URL)}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Bonded, insured and background-checked — here is why homeowners choose Lagos Cleaning.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 4. DEEP CLEANING EDUCATION — sent Day 2 after lead
+// ═══════════════════════════════════════════════════════════════════════════════
+function deepCleaningEdu(firstName) {
+  return wrap(`
+    ${h('Regular cleaning vs. deep cleaning: which one do you need?')}
+    ${p(`Hi ${firstName},`)}
+    ${p('A lot of clients ask us this question before booking.')}
+    ${hr}
+    ${p('<strong>Regular cleaning</strong> is for maintenance.', 'margin-bottom:8px')}
+    ${p('It covers the visible areas of the home and keeps everything fresh week after week.')}
+    ${p('<strong>Deep cleaning</strong> is for reset.', 'margin-bottom:8px')}
+    ${p('It focuses on areas that collect buildup over time:', 'margin-bottom:8px')}
+    ${bullet([
+      'Baseboards and corners',
+      'Bathrooms — grout, fixtures, tile',
+      'Kitchen grease and appliances',
+      'Cabinets inside and out',
+      'Floors, detailed surfaces and hard-to-reach areas'
+    ])}
+    ${hr}
+    ${highlight('If your home has not had a professional cleaning in a while, we recommend starting with a one-time deep clean, then moving to weekly or monthly maintenance.')}
+    ${p('This gives your home a better starting point and makes future cleanings faster and easier to maintain.')}
+    ${promoCode('LAGOS15', '15% OFF your first cleaning')}
+    ${btn('Request Your Free Quote', BOOKING_URL)}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Which service does your home need? Here is the simple answer.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 5. CH ELITE POWER WASH — sent Day 3 after lead
+// ═══════════════════════════════════════════════════════════════════════════════
+function powerWashElite(firstName) {
+  return wrap(`
+    ${h('Your driveway, patio or deck may need this.')}
+    ${p(`Hi ${firstName},`)}
+    ${p('The outside of your home creates the first impression before anyone walks through the door.')}
+    ${p('Driveways, patios, decks, porches and siding collect dirt, mold, mildew, algae, tire marks and weather stains over time.')}
+    ${hr}
+    ${p('That is why we created <strong>CH ELITE Power Wash</strong>.')}
+    ${p('This service is designed for homeowners who want their property to look cleaner, brighter and better maintained.')}
+    ${p('CH ELITE can help with:', 'margin-bottom:8px')}
+    ${bullet([
+      'Driveways and concrete',
+      'Patios and pavers',
+      'Decks and porches',
+      'Siding and exterior surfaces'
+    ])}
+    ${p('Our team uses <strong>commercial-grade equipment</strong>, biodegradable detergents and proven techniques to restore your outdoor surfaces safely and professionally.')}
+    ${hr}
+    ${highlight('<strong>Current seasonal offer: 20% OFF CH ELITE Power Wash Package.</strong><br>Limited spots available. Book before they fill up.')}
+    ${btn('Book Power Wash Quote', BOOKING_URL)}
+    ${p('Or reply with photos of the area you want cleaned and we will review it for you.', 'font-size:13px;color:#7a9a99;text-align:center;margin-top:12px')}
+    ${p('CH ELITE Power Wash<br>by Lagos Cleaning', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Your outdoor surfaces may need this — 20% OFF CH ELITE Power Wash.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 6. ESTIMATE FOLLOW-UP — sent 24h after quote if not booked
+// ═══════════════════════════════════════════════════════════════════════════════
+function estimateFollowup(firstName, serviceRequested = 'your requested service') {
+  return wrap(`
+    ${h(`${firstName}, do you want us to hold your quote?`)}
+    ${p('I wanted to follow up on the quote we sent for:')}
+    ${highlight(serviceRequested)}
+    ${p('We can still help you get this scheduled.')}
+    ${p('Before we move forward, I want to make sure everything was clear:', 'margin-bottom:8px')}
+    ${bullet([
+      'Service requested and what is included',
+      'Flat-rate price — no hidden fees',
+      'Available dates that fit your schedule',
+      'Any special instructions or access notes'
+    ])}
+    ${hr}
+    ${p('With Lagos Cleaning, your quote is simple and transparent.')}
+    ${p('You are also protected by our <strong>100% satisfaction guarantee</strong>. If something is not right, contact us within 24 hours and we will make it right.')}
+    ${btn('Confirm My Appointment', BOOKING_URL)}
+    ${p('Or reply with <strong>"ready"</strong> and we will help schedule you.', 'font-size:13px;color:#5a7a79;text-align:center;margin-top:12px')}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Your quote is still waiting — here is how to confirm your appointment.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 7. SAME-WEEK BOOKING — sent Day 5 after lead, if not booked
+// ═══════════════════════════════════════════════════════════════════════════════
+function sameWeekBooking(firstName) {
+  return wrap(`
+    ${h('We still have limited cleaning spots this week.')}
+    ${p(`Hi ${firstName},`)}
+    ${p('We still have a few available cleaning spots this week in <strong>Pennsylvania and New Jersey</strong>.')}
+    ${p('If you still need help with any of these:', 'margin-bottom:8px')}
+    ${bullet([
+      'House cleaning',
+      'Apartment cleaning',
+      'Deep cleaning',
+      'Move-in / move-out cleaning',
+      'Office cleaning',
+      'Power washing'
+    ])}
+    ${p('Now is a good time to schedule before the calendar fills.')}
+    ${hr}
+    ${promoCode('LAGOS15', '15% OFF your first cleaning')}
+    ${p('For CH ELITE Power Wash, ask us about the current seasonal <strong>20% OFF package</strong>.', 'font-size:13px;color:#5a7a79')}
+    ${btn('Book This Week', BOOKING_URL)}
+    ${p('Or reply with your preferred day and time and we will make it work.', 'font-size:13px;color:#7a9a99;text-align:center;margin-top:12px')}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Limited spots this week — book before your preferred date fills up.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 8. OBJECTION BREAKER — sent 48h after estimate if no response
+// ═══════════════════════════════════════════════════════════════════════════════
+function objectionBreaker(firstName) {
+  return wrap(`
+    ${h('Still thinking about it? Here is what to know first.')}
+    ${p(`Hi ${firstName},`)}
+    ${p('If you are still thinking about booking, here are a few things that may help.')}
+    ${hr}
+    <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:20px">
+      <tr><td style="padding:14px 0;border-bottom:1px solid #e0f0ef">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">Do I need to be home?</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">No. Many clients provide entry instructions, and we take care of the cleaning while they are away.</p>
+      </td></tr>
+      <tr><td style="padding:14px 0;border-bottom:1px solid #e0f0ef">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">Do you bring supplies?</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">Yes. Our team brings professional-grade supplies and equipment. You do not need to provide anything.</p>
+      </td></tr>
+      <tr><td style="padding:14px 0;border-bottom:1px solid #e0f0ef">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">Are you insured?</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">Yes. Lagos Cleaning is bonded and insured. Your home is fully protected.</p>
+      </td></tr>
+      <tr><td style="padding:14px 0;border-bottom:1px solid #e0f0ef">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">What if I am not happy?</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">You are covered by our 100% satisfaction guarantee. If something is missed, contact us within 24 hours and we will come back to re-clean at no charge.</p>
+      </td></tr>
+      <tr><td style="padding:14px 0">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">Do you serve my area?</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">We serve the greater Philadelphia metro area, several Pennsylvania counties and South / Central New Jersey.</p>
+      </td></tr>
+    </table>
+    ${btn('Schedule My Cleaning', BOOKING_URL)}
+    ${p(`Still have a question? Text us: <strong>${PHONE}</strong>`, 'font-size:13px;color:#7a9a99;text-align:center;margin-top:12px')}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Quick answers to the most common questions before booking.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 9. POST-SERVICE CARE — sent same day after completed service
+// ═══════════════════════════════════════════════════════════════════════════════
+function postServiceCare(firstName, serviceType = 'cleaning service') {
+  return wrap(`
+    ${h(`${firstName}, your service is complete.`)}
+    ${p(`Thank you for choosing Lagos Cleaning.`)}
+    ${p(`Your <strong>${serviceType}</strong> has been completed. We appreciate the opportunity to take care of your home.`)}
+    ${hr}
+    ${p('A few important notes:', 'margin-bottom:8px')}
+    ${bullet([
+      'If everything looks good, no action is needed.',
+      'If there is anything we missed, please contact us within 24 hours.',
+      'Your service is protected by our 100% satisfaction guarantee.',
+      'We will review the issue and make it right at no charge.'
+    ])}
+    ${hr}
+    ${p('To keep your home fresh, we recommend recurring cleaning every:', 'margin-bottom:8px')}
+    ${bullet([
+      '<strong>Weekly</strong> — best for busy families and larger homes',
+      '<strong>Bi-weekly</strong> — best for most homes with regular maintenance',
+      '<strong>Monthly</strong> — best for lighter maintenance or smaller spaces',
+      '<strong>Seasonally</strong> — for deep cleaning reset before or after a season'
+    ])}
+    ${btn('Schedule Your Next Cleaning', BOOKING_URL)}
+    ${p(`Thank you again for choosing us.<br><strong>Lagos Cleaning Team</strong><br>${PHONE}`, 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Your Lagos Cleaning service is complete — here is what to know.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 10. REVIEW REQUEST — sent Day 2 after service
+// ═══════════════════════════════════════════════════════════════════════════════
+function reviewRequest(firstName) {
+  return wrap(`
+    ${h(`${firstName}, how did we do?`)}
+    ${p('Thank you again for choosing Lagos Cleaning.')}
+    ${p('If you were happy with the service, would you take 30 seconds to leave us a review?')}
+    ${p('Your review helps other homeowners in PA and NJ feel confident choosing our team — and it helps our local business grow with people who deserve trustworthy service.')}
     ${hr}
     <div style="text-align:center;margin:24px 0">
-      <div style="font-size:28px;letter-spacing:6px;color:#1a9e97">★★★★★</div>
-      <div style="font-size:11px;letter-spacing:3px;color:#7a9a99;margin-top:8px">SHARE YOUR EXPERIENCE</div>
+      <div style="font-size:32px;letter-spacing:6px;color:#1a9e97;margin-bottom:8px">★★★★★</div>
+      <div style="font-size:11px;letter-spacing:3px;color:#7a9a99;font-family:Arial,sans-serif">SHARE YOUR EXPERIENCE</div>
     </div>
+    ${highlight('"Lagos Cleaning was professional, on time and did a great job. I highly recommend them." — A review like this takes 30 seconds and means everything to us.')}
+    ${btn('Leave a Google Review', REVIEW_LINK)}
+    ${p('Or reply to this email and share your feedback directly with our team.', 'font-size:13px;color:#7a9a99;text-align:center;margin-top:12px')}
     ${hr}
-    ${p('Your honest review helps other Philadelphia homeowners find trustworthy cleaning service — and it helps our small, family-run business grow with confidence.')}
-    ${highlight('It only takes 60 seconds to leave a review. And it means everything to us.')}
-    ${btn('Leave a Review on Google', 'https://g.page/r/your-google-place-id/review')}
-    <div style="text-align:center;margin-top:12px">
-      <a href="${WA_LINK}?text=My+review+for+Lagos+Cleaning:" style="color:#1a9e97;font-size:13px;text-decoration:none;letter-spacing:1px">SEND VIA WHATSAPP →</a>
-    </div>
-    ${hr}
-    ${p('And if anything was not perfect on your last visit — please tell us. We will make it right.', 'font-size:13px;color:#7a9a99')}
+    ${p('If anything was not perfect on your last visit, please tell us. We will make it right.', 'font-size:13px;color:#7a9a99')}
     ${p('With gratitude,<br><strong>Lagos Cleaning Team</strong>', 'font-size:13px;color:#7a9a99;margin-top:20px')}
-  `, 'Your review helps our community find trusted cleaning service.');
+  `, 'How did we do? Your review helps other homeowners in PA & NJ find trusted cleaning service.');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// EMAIL 5 — Referral
+// 11. REFERRAL PROGRAM — sent Day 7 after service
 // ═══════════════════════════════════════════════════════════════════════════════
-function cleaningReferral(firstName) {
+function referralProgram(firstName) {
   return wrap(`
-    ${h('Know someone who needs a clean home?')}
+    ${h('Give 10%, get $25 credit.')}
     ${p(`Hi ${firstName},`)}
-    ${p('A clean, organized home is one of the best gifts you can give — to yourself or someone you care about.')}
+    ${p('If you know someone who needs house cleaning, apartment cleaning, move-in / move-out cleaning, office cleaning or power washing, you can refer them to Lagos Cleaning.')}
     ${hr}
-    <div style="text-align:center;margin:20px 0;line-height:2.2">
-      <div style="color:#2d4a49;font-size:15px">A busy neighbor.</div>
-      <div style="color:#2d4a49;font-size:15px">A hardworking friend.</div>
-      <div style="color:#2d4a49;font-size:15px">A family member who needs support.</div>
-      <div style="color:#1a9e97;font-size:15px;font-style:italic;margin-top:8px;font-family:Georgia,serif">Someone who deserves a truly clean home.</div>
-    </div>
+    ${p('Here is how it works:', 'margin-bottom:8px')}
+    ${bullet([
+      'Your friend gets <strong>10% OFF</strong> their first booking',
+      'You receive a <strong>$25 credit</strong> toward your next service after they complete their first appointment',
+      'No limit — the more people you refer, the more credits you earn'
+    ])}
     ${hr}
-    ${p('Refer a friend to Lagos Cleaning and <strong>both of you receive a special discount</strong> on the next service.')}
-    ${highlight('We built this business through trust and referrals. Every person you send our way is treated like family.')}
-    ${btn('Refer a Friend Now', WA_LINK + '?text=I+want+to+refer+a+friend+to+Lagos+Cleaning')}
-    ${p('Simply share our number: <strong>${PHONE}</strong> or our website with a friend and let us know so we can apply your reward.', 'font-size:13px;color:#7a9a99;margin-top:16px')}
-    ${p('Thank you for being part of the Lagos family.<br><strong>Lagos Cleaning Team</strong>', 'font-size:13px;color:#7a9a99;margin-top:20px')}
-  `, 'Refer a friend and both of you receive a special discount.');
+    ${highlight('To refer someone, share our booking link or tell them to mention your name when they book.')}
+    ${btn('Refer a Friend', REFERRAL_URL)}
+    ${p(`Or send them our number: <strong>${PHONE}</strong>`, 'font-size:13px;color:#7a9a99;text-align:center;margin-top:12px')}
+    ${p('Thank you for trusting Lagos Cleaning.<br><strong>Lagos Cleaning Team</strong>', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Refer a friend — they get 10% off, you get $25 credit.');
 }
 
-// ── Cleaning admin notification ───────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// 12. RECURRING CLEANING — sent Day 21 after service
+// ═══════════════════════════════════════════════════════════════════════════════
+function recurringCleaning(firstName) {
+  return wrap(`
+    ${h('Want to keep your home clean every month?')}
+    ${p(`Hi ${firstName},`)}
+    ${p('A one-time cleaning makes your home feel fresh. Recurring cleaning keeps it that way.')}
+    ${p('Many Lagos Cleaning clients choose recurring service because it saves time, reduces stress and keeps the home consistently maintained.')}
+    ${hr}
+    <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:20px">
+      <tr><td style="padding:14px 16px;background:#f0fafa;border-left:3px solid #1a9e97;margin-bottom:8px;display:block">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">Weekly cleaning</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">Best for busy families, larger homes and high-traffic spaces.</p>
+      </td></tr>
+    </table>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:8px">
+      <tr><td style="padding:14px 16px;background:#f7fffe;border-left:3px solid rgba(26,158,151,.4)">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">Bi-weekly cleaning</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">Best for most homes that need consistent maintenance without daily upkeep.</p>
+      </td></tr>
+    </table>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:20px">
+      <tr><td style="padding:14px 16px;background:#f7fffe;border-left:3px solid rgba(26,158,151,.4)">
+        <p style="color:#0d2c2b;font-size:14px;font-weight:bold;margin:0 0 4px;font-family:Arial,sans-serif">Monthly cleaning</p>
+        <p style="color:#2d4a49;font-size:14px;line-height:1.7;margin:0;font-family:Arial,sans-serif">Best for lighter maintenance or smaller homes that stay relatively clean.</p>
+      </td></tr>
+    </table>
+    ${p('Recurring cleaning also helps prevent buildup in kitchens, bathrooms, floors and high-touch areas.')}
+    ${hr}
+    ${p('To set up recurring service, reply with <strong>"weekly"</strong>, <strong>"bi-weekly"</strong> or <strong>"monthly"</strong> and we will schedule you.', 'font-size:13px;color:#5a7a79')}
+    ${btn('Set Up Recurring Service', BOOKING_URL)}
+    ${p('Lagos Cleaning Team', 'font-size:13px;color:#7a9a99;margin-top:24px')}
+  `, 'Keep your home consistently clean — set up weekly, bi-weekly or monthly service.');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ADMIN NOTIFICATION — internal alert for every new request
+// ═══════════════════════════════════════════════════════════════════════════════
 function cleaningAdminNotification(requestData) {
   const {
     customer_name, customer_email, customer_phone,
@@ -262,35 +496,53 @@ function cleaningAdminNotification(requestData) {
 
   return wrap(`
     <div style="display:inline-block;background:#e8f8f7;padding:4px 14px;margin-bottom:20px;border-radius:2px;border:1px solid rgba(26,158,151,.3)">
-      <span style="color:#1a9e97;font-size:10px;letter-spacing:3px">NEW CLEANING REQUEST</span>
+      <span style="color:#1a9e97;font-size:10px;letter-spacing:3px;font-family:Arial,sans-serif">NEW CLEANING REQUEST</span>
     </div>
     ${h('New Lead — Lagos Cleaning')}
     <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:20px">
       ${[
-        ['Name',     customer_name],
-        ['Email',    customer_email],
-        ['Phone',    customer_phone || '—'],
-        ['Service',  service_type],
-        ['Frequency',recurrence || 'One-time'],
-        ['Address',  fullAddress || '—'],
-        ['Date',     preferred_date || 'Flexible'],
-        ['Notes',    description || '—']
-      ].map(([k, v]) => `
-      <tr>
-        <td style="color:#7a9a99;font-size:12px;letter-spacing:1px;padding:8px 16px 8px 0;border-bottom:1px solid #e0f0ef;white-space:nowrap">${k.toUpperCase()}</td>
-        <td style="color:#2d4a49;font-size:14px;padding:8px 0;border-bottom:1px solid #e0f0ef">${v || '—'}</td>
-      </tr>`).join('')}
+        ['Name',      customer_name],
+        ['Email',     customer_email],
+        ['Phone',     customer_phone || '—'],
+        ['Service',   service_type],
+        ['Frequency', recurrence || 'One-time'],
+        ['Address',   fullAddress || '—'],
+        ['Date',      preferred_date || 'Flexible'],
+        ['Notes',     description || '—']
+      ].map(([k, v]) => detailRow(k, v || '—')).join('')}
     </table>
-    ${calLink ? `${btn('📅 Add to Google Calendar', calLink)}` : ''}
+    ${calLink ? btn('📅 Add to Google Calendar', calLink) : ''}
     ${btn('View Admin Panel', BASE_URL + '/admin')}
   `, 'New cleaning request — Lagos Cleaning');
 }
 
+// ── Legacy aliases — keep backward compat with processDueEmails() ─────────────
+const cleaningConfirmed     = (firstName, details = {}) => welcomeLead(firstName);
+const cleaningFollowup24h   = estimateFollowup;
+const cleaningReengagement  = sameWeekBooking;
+const cleaningReview        = reviewRequest;
+const cleaningReferral      = referralProgram;
+
 module.exports = {
+  // Full 12-template funnel
+  welcomeLead,
+  firstTimeOffer,
+  trustBuilder,
+  deepCleaningEdu,
+  powerWashElite,
+  estimateFollowup,
+  sameWeekBooking,
+  objectionBreaker,
+  postServiceCare,
+  reviewRequest,
+  referralProgram,
+  recurringCleaning,
+  // Admin notification
+  cleaningAdminNotification,
+  // Legacy aliases
   cleaningConfirmed,
   cleaningFollowup24h,
   cleaningReengagement,
   cleaningReview,
   cleaningReferral,
-  cleaningAdminNotification
 };

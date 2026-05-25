@@ -163,13 +163,27 @@ textarea.field-inp{resize:vertical;min-height:90px;line-height:1.6}
 .ecb-btn.primary{background:var(--gold);border-color:var(--gold);color:#0a0a0a;font-weight:600}
 .ecb-btn:hover{opacity:.85}
 /* TEMPLATES TAB */
-.tpl-card{background:linear-gradient(180deg,#1b1b1b,#151515);border:1px solid rgba(184,146,46,.24);padding:1.2rem 1.4rem;border-radius:6px;box-shadow:0 12px 36px rgba(0,0,0,.18)}
-.tpl-card-name{color:var(--gold);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.4rem}
-.tpl-card-subject{color:var(--text);font-size:.8rem;margin-bottom:.8rem;line-height:1.4}
+.tpl-filter-bar{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tpl-filter-btn{padding:.4rem .9rem;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;font-family:'Montserrat',sans-serif;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-muted);transition:.2s}
+.tpl-filter-btn.active{border-color:var(--gold);color:var(--gold)}
+.tpl-section-title{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-muted);padding:.4rem 0 .8rem;margin-bottom:.2rem;border-bottom:1px solid var(--border);margin-bottom:.8rem}
+.tpl-section-title span{color:var(--gold)}
+.tpl-card{padding:1.1rem 1.3rem;border-radius:4px;position:relative}
+.tpl-card.jewelry{background:linear-gradient(180deg,#1b1b1b,#151515);border:1px solid rgba(184,146,46,.24)}
+.tpl-card.cleaning{background:linear-gradient(180deg,#0f2221,#0d1f1e);border:1px solid rgba(26,158,151,.22)}
+.tpl-card-badge{display:inline-block;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;padding:.15rem .5rem;border-radius:2px;margin-bottom:.5rem}
+.tpl-card-badge.jewelry{background:rgba(184,146,46,.12);color:var(--gold);border:1px solid rgba(184,146,46,.25)}
+.tpl-card-badge.cleaning{background:rgba(26,158,151,.12);color:#1a9e97;border:1px solid rgba(26,158,151,.25)}
+.tpl-card-name{font-size:.72rem;font-weight:600;color:var(--text);margin-bottom:.3rem;letter-spacing:.04em}
+.tpl-card-subject{color:var(--text-muted);font-size:.72rem;margin-bottom:.4rem;line-height:1.4;font-style:italic}
+.tpl-card-desc{font-size:.62rem;color:#5a5852;margin-bottom:.9rem;line-height:1.5}
+.tpl-card-trigger{font-size:.58rem;color:#3a8e8a;margin-bottom:.8rem;letter-spacing:.05em}
 .tpl-card-actions{display:flex;gap:.5rem}
-.tpl-send-btn{background:rgba(184,146,46,.18);border:1px solid rgba(184,146,46,.34);color:#d7b85a;font-size:.6rem;letter-spacing:.15em;padding:.45rem .85rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.2s;white-space:nowrap}
-.tpl-send-btn:hover{background:var(--gold);color:#0a0a0a}
-.tpl-email-input{background:#222;border:1px solid rgba(184,146,46,.24);color:var(--text);font-size:.72rem;padding:.45rem .65rem;font-family:'Montserrat',sans-serif;flex:1;outline:none;min-width:0}
+.tpl-send-btn{background:rgba(184,146,46,.18);border:1px solid rgba(184,146,46,.34);color:#d7b85a;font-size:.58rem;letter-spacing:.15em;padding:.4rem .75rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.2s;white-space:nowrap}
+.tpl-send-btn.cleaning{background:rgba(26,158,151,.15);border-color:rgba(26,158,151,.35);color:#1a9e97}
+.tpl-send-btn:hover{background:var(--gold);color:#0a0a0a;border-color:var(--gold)}
+.tpl-send-btn.cleaning:hover{background:#1a9e97;color:#fff;border-color:#1a9e97}
+.tpl-email-input{background:#181a1a;border:1px solid rgba(184,146,46,.2);color:var(--text);font-size:.68rem;padding:.4rem .6rem;font-family:'Montserrat',sans-serif;flex:1;outline:none;min-width:0}
 .tpl-email-input:focus{border-color:var(--gold)}
 /* CALENDARIO */
 .cal-month{margin-bottom:2.5rem}
@@ -452,7 +466,12 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
     <!-- TEMPLATES TAB -->
     <div id="tab-templates" style="display:none">
       <div class="dash-header"><h2>Email <em>Templates</em></h2><div class="last-update">Manage & test all email campaigns</div></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;padding:.5rem 0" id="templates-grid"></div>
+      <div class="tpl-filter-bar">
+        <button class="tpl-filter-btn active" onclick="filterTemplates('all',this)">✦ All</button>
+        <button class="tpl-filter-btn" onclick="filterTemplates('cleaning',this)">🧹 Cleaning (12)</button>
+        <button class="tpl-filter-btn" onclick="filterTemplates('jewelry',this)">💎 Jewelry (9)</button>
+      </div>
+      <div id="templates-grid" style="display:flex;flex-direction:column;gap:1rem;padding:.5rem 0"></div>
     </div>
 
     <!-- CALENDARIO TAB -->
@@ -1821,38 +1840,152 @@ function closeEmailConfirm() {
 }
 
 // ── TEMPLATES TAB ─────────────────────────────────────────────────────────────
-const EMAIL_TEMPLATES = [
-  { type: 'welcome',    name: 'Welcome',           subject: '✦ LW ✦ Bem-vinda à Lagos — sua joia especial espera por você', desc: 'Sent to new subscribers / manual dispatch' },
-  { type: 'firstoffer', name: 'First Purchase Offer', subject: 'A special offer — just for you', desc: 'New subscriber incentive — 10% off code WELCOME10' },
-  { type: 'brand',      name: 'Brand Story',        subject: 'The story behind every Lagos piece', desc: 'Trust-building sequence email' },
-  { type: 'care',       name: 'Jewelry Care (Day 3)', subject: 'How to keep your jewelry beautiful for longer', desc: 'Post-purchase — auto-sent day 3 via cron' },
-  { type: 'crosssell',  name: 'Cross-Sell (Day 7)',  subject: 'Complete your look with these matching pieces', desc: 'Post-purchase — auto-sent day 7 via cron' },
-  { type: 'review',     name: 'Review Request (Day 10)', subject: 'How did you feel wearing your Lagos Jewelry piece?', desc: 'Post-purchase — auto-sent day 10 via cron' },
-  { type: 'referral',   name: 'Referral (Day 21)',   subject: 'Share Lagos Jewelry with a woman you love', desc: 'Post-purchase — auto-sent day 21 via cron' },
-  { type: 'gift',       name: 'Gift Campaign',       subject: 'The perfect gift for the woman in your life', desc: 'Seasonal campaign — Mother\'s Day, Christmas, etc.' },
-  { type: 'vip',        name: 'VIP Invitation',      subject: '✦ LW ✦ You\'ve been invited to the Lagos VIP Circle', desc: 'Loyalty reward — send after 2+ purchases' },
-];
+const EMAIL_TEMPLATES = {
+  cleaning: [
+    {
+      type: 'clean_welcome',   name: 'Welcome Lead',
+      subject: 'Welcome to Lagos Cleaning — your free quote is one step away',
+      desc: 'Sent immediately after a new quote request. Sets tone, builds trust, shares LAGOS15.',
+      trigger: '⚡ Immediate — after new lead'
+    },
+    {
+      type: 'clean_firstoffer', name: 'First-Time Offer',
+      subject: 'Claim 15% OFF your first cleaning with LAGOS15',
+      desc: 'Converts new leads with a promo code. Lists all eligible services.',
+      trigger: '⏱ 2 hours after lead'
+    },
+    {
+      type: 'clean_trust',     name: 'Trust Builder',
+      subject: 'Why homeowners in PA & NJ trust Lagos Cleaning',
+      desc: 'Authority email. Covers bonded, insured, background-checked, eco-friendly, flat-rate.',
+      trigger: '📅 Day 1 after lead'
+    },
+    {
+      type: 'clean_education', name: 'Deep Cleaning Education',
+      subject: 'Regular cleaning vs. deep cleaning: which one do you need?',
+      desc: 'Educates lead on service types. Nudges toward first deep clean + recurring.',
+      trigger: '📅 Day 2 after lead'
+    },
+    {
+      type: 'clean_powerwash', name: 'CH ELITE Power Wash',
+      subject: 'Your driveway, patio or deck may need this',
+      desc: 'Upsell for outdoor services. 20% OFF seasonal offer. Targets homeowners.',
+      trigger: '📅 Day 3 after lead'
+    },
+    {
+      type: 'clean_estimate',  name: 'Estimate Follow-Up',
+      subject: 'Do you want us to hold your quote?',
+      desc: 'Recovers leads who went silent after receiving a quote. Clear re-engagement CTA.',
+      trigger: '📅 24h after quote sent'
+    },
+    {
+      type: 'clean_objection', name: 'Objection Breaker',
+      subject: 'Still thinking about it? Here is what to know first',
+      desc: 'FAQ-style email: home access, supplies, insurance, guarantee, service area.',
+      trigger: '📅 48h after estimate, no response'
+    },
+    {
+      type: 'clean_sameweek',  name: 'Same-Week Booking',
+      subject: 'We still have limited cleaning spots this week',
+      desc: 'Creates urgency. Lists all services + both promo codes. Works for undecided leads.',
+      trigger: '📅 Day 5 after lead'
+    },
+    {
+      type: 'clean_postservice', name: 'Post-Service Care',
+      subject: 'Your Lagos Cleaning service is complete',
+      desc: 'Post-service touchpoint. Satisfaction guarantee reminder + recurring options.',
+      trigger: '✅ Same day after completed service'
+    },
+    {
+      type: 'clean_review',    name: 'Review Request',
+      subject: 'How did we do?',
+      desc: 'Drives Google reviews. 30-second ask, example review copy included.',
+      trigger: '📅 Day 2–3 after service'
+    },
+    {
+      type: 'clean_referral',  name: 'Referral Program',
+      subject: 'Give 10%, get $25 credit',
+      desc: 'Referral engine: friend gets 10% off, client earns $25 credit. No limit.',
+      trigger: '📅 Day 7 after service'
+    },
+    {
+      type: 'clean_recurring', name: 'Recurring Cleaning',
+      subject: 'Want to keep your home clean every month?',
+      desc: 'Converts one-time clients to monthly/bi-weekly/weekly recurring plans.',
+      trigger: '📅 Day 21 after service'
+    },
+  ],
+  jewelry: [
+    { type: 'welcome',    name: 'Welcome',              subject: '✦ LW ✦ Welcome to Lagos World — Your Jewelry Journey Begins',   desc: 'Sent to new subscribers / manual dispatch', trigger: '⚡ Immediate' },
+    { type: 'firstoffer', name: 'First Purchase Offer', subject: 'LW · A special welcome offer — just for you',                  desc: 'New subscriber incentive — 10% off code WELCOME10', trigger: 'New subscriber' },
+    { type: 'brand',      name: 'Brand Story',          subject: 'LW · The story behind every Lagos piece',                      desc: 'Trust-building sequence email', trigger: 'Manual / sequence' },
+    { type: 'care',       name: 'Jewelry Care',         subject: 'LW · How to keep your jewelry beautiful for longer',           desc: 'Post-purchase — auto-sent Day 3 via cron', trigger: '📅 Day 3 post-purchase' },
+    { type: 'crosssell',  name: 'Cross-Sell',           subject: 'LW · Complete your look with these matching pieces',           desc: 'Post-purchase — auto-sent Day 7 via cron', trigger: '📅 Day 7 post-purchase' },
+    { type: 'review',     name: 'Review Request',       subject: 'LW · How did you feel wearing your Lagos Jewelry piece?',      desc: 'Post-purchase — auto-sent Day 10 via cron', trigger: '📅 Day 10 post-purchase' },
+    { type: 'referral',   name: 'Referral',             subject: 'LW · Share Lagos Jewelry with a woman you love',              desc: 'Post-purchase — auto-sent Day 21 via cron', trigger: '📅 Day 21 post-purchase' },
+    { type: 'gift',       name: 'Gift Campaign',        subject: 'LW · The perfect gift for the woman in your life',            desc: 'Seasonal campaign — Mother\'s Day, Christmas, etc.', trigger: 'Manual / seasonal' },
+    { type: 'vip',        name: 'VIP Invitation',       subject: '✦ LW ✦ You have been invited to the Lagos VIP Circle',        desc: 'Loyalty reward — send after 2+ purchases', trigger: 'Manual / loyalty' },
+  ]
+};
+
+let _tplFilter = 'all';
+
+function filterTemplates(cat, btn) {
+  _tplFilter = cat;
+  document.querySelectorAll('.tpl-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadTemplates();
+}
 
 function loadTemplates() {
   const grid = document.getElementById('templates-grid');
-  grid.innerHTML = EMAIL_TEMPLATES.map(tpl => `
-    <div class="tpl-card">
-      <div class="tpl-card-name">${tpl.name}</div>
-      <div class="tpl-card-subject">${tpl.subject}</div>
-      <div style="font-size:.65rem;color:var(--text-muted);margin-bottom:.8rem;line-height:1.4">${tpl.desc}</div>
-      <div class="tpl-card-actions">
-        <input class="tpl-email-input" type="email" id="tpl-email-${tpl.type}" placeholder="test@email.com">
-        <button class="tpl-send-btn" onclick="sendTestEmail('${tpl.type}','${tpl.name}')">▶ Send Test</button>
+  const sections = [];
+
+  const renderSection = (title, badge, templates) => {
+    const cards = templates.map(tpl => `
+      <div class="tpl-card ${badge}" data-cat="${badge}">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+          <span class="tpl-card-badge ${badge}">${badge === 'cleaning' ? '🧹 Cleaning' : '💎 Jewelry'}</span>
+          <span class="tpl-card-trigger">${tpl.trigger}</span>
+        </div>
+        <div class="tpl-card-name">${tpl.name}</div>
+        <div class="tpl-card-subject">"${tpl.subject}"</div>
+        <div class="tpl-card-desc">${tpl.desc}</div>
+        <div class="tpl-card-actions">
+          <input class="tpl-email-input" type="email" id="tpl-email-${tpl.type}" placeholder="recipient@email.com">
+          <button class="tpl-send-btn ${badge}" onclick="sendTestEmail('${tpl.type}','${tpl.name}','${badge}')">▶ Send Test</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+
+    return `
+      <div class="tpl-section-title">✦ <span>${title}</span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:.8rem;margin-bottom:1.5rem">
+        ${cards}
+      </div>
+    `;
+  };
+
+  if (_tplFilter === 'all' || _tplFilter === 'cleaning') {
+    sections.push(renderSection('Lagos Cleaning — 12-Template Full Funnel', 'cleaning', EMAIL_TEMPLATES.cleaning));
+  }
+  if (_tplFilter === 'all' || _tplFilter === 'jewelry') {
+    sections.push(renderSection('Lagos Jewelry — Post-Purchase Sequence', 'jewelry', EMAIL_TEMPLATES.jewelry));
+  }
+
+  grid.innerHTML = sections.join('');
 }
 
-async function sendTestEmail(type, name) {
+async function sendTestEmail(type, name, category = 'jewelry') {
   const input = document.getElementById('tpl-email-' + type);
   const to = input.value.trim();
-  if (!to || !to.includes('@')) { showToast('⚠ Enter a valid email'); return; }
-  showToast('Sending ' + name + '...');
+  if (!to || !to.includes('@')) { showToast('⚠ Enter a valid email first'); return; }
+
+  const btn = input.nextElementSibling;
+  const orig = btn.textContent;
+  btn.textContent = '⏳ Sending...';
+  btn.disabled = true;
+
   try {
     const r = await fetch('/api/cron/send', {
       method: 'POST',
@@ -1868,6 +2001,9 @@ async function sendTestEmail(type, name) {
     }
   } catch (e) {
     showToast('⚠ Error: ' + e.message);
+  } finally {
+    btn.textContent = orig;
+    btn.disabled = false;
   }
 }
 
