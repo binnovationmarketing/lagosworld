@@ -9,12 +9,12 @@ const { processMessage } = require('../services/milla');
 
 // ── Web widget ────────────────────────────────────────────────────────────────
 router.post('/chat', async (req, res) => {
-  const { message, sessionId, channel } = req.body;
+  const { message, sessionId, channel, page } = req.body;
   if (!message || !message.trim()) return res.status(400).json({ error: 'message required' });
   if (!sessionId)                   return res.status(400).json({ error: 'sessionId required' });
 
   try {
-    const reply = await processMessage(req.supabase, sessionId, message.trim(), channel || 'web');
+    const reply = await processMessage(req.supabase, sessionId, message.trim(), channel || 'web', page || '/');
     res.json({ ok: true, reply });
   } catch (err) {
     const detail = err?.message || String(err);

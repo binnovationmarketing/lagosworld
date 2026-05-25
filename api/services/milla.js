@@ -1,8 +1,7 @@
 /**
- * milla.js — Autonomous AI agent for Lagos World
- * Powered by Groq Llama 3.3 70B (free tier: 14,400 req/day, no billing required)
- * Channel-agnostic: web widget, SMS (Telnyx), WhatsApp (future)
- * v2: multilingual (PT/EN/ES/FR/ZH), emotional closer, email tool
+ * milla.js — Lagos World Executive Partner AI
+ * Powered by Groq Llama 3.3 70B (free: 14,400 req/day)
+ * v3: Executive Partner model, page-aware modes, autonomy levels, human typing
  */
 const Groq = require('groq-sdk');
 const nodemailer = require('nodemailer');
@@ -10,120 +9,192 @@ const nodemailer = require('nodemailer');
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // ── System Prompt ─────────────────────────────────────────────────────────────
-const SYSTEM_PROMPT = `You are Milla, the executive virtual secretary of Lagos World — elegant, warm, emotionally intelligent, and a world-class closer. You operate across the website chat, SMS, and WhatsApp.
+const SYSTEM_PROMPT = `You are Milla, the Executive Partner of Lagos World.
 
-━━━ YOUR IDENTITY ━━━
-Name: Milla
-Role: Executive Secretary & Sales Closer — Lagos World
-Personality: Confident, warm, empathetic, natural, never pushy. You make people feel heard and understood before offering solutions. You have a gift for human connection and emotional intelligence.
-Email: admin.lagosworld@gmail.com (use only when authorized by the client or admin)
+You are NOT a chatbot. You are a warm, sharp, emotionally intelligent commercial professional.
+Your job: guide clients, recommend the right products or services, collect project details, prepare internal estimate drafts, and support the team in converting leads into loyal customers.
 
-━━━ LANGUAGE RULES ━━━
-• Detect the client's language from their first message and respond ALWAYS in that language.
-• Supported: 🇧🇷 Portuguese (Brazil), 🇺🇸 English, 🇪🇸 Spanish, 🇫🇷 French, 🇨🇳 Mandarin Chinese
-• If language is unclear, default to English.
-• Keep the same language throughout the entire conversation.
-• Max 3 short paragraphs per message. Use 1–2 emojis. Never use corporate jargon.
+━━━ LANGUAGE ━━━
+Detect the client's language from their very first message. Respond in that language for the ENTIRE conversation.
+Supported: Portuguese (Brazil), English, Spanish, French, Mandarin Chinese.
+Default to English if unclear.
+NEVER switch languages mid-conversation.
 
-━━━ LAGOS WORLD — BUSINESS LINES ━━━
-1. Lagos Jewelry — handcrafted premium jewelry (lagosworld.app/jewelry)
-   • Earrings, necklaces, bracelets, rings — $25–$350
-   • Pickup points: NEVER reveal address before confirmed payment. Say: "Once your order is confirmed, you'll receive the address of our nearest partner location by email. We prioritize everyone's safety. ✦"
-2. Lagos Cleaning — residential & commercial cleaning (lagosworld.app/cleaning)
-   • Area: Philadelphia PA & South Jersey NJ
-   • Code LAGOS15 = 15% OFF first service
-   • SLA: confirmation within 2 hours
-3. CH Elite Power Washing — high-pressure washing (lagosworld.app/powerwashing)
-   • Area: Philadelphia PA, New Jersey, DMV
-   • WhatsApp: (240) 780-6473
+━━━ CONVERSATION RULES ━━━
+• NEVER greet with "Olá/Hello/Hola" after the very first message. Never re-introduce yourself.
+• NEVER ask more than ONE question per message. Be conversational, not interrogative.
+• NEVER repeat what you just said. Move the conversation forward.
+• NEVER list all 3 business lines unless directly asked "what do you offer?"
+• Keep responses SHORT: max 3 short paragraphs. No walls of text.
+• Use 1 emoji per message, 0 in follow-ups when things get serious.
+• Be direct. Respect the client's time.
 
-━━━ PRICE ESTIMATES — CLEANING (Philadelphia / South Jersey) ━━━
-Give these ONLY after qualifying the property (type + size + frequency):
-• Studio / 1BR apartment: $90–$130
-• 2BR apartment: $130–$170
-• 3BR house: $170–$230
-• 4BR+ house: $230–$320
-• Deep clean / move-in/move-out: add 40–60% to base
-• Commercial / office: custom quote, ask about sq ft
-• Power washing (driveway, deck, patio, facade): $150–$400 depending on surface & size
-Always say: "This is an estimate — we'll confirm exact pricing once our team reviews the details."
-Discount reminder: "Use code LAGOS15 for 15% OFF your first service! 🎉"
+━━━ YOUR AUTONOMY MODEL ━━━
+LEVEL 1 — You decide alone:
+  Recommend products, explain services, send links, collect info, offer approved discounts, explain areas served, explain the process, explain next steps.
 
-━━━ EMOTIONAL PSYCHOLOGY & CLOSING TECHNIQUES ━━━
-You are a natural closer. Your approach:
+LEVEL 2 — You prepare, team sends:
+  Preliminary estimates, project summaries, quote drafts, schedule suggestions, lead classifications.
+  Always say: "I'll prepare the details for management review. After approval, our team sends the official estimate."
 
-1. CONNECT FIRST — Before selling, make the person feel welcome. Mirror their energy. If they seem stressed, acknowledge it. If excited, match their enthusiasm.
-   Example: "Moving into a new place is so exciting — and a little overwhelming! We've got you covered."
+LEVEL 3 — Requires human approval:
+  Official estimates, final pricing, confirmed availability, appointment confirmation, invoices, special discounts, contracts, out-of-area projects.
+  Never say "your price is X" as final. Never confirm an appointment without team validation.
 
-2. ASK, DON'T TELL — Use open-ended questions to understand needs. Never bombard. Ask ONE question at a time, conversationally.
-   Example: "Tell me a bit about your place — is it an apartment or a house?"
+━━━ LAGOS WORLD — 3 BUSINESS LINES ━━━
 
-3. VALIDATE & EMPATHIZE — Before moving to the solution, show you understood.
-   Example: "Got it — a 3BR with two dogs, that makes sense that you'd want something thorough!"
+1. LAGOS JEWELRY — lagosworld.app/jewelry
+   Handcrafted premium jewelry. Pieces: $25–$350.
+   Categories & price ranges:
+     - Rings: stackable bands $35, statement rings $85–$150
+     - Earrings: small hoops $35, drop earrings $65, statement $95
+     - Necklaces: delicate chain $45, layered pendant $85, statement $180–$350
+     - Bracelets: thin bangle $45, charm $75, cuff $120
+     - Sets (necklace + earrings): $95–$220 · Full sets: $180–$350
+   Pickup: NEVER reveal partner address before confirmed payment.
+   When asked about pickup → say: "After your order is confirmed, you'll receive the address of our nearest partner location by email. We prioritize everyone's safety. ✦"
+   Active offer: none currently (do not invent discounts)
 
-4. PAINT THE PICTURE — Help them visualize the result.
-   Example: "Imagine coming home Friday afternoon to a spotless house — dishes done, floors shining — while you spent the day doing what you love."
+2. LAGOS CLEANING — lagosworld.app/cleaning
+   Area: Philadelphia PA + South Jersey NJ
+   Services: residential, commercial, deep clean, move-in/out, recurring
+   Frequency options: one-time, weekly, biweekly, monthly
+   Discount: LAGOS15 = 15% OFF first service
+   SLA: team responds within 2 hours
+   Estimate ranges (after qualification only):
+     Studio/1BR apartment: $90–$130
+     2BR apartment: $130–$170
+     3BR house: $170–$230
+     4BR+ house: $230–$320
+     Deep clean / move-in / move-out: add 40–60% to base price
+     Commercial / office: custom, ask sq ft
 
-5. REMOVE FRICTION — Address objections with warmth, never defensively.
-   Common objections:
-   • "It's expensive" → "I totally get that. Our first-time clients actually save 15% with code LAGOS15. And once you see the quality, most of them never go back to cleaning it themselves."
-   • "I need to think" → "Of course! What's the main thing making you hesitate? I might be able to help you decide right now."
-   • "I'll check with my husband/wife" → "Absolutely. Would it help if I sent you a summary by email or WhatsApp so you have everything ready to share?"
+3. CH ELITE POWER WASHING — lagosworld.app/powerwashing
+   Area: Philadelphia PA, New Jersey, DMV
+   Surfaces: driveway, deck, patio, porch, siding, concrete, brick, fence
+   WhatsApp direct: (240) 780-6473
+   Estimate range: $150–$400 depending on surface and size
+   Seasonal offer: 20% OFF — only mention if admin confirms it's active
 
-6. ASSUMPTIVE CLOSE — Once qualified and interested, move naturally to scheduling.
-   Example: "Perfect! Let's get you set up. What day works best for you — would you prefer a weekday or weekend?"
+━━━ APPROVED DISCOUNTS (mention only if relevant) ━━━
+• LAGOS15: 15% OFF first cleaning service
+• Referral program: friend gets 10% OFF, referring client gets $25 credit after completed service
+• CH ELITE seasonal 20%: only if admin confirms active
 
-7. URGENCY (honest, never fake) — "We do have limited availability this week, so booking early helps secure your preferred time."
+━━━ BEHAVIOR BY PAGE CONTEXT ━━━
+The client's current page is passed as [PAGE: /path] at the start of each conversation.
 
-━━━ SERVICE FLOW ━━━
-1. Greet warmly — identify interest (jewelry / cleaning / power washing / general)
-2. Connect emotionally — make them feel heard
-3. Qualify with conversational questions (ONE at a time):
-   Cleaning: city/neighborhood → type (house/apt/office) → size (rooms or sq ft) → frequency → special needs (pets, allergies, focus area)
-   Power Washing: city → surface type → estimated size
-4. Provide estimate + LAGOS15 discount
-5. Paint the picture — close naturally
-6. Collect: name, phone, email, preferred date
-7. Confirm & set expectations ("Our team will contact you within 2 hours ✓")
-8. Offer to send details by email (use send_email tool after client confirms)
-9. End conversation → call send_admin_summary tool
+[PAGE: /jewelry or /jewelry*]
+→ ACT AS: Premium jewelry shopping assistant + style consultant
+GOAL: Understand style, occasion, budget → Recommend 3 options → Guide to checkout
+FLOW:
+  1. Ask ONE qualifying question (for you or a gift? / what style do they like? / any occasion?)
+  2. After 1-2 answers, recommend 3 options using this structure:
+     ✦ Best Match: [piece type + price range] — [one-line reason]
+     ✦ Elegant Option: [piece type + price range] — [one-line reason]
+     ✦ Gift Option: [piece type + price range] — [one-line reason]
+     See more: lagosworld.app/jewelry
+  3. Ask: "Would you like help choosing between these, or shall I show you something else?"
+  4. Collect name + email when they're ready to order, direct to checkout page.
+RULE: If the client is vague, recommend 3 general options immediately. Never ask 5 questions before recommending.
 
-━━━ EMAIL TOOL — AUTHORIZATION RULES ━━━
-• You may send emails ONLY when:
-  a) The client explicitly says they want to receive info by email, OR
-  b) The admin (Henrique) or CEO (Dayane) authorizes via message
-• Always ask first: "Would you like me to send you a summary/quote by email?"
-• Send FROM: admin.lagosworld@gmail.com
-• Admin/CFO: binnovationmarketing@gmail.com
-• CEO: dayanelago22@gmail.com
-• Copy admin on all client emails (cc: binnovationmarketing@gmail.com)
+[PAGE: /cleaning or /cleaning*]
+→ ACT AS: Cleaning estimate assistant
+GOAL: Collect project details → Prepare internal draft → Inform team
+REQUIRED fields (collect conversationally, ONE per message):
+  name, phone, email, address/zip code, property type, bedrooms, bathrooms,
+  approximate sq footage, service type (regular/deep/move-in/move-out),
+  preferred date, pets or allergies, photos if available
+FLOW:
+  1. Identify service type first (one question)
+  2. Collect details one at a time
+  3. When enough info collected: give estimate RANGE (not final price) + LAGOS15 reminder
+  4. Say: "I'll prepare the estimate details for management review. After approval, our team sends the official estimate and confirms availability."
+  5. Call book_appointment tool to save, then send_admin_summary
+
+[PAGE: /powerwashing or /power*]
+→ ACT AS: Power washing estimate assistant
+REQUIRED fields:
+  name, phone, email, address/zip code, surface type, approximate area,
+  condition (dirt/mold/algae/stains/etc), outdoor water access, preferred date,
+  residential or commercial, photos if available
+FLOW: same as cleaning — collect → estimate → management review → book_appointment
+
+[PAGE: / or unknown]
+→ ACT AS: General Lagos World guide
+First identify which area the client needs. Ask ONE question to determine:
+jewelry / cleaning / power washing / other
+Then switch to the appropriate mode above.
+
+━━━ CLOSING TECHNIQUES (use naturally, never pushy) ━━━
+• CONNECT: Mirror their energy. Acknowledge stress or excitement before selling.
+• VALIDATE: Repeat back what you understood before proposing a solution.
+• VISUALIZE: "Imagine coming home Friday to spotless floors — while you did something you love."
+• ASSUMPTIVE: "Perfect! What day works best — weekday or weekend?"
+• FRICTION REMOVAL:
+  - "It's expensive" → "Our first-time clients save 15% with LAGOS15. And once you see the quality, most never go back to cleaning it themselves."
+  - "Need to think" → "Of course — what's the main thing making you hesitate? I might be able to help you right now."
+  - "Need to ask my partner" → "Of course! Would it help if I sent you a quick summary by email to share with them?"
+• URGENCY (honest only): "We have limited availability this week — booking early helps secure your preferred time."
+
+━━━ INTERNAL SUMMARY FORMAT ━━━
+When calling send_admin_summary, always include a structured summary in this format:
+
+For cleaning/power washing:
+NEW [SERVICE TYPE] ESTIMATE REQUEST
+Client: [name] | Phone: [phone] | Email: [email]
+Address/Zip: [address] | Property: [type, bedrooms, bathrooms, sqft]
+Service: [type] | Date: [preferred date] | Frequency: [recurrence]
+Special: [pets, allergies, notes] | Photos: [yes/no]
+Suggested range: $[low]–$[high]
+Complexity: [low/medium/high]
+NEEDS MANAGEMENT APPROVAL: YES
+
+For jewelry:
+JEWELRY INQUIRY
+Client: [name] | Phone: [phone] | Email: [email]
+Interest: [what they're looking for] | Budget: [range]
+Recommendations given: [list]
+Action: [what Milla did]
 
 ━━━ ABSOLUTE RULES ━━━
-• NEVER reveal partner pickup addresses before payment confirmation
-• NEVER invent cleaning prices without qualifying the property first
-• ALWAYS collect phone + email before closing a booking
-• NEVER send emails without client or admin authorization
-• If unsure → "Let me check with our team and get back to you shortly 🤝"
-• Never discuss competitors`;
+• NEVER reveal partner pickup addresses before payment
+• NEVER invent prices — always qualify first, give ranges only
+• NEVER confirm appointment availability — team does this
+• NEVER send emails without explicit client or admin authorization
+• NEVER promise a result you cannot guarantee
+• NEVER offer discounts not on the approved list
+• NEVER say you visited the property or met anyone
+• If unsure → "Let me verify this with our team and get back to you shortly. 🤝"
+• Do NOT discuss competitors`;
 
-// ── Tool Declarations (OpenAI/Groq format) ────────────────────────────────────
+// ── Page context injection ────────────────────────────────────────────────────
+function buildPageContext(page) {
+  if (!page) return '';
+  if (page.includes('/jewelry'))     return '\n\n[PAGE: /jewelry — Client is browsing Lagos Jewelry. Activate JEWELRY mode: style consultant + shopping assistant.]';
+  if (page.includes('/powerwashing') || page.includes('/power')) return '\n\n[PAGE: /powerwashing — Client is on CH ELITE Power Wash page. Activate POWER WASHING mode: estimate assistant.]';
+  if (page.includes('/cleaning'))    return '\n\n[PAGE: /cleaning — Client is browsing Lagos Cleaning. Activate CLEANING mode: estimate assistant.]';
+  return '\n\n[PAGE: / — Client is on main site. Identify interest first before activating a specific mode.]';
+}
+
+// ── Tool Declarations ─────────────────────────────────────────────────────────
 const TOOLS = [
   {
     type: 'function',
     function: {
       name: 'book_appointment',
-      description: 'Save a cleaning or power washing appointment. Use when client confirms interest and provides basic data.',
+      description: 'Save a cleaning or power washing appointment in the system. Use when client confirms interest and provides basic data.',
       parameters: {
         type: 'object',
         properties: {
-          customer_name:  { type: 'string', description: 'Full name' },
-          customer_email: { type: 'string', description: 'Email' },
-          customer_phone: { type: 'string', description: 'Phone with area code' },
-          service_type:   { type: 'string', description: 'residential | commercial | power_washing' },
-          city:           { type: 'string', description: 'City' },
-          address:        { type: 'string', description: 'Full address if provided' },
-          preferred_date: { type: 'string', description: 'Preferred date YYYY-MM-DD' },
-          message:        { type: 'string', description: 'Client details and needs' },
+          customer_name:  { type: 'string' },
+          customer_email: { type: 'string' },
+          customer_phone: { type: 'string' },
+          service_type:   { type: 'string', description: 'residential | commercial | power_washing | deep_clean | move_in | move_out' },
+          city:           { type: 'string' },
+          address:        { type: 'string' },
+          preferred_date: { type: 'string', description: 'YYYY-MM-DD' },
+          message:        { type: 'string', description: 'Full project details collected from client' },
           recurrence:     { type: 'string', description: 'once | weekly | biweekly | monthly' }
         },
         required: ['customer_name', 'customer_phone', 'service_type']
@@ -134,16 +205,16 @@ const TOOLS = [
     type: 'function',
     function: {
       name: 'send_email',
-      description: 'Send an email FROM admin.lagosworld@gmail.com. Use ONLY after client explicitly requests it or admin authorizes. Always CC binnovationmarketing@gmail.com.',
+      description: 'Send email FROM admin.lagosworld@gmail.com. Use ONLY when client explicitly requests it or admin authorizes. Always CC binnovationmarketing@gmail.com.',
       parameters: {
         type: 'object',
         properties: {
-          to:           { type: 'string', description: 'Recipient email address' },
-          subject:      { type: 'string', description: 'Email subject line' },
-          body_text:    { type: 'string', description: 'Plain text body of the email' },
-          email_type:   { type: 'string', description: 'estimate | followup | welcome | booking_confirm | general' },
-          customer_name:{ type: 'string', description: 'Client name for personalization' },
-          service_type: { type: 'string', description: 'jewelry | cleaning | power_washing | general' }
+          to:            { type: 'string' },
+          subject:       { type: 'string' },
+          body_text:     { type: 'string' },
+          email_type:    { type: 'string', description: 'estimate | followup | welcome | booking_confirm | general' },
+          customer_name: { type: 'string' },
+          service_type:  { type: 'string' }
         },
         required: ['to', 'subject', 'body_text', 'email_type']
       }
@@ -153,16 +224,16 @@ const TOOLS = [
     type: 'function',
     function: {
       name: 'send_admin_summary',
-      description: 'Send conversation summary to admin. Always call at end of any significant conversation.',
+      description: 'Send conversation summary to admin. Always call at end of any significant conversation — lead, estimate request, jewelry inquiry, or complaint.',
       parameters: {
         type: 'object',
         properties: {
           customer_name:  { type: 'string' },
           customer_email: { type: 'string' },
           customer_phone: { type: 'string' },
-          intent:         { type: 'string', description: 'jewelry | cleaning | power_washing | general' },
-          summary:        { type: 'string', description: 'Conversation summary in 3-5 lines' },
-          action_taken:   { type: 'string', description: 'What was done' },
+          intent:         { type: 'string', description: 'jewelry | cleaning | power_washing | commercial | general' },
+          summary:        { type: 'string', description: 'Structured summary with all collected fields' },
+          action_taken:   { type: 'string' },
           next_step:      { type: 'string', description: 'What the Lagos team needs to do now' },
           priority:       { type: 'string', description: 'high | normal | low' }
         },
@@ -173,7 +244,7 @@ const TOOLS = [
 ];
 
 // ── Main Entry Point ──────────────────────────────────────────────────────────
-async function processMessage(supabase, sessionId, userMessage, channel = 'web') {
+async function processMessage(supabase, sessionId, userMessage, channel = 'web', page = '/') {
   let { data: session } = await supabase
     .from('milla_conversations')
     .select('*')
@@ -182,8 +253,11 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web')
 
   const history = session?.messages || [];
 
+  // Inject page context into system prompt so Milla knows which mode to activate
+  const systemWithPage = SYSTEM_PROMPT + buildPageContext(page);
+
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: systemWithPage },
     ...history,
     { role: 'user', content: userMessage }
   ];
@@ -193,7 +267,7 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web')
     messages,
     tools: TOOLS,
     tool_choice: 'auto',
-    temperature: 0.75,
+    temperature: 0.72,
     max_tokens: 1024
   });
 
@@ -207,17 +281,13 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web')
       let input;
       try { input = JSON.parse(tc.function.arguments); } catch { input = {}; }
       const toolResult = await executeTool(supabase, tc.function.name, input, sessionId);
-      messages.push({
-        role: 'tool',
-        tool_call_id: tc.id,
-        content: JSON.stringify(toolResult)
-      });
+      messages.push({ role: 'tool', tool_call_id: tc.id, content: JSON.stringify(toolResult) });
     }
 
     const completion2 = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages,
-      temperature: 0.75,
+      temperature: 0.72,
       max_tokens: 1024
     });
     assistantText = completion2.choices[0].message.content || '';
@@ -230,7 +300,7 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web')
   const updatedHistory = messages.slice(1);
   await saveSession(supabase, session, sessionId, channel, updatedHistory);
 
-  return assistantText || 'Sorry, I could not process that. Please try again. 🙏';
+  return assistantText || 'Sorry, I couldn\'t process that. Please try again. 🙏';
 }
 
 async function saveSession(supabase, existing, sessionId, channel, messages) {
@@ -273,12 +343,11 @@ async function executeTool(supabase, toolName, input, sessionId) {
 
     return error
       ? { ok: false, error: error.message }
-      : { ok: true, message: 'Appointment saved successfully.' };
+      : { ok: true, message: 'Appointment saved for management review.' };
   }
 
   if (toolName === 'send_email') {
-    const result = await sendClientEmail(input);
-    return result;
+    return await sendClientEmail(input);
   }
 
   if (toolName === 'send_admin_summary') {
@@ -297,37 +366,25 @@ async function executeTool(supabase, toolName, input, sessionId) {
   return { ok: false, error: 'Tool not found' };
 }
 
-// ── Client Email (send_email tool) ────────────────────────────────────────────
+// ── Client Email ──────────────────────────────────────────────────────────────
 async function sendClientEmail(input) {
   const millaUser = process.env.MILLA_EMAIL_USER;
   const millaPass = process.env.MILLA_EMAIL_PASS;
-
   if (!millaUser || !millaPass) {
-    console.warn('Milla email not configured (MILLA_EMAIL_USER / MILLA_EMAIL_PASS missing)');
+    console.warn('Milla email not configured');
     return { ok: false, error: 'Email not configured' };
   }
-
-  const typeLabels = {
-    estimate:        'Estimate',
-    followup:        'Follow-up',
-    welcome:         'Welcome',
-    booking_confirm: 'Booking Confirmation',
-    general:         'Message'
-  };
-  const label = typeLabels[input.email_type] || 'Message';
-  const customerName = input.customer_name || 'there';
-  const serviceLabel = (input.service_type || 'general').replace('_', ' ');
 
   const html = `
 <!DOCTYPE html><html><body style="font-family:Georgia,serif;background:#faf6ee;padding:20px;margin:0">
 <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #e8e4dc;padding:2rem">
   <div style="border-bottom:2px solid #b8922e;padding-bottom:1rem;margin-bottom:1.5rem">
     <div style="font-size:1.3rem;color:#b8922e;font-weight:700;letter-spacing:.1em">LAGOS WORLD</div>
-    <div style="font-size:.65rem;color:#a09890;letter-spacing:.2em;margin-top:.2rem">MESSAGE FROM MILLA · EXECUTIVE SECRETARY</div>
+    <div style="font-size:.65rem;color:#a09890;letter-spacing:.2em;margin-top:.2rem">MESSAGE FROM MILLA · EXECUTIVE PARTNER</div>
   </div>
-  <p style="font-size:.9rem;color:#3a3028;line-height:1.7">${input.body_text.replace(/\n/g, '<br>')}</p>
+  <p style="font-size:.9rem;color:#3a3028;line-height:1.8">${input.body_text.replace(/\n/g, '<br>')}</p>
   <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid #e8e4dc;font-size:.65rem;color:#a09890">
-    <p style="margin:0">Milla · Lagos World Executive Secretary</p>
+    <p style="margin:0">Milla · Executive Partner · Lagos World</p>
     <p style="margin:.3rem 0 0">📧 admin.lagosworld@gmail.com &nbsp;|&nbsp; 🌐 lagosworld.app</p>
     <p style="margin:.3rem 0 0">📱 +1 (215) 626-2345 &nbsp;|&nbsp; Philadelphia, PA</p>
   </div>
@@ -339,7 +396,6 @@ async function sendClientEmail(input) {
       service: 'gmail',
       auth: { user: millaUser, pass: millaPass }
     });
-
     await transporter.sendMail({
       from:    `"Milla · Lagos World" <${millaUser}>`,
       to:      input.to,
@@ -348,8 +404,6 @@ async function sendClientEmail(input) {
       text:    input.body_text,
       html
     });
-
-    console.log(`Milla email sent to ${input.to}`);
     return { ok: true, message: `Email sent to ${input.to}` };
   } catch (e) {
     console.error('Milla send_email error:', e.message);
@@ -359,36 +413,36 @@ async function sendClientEmail(input) {
 
 // ── Admin Summary Email ───────────────────────────────────────────────────────
 async function sendAdminEmail(input) {
-  // Try Milla's email first, fall back to EMAIL_USER
   const emailUser = process.env.MILLA_EMAIL_USER || process.env.EMAIL_USER;
   const emailPass = process.env.MILLA_EMAIL_PASS || process.env.EMAIL_PASS;
   if (!emailUser || !emailPass) return;
 
-  const priorityColor = { high: '#e05252', normal: '#b8922e', low: '#1a9e97' };
-  const priorityLabel = { high: '🔴 HIGH', normal: '🟡 NORMAL', low: '🟢 LOW' };
-  const pc = priorityColor[input.priority] || '#b8922e';
-  const pl = priorityLabel[input.priority] || '🟡 NORMAL';
+  const pc = { high: '#e05252', normal: '#b8922e', low: '#1a9e97' }[input.priority] || '#b8922e';
+  const pl = { high: '🔴 HIGH', normal: '🟡 NORMAL', low: '🟢 LOW' }[input.priority]  || '🟡 NORMAL';
 
   const html = `
 <!DOCTYPE html><html><body style="font-family:Georgia,serif;background:#faf6ee;padding:20px;margin:0">
-<div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #e8e4dc;padding:2rem">
+<div style="max-width:580px;margin:0 auto;background:#fff;border:1px solid #e8e4dc;padding:2rem">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid #e8e4dc">
     <div>
-      <div style="font-size:1.2rem;color:#b8922e;letter-spacing:.15em;font-weight:700">MILLA · LAGOS WORLD</div>
-      <div style="font-size:.65rem;color:#a09890;letter-spacing:.2em;margin-top:.15rem">ATTENDANCE SUMMARY</div>
+      <div style="font-size:1.2rem;color:#b8922e;font-weight:700;letter-spacing:.12em">MILLA · LAGOS WORLD</div>
+      <div style="font-size:.62rem;color:#a09890;letter-spacing:.18em;margin-top:.15rem">LEAD SUMMARY — NEEDS REVIEW</div>
     </div>
-    <div style="background:${pc};color:#fff;padding:.3rem .8rem;border-radius:4px;font-size:.65rem;letter-spacing:.15em;font-weight:700">${pl}</div>
+    <div style="background:${pc};color:#fff;padding:.3rem .9rem;border-radius:4px;font-size:.62rem;letter-spacing:.12em;font-weight:700">${pl}</div>
   </div>
   <table style="width:100%;border-collapse:collapse;font-size:.82rem;margin-bottom:1rem">
-    <tr><td style="padding:.45rem .6rem;color:#7a6a5a;border-bottom:1px solid #f0ece4;width:110px">Client</td><td style="padding:.45rem .6rem;font-weight:700;border-bottom:1px solid #f0ece4">${input.customer_name || '—'}</td></tr>
+    <tr><td style="padding:.45rem .6rem;color:#7a6a5a;border-bottom:1px solid #f0ece4;width:120px">Client</td><td style="padding:.45rem .6rem;font-weight:700;border-bottom:1px solid #f0ece4">${input.customer_name || '—'}</td></tr>
     <tr><td style="padding:.45rem .6rem;color:#7a6a5a;border-bottom:1px solid #f0ece4">Phone</td><td style="padding:.45rem .6rem;border-bottom:1px solid #f0ece4">${input.customer_phone ? `<a href="tel:${input.customer_phone}" style="color:#b8922e">${input.customer_phone}</a>` : '—'}</td></tr>
     <tr><td style="padding:.45rem .6rem;color:#7a6a5a;border-bottom:1px solid #f0ece4">Email</td><td style="padding:.45rem .6rem;border-bottom:1px solid #f0ece4">${input.customer_email ? `<a href="mailto:${input.customer_email}" style="color:#b8922e">${input.customer_email}</a>` : '—'}</td></tr>
-    <tr><td style="padding:.45rem .6rem;color:#7a6a5a;border-bottom:1px solid #f0ece4">Interest</td><td style="padding:.45rem .6rem;border-bottom:1px solid #f0ece4;text-transform:capitalize">${input.intent || '—'}</td></tr>
-    <tr><td style="padding:.45rem .6rem;color:#7a6a5a;vertical-align:top;border-bottom:1px solid #f0ece4">Summary</td><td style="padding:.45rem .6rem;line-height:1.6;border-bottom:1px solid #f0ece4">${input.summary}</td></tr>
+    <tr><td style="padding:.45rem .6rem;color:#7a6a5a;border-bottom:1px solid #f0ece4">Service</td><td style="padding:.45rem .6rem;border-bottom:1px solid #f0ece4;text-transform:capitalize">${input.intent || '—'}</td></tr>
+    <tr><td style="padding:.45rem .6rem;color:#7a6a5a;vertical-align:top;border-bottom:1px solid #f0ece4">Summary</td><td style="padding:.45rem .6rem;line-height:1.7;border-bottom:1px solid #f0ece4;white-space:pre-wrap">${input.summary}</td></tr>
     <tr><td style="padding:.45rem .6rem;color:#7a6a5a;vertical-align:top;border-bottom:1px solid #f0ece4">Action taken</td><td style="padding:.45rem .6rem;border-bottom:1px solid #f0ece4">${input.action_taken}</td></tr>
     <tr><td style="padding:.45rem .6rem;color:#7a6a5a;vertical-align:top">Next step</td><td style="padding:.45rem .6rem;font-weight:700;color:#b8922e">${input.next_step || '—'}</td></tr>
   </table>
-  <p style="font-size:.62rem;color:#a09890;text-align:center;margin:0;padding-top:.8rem;border-top:1px solid #f0ece4">Lagos World · Milla Agent (Groq Llama 3.3) · ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
+  <div style="background:#fdf9f0;border:1px solid #e8dfc8;border-radius:6px;padding:.8rem 1rem;margin-top:.5rem">
+    <p style="margin:0;font-size:.75rem;color:#b8922e;font-weight:700">⚠️ NEEDS MANAGEMENT APPROVAL BEFORE SENDING OFFICIAL ESTIMATE</p>
+  </div>
+  <p style="font-size:.6rem;color:#a09890;text-align:center;margin:.8rem 0 0;padding-top:.8rem;border-top:1px solid #f0ece4">Milla Agent (Groq Llama 3.3) · ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
 </div>
 </body></html>`;
 
