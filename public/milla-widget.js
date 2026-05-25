@@ -24,42 +24,53 @@
 
   // ── CSS ─────────────────────────────────────────────────────────────────────
   const css = `
-    #milla-bubble{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9990;width:56px;height:56px;border-radius:50%;background:${ACCENT};border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:transform .15s,box-shadow .15s;outline:none}
+    #milla-bubble{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9990;width:52px;height:52px;border-radius:50%;background:${ACCENT};border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:transform .15s,box-shadow .15s;outline:none;-webkit-tap-highlight-color:transparent}
     #milla-bubble:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(0,0,0,.45)}
-    #milla-bubble .milla-badge{position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:#25d366;border-radius:50%;border:2px solid #fff;animation:milla-pulse 2s infinite}
+    #milla-bubble .milla-badge{position:absolute;top:-2px;right:-2px;width:13px;height:13px;background:#25d366;border-radius:50%;border:2px solid #fff;animation:milla-pulse 2s infinite}
     @keyframes milla-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.7}}
-    #milla-panel{position:fixed;bottom:5.5rem;right:1.5rem;z-index:9990;width:360px;max-width:calc(100vw - 2rem);background:#1a1a18;border:1px solid rgba(255,255,255,.08);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden;font-family:'Montserrat',Georgia,sans-serif}
+
+    /* ── Desktop panel ── */
+    #milla-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:9990;width:360px;max-width:calc(100vw - 3rem);background:#1a1a18;border:1px solid rgba(255,255,255,.08);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden;font-family:'Montserrat',Georgia,sans-serif}
     #milla-panel.open{display:flex}
-    #milla-header{background:${ACCENT};padding:.85rem 1rem;display:flex;align-items:center;gap:.7rem}
-    #milla-avatar{width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+
+    /* ── Mobile: bottom sheet ── */
+    @media(max-width:520px){
+      #milla-bubble{bottom:1rem;right:1rem;width:48px;height:48px;font-size:1.3rem}
+      #milla-panel{right:0;left:0;bottom:0;width:100%;max-width:100%;border-radius:20px 20px 0 0;border-left:none;border-right:none;border-bottom:none;max-height:82vh}
+      #milla-panel.open{display:flex}
+    }
+
+    #milla-header{background:${ACCENT};padding:.75rem 1rem;display:flex;align-items:center;gap:.65rem}
+    #milla-avatar{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
     #milla-header-info{flex:1}
-    #milla-header-name{font-size:.82rem;font-weight:700;color:#fff;letter-spacing:.06em}
-    #milla-header-status{font-size:.6rem;color:rgba(255,255,255,.75);letter-spacing:.08em;display:flex;align-items:center;gap:.3rem}
-    #milla-header-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#25d366;display:inline-block}
-    #milla-close{background:none;border:none;color:rgba(255,255,255,.8);font-size:1.1rem;cursor:pointer;padding:.2rem;line-height:1}
+    #milla-header-name{font-size:.78rem;font-weight:700;color:#fff;letter-spacing:.05em}
+    #milla-header-status{font-size:.58rem;color:rgba(255,255,255,.75);letter-spacing:.07em;display:flex;align-items:center;gap:.3rem;margin-top:.1rem}
+    #milla-header-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#25d366;display:inline-block}
+    #milla-close{background:none;border:none;color:rgba(255,255,255,.8);font-size:1.1rem;cursor:pointer;padding:.3rem;line-height:1;-webkit-tap-highlight-color:transparent}
     #milla-close:hover{color:#fff}
-    #milla-messages{flex:1;overflow-y:auto;padding:.8rem;display:flex;flex-direction:column;gap:.6rem;max-height:340px;min-height:220px;scroll-behavior:smooth}
-    #milla-messages::-webkit-scrollbar{width:4px}
+    #milla-messages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.8rem;display:flex;flex-direction:column;gap:.55rem;max-height:340px;min-height:180px;scroll-behavior:smooth}
+    @media(max-width:520px){#milla-messages{max-height:55vh;min-height:160px}}
+    #milla-messages::-webkit-scrollbar{width:3px}
     #milla-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-    .milla-msg{max-width:84%;padding:.6rem .85rem;border-radius:12px;font-size:.78rem;line-height:1.6;word-break:break-word;white-space:pre-wrap;animation:milla-fadein .25s ease}
-    @keyframes milla-fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    .milla-msg.agent{background:rgba(255,255,255,.07);color:#e4ddd0;border-bottom-left-radius:4px;align-self:flex-start}
-    .milla-msg.user{background:${ACCENT};color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
-    .milla-msg.error{background:rgba(224,82,82,.15);color:#e05252;border:1px solid rgba(224,82,82,.2);align-self:flex-start}
-    .milla-typing{display:flex;align-items:center;gap:.25rem;padding:.55rem .85rem;background:rgba(255,255,255,.07);border-radius:12px;border-bottom-left-radius:4px;align-self:flex-start}
-    .milla-typing-label{font-size:.65rem;color:rgba(255,255,255,.4);margin-right:.3rem;font-family:inherit}
-    .milla-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);animation:milla-bounce 1.1s infinite}
+    .milla-msg{max-width:86%;padding:.55rem .8rem;border-radius:12px;font-size:.76rem;line-height:1.6;word-break:break-word;white-space:pre-wrap;animation:milla-fadein .22s ease}
+    @keyframes milla-fadein{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+    .milla-msg.agent{background:rgba(255,255,255,.07);color:#e4ddd0;border-bottom-left-radius:3px;align-self:flex-start}
+    .milla-msg.user{background:${ACCENT};color:#fff;border-bottom-right-radius:3px;align-self:flex-end}
+    .milla-msg.error{background:rgba(224,82,82,.14);color:#e05252;border:1px solid rgba(224,82,82,.2);align-self:flex-start}
+    .milla-typing{display:flex;align-items:center;gap:.25rem;padding:.5rem .8rem;background:rgba(255,255,255,.07);border-radius:12px;border-bottom-left-radius:3px;align-self:flex-start}
+    .milla-typing-label{font-size:.62rem;color:rgba(255,255,255,.38);margin-right:.25rem;font-family:inherit}
+    .milla-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.32);animation:milla-bounce 1.1s infinite}
     .milla-dot:nth-child(2){animation-delay:.18s}
     .milla-dot:nth-child(3){animation-delay:.36s}
     @keyframes milla-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-    #milla-input-row{padding:.65rem .8rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.5rem;background:#111}
-    #milla-input{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#e4ddd0;border-radius:8px;padding:.5rem .75rem;font-size:.78rem;font-family:inherit;outline:none;resize:none;max-height:80px;min-height:36px;line-height:1.4;overflow-y:auto}
+    #milla-input-row{padding:.6rem .75rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.45rem;background:#111;padding-bottom:env(safe-area-inset-bottom,.6rem)}
+    #milla-input{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#e4ddd0;border-radius:8px;padding:.48rem .7rem;font-size:.78rem;font-family:inherit;outline:none;resize:none;max-height:72px;min-height:34px;line-height:1.4;overflow-y:auto;-webkit-appearance:none}
     #milla-input:focus{border-color:${ACCENT}}
-    #milla-input::placeholder{color:rgba(255,255,255,.3)}
-    #milla-send{background:${ACCENT};border:none;border-radius:8px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;color:#fff;font-size:.9rem;align-self:flex-end}
+    #milla-input::placeholder{color:rgba(255,255,255,.28)}
+    #milla-send{background:${ACCENT};border:none;border-radius:8px;width:34px;height:34px;min-width:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;color:#fff;font-size:.85rem;align-self:flex-end;-webkit-tap-highlight-color:transparent}
     #milla-send:hover{background:${ACCENT_DARK}}
-    #milla-send:disabled{opacity:.4;cursor:default}
-    #milla-footer{padding:.35rem;text-align:center;font-size:.55rem;color:rgba(255,255,255,.2);letter-spacing:.1em;background:#111}
+    #milla-send:disabled{opacity:.38;cursor:default}
+    #milla-footer{padding:.3rem;text-align:center;font-size:.52rem;color:rgba(255,255,255,.18);letter-spacing:.09em;background:#111}
   `;
   const style = document.createElement('style');
   style.textContent = css;
