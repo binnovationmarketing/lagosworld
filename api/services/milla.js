@@ -1,12 +1,12 @@
 /**
  * milla.js — Autonomous AI agent for Lagos World
- * Powered by Google Gemini 1.5 Flash (free tier: 1,500 req/day)
+ * Powered by Groq Llama 3.3 70B (free tier: 14,400 req/day, no billing required)
  * Channel-agnostic: web widget, SMS (Telnyx), WhatsApp (future)
  */
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 const nodemailer = require('nodemailer');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // ── System Prompt ─────────────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `Você é Milla, a secretária executiva virtual da Lagos World. Atende pelo site (chat) e por SMS/WhatsApp.
@@ -63,95 +63,117 @@ WhatsApp direto CH Elite: (240) 780-6473
 • Se não souber → "Vou verificar com nossa equipe e te respondo em breve 🤝"
 • Não discuta concorrentes`;
 
-// ── Tool Declarations (Gemini format) ─────────────────────────────────────────
-const TOOL_DECLARATIONS = [
+// ── Tool Declarations (OpenAI/Groq format) ────────────────────────────────────
+const TOOLS = [
   {
-    name: 'book_appointment',
-    description: 'Salva agendamento de limpeza ou power washing no sistema. Use quando o cliente confirmar interesse e fornecer dados básicos.',
-    parameters: {
-      type: 'OBJECT',
-      properties: {
-        customer_name:  { type: 'STRING', description: 'Nome completo' },
-        customer_email: { type: 'STRING', description: 'Email' },
-        customer_phone: { type: 'STRING', description: 'Telefone com DDD' },
-        service_type:   { type: 'STRING', description: 'residential | commercial | power_washing' },
-        city:           { type: 'STRING', description: 'Cidade' },
-        address:        { type: 'STRING', description: 'Endereço completo se fornecido' },
-        preferred_date: { type: 'STRING', description: 'Data preferida YYYY-MM-DD' },
-        message:        { type: 'STRING', description: 'Detalhes e necessidades do cliente' },
-        recurrence:     { type: 'STRING', description: 'once | weekly | biweekly | monthly' }
-      },
-      required: ['customer_name', 'customer_phone', 'service_type']
+    type: 'function',
+    function: {
+      name: 'book_appointment',
+      description: 'Salva agendamento de limpeza ou power washing no sistema. Use quando o cliente confirmar interesse e fornecer dados básicos.',
+      parameters: {
+        type: 'object',
+        properties: {
+          customer_name:  { type: 'string', description: 'Nome completo' },
+          customer_email: { type: 'string', description: 'Email' },
+          customer_phone: { type: 'string', description: 'Telefone com DDD' },
+          service_type:   { type: 'string', description: 'residential | commercial | power_washing' },
+          city:           { type: 'string', description: 'Cidade' },
+          address:        { type: 'string', description: 'Endereço completo se fornecido' },
+          preferred_date: { type: 'string', description: 'Data preferida YYYY-MM-DD' },
+          message:        { type: 'string', description: 'Detalhes e necessidades do cliente' },
+          recurrence:     { type: 'string', description: 'once | weekly | biweekly | monthly' }
+        },
+        required: ['customer_name', 'customer_phone', 'service_type']
+      }
     }
   },
   {
-    name: 'send_admin_summary',
-    description: 'Envia resumo do atendimento para o administrador. Use sempre ao encerrar uma conversa significativa.',
-    parameters: {
-      type: 'OBJECT',
-      properties: {
-        customer_name:  { type: 'STRING' },
-        customer_email: { type: 'STRING' },
-        customer_phone: { type: 'STRING' },
-        intent:         { type: 'STRING', description: 'jewelry | cleaning | power_washing | general' },
-        summary:        { type: 'STRING', description: 'Resumo da conversa em 3-5 linhas' },
-        action_taken:   { type: 'STRING', description: 'O que foi feito' },
-        next_step:      { type: 'STRING', description: 'O que a equipe Lagos precisa fazer agora' },
-        priority:       { type: 'STRING', description: 'high | normal | low' }
-      },
-      required: ['summary', 'intent', 'action_taken', 'priority']
+    type: 'function',
+    function: {
+      name: 'send_admin_summary',
+      description: 'Envia resumo do atendimento para o administrador. Use sempre ao encerrar uma conversa significativa.',
+      parameters: {
+        type: 'object',
+        properties: {
+          customer_name:  { type: 'string' },
+          customer_email: { type: 'string' },
+          customer_phone: { type: 'string' },
+          intent:         { type: 'string', description: 'jewelry | cleaning | power_washing | general' },
+          summary:        { type: 'string', description: 'Resumo da conversa em 3-5 linhas' },
+          action_taken:   { type: 'string', description: 'O que foi feito' },
+          next_step:      { type: 'string', description: 'O que a equipe Lagos precisa fazer agora' },
+          priority:       { type: 'string', description: 'high | normal | low' }
+        },
+        required: ['summary', 'intent', 'action_taken', 'priority']
+      }
     }
   }
 ];
 
 // ── Main Entry Point ──────────────────────────────────────────────────────────
 async function processMessage(supabase, sessionId, userMessage, channel = 'web') {
-  // Load existing conversation
+  // Load existing conversation (stored in OpenAI message format)
   let { data: session } = await supabase
     .from('milla_conversations')
     .select('*')
     .eq('session_id', sessionId)
     .maybeSingle();
 
+  // messages = array of {role, content} — OpenAI/Groq format
   const history = session?.messages || [];
 
-  // Init Gemini model
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
-    systemInstruction: SYSTEM_PROMPT,
-    tools: [{ functionDeclarations: TOOL_DECLARATIONS }],
-    generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
+  // Build messages array: system + history + new user message
+  const messages = [
+    { role: 'system', content: SYSTEM_PROMPT },
+    ...history,
+    { role: 'user', content: userMessage }
+  ];
+
+  // First call to Groq
+  const completion = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
+    messages,
+    tools: TOOLS,
+    tool_choice: 'auto',
+    temperature: 0.7,
+    max_tokens: 1024
   });
 
-  const chat = model.startChat({ history });
-
-  // Send user message
-  const result = await chat.sendMessage(userMessage);
-  const response = result.response;
-
-  // Check for function/tool calls
-  const functionCalls = response.functionCalls();
+  const msg = completion.choices[0].message;
   let assistantText = '';
 
-  if (functionCalls && functionCalls.length > 0) {
-    // Execute each tool
-    const toolResponses = [];
-    for (const fc of functionCalls) {
-      const toolResult = await executeTool(supabase, fc.name, fc.args, sessionId);
-      toolResponses.push({
-        functionResponse: { name: fc.name, response: toolResult }
+  if (msg.tool_calls && msg.tool_calls.length > 0) {
+    // Append assistant message with tool_calls to history
+    messages.push(msg);
+
+    // Execute each tool and append results
+    for (const tc of msg.tool_calls) {
+      let input;
+      try { input = JSON.parse(tc.function.arguments); } catch { input = {}; }
+      const toolResult = await executeTool(supabase, tc.function.name, input, sessionId);
+      messages.push({
+        role: 'tool',
+        tool_call_id: tc.id,
+        content: JSON.stringify(toolResult)
       });
     }
 
-    // Send tool results back to get final text response
-    const result2 = await chat.sendMessage(toolResponses);
-    assistantText = result2.response.text();
+    // Second call to get final text response after tool execution
+    const completion2 = await groq.chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
+      messages,
+      temperature: 0.7,
+      max_tokens: 1024
+    });
+    assistantText = completion2.choices[0].message.content || '';
+    messages.push({ role: 'assistant', content: assistantText });
   } else {
-    assistantText = response.text();
+    assistantText = msg.content || '';
+    messages.push({ role: 'assistant', content: assistantText });
   }
 
-  // Save full updated history
-  const updatedHistory = await chat.getHistory();
+  // Save updated history (everything after system prompt)
+  const updatedHistory = messages.slice(1); // drop system message
   await saveSession(supabase, session, sessionId, channel, updatedHistory);
 
   return assistantText || 'Desculpe, não consegui processar. Tente novamente. 🙏';
