@@ -11836,13 +11836,17 @@ function filterCat(cat,btn){
   curCat=cat;shopPage=1;
   document.querySelectorAll('.nav-cat,.fp').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  applyFilters();
-  if(window.scrollY>200)document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
+  // Yield: browser paints the active-state change first, then runs the heavy filter
+  setTimeout(()=>{
+    applyFilters();
+    if(window.scrollY>200)document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
+  },0);
 }
 function doSearch(q){curSearch=q.toLowerCase().trim();shopPage=1;applyFilters()}
 const SHOP_PAGE_SIZE=40;
 let shopPage=1;
 let _matchedCards=[];
+let _cardCache=null; // cached once — all .card elements (static DOM)
 
 function applyFilters(){
   shopPage=1;
@@ -11850,7 +11854,9 @@ function applyFilters(){
 }
 
 function renderShopPage(){
-  const cards=Array.from(document.querySelectorAll('.card'));
+  // Cache cards once (DOM is static — no cards are added/removed)
+  if(!_cardCache)_cardCache=Array.from(document.querySelectorAll('.card'));
+  const cards=_cardCache;
   _matchedCards=cards.filter(c=>
     (curCat==='ALL'||c.dataset.cat===curCat)&&
     (!curSearch||c.dataset.name.includes(curSearch)||c.dataset.cat.toLowerCase().includes(curSearch))
@@ -11860,7 +11866,10 @@ function renderShopPage(){
   shopPage=Math.max(1,Math.min(shopPage,totalPages));
   const start=(shopPage-1)*SHOP_PAGE_SIZE;
   const pageSet=new Set(_matchedCards.slice(start,start+SHOP_PAGE_SIZE));
-  cards.forEach(c=>c.classList.toggle('hidden',!pageSet.has(c)));
+  // Batch all className mutations in one rAF — single layout pass
+  requestAnimationFrame(()=>{
+    cards.forEach(c=>c.classList.toggle('hidden',!pageSet.has(c)));
+  });
   document.getElementById('res-n').textContent=total;
   renderShopPagination(total,totalPages);
 }
@@ -11931,12 +11940,14 @@ function openModal(id){
   }
   // Thumbs — defer to next frame so modal open animation isn't blocked
   const th=document.getElementById('m-thumbs');th.innerHTML='';
+  _modalThumbs=[];
   requestAnimationFrame(()=>{
     activeImgs.forEach((img,i)=>{
       const im=document.createElement('img');im.className='modal-thumb'+(i===0?' on':'');
       im.src=img;im.loading='lazy';im.decoding='async';
       im.onclick=()=>setModalImg(i);
       th.appendChild(im);
+      _modalThumbs.push(im);
     });
   });
   // Variants
@@ -11961,10 +11972,16 @@ function setModalImg(i){
   if(!modalProd)return;
   modalImgIdx=i;
   const imgs=modalProd._activeImgs||modalProd.imgs;
-  document.getElementById('m-img').src=imgs[i];
-  document.getElementById('m-img').classList.remove('zoomed');
-  document.querySelectorAll('.modal-thumb').forEach((t,idx)=>t.classList.toggle('on',idx===i));
+  // Update counter immediately (zero cost)
   updateModalCounter();
+  // Defer src + thumb class updates — avoids blocking paint on every nav press
+  requestAnimationFrame(()=>{
+    document.getElementById('m-img').src=imgs[i];
+    document.getElementById('m-img').classList.remove('zoomed');
+    // Use cached array — no DOM query, no forced layout
+    (_modalThumbs.length?_modalThumbs:Array.from(document.querySelectorAll('.modal-thumb')))
+      .forEach((t,idx)=>t.classList.toggle('on',idx===i));
+  });
 }
 function updateModalCounter(){
   if(!modalProd)return;
@@ -11972,6 +11989,7 @@ function updateModalCounter(){
 }
 function modalPrev(){if(modalProd){const imgs=modalProd._activeImgs||modalProd.imgs;setModalImg((modalImgIdx-1+imgs.length)%imgs.length)}}
 function modalNext(){if(modalProd){const imgs=modalProd._activeImgs||modalProd.imgs;setModalImg((modalImgIdx+1)%imgs.length)}}
+let _modalThumbs=[];
 function closeModal(){document.getElementById('modal-bg').classList.remove('open');document.body.style.overflow=''}
 function addFromModal(){
   if(!modalProd||!selVar)return;
@@ -12174,7 +12192,7 @@ function selDelivery(type,btn){
   if(type==='local')selShipping={id:'local',name:'Same City (4h)',price:cart.reduce((s,i)=>s+(i.v.price*i.qty),0)>=200?0:10};
   else if(type==='outside')selShipping={id:'outside',name:'Outside City (6h)',price:cart.reduce((s,i)=>s+(i.v.price*i.qty),0)>=200?0:20};
   else selShipping={id:'free',name:'Free Delivery',price:0};
-  updateCheckoutSummary();
+  setTimeout(()=>updateCheckoutSummary(),0);
 }
 
 function handleProof(input){
@@ -12290,7 +12308,11 @@ function openAdmin(){
   document.body.style.overflow='hidden';
   setTimeout(()=>buildAdminTable(),0);
 }
-function closeAdmin(){document.getElementById('admin-panel').classList.remove('open');document.body.style.overflow=''}
+function closeAdmin(){
+  document.getElementById('admin-tbody').innerHTML=''; // clear heavy table first
+  document.getElementById('admin-panel').classList.remove('open');
+  document.body.style.overflow='';
+}
 function adminSearch(q){
   document.querySelectorAll('#admin-tbody tr').forEach(r=>r.style.display=r.dataset.name.includes(q.toLowerCase())?'':'none');
 }
