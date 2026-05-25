@@ -2209,7 +2209,7 @@ function openWhatsAppBroadcast(ev) {
   if (typeof ev === 'string') {
     try { ev = JSON.parse(ev.replace(/&quot;/g,'"')); } catch(e) { return; }
   }
-  window._currentWaEvent = ev; // store for Regenerar button
+  window._currentWaEvent = ev;
   const msg = generateBroadcastMsg(ev);
 
   // Build modal
@@ -2236,8 +2236,7 @@ function openWhatsAppBroadcast(ev) {
         ✓ Mensagem personalizada — vai para todos mas cada pessoa sente que é só pra ela
       </div>
       <div class="wa-actions">
-        <button class="wa-copy-btn" onclick="copyWaMsg()">📋 Copiar Mensagem</button>
-        <button class="wa-copy-btn" style="background:#128c7e;flex:0 0 auto" onclick="openWhatsAppBroadcast(window._currentWaEvent)">🔄 Regenerar</button>
+        <button class="wa-copy-btn" id="wa-copy-trigger" onclick="copyWaMsg(this)">📋 Copiar Mensagem</button>
         <button class="wa-close-btn" onclick="document.getElementById('wa-broadcast-modal').remove()">Fechar</button>
       </div>
     </div>
@@ -2246,15 +2245,31 @@ function openWhatsAppBroadcast(ev) {
   modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
 }
 
-function copyWaMsg() {
-  const ta = document.getElementById('wa-msg-text');
-  navigator.clipboard.writeText(ta.value).then(() => {
+function copyWaMsg(btn) {
+  const ta  = document.getElementById('wa-msg-text');
+  const txt = ta.value;
+  if (!txt) return;
+
+  const ok = () => {
+    if (btn) { const prev = btn.textContent; btn.textContent = '✅ Copiado!'; btn.disabled = true; setTimeout(() => { btn.textContent = prev; btn.disabled = false; }, 2200); }
     showToast('✓ Mensagem copiada — cole no WhatsApp Broadcast');
-  }).catch(() => {
-    ta.select();
-    document.execCommand('copy');
-    showToast('✓ Copiado!');
-  });
+  };
+  const fail = (e) => {
+    showToast('⚠ Não foi possível copiar: ' + (e?.message || 'erro'));
+  };
+
+  // Modern clipboard API (HTTPS / secure context)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(ok).catch(() => {
+      // Fallback: select + execCommand
+      try { ta.focus(); ta.select(); document.execCommand('copy') ? ok() : fail(); }
+      catch(e2) { fail(e2); }
+    });
+  } else {
+    // execCommand fallback for older browsers / HTTP
+    try { ta.focus(); ta.select(); document.execCommand('copy') ? ok() : fail(); }
+    catch(e) { fail(e); }
+  }
 }
 
 // ── AGENDA CALENDAR ───────────────────────────────────────────────────────────
