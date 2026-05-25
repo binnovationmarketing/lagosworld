@@ -17,11 +17,13 @@ router.post('/chat', async (req, res) => {
     const reply = await processMessage(req.supabase, sessionId, message.trim(), channel || 'web');
     res.json({ ok: true, reply });
   } catch (err) {
-    console.error('Milla chat error:', err);
-    const userMsg = err.status === 401
-      ? 'ANTHROPIC_API_KEY não configurada. Adicione nas variáveis de ambiente Vercel.'
-      : 'Milla está indisponível no momento. Tente novamente em breve. 🙏';
-    res.status(500).json({ error: userMsg });
+    const detail = err?.message || String(err);
+    console.error('Milla chat error:', detail, err?.status, err?.errorDetails);
+    const noKey  = !process.env.GEMINI_API_KEY;
+    const userMsg = noKey
+      ? 'GEMINI_API_KEY não configurada no Vercel.'
+      : `Milla indisponível: ${detail.slice(0,120)}`;
+    res.status(500).json({ error: userMsg, detail });
   }
 });
 
