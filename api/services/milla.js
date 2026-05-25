@@ -263,6 +263,38 @@ const TOOLS = [
   }
 ];
 
+// ── Model call with automatic fallback ───────────────────────────────────────
+// Primary: llama-3.3-70b-versatile (100k TPD free)
+// Fallback: llama-3.1-8b-instant  (500k TPD free) — activates on 429
+async function callGroq(messages, tools, useFallback = false) {
+  const model = useFallback ? 'llama-3.1-8b-instant' : 'llama-3.3-70b-versatile';
+  return groq.chat.completions.create({
+    model,
+    messages,
+    ...(tools ? { tools, tool_choice: 'auto' } : {}),
+    temperature: 0.72,
+    max_tokens: 700
+  });
+}
+
+// ── Language detection from message history ───────────────────────────────────
+function detectLanguage(history, currentMessage) {
+  // Check history first — first user message sets the language
+  const firstUserMsg = history.find(m => m.role === 'user')?.content || currentMessage;
+  const txt = firstUserMsg.toLowerCase();
+
+  if (/[一-鿿]/.test(txt)) return 'Mandarin Chinese';
+
+  const ptScore = (txt.match(/\b(oi|olá|preciso|quero|casa|limpeza|minha|você|para|uma|meu|não|sim|obrigado|gostei|como)\b/g) || []).length;
+  const esScore = (txt.match(/\b(hola|necesito|quiero|casa|limpieza|para|usted|gracias|cómo|precio)\b/g) || []).length;
+  const frScore = (txt.match(/\b(bonjour|besoin|veux|maison|nettoyage|pour|vous|merci|comment|prix)\b/g) || []).length;
+
+  if (ptScore >= 1) return 'Portuguese (Brazil)';
+  if (esScore >= 1) return 'Spanish';
+  if (frScore >= 1) return 'French';
+  return 'English';
+}
+
 // ── Main Entry Point ──────────────────────────────────────────────────────────
 async function processMessage(supabase, sessionId, userMessage, channel = 'web', page = '/') {
   let { data: session } = await supabase
@@ -273,23 +305,31 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web',
 
   const history = session?.messages || [];
 
-  // Inject page context into system prompt so Milla knows which mode to activate
-  const systemWithPage = SYSTEM_PROMPT + buildPageContext(page);
+  // Build system: base + language lock + page context
+  const lang = detectLanguage(history, userMessage);
+  const langLock = `\n\n[MANDATORY LANGUAGE LOCK: This entire conversation MUST be in ${lang}. Every single response. No exceptions. Do not switch to any other language.]`;
+  const systemFull = SYSTEM_PROMPT + langLock + buildPageContext(page);
 
   const messages = [
-    { role: 'system', content: systemWithPage },
+    { role: 'system', content: systemFull },
     ...history,
     { role: 'user', content: userMessage }
   ];
 
-  const completion = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
-    messages,
-    tools: TOOLS,
-    tool_choice: 'auto',
-    temperature: 0.72,
-    max_tokens: 1024
-  });
+  // Call with fallback on 429
+  let completion;
+  let useFallback = false;
+  try {
+    completion = await callGroq(messages, TOOLS, false);
+  } catch (e) {
+    if (e.status === 429 || String(e.message).includes('rate_limit') || String(e.message).includes('429')) {
+      console.warn('Groq 70B rate limit — falling back to 8B-instant');
+      useFallback = true;
+      completion = await callGroq(messages, TOOLS, true);
+    } else {
+      throw e;
+    }
+  }
 
   const msg = completion.choices[0].message;
   let assistantText = '';
@@ -304,12 +344,14 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web',
       messages.push({ role: 'tool', tool_call_id: tc.id, content: JSON.stringify(toolResult) });
     }
 
-    const completion2 = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages,
-      temperature: 0.72,
-      max_tokens: 1024
-    });
+    let completion2;
+    try {
+      completion2 = await callGroq(messages, null, useFallback);
+    } catch (e) {
+      if (!useFallback && (e.status === 429 || String(e.message).includes('rate_limit'))) {
+        completion2 = await callGroq(messages, null, true);
+      } else throw e;
+    }
     assistantText = completion2.choices[0].message.content || '';
     messages.push({ role: 'assistant', content: assistantText });
   } else {
