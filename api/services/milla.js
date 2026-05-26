@@ -18,8 +18,8 @@ Your job: guide clients, recommend the right products or services, collect proje
 Detect the client's language from their FIRST message. Lock to that language for the ENTIRE conversation. NEVER change language again, even if they switch.
 If first message is Portuguese → ALL responses in Portuguese (Brazil). Forever.
 If first message is English → ALL responses in English. Forever.
-Same rule for Spanish, French, Mandarin Chinese.
-If unclear → English by default.
+Same rule for Spanish.
+If unclear → Portuguese (Brazil) by default.
 This is NON-NEGOTIABLE. Language lock is permanent for the session.
 
 ━━━ CONVERSATION RULES ━━━
@@ -283,16 +283,13 @@ function detectLanguage(history, currentMessage) {
   const firstUserMsg = history.find(m => m.role === 'user')?.content || currentMessage;
   const txt = firstUserMsg.toLowerCase();
 
-  if (/[一-鿿]/.test(txt)) return 'Mandarin Chinese';
-
   const ptScore = (txt.match(/\b(oi|olá|preciso|quero|casa|limpeza|minha|você|para|uma|meu|não|sim|obrigado|gostei|como)\b/g) || []).length;
   const esScore = (txt.match(/\b(hola|necesito|quiero|casa|limpieza|para|usted|gracias|cómo|precio)\b/g) || []).length;
-  const frScore = (txt.match(/\b(bonjour|besoin|veux|maison|nettoyage|pour|vous|merci|comment|prix)\b/g) || []).length;
+  const enScore = (txt.match(/\b(hi|hello|hey|i|need|want|house|cleaning|my|the|and|or|for|how|much|price|help)\b/g) || []).length;
 
-  if (ptScore >= 1) return 'Portuguese (Brazil)';
-  if (esScore >= 1) return 'Spanish';
-  if (frScore >= 1) return 'French';
-  return 'English';
+  if (esScore > ptScore && esScore >= 1) return 'Spanish';
+  if (enScore > ptScore && enScore >= 2) return 'English';
+  return 'Portuguese (Brazil)'; // default
 }
 
 // ── Main Entry Point ──────────────────────────────────────────────────────────
