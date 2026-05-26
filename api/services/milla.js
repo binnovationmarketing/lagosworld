@@ -510,10 +510,15 @@ async function sendAdminEmail(input) {
       service: 'gmail',
       auth: { user: emailUser, pass: emailPass }
     });
+    const isCleaningIntent = ['cleaning', 'power_washing', 'commercial', 'move_in', 'move_out', 'residential'].includes(input.intent);
+    const ccList = isCleaningIntent
+      ? 'dayanelago22@gmail.com, lagosvipcleaning@gmail.com'
+      : 'dayanelago22@gmail.com';
+
     await transporter.sendMail({
       from:    `"Milla · Lagos World" <${emailUser}>`,
       to:      'binnovationmarketing@gmail.com',
-      cc:      'dayanelago22@gmail.com',
+      cc:      ccList,
       subject: `🤖 Milla [${(input.priority||'normal').toUpperCase()}] ${input.intent} — ${input.customer_name||'New Lead'} — ${input.action_taken}`,
       html
     });
