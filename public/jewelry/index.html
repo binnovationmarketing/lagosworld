@@ -12529,6 +12529,9 @@ async function submitNewsletter() {
   btn.style.color = '#fff';
   setTimeout(closeNewsletter, 2000);
 }
+
+// ── INIT — apply pagination on first load (ALL tab is default, never triggered by click) ──
+document.addEventListener('DOMContentLoaded', () => { renderShopPage(); });
 </script>
 
 <!-- NEWSLETTER POPUP -->
