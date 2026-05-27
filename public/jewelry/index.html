@@ -12342,7 +12342,7 @@ async function submitOrder(){
   const sendEmailCb=document.getElementById('send-email-cb');
   const wantsEmail=!sendEmailCb||sendEmailCb.checked;
   try{
-    await fetch('/api/send-order',{
+    await fetch('/api/jewelry/orders',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({

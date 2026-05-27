@@ -11,75 +11,92 @@ function validate(req, res) {
   return true;
 }
 
-// POST: Criar novo pedido de jewelry — with validation
+// POST /api/jewelry/orders — unified order handler (web checkout + admin)
+// Replaces legacy /api/send-order — accepts both naming conventions
 router.post('/orders',
-  body('customer_name').notEmpty().trim().isLength({ max: 200 }).escape().withMessage('Name required'),
-  body('customer_email').isEmail().normalizeEmail().withMessage('Valid email required'),
+  body('name').optional().trim().isLength({ max: 200 }).escape(),
+  body('customer_name').optional().trim().isLength({ max: 200 }).escape(),
+  body('email').optional({ checkFalsy: true }).isEmail().normalizeEmail(),
+  body('customer_email').optional({ checkFalsy: true }).isEmail().normalizeEmail(),
+  body('phone').optional().trim().isLength({ max: 30 }),
   body('customer_phone').optional().trim().isLength({ max: 30 }),
   body('total').isNumeric().withMessage('Total must be a number'),
   body('items').isArray({ min: 1 }).withMessage('Items required'),
   async (req, res) => {
   if (!validate(req, res)) return;
   try {
-    const { customer_name, customer_email, customer_phone, delivery_method, address, items, total } = req.body;
+    // Accept both naming conventions
+    const name  = (req.body.name  || req.body.customer_name  || '').trim();
+    const email = (req.body.email || req.body.customer_email || '').trim();
+    const phone = (req.body.phone || req.body.customer_phone || '').trim();
 
-    // Salvar no banco — mapeia para schema correto (sem coluna items)
+    if (!name)           return res.status(400).json({ error: 'Name required' });
+    if (!email && !phone) return res.status(400).json({ error: 'email or phone required' });
+
+    const {
+      address = '', city = '', state = '', zip = '',
+      payment, delivery_method, deliveryType,
+      items, total, shipping = 0,
+      zelle_proof, notes = ''
+    } = req.body;
+
+    const paymentMethod = payment || delivery_method || '';
+    const delivMethod   = deliveryType || delivery_method || paymentMethod;
+    const subtotal      = Number(total) - Number(shipping);
+
     const { data, error } = await req.supabase
       .from('jewelry_orders')
       .insert([{
-        customer_name,
-        customer_email,
-        customer_phone,
-        delivery_method,
-        address,
-        total:         Number(total) || 0,
-        subtotal:      Number(total) || 0,
-        shipping_cost: 0,
-        status:        'pending',
-        payment_method: delivery_method || ''
+        customer_name:   name,
+        customer_email:  email,
+        customer_phone:  phone,
+        delivery_method: delivMethod,
+        address, city, state, zip,
+        payment_method:  paymentMethod,
+        shipping_cost:   Number(shipping) || 0,
+        subtotal:        subtotal > 0 ? subtotal : Number(total) || 0,
+        total:           Number(total) || 0,
+        status:          'pending',
+        notes
       }])
-      .select('id');
+      .select('id')
+      .single();
 
     if (error) throw error;
 
-    // Salvar itens na tabela order_items
-    if (data?.[0]?.id && Array.isArray(items) && items.length > 0) {
+    const orderId = data?.id || null;
+
+    if (orderId && Array.isArray(items) && items.length > 0) {
       const lineItems = items.map(i => ({
-        order_id:     data[0].id,
-        product_name: i.title || i.name || '',
-        variant_desc: i.sku   || '',
-        quantity:     Number(i.quantity || i.qty) || 1,
+        order_id:     orderId,
+        product_name: i.title   || i.name    || '',
+        variant_desc: i.variant || i.sku     || '',
+        quantity:     Number(i.quantity || i.qty)   || 1,
         unit_price:   Number(i.price) || 0
-        // line_total is GENERATED ALWAYS — omit from insert
+        // line_total GENERATED ALWAYS — omit
       }));
       await req.supabase.from('order_items').insert(lineItems);
     }
 
-    const orderId = data?.[0]?.id || null;
-    res.json({ success: true, order: { ...data[0], customer_name, customer_email, total } });
+    // Respond immediately — emails are non-blocking
+    res.json({ ok: true, message: 'Order confirmed. Check your email!' });
 
-    // Non-blocking premium emails (admin + customer + post-purchase queue)
     sendOrderEmails({
-      name: customer_name,
-      phone: customer_phone,
-      email: customer_email,
-      address,
-      city: '', state: '', zip: '',
-      payment: delivery_method,
-      deliveryType: delivery_method,
+      name, phone, email,
+      address, city, state, zip,
+      payment: paymentMethod,
+      deliveryType: delivMethod,
       items: (items || []).map(i => ({
-        name: i.title || i.name || '',
-        variant: i.sku || '',
-        qty: Number(i.quantity || i.qty) || 1,
-        price: Number(i.price) || 0
+        name:    i.title   || i.name    || '',
+        variant: i.variant || i.sku     || '',
+        qty:     Number(i.quantity || i.qty) || 1,
+        price:   Number(i.price) || 0
       })),
-      total,
-      shipping: 0,
-      notes: '',
-      orderId
+      total, shipping, notes, orderId, zelle_proof
     }, req.supabase).catch(e => console.error('Email failed (order saved):', e.message));
+
   } catch (error) {
-    console.error(error);
+    console.error('POST /api/jewelry/orders:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
