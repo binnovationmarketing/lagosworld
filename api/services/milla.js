@@ -210,10 +210,11 @@ const TOOLS = [
         type: 'object',
         properties: {
           query:    { type: 'string', description: 'Search term — product type, style, material, or occasion. e.g. "brinco dourado", "anel zircônia", "colar delicado presente"' },
-          category: { type: 'string', description: 'Optional filter: BRINCOS | ANÉIS | COLARES | PULSEIRAS E BRACELETES | CONJUNTOS | PINGENTES | ACESSÓRIOS | AÇO' },
+          category: { type: 'string', description: 'Optional filter: BRINCOS | ANEIS | COLARES | PULSEIRAS E BRACELETES | CONJUNTOS | PINGENTES | ACESSORIOS | ACO' },
           max_price: { type: 'number', description: 'Optional max price in USD' }
         },
-        required: ['query']
+        required: ['query'],
+        additionalProperties: false
       }
     }
   },
@@ -352,10 +353,19 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web',
     completion = await callGroq(messages, pageTools, false);
   } catch (e) {
     const is429 = e.status === 429 || String(e.message).includes('rate_limit') || String(e.message).includes('429');
+    // 400 = Groq rejected model's tool call JSON (schema mismatch) — retry without tools
+    const is400Tool = e.status === 400 && (
+      String(e.message).includes('tool call validation') ||
+      String(e.message).includes('parameters for tool') ||
+      String(e.message).includes('did not match schema')
+    );
     if (is429) {
       console.warn('Groq 70B rate limit — falling back to 8B-instant (no tools)');
       useFallback = true;
       completion = await callGroq(messages, null, true); // 8B: no tools
+    } else if (is400Tool) {
+      console.warn('Groq tool call validation 400 — retrying without tools');
+      completion = await callGroq(messages, null, false); // 70B without tools
     } else {
       throw e;
     }

@@ -158,8 +158,9 @@
     if (isOpen) setTimeout(() => inputEl.focus(), 150);
   }
 
-  bubble.addEventListener('click', toggle);
-  panel.querySelector('#milla-close').addEventListener('click', toggle);
+  // rAF: yield to paint cycle before toggle DOM mutations (fixes INP 541ms on bubble)
+  bubble.addEventListener('click', () => requestAnimationFrame(toggle));
+  panel.querySelector('#milla-close').addEventListener('click', () => requestAnimationFrame(toggle));
 
   // ── Greeting (local, instant — no API call) ──────────────────────────────────
   function sendGreeting() {
@@ -178,14 +179,16 @@
     const text = inputEl.value.trim();
     if (!text || isBusy) return;
     isBusy = true;
-    sendBtn.disabled = true;
-    inputEl.value = ''; // Instant visual: clear input in same frame as keydown
 
-    // Yield to browser paint BEFORE DOM mutations (fixes INP 546-696ms on textarea)
-    // requestAnimationFrame fires just before next paint — ensures browser can render
-    // the cleared input and disabled state before we add message bubbles
+    // Frame 1: ONLY clear input — cheapest possible DOM write, fixes INP 416ms
+    // sendBtn.disabled deferred to frame 2 so this frame paints instantly
+    inputEl.value = '';
+
+    // Yield: browser paints cleared input before any further DOM work
     await new Promise(r => requestAnimationFrame(r));
 
+    // Frame 2: button state + message bubbles (all in one layout pass)
+    sendBtn.disabled = true;
     appendMsg(text, 'user');
     const typing = showTyping();
 
