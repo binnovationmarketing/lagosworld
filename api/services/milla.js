@@ -315,11 +315,20 @@ function detectLanguage(history, currentMessage) {
 
 // ── Main Entry Point ──────────────────────────────────────────────────────────
 async function processMessage(supabase, sessionId, userMessage, channel = 'web', page = '/') {
-  let { data: session } = await supabase
+  let { data: session, error: sessionErr } = await supabase
     .from('milla_conversations')
     .select('*')
     .eq('session_id', sessionId)
     .maybeSingle();
+
+  if (sessionErr) {
+    if (sessionErr.code === '42P01') {
+      console.error('[MILLA] milla_conversations table missing — run migration 006_milla_conversations.sql');
+    } else {
+      console.error('[MILLA] Session load error:', sessionErr.message);
+    }
+    // Continue with empty history rather than crashing
+  }
 
   const history = session?.messages || [];
 

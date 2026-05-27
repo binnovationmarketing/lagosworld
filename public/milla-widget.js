@@ -179,17 +179,17 @@
     if (!text || isBusy) return;
     isBusy = true;
     sendBtn.disabled = true;
+    inputEl.value = ''; // Instant visual: clear input in same frame as keydown
 
-    // Yield before any DOM work — eliminates INP blocking on keydown/click handler
-    await new Promise(r => setTimeout(r, 0));
+    // Yield to browser paint BEFORE DOM mutations (fixes INP 546-696ms on textarea)
+    // requestAnimationFrame fires just before next paint — ensures browser can render
+    // the cleared input and disabled state before we add message bubbles
+    await new Promise(r => requestAnimationFrame(r));
 
     appendMsg(text, 'user');
-    inputEl.value = '';
-
     const typing = showTyping();
 
     try {
-      // Fetch API response
       const r = await fetch('/api/milla/chat', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -197,14 +197,15 @@
           message:   text,
           sessionId: SESSION_ID,
           channel:   'web',
-          page:      PAGE_PATH   // backend uses this for context-aware behavior
+          page:      PAGE_PATH
         })
       });
       const d = await r.json();
 
       if (d.ok && d.reply) {
-        // Human delay: keep typing indicator visible for realistic duration
         await humanDelay(d.reply);
+        // Batch all post-response DOM in one rAF — single layout pass
+        await new Promise(r => requestAnimationFrame(r));
         typing.remove();
         appendMsg(d.reply, 'agent');
       } else {
@@ -217,16 +218,22 @@
     }
 
     isBusy = false;
-    sendBtn.disabled = false;
-    inputEl.focus();
+    // Defer re-enable + focus to next frame — avoids style recalc blocking the response paint
+    requestAnimationFrame(() => {
+      sendBtn.disabled = false;
+      inputEl.focus();
+    });
   }
 
   // ── Event listeners ───────────────────────────────────────────────────────────
-  sendBtn.addEventListener('click', () => setTimeout(sendMessage, 0));
+  // Use requestAnimationFrame instead of setTimeout(0) — rAF yields to paint cycle
+  sendBtn.addEventListener('click', () => requestAnimationFrame(sendMessage));
 
-  // keydown: only e.preventDefault() is synchronous — sendMessage deferred
   inputEl.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); setTimeout(sendMessage, 0); }
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      requestAnimationFrame(sendMessage); // yield to browser before executing send
+    }
   });
 
   // NO input event listener — auto-resize removed entirely.
