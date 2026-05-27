@@ -60,10 +60,11 @@ async function sendOrderEmails(orderData, supabase) {
     html: t.orderConfirmation(orderData)
   });
 
-  // 2. Customer confirmation
-  if (email && !ADMINS.includes(email)) {
+  // 2. Customer confirmation — always send (even if customer is an admin/test account)
+  if (email) {
     await transporter.sendMail({
       from, to: email,
+      cc: ADMINS.includes(email) ? [] : ADMINS, // CC admin on customer copies, skip if same address
       subject: `✦ LW ✦ Pedido Confirmado — Lagos Jewelry — ${name}`,
       html: t.orderConfirmation(orderData)
     });

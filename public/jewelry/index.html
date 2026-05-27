@@ -12400,17 +12400,22 @@ function updateCheckoutSummary(){
 }
 
 function selPay(type,btn){
+  // Update state immediately (zero cost)
   selPayment=type;
-  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
-  document.getElementById('info-zelle').classList.toggle('on',type==='zelle');
-  document.getElementById('info-pix').classList.toggle('on',type==='pix');
-  document.getElementById('proof-upload').classList.toggle('on',type==='zelle'||type==='pix');
-  const cdEl=document.getElementById('cash-delivery');
-  cdEl.classList.toggle('on',type==='cash');
-  if(type==='cash'){
-    const total=cart.reduce((s,i)=>s+(i.v.price*i.qty),0);
-    document.getElementById('cash-free').style.display=total>=200?'block':'none';
-  }
+  // Yield to browser — all DOM mutations deferred to next frame (fixes INP 322ms on span.pay-ico)
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));
+    btn.classList.add('sel');
+    document.getElementById('info-zelle').classList.toggle('on',type==='zelle');
+    document.getElementById('info-pix').classList.toggle('on',type==='pix');
+    document.getElementById('proof-upload').classList.toggle('on',type==='zelle'||type==='pix');
+    const cdEl=document.getElementById('cash-delivery');
+    cdEl.classList.toggle('on',type==='cash');
+    if(type==='cash'){
+      const total=cart.reduce((s,i)=>s+(i.v.price*i.qty),0);
+      document.getElementById('cash-free').style.display=total>=200?'block':'none';
+    }
+  });
 }
 
 function selDelivery(type,btn){
@@ -12456,11 +12461,47 @@ async function submitOrder(){
   const grandTotal=total+ship;
   document.getElementById('submit-btn').disabled=true;
   document.getElementById('submit-btn').textContent='Sending...';
-  // Build WhatsApp message
-  const items=cart.map(i=>`• ${i.prod.name}${i.v.desc?' ('+i.v.desc+')':''} ×${i.qty} = $${(i.v.price*i.qty).toFixed(2)}`).join('%0A');
-  const payTxt=selPayment==='zelle'?'Zelle: +12156262345 (Dayane Lago)':selPayment==='pix'?'Pix/TED Brasil — Chave: admin.lagosworld@gmail.com (Dayane Lago)':'Cash on delivery';
-  const delivTxt=selPayment==='cash'?(selDeliveryType==='local'?'Same City (4h) — $10 fee':'Outside City (6h) — $20 fee'):(selShipping?selShipping.name:'UPS Ground');
-  const waMsg=`✝ *Lagos Jewelry Order*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Email:* ${email}%0A*Address:* ${address}, ${city}, ${state} ${zip}%0A%0A*Items:*%0A${items}%0A%0A*Shipping:* ${delivTxt}%0A*Ship Cost:* ${ship===0?'FREE':'$'+ship.toFixed(2)}%0A*TOTAL: $${grandTotal.toFixed(2)}*%0A*Payment:* ${payTxt}%0A*Notes:* ${document.getElementById('fobs').value||'—'}`;
+  // Build WhatsApp message — plain string then encodeURIComponent (avoids broken chars)
+  const payTxt=selPayment==='zelle'?'Zelle: +1 (215) 626-2345 | Dayane Lago':selPayment==='pix'?'Pix/TED Brasil | Chave: admin.lagosworld@gmail.com':' Cash on Delivery';
+  const delivTxt=selPayment==='cash'?(selDeliveryType==='local'?'Same City (4h) — $10':'Outside City (6h) — $20'):(selShipping?selShipping.name:'UPS Ground');
+  const itemLines=cart.map(i=>{
+    const sku=i.prod.sku?` [${i.prod.sku}]`:'';
+    const variant=i.v.desc?` (${i.v.desc})`:'';
+    return `• ${i.prod.name}${sku}${variant} x${i.qty} = $${(i.v.price*i.qty).toFixed(2)}`;
+  }).join('\n');
+  const waMsgRaw=[
+    '*LAGOS JEWELRY*',
+    '(215) 626-2345 | admin.lagosworld@gmail.com',
+    '',
+    '*PEDIDO CONFIRMADO*',
+    '--------------------',
+    '',
+    '*CLIENTE*',
+    `Nome: ${name}`,
+    `Telefone: ${phone}`,
+    `Email: ${email}`,
+    '',
+    '*ENDERECO*',
+    [address,city,state,zip].filter(Boolean).join(', '),
+    '',
+    '*ITENS*',
+    itemLines,
+    '',
+    '--------------------',
+    `*Entrega:* ${delivTxt}`,
+    `*Frete:* ${ship===0?'GRATIS':'$'+ship.toFixed(2)}`,
+    `*TOTAL: $${grandTotal.toFixed(2)}*`,
+    `*Pagamento:* ${payTxt}`,
+    '',
+    `*Obs:* ${document.getElementById('fobs').value||'—'}`,
+    '',
+    '--------------------',
+    'Atenciosamente,',
+    'Dayane Lago',
+    'Founder | Lagos World',
+    '"She is clothed with strength and dignity" -- Prov 31:25'
+  ].join('\n');
+  const waMsg=encodeURIComponent(waMsgRaw);
   // Send to API for email
   const proofFile=document.getElementById('proof-file');
   let zelleProof=null;
@@ -12476,7 +12517,7 @@ async function submitOrder(){
       body:JSON.stringify({
         name,phone,email:wantsEmail?email:null,address,zip,city,state,
         payment:selPayment,deliveryType:selDeliveryType,
-        items:cart.map(i=>({name:i.prod.name,variant:i.v.desc,qty:i.qty,price:i.v.price})),
+        items:cart.map(i=>({name:i.prod.name,sku:i.prod.sku||'',variant:i.v.desc,qty:i.qty,price:i.v.price})),
         total:grandTotal,shipping:ship,
         zelle_proof:zelleProof,notes:document.getElementById('fobs').value
       })
