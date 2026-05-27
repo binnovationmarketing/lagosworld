@@ -20,7 +20,7 @@ let nameOv  = JSON.parse(localStorage.getItem('lj_names') ||'{}');
 let cart = [];
 let curCat = 'ALL', curSearch = '';
 let modalProd = null, modalImgIdx = 0, selVar = null;
-let selPayment = null, selDeliveryType = null;
+let selPayment = null;
 let selShipping = null;
 
 // Returns variant list with price overrides applied

@@ -40,7 +40,8 @@ function calcShipping(destZip,city,state){
     const diff=Math.abs(orig-dest);
     const sameState=state==='PA'||state==='NJ'||state==='DE'||state==='MD';
     if(sameState&&diff<20){
-      opts.push({id:'local',name:'⚡ Same Day — Cash Delivery',price:total<200?10:0,eta:'4 Hours',note:'Philadelphia metro area'});
+      opts.push({id:'local',name:'⚡ Same Day — Cash Delivery',price:total<200?10:0,eta:'4 Hours',note:'Philadelphia metro area · Cash on delivery'});
+      opts.push({id:'outside',name:'🚗 Outside City — Cash Delivery',price:total<200?20:0,eta:'6 Hours',note:'PA & nearby areas · Cash on delivery'});
       opts.push({id:'ups_ground_local',name:'📦 UPS Ground',price:12.99,eta:'1-2 Business Days',note:'Tracked shipping'});
     } else if(diff<50){
       opts.push({id:'ups_ground_1',name:'📦 UPS Ground',price:14.99,eta:'2-3 Business Days',note:'Tracked'});

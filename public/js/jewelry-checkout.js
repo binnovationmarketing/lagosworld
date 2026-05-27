@@ -3,10 +3,9 @@ function openCheckout(){
   if(!cart.length)return;
   toggleCart();
   requestAnimationFrame(()=>{
-    selPayment=null;selDeliveryType=null;selShipping=null;
+    selPayment=null;selShipping=null;
     document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));
     document.getElementById('info-zelle').classList.remove('on');
-    document.getElementById('cash-delivery').classList.remove('on');
     document.getElementById('proof-upload').classList.remove('on');
     document.getElementById('zip-result').classList.remove('show');
     document.getElementById('co-form').style.display='block';
@@ -37,23 +36,9 @@ function selPay(type,btn){
     document.getElementById('info-zelle').classList.toggle('on',type==='zelle');
     document.getElementById('info-pix').classList.toggle('on',type==='pix');
     document.getElementById('proof-upload').classList.toggle('on',type==='zelle'||type==='pix');
-    const cdEl=document.getElementById('cash-delivery');
-    cdEl.classList.toggle('on',type==='cash');
-    if(type==='cash'){
-      const total=cart.reduce((s,i)=>s+(i.v.price*i.qty),0);
-      document.getElementById('cash-free').style.display=total>=200?'block':'none';
-    }
   });
 }
 
-function selDelivery(type,btn){
-  selDeliveryType=type;
-  document.querySelectorAll('.del-opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
-  if(type==='local')selShipping={id:'local',name:'Same City (4h)',price:cart.reduce((s,i)=>s+(i.v.price*i.qty),0)>=200?0:10};
-  else if(type==='outside')selShipping={id:'outside',name:'Outside City (6h)',price:cart.reduce((s,i)=>s+(i.v.price*i.qty),0)>=200?0:20};
-  else selShipping={id:'free',name:'Free Delivery',price:0};
-  setTimeout(()=>updateCheckoutSummary(),0);
-}
 
 function handleProof(input){
   const file=input.files[0];if(!file)return;
@@ -82,14 +67,14 @@ async function submitOrder(){
   if(!phone){showToast('⚠ Enter your phone');return}
   if(!email){showToast('⚠ Enter your email');return}
   if(!selPayment){showToast('⚠ Select payment method');return}
-  if(selPayment==='cash'&&!selDeliveryType){showToast('⚠ Select delivery type');return}
+  if(!selShipping){showToast('⚠ Select a shipping option');return}
   const total=cart.reduce((s,i)=>s+(i.v.price*i.qty),0);
   const ship=selShipping?selShipping.price:0;
   const grandTotal=total+ship;
   document.getElementById('submit-btn').disabled=true;
   document.getElementById('submit-btn').textContent='Sending...';
   const payTxt=selPayment==='zelle'?'Zelle: +1 (215) 626-2345 | Dayane Lago':selPayment==='pix'?'Pix/TED Brasil | Chave: admin.lagosworld@gmail.com':' Cash on Delivery';
-  const delivTxt=selPayment==='cash'?(selDeliveryType==='local'?'Same City (4h) — $10':'Outside City (6h) — $20'):(selShipping?selShipping.name:'UPS Ground');
+  const delivTxt=selShipping?selShipping.name:'—';
   const itemLines=cart.map(i=>{
     const sku=i.prod.sku?` [${i.prod.sku}]`:'';
     const variant=i.v.desc?` (${i.v.desc})`:'';
@@ -141,7 +126,7 @@ async function submitOrder(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         name,phone,email:wantsEmail?email:null,address,zip,city,state,
-        payment:selPayment,deliveryType:selDeliveryType,
+        payment:selPayment,deliveryType:selShipping?.id||null,
         items:cart.map(i=>({name:i.prod.name,sku:i.prod.sku||'',variant:i.v.desc,qty:i.qty,price:i.v.price})),
         total:grandTotal,shipping:ship,
         zelle_proof:zelleProof,notes:document.getElementById('fobs').value
