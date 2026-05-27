@@ -2,7 +2,69 @@
 let shopPageSize=20;
 let shopPage=1;
 let _matchedCards=[];
-let _cardCache=null; // cached once — all .card elements (static DOM)
+let _cardCache=null; // cached after renderAllCards()
+
+// ── Render all product cards into #grid (replaces static HTML) ───────────────
+function renderAllCards(){
+  const grid = document.getElementById('grid');
+  if (!grid) return;
+  const CAT_ICONS = {
+    'BRINCOS':'💎','ANÉIS':'💍','COLARES':'📿',
+    'PULSEIRAS E BRACELETES':'✨','CONJUNTOS':'👑',
+    'PINGENTES':'🔮','ACESSÓRIOS':'🌟','AÇO':'⚡','OUTROS':'✦'
+  };
+  grid.innerHTML = PRODUCTS.map((p, idx) => {
+    const imgCount = p.imgs ? p.imgs.length : 1;
+    const price = p.minPrice === p.maxPrice
+      ? `$${p.minPrice.toFixed(2)}`
+      : `$${p.minPrice.toFixed(2)} – $${p.maxPrice.toFixed(2)}`;
+    const loading = idx < 20 ? 'eager' : 'lazy';
+    const fetchprio = idx < 3 ? ' fetchpriority="high"' : '';
+    return `<div class="card" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" style="animation-delay:${(idx%20)*50}ms">
+  <div class="card-imgs">
+    <img class="card-img" src="${p.img}" alt="${p.name}" loading="${loading}"${fetchprio}>
+    <img class="card-img-b" src="${p.img2||p.img}" alt="${p.name}" loading="lazy">
+    <div class="card-overlay"></div>
+    <div class="zoom-hint">🔍</div>
+    <div class="img-count">📷 ${imgCount} foto${imgCount>1?'s':''}</div>
+    <div class="card-action">
+      <button class="quick-add" onclick="event.stopPropagation();openModal(${p.id})">
+        <span>✦</span><span>View Details</span>
+      </button>
+    </div>
+  </div>
+  <div class="card-info" onclick="openModal(${p.id})">
+    <div class="card-sku">${p.sku||''}</div>
+    <div class="card-name">${p.name}</div>
+    <div class="card-cat">${p.cat}</div>
+    <div class="card-price"><span class="price-val">${p.minPrice>0?price:'—'}</span></div>
+  </div>
+</div>`;
+  }).join('');
+  _cardCache = null; // reset so renderShopPage re-queries
+  renderCatFilters();
+}
+
+// ── Render category filter buttons with live counts ───────────────────────────
+function renderCatFilters(){
+  const wrap = document.getElementById('cat-filters');
+  if (!wrap) return;
+  const CAT_ICONS = {
+    'BRINCOS':'💎','ANÉIS':'💍','COLARES':'📿',
+    'PULSEIRAS E BRACELETES':'✨','CONJUNTOS':'👑',
+    'PINGENTES':'🔮','ACESSÓRIOS':'🌟','AÇO':'⚡'
+  };
+  const counts = {};
+  PRODUCTS.forEach(p => { counts[p.cat] = (counts[p.cat]||0) + 1; });
+  const total = PRODUCTS.length;
+  const cats = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  wrap.innerHTML =
+    `<button class="fp${curCat==='ALL'?' active':''}" onclick="filterCat('ALL',this)"><span>✦ All (${total})</span></button>` +
+    cats.map(([cat, n]) => {
+      const icon = CAT_ICONS[cat] || '✦';
+      return `<button class="fp${curCat===cat?' active':''}" onclick="filterCat('${cat}',this)"><span>${icon} ${cat} (${n})</span></button>`;
+    }).join('');
+}
 
 function filterCat(cat,btn){
   curCat=cat;shopPage=1;

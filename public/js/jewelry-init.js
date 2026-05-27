@@ -96,6 +96,7 @@
 
 // ── INIT — run pagination on first load ──────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  renderAllCards();  // inject all product cards from PRODUCTS array
   renderShopPage();
   // Deep-link: lagosworld.app/jewelry#12345678 opens that product modal
   const hash = window.location.hash.replace('#','');
