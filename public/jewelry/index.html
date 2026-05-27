@@ -12027,13 +12027,16 @@ function getVars(p){
 // ── FILTER ──
 function filterCat(cat,btn){
   curCat=cat;shopPage=1;
-  document.querySelectorAll('.nav-cat,.fp').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  // Yield: browser paints the active-state change first, then runs the heavy filter
-  setTimeout(()=>{
-    applyFilters();
-    if(window.scrollY>200)document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
-  },0);
+  // Frame 1: paint the active button state immediately
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('.nav-cat,.fp').forEach(b=>b.classList.remove('active'));
+    if(btn)btn.classList.add('active');
+    // Frame 2: run heavy filter + pagination after active state is painted
+    requestAnimationFrame(()=>{
+      applyFilters();
+      if(window.scrollY>200)document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
 }
 function doSearch(q){curSearch=q.toLowerCase().trim();shopPage=1;applyFilters()}
 let shopPageSize=20;
@@ -12223,7 +12226,7 @@ function addToCart(prod,v){
   });
 }
 function rmFromCart(key){cart=cart.filter(i=>i.key!==key);updateCart()}
-function clearCart(){cart=[];updateCart()}
+function clearCart(){cart=[];requestAnimationFrame(()=>updateCart())}
 function updateCart(){
   const cnt=cart.reduce((s,i)=>s+i.qty,0);
   document.getElementById('cart-badge').textContent=cnt;
@@ -12375,17 +12378,20 @@ function selectShipping(opt, btnEl){
 function openCheckout(){
   if(!cart.length)return;
   toggleCart();
-  selPayment=null;selDeliveryType=null;selShipping=null;
-  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));
-  document.getElementById('info-zelle').classList.remove('on');
-  document.getElementById('cash-delivery').classList.remove('on');
-  document.getElementById('proof-upload').classList.remove('on');
-  document.getElementById('zip-result').classList.remove('show');
-  document.getElementById('co-form').style.display='block';
-  document.getElementById('co-success').style.display='none';
-  updateCheckoutSummary();
-  document.getElementById('co-veil').classList.add('open');
-  document.body.style.overflow='hidden';
+  // Yield to paint — defer all DOM mutations so browser can render cart-close first
+  requestAnimationFrame(()=>{
+    selPayment=null;selDeliveryType=null;selShipping=null;
+    document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));
+    document.getElementById('info-zelle').classList.remove('on');
+    document.getElementById('cash-delivery').classList.remove('on');
+    document.getElementById('proof-upload').classList.remove('on');
+    document.getElementById('zip-result').classList.remove('show');
+    document.getElementById('co-form').style.display='block';
+    document.getElementById('co-success').style.display='none';
+    updateCheckoutSummary();
+    document.getElementById('co-veil').classList.add('open');
+    document.body.style.overflow='hidden';
+  });
 }
 function closeCheckout(){document.getElementById('co-veil').classList.remove('open');document.body.style.overflow=''}
 
@@ -12547,7 +12553,7 @@ const SEQ=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight']
 let seqIdx=0;
 document.addEventListener('keydown',e=>{
   if(e.key===SEQ[seqIdx]){seqIdx++;if(seqIdx===SEQ.length){seqIdx=0;unlockAdmin()}}else seqIdx=0;
-  if(e.key==='Escape'){closeModal();closeCheckout();closeAdmin()}
+  if(e.key==='Escape'){requestAnimationFrame(()=>{closeModal();closeCheckout();closeAdmin()})}
 });
 // Swipe to open admin on mobile
 let touchStartX=0,touchStartY=0;
