@@ -5,13 +5,13 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
 const { createClient } = require('@supabase/supabase-js');
-const jewelryRoutes  = require('./routes/jewelry');
-const cleaningRoutes = require('./routes/cleaning');
-const coursesRoutes  = require('./routes/courses');
-const cronRoutes     = require('./routes/cron');
-const adminRoutes    = require('./routes/admin');
-const millaRoutes    = require('./routes/milla');
-const { sendEmail }  = require('./services/email');
+const jewelryRoutes  = require('../lib/routes/jewelry');
+const cleaningRoutes = require('../lib/routes/cleaning');
+const coursesRoutes  = require('../lib/routes/courses');
+const cronRoutes     = require('../lib/routes/cron');
+const adminRoutes    = require('../lib/routes/admin');
+const millaRoutes    = require('../lib/routes/milla');
+const { sendEmail }  = require('../lib/services/email');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -150,10 +150,10 @@ app.post('/api/newsletter/subscribe',
     res.json({ ok: true, message: 'Subscribed!' });
 
     // Non-blocking: welcome email to subscriber + admin notification
-    const { sendEmail } = require('./services/email');
-    const { FROM } = require('./services/email');
+    const { sendEmail } = require('../lib/services/email');
+    const { FROM } = require('../lib/services/email');
     const nodemailer = require('nodemailer');
-    const t = require('./services/emailTemplates');
+    const t = require('../lib/services/emailTemplates');
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
