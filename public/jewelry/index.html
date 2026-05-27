@@ -12618,7 +12618,15 @@ async function submitNewsletter() {
 }
 
 // ── INIT — apply pagination on first load (ALL tab is default, never triggered by click) ──
-document.addEventListener('DOMContentLoaded', () => { renderShopPage(); });
+document.addEventListener('DOMContentLoaded', () => {
+  renderShopPage();
+  // Deep-link: lagosworld.app/jewelry#12345678 opens that product modal
+  const hash = window.location.hash.replace('#','');
+  if (hash && /^\d+$/.test(hash)) {
+    const pid = parseInt(hash, 10);
+    if (PRODUCTS.find(p => p.id === pid)) setTimeout(() => openModal(pid), 300);
+  }
+});
 </script>
 
 <!-- NEWSLETTER POPUP -->

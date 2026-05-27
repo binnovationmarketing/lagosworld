@@ -30,8 +30,18 @@ This is NON-NEGOTIABLE. Language lock is permanent for the session.
 • Keep responses SHORT: max 3 short paragraphs. No walls of text.
 • Use 1 emoji per message, 0 in follow-ups when things get serious.
 • Be direct. Respect the client's time.
-• After giving 3 jewelry recommendations: NEXT message MUST include the shop link. NEVER ask qualification questions again after recommending.
+• After giving 3 jewelry recommendations: NEXT message MUST include direct product links. NEVER ask qualification questions again after recommending.
 • After client says they liked options / wants to see / asks how to buy → give the link IMMEDIATELY. Do NOT re-qualify.
+
+━━━ ANTI-REPETITION RULES ━━━
+• NEVER start two consecutive messages with the same word or phrase.
+• NEVER use the same sentence opener twice in a conversation: vary between direct answers, questions, observations, and empathetic statements.
+• NEVER say "Claro!", "Ótimo!", "Perfeito!", "Com certeza!" as filler — go straight to content.
+• NEVER repeat a product name or service description you already gave in the same conversation.
+• NEVER re-explain something the client already acknowledged.
+• If you recommended something and client said they liked it → move to checkout, don't re-describe.
+• Vary your closing lines: don't always end with "Qualquer dúvida, estou aqui!" or similar fixed phrases.
+• Track what you've already said. Don't loop.
 
 ━━━ YOUR AUTONOMY MODEL ━━━
 LEVEL 1 — You decide alone:
@@ -61,13 +71,18 @@ LEVEL 3 — Requires human approval:
    Active offer: none currently (do not invent discounts)
 
    JEWELRY RECOMMENDATION RULES:
-   - Always recommend exactly 3 options using this format:
-     ✦ Best Match: [piece] ($XX–$XX) — [one-line reason why it fits]
-     ✦ Elegant Option: [piece] ($XX–$XX) — [one-line reason]
-     ✦ Gift Option: [piece] ($XX–$XX) — [one-line reason]
-     👉 See the full collection: lagosworld.app/jewelry
-   - ALWAYS include the store link at the end of every recommendation block.
-   - After giving recommendations, if client responds with ANY of: "gostei", "quero ver", "como compro", "show me", "I like", "how do I", "where", "link" → respond ONLY with the link + brief guidance. DO NOT ask more questions.
+   - ALWAYS call the search_jewelry tool BEFORE recommending. Use real products from the catalog.
+   - Recommend exactly 3 options using this format:
+     ✦ Best Match: [exact product name] — $[price] — [one-line reason]
+        👉 lagosworld.app/jewelry#[product_id]
+     ✦ Elegant Option: [exact product name] — $[price] — [one-line reason]
+        👉 lagosworld.app/jewelry#[product_id]
+     ✦ Gift Option: [exact product name] — $[price] — [one-line reason]
+        👉 lagosworld.app/jewelry#[product_id]
+   - Each product gets its OWN direct link (not generic store link).
+   - The link format is: lagosworld.app/jewelry#[id] — clicking it opens that product directly.
+   - After giving recommendations, if client responds with "gostei", "quero ver", "link", "where", "how do I" → send only the direct product links again, no re-description.
+   - If client picks one specific product → guide to checkout: "Adicione ao carrinho direto pelo link 👉 lagosworld.app/jewelry#[id]"
 
 2. LAGOS CLEANING — lagosworld.app/cleaning
    Area: Philadelphia PA + South Jersey NJ
@@ -199,6 +214,22 @@ function buildPageContext(page) {
 
 // ── Tool Declarations ─────────────────────────────────────────────────────────
 const TOOLS = [
+  {
+    type: 'function',
+    function: {
+      name: 'search_jewelry',
+      description: 'Search the Lagos Jewelry product catalog. Call this BEFORE every jewelry recommendation to get real products with IDs and prices. Returns up to 5 products matching the query.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query:    { type: 'string', description: 'Search term — product type, style, material, or occasion. e.g. "brinco dourado", "anel zircônia", "colar delicado presente"' },
+          category: { type: 'string', description: 'Optional filter: BRINCOS | ANÉIS | COLARES | PULSEIRAS E BRACELETES | CONJUNTOS | PINGENTES | ACESSÓRIOS | AÇO' },
+          max_price: { type: 'number', description: 'Optional max price in USD' }
+        },
+        required: ['query']
+      }
+    }
+  },
   {
     type: 'function',
     function: {
@@ -374,6 +405,61 @@ async function saveSession(supabase, existing, sessionId, channel, messages) {
 // ── Tool Executors ────────────────────────────────────────────────────────────
 async function executeTool(supabase, toolName, input, sessionId) {
   console.log(`Milla tool: ${toolName}`, input);
+
+  if (toolName === 'search_jewelry') {
+    try {
+      let query = supabase
+        .from('jewelry_products')
+        .select('id, name, sku, category, min_price, max_price, variations')
+        .eq('active', true)
+        .limit(5);
+
+      // Category filter
+      if (input.category) query = query.eq('category', input.category.toUpperCase());
+
+      // Price filter
+      if (input.max_price) query = query.lte('min_price', Number(input.max_price));
+
+      // Text search — ilike on name
+      if (input.query) query = query.ilike('name', `%${input.query.replace(/[%_]/g, '')}%`);
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      // If ilike returns nothing, try broader search without filter
+      let results = data || [];
+      if (results.length === 0 && input.category) {
+        const { data: broad } = await supabase
+          .from('jewelry_products')
+          .select('id, name, sku, category, min_price, max_price, variations')
+          .eq('active', true)
+          .eq('category', input.category.toUpperCase())
+          .limit(5);
+        results = broad || [];
+      }
+
+      if (results.length === 0) {
+        return { ok: true, products: [], message: 'No products found. Use store link: lagosworld.app/jewelry' };
+      }
+
+      const products = results.map(p => ({
+        id:       p.id,
+        name:     p.name.trim(),
+        category: p.category,
+        price:    p.min_price === p.max_price
+          ? `$${p.min_price.toFixed(2)}`
+          : `$${p.min_price.toFixed(2)}–$${p.max_price.toFixed(2)}`,
+        variants: (p.variations || []).map(v => v.desc).filter(Boolean).join(', '),
+        link:     `lagosworld.app/jewelry#${p.id}`
+      }));
+
+      return { ok: true, products };
+    } catch (e) {
+      console.error('search_jewelry error:', e.message);
+      return { ok: false, error: e.message, message: 'Search failed. Use lagosworld.app/jewelry' };
+    }
+  }
 
   if (toolName === 'book_appointment') {
     const { error } = await supabase.from('cleaning_requests').insert([{
