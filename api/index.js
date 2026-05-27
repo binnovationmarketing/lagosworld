@@ -16,6 +16,23 @@ const { sendEmail }  = require('../lib/services/email');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust Vercel's proxy — required for rate-limit IP detection and X-Forwarded-For
+app.set('trust proxy', 1);
+
+// ── Startup config check ──────────────────────────────────────────────────────
+if (!process.env.EMAIL_USER || process.env.EMAIL_USER.includes('COLE_AQUI')) {
+  console.error('[CONFIG] EMAIL_USER not set — order/email confirmations will fail');
+}
+if (!process.env.EMAIL_PASS || process.env.EMAIL_PASS.includes('COLE_AQUI')) {
+  console.error('[CONFIG] EMAIL_PASS not set — order/email confirmations will fail');
+}
+if (!process.env.SUPABASE_URL) {
+  console.error('[CONFIG] SUPABASE_URL not set');
+}
+if (!process.env.SUPABASE_SERVICE_KEY) {
+  console.error('[CONFIG] SUPABASE_SERVICE_KEY not set');
+}
+
 // ── Rate Limiting ─────────────────────────────────────────────────────────────
 // General: 60 req/min per IP
 const generalLimiter = rateLimit({
@@ -112,7 +129,41 @@ app.use('/api/milla',    millaRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Lagos Platform API running' });
+  res.json({
+    status: 'ok',
+    message: 'Lagos Platform API running',
+    email: {
+      user_set:  !!(process.env.EMAIL_USER && !process.env.EMAIL_USER.includes('COLE')),
+      pass_set:  !!(process.env.EMAIL_PASS && !process.env.EMAIL_PASS.includes('COLE')),
+    },
+    supabase: !!process.env.SUPABASE_URL
+  });
+});
+
+// Email test — protected by CRON_SECRET (GET /api/health/email?to=you@email.com)
+app.get('/api/health/email', async (req, res) => {
+  const secret = process.env.CRON_SECRET;
+  if (secret && req.headers['authorization'] !== `Bearer ${secret}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  const nodemailer = require('nodemailer');
+  const to = req.query.to || process.env.EMAIL_USER;
+  try {
+    const t = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+    });
+    await t.verify();
+    await t.sendMail({
+      from: `"Lagos World Test" <${process.env.EMAIL_USER}>`,
+      to,
+      subject: '✅ Lagos Email Test — Working!',
+      text: `Email system is working. Sent at ${new Date().toISOString()}`
+    });
+    res.json({ ok: true, sent_to: to });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message, user: process.env.EMAIL_USER ? '(set)' : '(NOT SET)' });
+  }
 });
 
 // ── Input validation helper ───────────────────────────────────────────────────
