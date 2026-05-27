@@ -20,3 +20,7 @@ scripts/*.sql
 
 # Editor workspace files
 *.code-workspace
+public/images/dayane-1.png
+public/images/dayane-2.png
+public/images/dayane-3.png
+public/images/dayane-*-opt.jpeg
