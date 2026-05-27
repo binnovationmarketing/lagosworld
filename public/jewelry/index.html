@@ -11767,11 +11767,13 @@ body{background:#ffffff!important;color:#2c2822!important}
         </div>
         <div class="fg" style="margin:0">
           <label class="fl">City</label>
-          <input class="fi" id="fc" type="text" placeholder="Philadelphia" autocomplete="address-level2" readonly>
+          <input class="fi" id="fc" type="text" placeholder="Philadelphia" autocomplete="address-level2"
+            oninput="const z=document.getElementById('fz').value;const s=document.getElementById('fst').value.trim();if(z.length===5&&s)calcShipping(z,this.value.trim(),s)">
         </div>
         <div class="fg" style="margin:0">
           <label class="fl">State</label>
-          <input class="fi" id="fst" type="text" placeholder="PA" autocomplete="address-level1" readonly style="text-transform:uppercase">
+          <input class="fi" id="fst" type="text" placeholder="PA" autocomplete="address-level1" maxlength="2" style="text-transform:uppercase"
+            oninput="const z=document.getElementById('fz').value;const c=document.getElementById('fc').value.trim();if(z.length===5&&c)calcShipping(z,c,this.value.trim().toUpperCase())">
         </div>
       </div>
 
@@ -12057,12 +12059,13 @@ function renderShopPage(){
   shopPage=Math.max(1,Math.min(shopPage,totalPages));
   const start=(shopPage-1)*shopPageSize;
   const pageSet=new Set(_matchedCards.slice(start,start+shopPageSize));
-  // Batch all className mutations in one rAF — single layout pass
+  // rAF 1: card show/hide (single layout pass — yields to browser paint first)
   requestAnimationFrame(()=>{
     cards.forEach(c=>c.classList.toggle('hidden',!pageSet.has(c)));
+    document.getElementById('res-n').textContent=total;
+    // rAF 2: pagination HTML (deferred so nav-cat click paints instantly → fixes INP)
+    requestAnimationFrame(()=>renderShopPagination(total,totalPages));
   });
-  document.getElementById('res-n').textContent=total;
-  renderShopPagination(total,totalPages);
 }
 
 function renderShopPagination(total,totalPages){
@@ -12208,8 +12211,16 @@ function addToCart(prod,v){
   const ex=cart.find(i=>i.key===key);
   const cartImg=(imgsOv[prod.id]&&imgsOv[prod.id].length?imgsOv[prod.id]:prod.imgs)[0]||'';
   if(ex)ex.qty++;else cart.push({key,prod,v,qty:1,img:cartImg});
-  updateCart();showToast('✝ '+prod.name+' added!');
-  trackCartEvent('add',{product:prod.name,variant:v.desc||''});
+  // Show toast immediately (zero-cost visual feedback)
+  showToast('✝ '+prod.name+' added!');
+  // Defer heavy DOM (cart rebuild) + localStorage to next idle slot — fixes INP 551ms on modal-add
+  requestAnimationFrame(()=>{
+    updateCart();
+    // trackCartEvent does localStorage read/write + fetch — push to idle so it never blocks paint
+    const idleFn=()=>trackCartEvent('add',{product:prod.name,variant:v.desc||''});
+    if(typeof requestIdleCallback!=='undefined')requestIdleCallback(idleFn,{timeout:2000});
+    else setTimeout(idleFn,0);
+  });
 }
 function rmFromCart(key){cart=cart.filter(i=>i.key!==key);updateCart()}
 function clearCart(){cart=[];updateCart()}
@@ -12281,20 +12292,32 @@ function trackCartEvent(type,extraData){
 // ── ZIP LOOKUP & SHIPPING ──
 async function lookupZip(zip){
   if(!/^\d{5}$/.test(zip))return;
+  const fcEl=document.getElementById('fc');
+  const fstEl=document.getElementById('fst');
+  const zipEl=document.getElementById('fz');
+  // Visual loading state
+  fcEl.placeholder='Buscando...';
+  fcEl.style.opacity='.5';
+  zipEl.style.borderColor='rgba(201,168,76,.5)';
   try{
     const r=await fetch(`https://api.zippopotam.us/us/${zip}`);
     if(!r.ok)throw new Error('ZIP not found');
     const d=await r.json();
     const city=d.places[0]['place name'];
     const state=d.places[0]['state abbreviation'];
-    document.getElementById('fc').value=city;
-    document.getElementById('fst').value=state;
+    fcEl.value=city;
+    fstEl.value=state;
+    fcEl.style.opacity='';
+    fcEl.placeholder='Philadelphia';
+    zipEl.style.borderColor='rgba(201,168,76,.6)';
     calcShipping(zip,city,state);
   }catch(e){
-    document.getElementById('fc').value='';
-    document.getElementById('fst').value='';
+    fcEl.style.opacity='';
+    fcEl.placeholder='City (enter manually)';
+    fstEl.placeholder='ST';
+    zipEl.style.borderColor='rgba(220,80,80,.4)';
     document.getElementById('zip-result').classList.remove('show');
-    showToast('⚠ ZIP code not found');
+    showToast('⚠ ZIP not found — enter city & state manually');
   }
 }
 
@@ -12326,15 +12349,16 @@ function calcShipping(destZip,city,state){
   }
   selShipping=null;
   const container=document.getElementById('ship-options');
-  container.innerHTML=opts.map((o,i)=>`
-    <div class="ship-opt${i===0?' sel':''}" onclick="selectShipping(${JSON.stringify(o).replace(/"/g,"'")},this)" data-id="${o.id}">
+  container.innerHTML=opts.map((o,idx)=>`
+    <div class="ship-opt${idx===0?' sel':''}" onclick="selectShipping(${JSON.stringify(o).replace(/"/g,"'")},this)" data-id="${o.id}">
       <div>
         <div class="ship-name">${o.name}</div>
         <div class="ship-eta">${o.eta} · ${o.note}</div>
       </div>
       <div class="ship-price">${o.price===0?'FREE':'$'+o.price.toFixed(2)}</div>
     </div>`).join('');
-  if(i===0)selectShipping(opts[0]);
+  // Auto-select first option (fixed: was using undefined `i`)
+  selectShipping(opts[0]);
   document.getElementById('zip-result').classList.add('show');
   // Update checkout summary
   updateCheckoutSummary();
