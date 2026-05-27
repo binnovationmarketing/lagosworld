@@ -704,7 +704,7 @@ body{background:#ffffff!important;color:#2c2822!important}
   <div class="toolbar">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input class="search-input" id="search" type="text" placeholder="Search jewelry..." oninput="doSearch(this.value)">
+      <input class="search-input" id="search" type="text" placeholder="Search by name or SKU code..." oninput="doSearch(this.value)">
     </div>
     <div class="res-count">Showing <span id="res-n">512</span> pieces</div>
   </div>
@@ -1148,8 +1148,8 @@ body{background:#ffffff!important;color:#2c2822!important}
 <script src="/js/jewelry-init.js"></script>
 
 <!-- NEWSLETTER POPUP -->
-<div id="newsletter-popup" style="position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;transition:opacity .4s;pointer-events:none;backdrop-filter:blur(4px)">
-  <div style="background:#0c0c0c;border:1px solid rgba(201,168,76,.25);max-width:440px;width:100%;position:relative;transform:translateY(20px);transition:transform .4s">
+<div id="newsletter-popup" style="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;transition:opacity .4s;pointer-events:none">
+  <div style="background:#0c0c0c;border:1px solid rgba(201,168,76,.25);max-width:440px;width:100%;position:relative;transform:translateY(20px);transition:transform .4s;will-change:transform;contain:layout style">
     <!-- Cross bar top -->
     <div style="height:3px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.8),transparent)"></div>
     <div style="padding:2rem 2rem 2.2rem">

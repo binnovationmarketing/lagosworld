@@ -20,7 +20,7 @@ function renderAllCards(){
       : `$${p.minPrice.toFixed(2)} – $${p.maxPrice.toFixed(2)}`;
     const loading = idx < 20 ? 'eager' : 'lazy';
     const fetchprio = idx < 3 ? ' fetchpriority="high"' : '';
-    return `<div class="card" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" style="animation-delay:${(idx%20)*50}ms">
+    return `<div class="card" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" style="animation-delay:${(idx%20)*50}ms">
   <div class="card-imgs">
     <img class="card-img" src="${p.img}" alt="${p.name}" loading="${loading}"${fetchprio}>
     <img class="card-img-b" src="${p.img2||p.img}" alt="${p.name}" loading="lazy">
@@ -28,12 +28,12 @@ function renderAllCards(){
     <div class="zoom-hint">🔍</div>
     <div class="img-count">📷 ${imgCount} foto${imgCount>1?'s':''}</div>
     <div class="card-action">
-      <button class="quick-add" onclick="event.stopPropagation();openModal(${p.id})">
+      <button class="quick-add" onclick="event.stopPropagation();requestAnimationFrame(()=>openModal(${p.id}))">
         <span>✦</span><span>View Details</span>
       </button>
     </div>
   </div>
-  <div class="card-info" onclick="openModal(${p.id})">
+  <div class="card-info" onclick="requestAnimationFrame(()=>openModal(${p.id}))">
     <div class="card-sku">${p.sku||''}</div>
     <div class="card-name">${p.name}</div>
     <div class="card-cat">${p.cat}</div>
@@ -93,7 +93,7 @@ function renderShopPage(){
   const cards=_cardCache;
   _matchedCards=cards.filter(c=>
     (curCat==='ALL'||c.dataset.cat===curCat)&&
-    (!curSearch||c.dataset.name.includes(curSearch)||c.dataset.cat.toLowerCase().includes(curSearch))
+    (!curSearch||c.dataset.name.includes(curSearch)||c.dataset.cat.toLowerCase().includes(curSearch)||c.dataset.sku.includes(curSearch))
   );
   const total=_matchedCards.length;
   const totalPages=Math.ceil(total/shopPageSize)||1;

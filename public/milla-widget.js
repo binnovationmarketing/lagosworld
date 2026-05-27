@@ -52,7 +52,7 @@
     @media(max-width:520px){#milla-messages{max-height:55vh;min-height:160px}}
     #milla-messages::-webkit-scrollbar{width:3px}
     #milla-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-    .milla-msg{max-width:86%;padding:.55rem .8rem;border-radius:12px;font-size:.76rem;line-height:1.6;word-break:break-word;white-space:pre-wrap;animation:milla-fadein .22s ease}
+    .milla-msg{max-width:86%;padding:.55rem .8rem;border-radius:12px;font-size:.76rem;line-height:1.6;word-break:break-word;white-space:pre-wrap;animation:milla-fadein .22s ease;pointer-events:none;user-select:text}
     @keyframes milla-fadein{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
     .milla-msg.agent{background:rgba(255,255,255,.07);color:#e4ddd0;border-bottom-left-radius:3px;align-self:flex-start}
     .milla-msg.user{background:${ACCENT};color:#fff;border-bottom-right-radius:3px;align-self:flex-end}
@@ -63,7 +63,7 @@
     .milla-dot:nth-child(2){animation-delay:.18s}
     .milla-dot:nth-child(3){animation-delay:.36s}
     @keyframes milla-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-    #milla-input-row{padding:.6rem .75rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.45rem;background:#111;padding-bottom:env(safe-area-inset-bottom,.6rem)}
+    #milla-input-row{padding:.6rem .75rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.45rem;background:#111;padding-bottom:env(safe-area-inset-bottom,.6rem);contain:layout style}
     #milla-input{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#e4ddd0;border-radius:8px;padding:.48rem .7rem;font-size:.78rem;font-family:inherit;outline:none;resize:none;height:36px;line-height:1.4;overflow-y:auto;-webkit-appearance:none}
     #milla-input:focus{border-color:${ACCENT}}
     #milla-input::placeholder{color:rgba(255,255,255,.28)}
