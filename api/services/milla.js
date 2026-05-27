@@ -212,6 +212,13 @@ function buildPageContext(page) {
   return '\n\n[PAGE: / — Client is on main site. Identify interest first before activating a specific mode.]';
 }
 
+// ── Filter tools by page — only send relevant tools to reduce token use and failed_generation risk
+function getToolsForPage(page) {
+  const isJewelry = page && page.includes('/jewelry');
+  // search_jewelry only on jewelry page — other pages don't need it
+  return TOOLS.filter(t => t.function.name !== 'search_jewelry' || isJewelry);
+}
+
 // ── Tool Declarations ─────────────────────────────────────────────────────────
 const TOOLS = [
   {
@@ -297,14 +304,17 @@ const TOOLS = [
 // ── Model call with automatic fallback ───────────────────────────────────────
 // Primary: llama-3.3-70b-versatile (100k TPD free)
 // Fallback: llama-3.1-8b-instant  (500k TPD free) — activates on 429
+// NOTE: 8B model receives tools only if explicitly allowed — tool calling on 8B is unstable
 async function callGroq(messages, tools, useFallback = false) {
   const model = useFallback ? 'llama-3.1-8b-instant' : 'llama-3.3-70b-versatile';
+  // 8B: skip tools entirely — unreliable tool calling causes failed_generation
+  const safeTools = (tools && !useFallback) ? tools : null;
   return groq.chat.completions.create({
     model,
     messages,
-    ...(tools ? { tools, tool_choice: 'auto' } : {}),
-    temperature: 0.72,
-    max_tokens: 700
+    ...(safeTools ? { tools: safeTools, tool_choice: 'auto' } : {}),
+    temperature: 0.68,
+    max_tokens: 1400  // was 700 — tool call JSON alone uses 200-400 tokens
   });
 }
 
@@ -344,31 +354,61 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web',
     { role: 'user', content: userMessage }
   ];
 
-  // Call with fallback on 429
+  const pageTools = getToolsForPage(page);
+
+  // ── First call (with tools) ──────────────────────────────────────────────
   let completion;
   let useFallback = false;
   try {
-    completion = await callGroq(messages, TOOLS, false);
+    completion = await callGroq(messages, pageTools, false);
   } catch (e) {
-    if (e.status === 429 || String(e.message).includes('rate_limit') || String(e.message).includes('429')) {
-      console.warn('Groq 70B rate limit — falling back to 8B-instant');
+    const is429 = e.status === 429 || String(e.message).includes('rate_limit') || String(e.message).includes('429');
+    if (is429) {
+      console.warn('Groq 70B rate limit — falling back to 8B-instant (no tools)');
       useFallback = true;
-      completion = await callGroq(messages, TOOLS, true);
+      completion = await callGroq(messages, null, true); // 8B: no tools
     } else {
       throw e;
     }
   }
 
   const msg = completion.choices[0].message;
+  const finishReason = completion.choices[0].finish_reason;
   let assistantText = '';
 
-  if (msg.tool_calls && msg.tool_calls.length > 0) {
+  // ── Detect failed_generation — retry without tools ───────────────────────
+  const isFailed = finishReason === 'failed_generation'
+    || (msg.content && msg.content.includes('failed_generation'))
+    || (msg.content && msg.content.includes('Failed to call a function'));
+
+  if (isFailed) {
+    console.warn('Groq failed_generation — retrying without tools');
+    let retryCompletion;
+    try {
+      retryCompletion = await callGroq(messages, null, useFallback);
+    } catch (e) {
+      if (!useFallback) {
+        retryCompletion = await callGroq(messages, null, true);
+        useFallback = true;
+      } else throw e;
+    }
+    assistantText = retryCompletion.choices[0].message.content || '';
+    messages.push({ role: 'assistant', content: assistantText });
+
+  // ── Normal tool call flow ────────────────────────────────────────────────
+  } else if (msg.tool_calls && msg.tool_calls.length > 0) {
     messages.push(msg);
 
     for (const tc of msg.tool_calls) {
       let input;
       try { input = JSON.parse(tc.function.arguments); } catch { input = {}; }
-      const toolResult = await executeTool(supabase, tc.function.name, input, sessionId);
+      let toolResult;
+      try {
+        toolResult = await executeTool(supabase, tc.function.name, input, sessionId);
+      } catch (toolErr) {
+        console.error(`Tool ${tc.function.name} threw:`, toolErr.message);
+        toolResult = { ok: false, error: toolErr.message };
+      }
       messages.push({ role: 'tool', tool_call_id: tc.id, content: JSON.stringify(toolResult) });
     }
 
@@ -378,10 +418,13 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web',
     } catch (e) {
       if (!useFallback && (e.status === 429 || String(e.message).includes('rate_limit'))) {
         completion2 = await callGroq(messages, null, true);
+        useFallback = true;
       } else throw e;
     }
     assistantText = completion2.choices[0].message.content || '';
     messages.push({ role: 'assistant', content: assistantText });
+
+  // ── Plain text response ──────────────────────────────────────────────────
   } else {
     assistantText = msg.content || '';
     messages.push({ role: 'assistant', content: assistantText });
@@ -390,7 +433,7 @@ async function processMessage(supabase, sessionId, userMessage, channel = 'web',
   const updatedHistory = messages.slice(1);
   await saveSession(supabase, session, sessionId, channel, updatedHistory);
 
-  return assistantText || 'Sorry, I couldn\'t process that. Please try again. 🙏';
+  return assistantText || 'Desculpe, não consegui processar. Pode repetir? 🙏';
 }
 
 async function saveSession(supabase, existing, sessionId, channel, messages) {
