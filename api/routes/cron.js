@@ -130,6 +130,112 @@ router.get('/abandoned-carts', async (req, res) => {
   }
 });
 
+// ── Catalog Sync ──────────────────────────────────────────────────────────────
+// GET /api/cron/sync-catalog — fetches Estação 79 catalog, inserts new products
+// Runs daily at 9am via Vercel Cron. Protected by CRON_SECRET.
+router.get('/sync-catalog', async (req, res) => {
+  const secret = req.headers['x-cron-secret'] || req.headers['authorization']?.replace('Bearer ','') || req.query.secret;
+  if (process.env.CRON_SECRET && secret !== process.env.CRON_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const CATALOG_TOKEN = '2441f464b56e9641d86b2772287d13d5';
+  const API_BASE      = 'https://dados.conectavenda.com.br/api';
+
+  function mapCategory(g = '') {
+    g = g.toUpperCase();
+    if (g.includes('BRINCO'))    return 'BRINCOS';
+    if (g.includes('ANEL'))      return 'ANÉIS';
+    if (g.includes('COLAR') || g.includes('CORRENTE') || g.includes('GARGANTILHA')) return 'COLARES';
+    if (g.includes('PULSEIRA') || g.includes('BRACELETE')) return 'PULSEIRAS E BRACELETES';
+    if (g.includes('CONJUNTO'))  return 'CONJUNTOS';
+    if (g.includes('PINGENTE'))  return 'PINGENTES';
+    if (g.includes('ACESSORIO') || g.includes('ACESSÓRIO')) return 'ACESSÓRIOS';
+    if (g.includes('ACO') || g.includes('AÇO')) return 'AÇO';
+    return g || 'OUTROS';
+  }
+
+  function transformProduct(raw) {
+    const vars = []; let minP = null, maxP = null;
+    for (const v of (raw.produto_variacoes || [])) {
+      const p = (v.variacao_preco || 0) / 100;
+      if (p > 0) { if (minP === null || p < minP) minP = p; if (maxP === null || p > maxP) maxP = p; }
+      vars.push({ id: v.variacao_id, desc: v.variacao_descricao || '', price: p, stock: v.variacao_estoque ?? null, active: v.variacao_ativo !== 0, order: v.variacao_ordem || 0 });
+    }
+    const imgs = raw.produto_imagens || [];
+    return {
+      id:           raw.produto_id,
+      source_id:    raw.produto_id,
+      sku:          (raw.produto_referencia || '').trim(),
+      name:         (raw.produto_nome || '').trim(),
+      description:  (raw.produto_descricao || '').replace(/<[^>]+>/g, '').trim(),
+      category:     mapCategory(raw.produto_grupo_descricao),
+      category_raw: raw.produto_grupo_descricao || '',
+      images:       imgs,
+      img_primary:  imgs[0] || '',
+      img_hover:    imgs[1] || imgs[0] || '',
+      min_price:    minP || 0,
+      max_price:    maxP || 0,
+      variations:   vars,
+      active:       raw.produto_ativo !== 0,
+      featured:     !!raw.produto_tag_destaque,
+      sort_order:   0,
+      updated_at:   new Date().toISOString()
+    };
+  }
+
+  try {
+    // 1. Open session
+    const sessRes = await fetch(`${API_BASE}/cliente/iniciar`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'conecta-session': '' },
+      body: JSON.stringify({ catalogo: CATALOG_TOKEN })
+    });
+    const session = sessRes.headers.get('conecta-session');
+    if (!session) throw new Error('No Conecta Venda session token');
+
+    // 2. Fetch catalog
+    const catRes  = await fetch(`${API_BASE}/produtos/listar`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'conecta-session': session },
+      body: JSON.stringify({ catalogo: CATALOG_TOKEN, pagina: 1, limite: 1000 })
+    });
+    const rawItems = await catRes.json();
+    if (!Array.isArray(rawItems)) throw new Error(`Unexpected catalog response: ${JSON.stringify(rawItems).slice(0,200)}`);
+
+    // Deduplicate by produto_id
+    const seen = new Map();
+    for (const p of rawItems) if (p.produto_id && !seen.has(p.produto_id)) seen.set(p.produto_id, p);
+    const unique = [...seen.values()];
+
+    // 3. Compare with DB
+    const { data: existing } = await req.supabase.from('jewelry_products').select('source_id, sku').limit(2000);
+    const existingIds  = new Set((existing || []).map(r => r.source_id).filter(Boolean));
+    const existingSkus = new Set((existing || []).map(r => r.sku).filter(Boolean));
+
+    const transformed = unique.map(transformProduct);
+    const newProducts = transformed.filter(p => p.source_id && !existingIds.has(p.source_id) && !existingSkus.has(p.sku));
+
+    // 4. Insert new products
+    let inserted = 0;
+    for (let i = 0; i < newProducts.length; i += 50) {
+      const { error } = await req.supabase.from('jewelry_products').insert(newProducts.slice(i, i + 50));
+      if (!error) inserted += Math.min(50, newProducts.length - i);
+      else console.error('[sync-catalog] Insert error:', error.message);
+    }
+
+    const summary = {
+      ok: true, timestamp: new Date().toISOString(),
+      catalogTotal: unique.length, dbBefore: existing?.length || 0,
+      inserted, newProducts: newProducts.map(p => ({ sku: p.sku, name: p.name, category: p.category }))
+    };
+    console.log(`[sync-catalog] Done: ${inserted} inserted, ${unique.length} in catalog`);
+    return res.json(summary);
+
+  } catch (err) {
+    console.error('[sync-catalog] Error:', err.message);
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 // ── Manual email dispatch ─────────────────────────────────────────────────────
 // POST /api/cron/send  { type, to, name }
 // type: welcome | care | crosssell | review | referral | vip | gift | brand
