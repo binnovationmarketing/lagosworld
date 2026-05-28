@@ -1375,6 +1375,49 @@ function isServedZip(zip) {
   return (n >= 15000 && n <= 19699) || (n >= 7000 && n <= 8999);
 }
 
+// County lookup by 3-digit ZIP prefix — PA & NJ service area
+const ZIP_COUNTY = {
+  '190': 'Delaware County, PA',   // Drexel Hill, Upper Darby, Haverford
+  '191': 'Philadelphia County, PA',
+  '192': 'Philadelphia County, PA',
+  '193': 'Chester County, PA',    // Exton, West Chester
+  '194': 'Montgomery County, PA', // Norristown, King of Prussia, Ambler
+  '195': 'Montgomery County, PA', // Lansdale, Hatfield
+  '196': 'Montgomery County, PA', // Ardmore, Bala Cynwyd
+  '185': 'Bucks County, PA',
+  '186': 'Bucks County, PA',
+  '187': 'Bucks County, PA',
+  '188': 'Bucks County, PA',
+  '189': 'Bucks County, PA',      // Doylestown, Newtown
+  '155': 'Allegheny County, PA',
+  '151': 'Allegheny County, PA',
+  '152': 'Allegheny County, PA',
+  '070': 'Hudson County, NJ',
+  '071': 'Bergen County, NJ',
+  '072': 'Bergen County, NJ',
+  '073': 'Bergen County, NJ',     // Newark area
+  '074': 'Essex County, NJ',
+  '075': 'Essex County, NJ',
+  '076': 'Passaic County, NJ',
+  '077': 'Middlesex County, NJ',
+  '078': 'Middlesex County, NJ',
+  '079': 'Somerset County, NJ',
+  '080': 'Camden County, NJ',     // Camden, Cherry Hill
+  '081': 'Camden County, NJ',     // Voorhees, Haddonfield, Marlton
+  '082': 'Burlington County, NJ', // Mt Holly, Medford
+  '083': 'Cumberland County, NJ',
+  '084': 'Atlantic County, NJ',
+  '085': 'Mercer County, NJ',     // Trenton area
+  '086': 'Mercer County, NJ',
+  '087': 'Monmouth County, NJ',
+  '088': 'Middlesex County, NJ',
+  '089': 'Monmouth County, NJ',
+};
+
+function getCounty(zip) {
+  return ZIP_COUNTY[zip.slice(0, 3)] || null;
+}
+
 function showZipMsg(text, type) {
   const el = document.getElementById('zip-msg');
   el.textContent = text;
@@ -1392,29 +1435,51 @@ async function checkZip() {
     return;
   }
 
-  const served = isServedZip(zip);
+  const btn = document.querySelector('.zip-btn');
+  const origTxt = btn.textContent;
+  btn.textContent = 'Checking...';
+  btn.disabled = true;
 
-  // Fire-and-forget — record even if user abandons after this
+  const served = isServedZip(zip);
+  const county = getCounty(zip);
+
+  // Lookup city from Zippopotam (free, no auth, CORS-friendly)
+  let city = '', stateAbbr = '';
+  try {
+    const geo = await fetch(`https://api.zippopotam.us/us/${zip}`);
+    if (geo.ok) {
+      const gd = await geo.json();
+      if (gd?.places?.[0]) {
+        city = gd.places[0]['place name'] || '';
+        stateAbbr = gd.places[0]['state abbreviation'] || '';
+      }
+    }
+  } catch(e) { /* non-blocking */ }
+
+  btn.textContent = origTxt;
+  btn.disabled = false;
+
+  // Fire-and-forget — record even if user abandons after this point
   fetch('/api/cleaning/zip-capture', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ zip, served, source: 'hero_widget' })
+    body: JSON.stringify({ zip, served, city: city || null, county: county || null, state_abbr: stateAbbr || null, source: 'hero_widget' })
   }).catch(() => {});
 
+  const location = city ? `${city}${stateAbbr ? ', ' + stateAbbr : ''}` : `ZIP ${zip}`;
+
   if (served) {
-    showZipMsg('✓ Great news — we serve your area! Fill in your details below.', 'ok');
-    // Pre-fill city/zip field in the booking form
+    showZipMsg(`✓ ${location} — we serve your area! Fill in your details below.`, 'ok');
     const cityInp = document.querySelector('#booking-form input[name="city"]');
-    if (cityInp && !cityInp.value) cityInp.value = zip;
-    // Smooth scroll to form with a small delay so the user sees the success message
+    if (cityInp && !cityInp.value) cityInp.value = city ? `${city}, ${zip}` : zip;
     setTimeout(() => {
       document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 600);
+    }, 700);
   } else {
-    showZipMsg('We may be expanding to your area soon — leave your details and we\'ll notify you!', 'warn');
+    showZipMsg(`${location} — we may be expanding there soon! Leave your details and we'll reach out.`, 'warn');
     setTimeout(() => {
       document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 900);
+    }, 1000);
   }
 }
 
