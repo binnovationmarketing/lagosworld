@@ -137,6 +137,23 @@ nav{position:sticky;top:0;z-index:300;background:#fff;border-bottom:1px solid va
 @media(max-width:900px){.hero-sub{margin:0 auto 2rem}}
 .hero-ctabar{display:flex;gap:.85rem;flex-wrap:wrap}
 @media(max-width:900px){.hero-ctabar{justify-content:center}}
+/* ZIP WIDGET */
+.zip-widget{margin-bottom:1.5rem}
+.zip-row{display:flex;gap:.6rem;max-width:480px}
+@media(max-width:900px){.zip-row{max-width:100%}}
+.zip-input-wrap{flex:1;display:flex;align-items:center;background:rgba(255,255,255,.95);border-radius:8px;padding:0 .8rem;gap:.4rem;min-width:0}
+.zip-pin{font-size:1rem;flex-shrink:0}
+.zip-inp{flex:1;border:none;outline:none;background:transparent;font-size:1rem;font-weight:600;color:#0f172a;padding:.85rem 0;font-family:'Inter',sans-serif;min-width:0}
+.zip-inp::placeholder{font-weight:400;color:#94a3b8}
+.zip-btn{background:#16A34A;color:#fff;border:none;border-radius:8px;padding:.85rem 1.2rem;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;letter-spacing:.02em;transition:background .2s,transform .1s;flex-shrink:0}
+.zip-btn:hover{background:#15803d;transform:translateY(-1px)}
+.zip-btn:active{transform:translateY(0)}
+.zip-hint{font-size:.68rem;opacity:.7;margin-top:.5rem;letter-spacing:.02em}
+.zip-msg{margin-top:.6rem;padding:.55rem .9rem;border-radius:6px;font-size:.78rem;font-weight:600}
+.zip-msg.ok{background:rgba(74,222,128,.2);border:1px solid rgba(74,222,128,.4);color:#4ADE80}
+.zip-msg.err{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.zip-msg.warn{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);color:#fcd34d}
+
 .hero-trust{display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:2.5rem;align-items:center}
 @media(max-width:900px){.hero-trust{justify-content:center}}
 .trust-badge{display:flex;align-items:center;gap:.4rem;font-size:.72rem;opacity:.9}
@@ -450,11 +467,25 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
   <div class="hero-inner container">
     <div>
       <div class="hero-badge">⭐ Highly Rated Cleaning Service Serving PA & NJ</div>
-      <h1>Professional <span>Cleaning Services</span> You Can Trust</h1>
-      <p class="hero-sub">From deep house cleaning to power washing — Lagos Cleaning delivers spotless results with trained, insured professionals. Serving Pennsylvania and New Jersey.</p>
-      <div class="hero-ctabar">
-        <a href="#booking" class="btn btn-green btn-xl">📅 Book Online Now</a>
-        <a href="tel:+12156262345" class="btn btn-outline btn-xl" style="border-color:rgba(255,255,255,.5);color:#fff">📞 Get a Free Quote</a>
+      <h1>Your Home Should Feel Like <span>a Reward,</span> Not Another Responsibility.</h1>
+      <p class="hero-sub">Professional cleaning, power washing &amp; move-in/out services — so you can stop managing the mess and start living the life you actually want.</p>
+
+      <!-- ZIP CAPTURE WIDGET -->
+      <div class="zip-widget">
+        <div class="zip-row">
+          <div class="zip-input-wrap">
+            <span class="zip-pin">📍</span>
+            <input type="text" id="hero-zip" class="zip-inp" maxlength="5" inputmode="numeric" pattern="[0-9]{5}" placeholder="Enter your ZIP code" autocomplete="postal-code" oninput="this.value=this.value.replace(/\D/g,'')">
+          </div>
+          <button class="zip-btn" onclick="checkZip()">Get a Free Estimate →</button>
+        </div>
+        <div id="zip-msg" class="zip-msg" style="display:none"></div>
+        <p class="zip-hint">We serve PA &amp; NJ — enter your ZIP to check coverage &amp; book instantly</p>
+      </div>
+
+      <div class="hero-ctabar" style="margin-top:1rem">
+        <a href="tel:+12156262345" class="btn btn-outline btn-xl" style="border-color:rgba(255,255,255,.5);color:#fff">📞 Call for Immediate Booking</a>
+        <a href="https://wa.me/12156262345" class="btn btn-outline btn-xl" style="border-color:rgba(74,222,128,.5);color:#4ADE80">💬 WhatsApp Us</a>
       </div>
       <div class="hero-trust">
         <div class="trust-badge"><svg viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Bonded & Insured</div>
@@ -1337,6 +1368,62 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
 </div>
 
 <script>
+// ── ZIP CAPTURE WIDGET ───────────────────────────────────────────────────────
+// PA zip ranges: 150xx–196xx | NJ: 070xx–089xx
+function isServedZip(zip) {
+  const n = parseInt(zip, 10);
+  return (n >= 15000 && n <= 19699) || (n >= 7000 && n <= 8999);
+}
+
+function showZipMsg(text, type) {
+  const el = document.getElementById('zip-msg');
+  el.textContent = text;
+  el.className = 'zip-msg ' + type;
+  el.style.display = '';
+}
+
+async function checkZip() {
+  const inp = document.getElementById('hero-zip');
+  const zip = inp.value.trim();
+
+  if (zip.length !== 5 || !/^\d{5}$/.test(zip)) {
+    showZipMsg('⚠ Please enter a valid 5-digit ZIP code.', 'err');
+    inp.focus();
+    return;
+  }
+
+  const served = isServedZip(zip);
+
+  // Fire-and-forget — record even if user abandons after this
+  fetch('/api/cleaning/zip-capture', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ zip, served, source: 'hero_widget' })
+  }).catch(() => {});
+
+  if (served) {
+    showZipMsg('✓ Great news — we serve your area! Fill in your details below.', 'ok');
+    // Pre-fill city/zip field in the booking form
+    const cityInp = document.querySelector('#booking-form input[name="city"]');
+    if (cityInp && !cityInp.value) cityInp.value = zip;
+    // Smooth scroll to form with a small delay so the user sees the success message
+    setTimeout(() => {
+      document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 600);
+  } else {
+    showZipMsg('We may be expanding to your area soon — leave your details and we\'ll notify you!', 'warn');
+    setTimeout(() => {
+      document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 900);
+  }
+}
+
+// Allow Enter key on zip input
+document.addEventListener('DOMContentLoaded', () => {
+  const zi = document.getElementById('hero-zip');
+  if (zi) zi.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); checkZip(); } });
+});
+
 // FAQ TOGGLE
 function toggleFaq(el) {
   const item = el.parentElement;
