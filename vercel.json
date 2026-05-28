@@ -26,6 +26,7 @@
     { "source": "/terms", "destination": "/terms/index.html" },
     { "source": "/jewelry", "destination": "/jewelry/index.html" },
     { "source": "/cleaning", "destination": "/cleaning/index.html" },
+    { "source": "/airbnb", "destination": "/airbnb/index.html" },
     { "source": "/courses", "destination": "/courses/index.html" },
     { "source": "/powerwashing", "destination": "/powerwashing/index.html" }
   ],

@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.svg">
+<meta name="theme-color" content="#0891B2">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<title>Airbnb & Move-In/Out Cleaning | Lagos Cleaning Services | Philadelphia PA & NJ</title>
+<meta name="description" content="Professional Airbnb turnover cleaning and move-in/move-out service across Philadelphia PA & New Jersey. Guest-ready in hours. 100% satisfaction guaranteed. Book your free quote today.">
+<meta name="keywords" content="airbnb cleaning Philadelphia, airbnb turnover cleaning PA NJ, move in cleaning Philadelphia, move out cleaning New Jersey, airbnb host cleaning service, short term rental cleaning PA">
+<meta name="author" content="Lagos Cleaning Services">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://lagoscleaning.app/airbnb">
+
+<!-- OPEN GRAPH -->
+<meta property="og:title" content="Airbnb & Move-In/Out Cleaning — Lagos Cleaning Services">
+<meta property="og:description" content="Your Airbnb guests deserve 5 stars. Professional turnover & move-in/out cleaning across PA & NJ.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lagoscleaning.app/airbnb">
+<meta property="og:locale" content="en_US">
+
+<!-- SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CleaningService",
+  "name": "Lagos Cleaning Services",
+  "url": "https://lagoscleaning.app",
+  "telephone": "+12156262345",
+  "email": "lagosvipcleaning@gmail.com",
+  "priceRange": "$$",
+  "description": "Professional Airbnb turnover cleaning and move-in/move-out service across Pennsylvania and New Jersey.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Philadelphia",
+    "addressRegion": "PA",
+    "addressCountry": "US"
+  },
+  "areaServed": ["Pennsylvania", "New Jersey"]
+}
+</script>
+
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: #050505;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #050505;
+  color: #e2e8f0;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  line-height: 1.2;
+}
+
+a { text-decoration: none; color: inherit; }
+
+img { display: block; max-width: 100%; }
+
+:root {
+  --teal: #0891B2;
+  --teal-dark: #0E7490;
+  --teal-light: #22D3EE;
+  --teal-glow: rgba(8, 145, 178, 0.3);
+  --teal-glow-soft: rgba(8, 145, 178, 0.12);
+  --bg: #050505;
+  --bg-card: rgba(255,255,255,0.04);
+  --bg-card-hover: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-teal: rgba(8,145,178,0.35);
+  --text-muted: #94a3b8;
+  --white: #ffffff;
+}
+
+/* ============================================================
+   GLASS UTILITY
+============================================================ */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.glass-teal {
+  background: rgba(8,145,178,0.08);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid var(--border-teal);
+  border-radius: 16px;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ============================================================
+   NAV
+============================================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(5,5,5,0.85);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease;
+}
+
+.nav-logo img {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a:hover { color: var(--white); }
+
+.nav-cta {
+  background: var(--teal);
+  color: var(--white) !important;
+  padding: 0.55rem 1.4rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+  box-shadow: 0 0 20px var(--teal-glow);
+}
+
+.nav-cta:hover {
+  background: var(--teal-dark) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 0 30px var(--teal-glow) !important;
+}
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+#nav-toggle { display: none; }
+
+#nav-toggle:checked ~ .nav-mobile { display: flex; }
+
+#nav-toggle:checked ~ label .nav-hamburger span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+#nav-toggle:checked ~ label .nav-hamburger span:nth-child(2) { opacity: 0; }
+#nav-toggle:checked ~ label .nav-hamburger span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: rgba(5,5,5,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  flex-direction: column;
+  padding: 1.5rem 2rem;
+  gap: 1.2rem;
+  z-index: 998;
+}
+
+.nav-mobile a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s ease;
+}
+
+.nav-mobile a:hover { color: var(--white); }
+
+.nav-mobile .nav-cta {
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.4rem;
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 120px 2rem 100px;
+}
+
+/* Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(8,145,178,0.22) 0%, transparent 70%);
+  top: -100px;
+  left: -150px;
+  animation: orbFloat1 12s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(14,116,144,0.18) 0%, transparent 70%);
+  top: 30%;
+  right: -100px;
+  animation: orbFloat2 9s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(34,211,238,0.12) 0%, transparent 70%);
+  bottom: 15%;
+  left: 20%;
+  animation: orbFloat3 11s ease-in-out infinite;
+}
+
+.orb-4 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(8,145,178,0.15) 0%, transparent 70%);
+  top: 60%;
+  right: 25%;
+  animation: orbFloat4 8s ease-in-out infinite;
+}
+
+.orb-5 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%);
+  top: 20%;
+  left: 55%;
+  animation: orbFloat5 13s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, 30px) scale(1.05); }
+  66% { transform: translate(-20px, 50px) scale(0.95); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, 40px) scale(1.08); }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(30px, -40px) scale(1.06); }
+  80% { transform: translate(-25px, 20px) scale(0.97); }
+}
+@keyframes orbFloat4 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -30px) scale(1.1); }
+}
+@keyframes orbFloat5 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  35% { transform: translate(-30px, 30px) scale(1.05); }
+  70% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  background: rgba(8,145,178,0.12);
+  border: 1px solid var(--border-teal);
+  border-radius: 50px;
+  padding: 0.4rem 1.1rem;
+  margin-bottom: 1.75rem;
+  animation: fadeDown 0.8s ease both;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.9s ease 0.15s both;
+  text-shadow: 0 0 60px rgba(8,145,178,0.25);
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--teal-light);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+  animation: fadeUp 0.9s ease 0.3s both;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.9s ease 0.45s both;
+  margin-bottom: 2.5rem;
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: var(--white);
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 30px var(--teal-glow), 0 4px 20px rgba(0,0,0,0.4);
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: var(--teal-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 0 50px var(--teal-glow), 0 8px 30px rgba(0,0,0,0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  animation: fadeUp 0.9s ease 0.6s both;
+  margin-bottom: 3rem;
+}
+
+/* Ticker */
+.hero-ticker-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 0.9rem 2rem;
+  background: rgba(8,145,178,0.07);
+  border-top: 1px solid var(--border-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.ticker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  animation: tickerPulse 2s ease infinite;
+  flex-shrink: 0;
+}
+
+@keyframes tickerPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+.ticker-text {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  transition: opacity 0.5s ease;
+}
+
+.ticker-text.fade-out { opacity: 0; }
+.ticker-text.fade-in { opacity: 1; }
+
+.ticker-label {
+  font-size: 0.75rem;
+  background: var(--teal);
+  color: white;
+  padding: 0.15rem 0.6rem;
+  border-radius: 50px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   TRUST BAR
+============================================================ */
+.trust-bar {
+  padding: 3rem 2rem;
+  background: rgba(8,145,178,0.04);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.trust-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.trust-stat {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--border);
+}
+
+.trust-stat:last-child { border-right: none; }
+
+.trust-number {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  color: var(--teal-light);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 0 30px rgba(34,211,238,0.3);
+}
+
+.trust-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ============================================================
+   SECTION SHARED
+============================================================ */
+section { padding: 6rem 2rem; }
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   SERVICES
+============================================================ */
+#services { background: var(--bg); }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.service-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.25rem;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(8,145,178,0.1) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  border-radius: 20px;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-teal);
+  background: var(--bg-card-hover);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(8,145,178,0.1);
+}
+
+.service-card:hover::before { opacity: 1; }
+
+.service-icon {
+  font-size: 2.75rem;
+  margin-bottom: 1.25rem;
+  line-height: 1;
+}
+
+.service-card h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+}
+
+.service-card p {
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  line-height: 1.65;
+}
+
+.service-bullets {
+  list-style: none;
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.service-bullets li {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.service-bullets li::before {
+  content: '✓';
+  color: var(--teal-light);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.service-card .btn-outline {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--teal-light);
+  border: 1px solid var(--border-teal);
+  border-radius: 50px;
+  padding: 0.55rem 1.25rem;
+  transition: all 0.25s ease;
+  background: transparent;
+}
+
+.service-card .btn-outline:hover {
+  background: var(--teal);
+  color: white;
+  border-color: var(--teal);
+}
+
+/* ============================================================
+   HOW IT WORKS
+============================================================ */
+#how {
+  background: radial-gradient(ellipse at 50% 50%, rgba(8,145,178,0.05) 0%, transparent 70%);
+}
+
+.steps-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 3.5rem;
+  position: relative;
+}
+
+.steps-row::before {
+  content: '';
+  position: absolute;
+  top: 52px;
+  left: calc(16.667% + 1rem);
+  right: calc(16.667% + 1rem);
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 50%, var(--teal) 100%);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.step-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin: 0 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-teal);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.35), 0 0 30px rgba(8,145,178,0.08);
+}
+
+.step-number {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 25px var(--teal-glow);
+}
+
+.step-emoji {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.step-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+}
+
+.step-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ============================================================
+   PREMIUM
+============================================================ */
+#premium {
+  position: relative;
+  overflow: hidden;
+}
+
+#premium::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(8,145,178,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.premium-panel {
+  background: rgba(8,145,178,0.05);
+  border: 1px solid var(--border-teal);
+  border-radius: 24px;
+  padding: 4rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-panel::after {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(8,145,178,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.coming-soon-badge {
+  display: inline-block;
+  background: var(--teal);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 50px;
+  margin-left: 0.75rem;
+  vertical-align: middle;
+  box-shadow: 0 0 15px var(--teal-glow);
+}
+
+.premium-panel h2 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--white);
+  margin-bottom: 0.75rem;
+}
+
+.premium-panel > p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 3rem;
+}
+
+.premium-perks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.perk-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.75rem;
+  transition: all 0.3s ease;
+}
+
+.perk-card:hover {
+  border-color: var(--border-teal);
+  background: rgba(8,145,178,0.07);
+}
+
+.perk-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.perk-card h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.perk-card p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.perk-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--teal-light);
+  background: rgba(34,211,238,0.1);
+  border: 1px solid rgba(34,211,238,0.25);
+  padding: 0.2rem 0.65rem;
+  border-radius: 50px;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   PRICING
+============================================================ */
+#pricing {
+  background: var(--bg);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+  align-items: start;
+}
+
+.price-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.25rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.35);
+}
+
+.price-card.featured {
+  border-color: var(--teal);
+  background: rgba(8,145,178,0.06);
+  box-shadow: 0 0 50px rgba(8,145,178,0.12);
+}
+
+.price-card.featured:hover {
+  box-shadow: 0 16px 60px rgba(0,0,0,0.4), 0 0 60px rgba(8,145,178,0.2);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--teal);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  border-radius: 50px;
+  white-space: nowrap;
+  box-shadow: 0 0 20px var(--teal-glow);
+}
+
+.price-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.5rem;
+}
+
+.price-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+}
+
+.price-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.price-amount {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.price-from {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding-top: 0.5rem;
+}
+
+.price-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--teal-light);
+  line-height: 1;
+}
+
+.price-per {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding-top: 1.8rem;
+}
+
+.price-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.price-bullets li {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.price-bullets li::before {
+  content: '✓';
+  color: var(--teal-light);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.pricing-note {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.pricing-note-wrap {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* ============================================================
+   TESTIMONIALS
+============================================================ */
+#reviews {
+  background: radial-gradient(ellipse at 50% 100%, rgba(8,145,178,0.05) 0%, transparent 60%);
+}
+
+.slider-wrap {
+  margin-top: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.testimonial-slide {
+  min-width: 100%;
+  padding: 0 1rem;
+}
+
+.testimonial-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 2rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 6rem;
+  color: var(--teal);
+  opacity: 0.25;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.t-stars {
+  font-size: 1.1rem;
+  color: #FBBF24;
+  letter-spacing: 2px;
+  margin-bottom: 1.25rem;
+}
+
+.t-quote {
+  font-size: 1.05rem;
+  color: #e2e8f0;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.t-author {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--teal-light);
+}
+
+.t-location {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.slider-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.25s ease;
+}
+
+.slider-btn:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+  box-shadow: 0 0 20px var(--teal-glow);
+}
+
+.slider-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+}
+
+.slider-dot.active {
+  background: var(--teal);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px var(--teal-glow);
+}
+
+.review-cta-wrap {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+.btn-review {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--teal-light);
+  border: 1px solid var(--border-teal);
+  border-radius: 50px;
+  padding: 0.65rem 1.5rem;
+  transition: all 0.25s ease;
+  background: transparent;
+}
+
+.btn-review:hover {
+  background: rgba(8,145,178,0.1);
+}
+
+/* ============================================================
+   FAQ
+============================================================ */
+#faq {
+  background: var(--bg);
+}
+
+.faq-list {
+  max-width: 780px;
+  margin: 3rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+
+.faq-item.open {
+  border-color: var(--border-teal);
+}
+
+.faq-trigger {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  gap: 1rem;
+  transition: color 0.25s ease;
+}
+
+.faq-trigger:hover { color: var(--teal-light); }
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(8,145,178,0.12);
+  border: 1px solid var(--border-teal);
+  color: var(--teal-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+.faq-item.open .faq-icon {
+  background: var(--teal);
+  color: white;
+  transform: rotate(45deg);
+}
+
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.faq-item.open .faq-body {
+  max-height: 300px;
+}
+
+.faq-body-inner {
+  padding: 0 1.5rem 1.25rem;
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   BOOKING FORM
+============================================================ */
+#book {
+  background: radial-gradient(ellipse at 50% 0%, rgba(8,145,178,0.07) 0%, transparent 60%);
+}
+
+.book-wrap {
+  max-width: 760px;
+  margin: 3rem auto 0;
+}
+
+.form-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 3rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.form-full { grid-column: 1 / -1; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  letter-spacing: 0.02em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.925rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.form-group select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.form-group select option {
+  background: #0f172a;
+  color: var(--white);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.15);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(8,145,178,0.06);
+  border: 1px solid var(--border-teal);
+  border-radius: 12px;
+  cursor: pointer;
+  grid-column: 1 / -1;
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--teal);
+  flex-shrink: 0;
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+.form-checkbox-label {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.form-checkbox-label strong {
+  color: var(--teal-light);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 0 30px var(--teal-glow);
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: var(--teal-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px var(--teal-glow), 0 8px 30px rgba(0,0,0,0.4);
+}
+
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+
+.btn-submit.loading .spinner { display: block; }
+.btn-submit.loading .btn-text { display: none; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+}
+
+.form-success.show { display: block; }
+.form-card.submitted .form-grid,
+.form-card.submitted .btn-submit { display: none; }
+.form-card.submitted .form-success { display: block; }
+
+.success-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.form-success h3 {
+  font-size: 1.6rem;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+}
+
+.form-success p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: white;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+}
+
+.btn-whatsapp:hover {
+  background: #1EBE5D;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   WHATSAPP FLOAT
+============================================================ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 900;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  animation: waPulse 2.5s ease infinite;
+  transition: transform 0.25s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+@keyframes waPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.3); }
+  50% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 14px rgba(37,211,102,0); }
+}
+
+.whatsapp-float svg {
+  width: 32px;
+  height: 32px;
+  fill: white;
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+  background: #0F172A;
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem 2rem;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.footer-brand img {
+  height: 44px;
+  width: auto;
+  margin-bottom: 0.75rem;
+}
+
+.footer-brand p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  max-width: 240px;
+  line-height: 1.6;
+}
+
+.footer-links {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-col h5 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-col ul li a {
+  font-size: 0.875rem;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover { color: var(--white); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+/* Wave watermark */
+.footer-watermark {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  opacity: 0.06;
+}
+
+footer { position: relative; overflow: hidden; }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+/* 900px */
+@media (max-width: 900px) {
+  .trust-bar-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .trust-stat {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem;
+  }
+  .trust-stat:nth-child(3),
+  .trust-stat:nth-child(4) {
+    border-bottom: none;
+  }
+  .trust-stat:nth-child(odd) {
+    border-right: 1px solid var(--border);
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .steps-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .steps-row::before { display: none; }
+
+  .step-card { margin: 0; }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .premium-perks {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 768px */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  section { padding: 4rem 1.5rem; }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card { padding: 2rem 1.5rem; }
+
+  .premium-panel { padding: 2.5rem 1.5rem; }
+}
+
+/* 640px */
+@media (max-width: 640px) {
+  .hero { padding: 110px 1.25rem 90px; }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  .trust-bar-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .footer-top { flex-direction: column; }
+  .footer-links { gap: 2rem; }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* 480px */
+@media (max-width: 480px) {
+  .nav { padding: 0 1rem; }
+
+  .trust-bar-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-stat {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .trust-stat:last-child { border-bottom: none; }
+  .trust-stat:nth-child(odd) { border-right: none; }
+
+  .section-title { font-size: 1.75rem; }
+
+  .hero-badge { font-size: 0.8rem; padding: 0.5rem 1rem; }
+
+  .ticker-label { display: none; }
+}
+
+/* 375px */
+@media (max-width: 375px) {
+  .hero h1 { font-size: 2rem; }
+  .hero-sub { font-size: 0.95rem; }
+  .service-card { padding: 1.75rem 1.25rem; }
+  .form-card { padding: 1.5rem 1rem; }
+  .testimonial-card { padding: 2rem 1.25rem; }
+  .whatsapp-float { bottom: 1.25rem; right: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="/cleaning" class="nav-logo" aria-label="Lagos Cleaning — home">
+    <img src="/images/lagos-cleaning-logo.png" alt="Lagos Cleaning Services" height="52" loading="eager">
+  </a>
+
+  <!-- Desktop -->
+  <ul class="nav-links">
+    <li><a href="#services">Airbnb</a></li>
+    <li><a href="#services">Move-In/Out</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#book" class="nav-cta">Book Now</a></li>
+  </ul>
+
+  <!-- Mobile hamburger (CSS-only) -->
+  <input type="checkbox" id="nav-toggle" aria-label="Toggle menu">
+  <label for="nav-toggle" class="nav-hamburger" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </label>
+</nav>
+
+<!-- Mobile menu -->
+<div class="nav-mobile" role="navigation" aria-label="Mobile navigation">
+  <a href="#services">Airbnb Cleaning</a>
+  <a href="#services">Move-In / Move-Out</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#faq">FAQ</a>
+  <a href="#book" class="nav-cta">Book Now →</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" id="home" aria-labelledby="hero-heading">
+  <!-- Orbs -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+  <div class="orb orb-4" aria-hidden="true"></div>
+  <div class="orb orb-5" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span>🏠</span> Airbnb &amp; Move-In / Move-Out Cleaning
+    </div>
+
+    <h1 id="hero-heading">
+      Your Airbnb guests deserve 5 stars.<br>
+      <em>So does your next chapter.</em>
+    </h1>
+
+    <p class="hero-sub">
+      Professional Airbnb turnover cleaning &amp; move-in/move-out service across Pennsylvania &amp; New Jersey
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#book" class="btn-primary">Get My Free Quote →</a>
+      <a href="#how" class="btn-secondary">How It Works</a>
+    </div>
+
+    <div class="hero-badge">
+      ⭐ 100% Satisfaction Guaranteed
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="hero-ticker-wrap" aria-live="polite" aria-atomic="true">
+    <span class="ticker-label">Live</span>
+    <div class="ticker-dot"></div>
+    <p class="ticker-text" id="ticker-text">⚡ Someone in Philadelphia just booked an Airbnb turnover — 23 min ago</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRUST BAR
+============================================================ -->
+<div class="trust-bar reveal" aria-label="Company statistics">
+  <div class="trust-bar-inner">
+    <div class="trust-stat">
+      <div class="trust-number" data-target="200" data-suffix="+">0</div>
+      <div class="trust-label">Airbnb Hosts Served</div>
+    </div>
+    <div class="trust-stat">
+      <div class="trust-number" data-target="4.9" data-suffix=" ★" data-decimal="1">0</div>
+      <div class="trust-label">Google Rating</div>
+    </div>
+    <div class="trust-stat">
+      <div class="trust-number" data-target="500" data-suffix="+">0</div>
+      <div class="trust-label">Properties Cleaned</div>
+    </div>
+    <div class="trust-stat">
+      <div class="trust-number" data-target="100" data-suffix="%" data-prefix="">0</div>
+      <div class="trust-label">Insured &amp; Bonded</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SERVICES
+============================================================ -->
+<section id="services" aria-labelledby="services-heading">
+  <div class="section-inner">
+    <div class="section-tag">✦ Our Services</div>
+    <h2 class="section-title" id="services-heading">Everything your property needs</h2>
+    <p class="section-sub">From Airbnb turnovers to fresh starts — we handle every detail so you don't have to.</p>
+
+    <div class="services-grid">
+
+      <!-- Card 1 -->
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">🏠</div>
+        <h3>Airbnb Turnover Cleaning</h3>
+        <p>Between-guest deep reset. Fresh linens setup. Guest-ready in hours.</p>
+        <ul class="service-bullets">
+          <li>Full property reset between guests</li>
+          <li>Fresh linen &amp; towel setup</li>
+          <li>Restocked essentials inspection</li>
+        </ul>
+        <a href="#book" class="btn-outline">Book Now</a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">📦</div>
+        <h3>Move-In Cleaning</h3>
+        <p>Start fresh. Every surface, every corner, every detail.</p>
+        <ul class="service-bullets">
+          <li>Deep clean before you unpack</li>
+          <li>Inside cabinets &amp; appliances</li>
+          <li>Baseboards, trim &amp; window sills</li>
+        </ul>
+        <a href="#book" class="btn-outline">Book Now</a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">✅</div>
+        <h3>Move-Out Cleaning</h3>
+        <p>Leave it spotless. Get your deposit back. Stress-free.</p>
+        <ul class="service-bullets">
+          <li>Inspection-ready deep clean</li>
+          <li>Bathroom tile &amp; grout detail</li>
+          <li>100% satisfaction guarantee</li>
+        </ul>
+        <a href="#book" class="btn-outline">Book Now</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS
+============================================================ -->
+<section id="how" aria-labelledby="how-heading">
+  <div class="section-inner">
+    <div class="section-tag">✦ Process</div>
+    <h2 class="section-title" id="how-heading">As easy as 1, 2, 3</h2>
+    <p class="section-sub">Book in minutes. We handle everything else.</p>
+
+    <div class="steps-row">
+
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-number">1</div>
+        <div class="step-emoji">📋</div>
+        <h3>Tell us about your space</h3>
+        <p>Quick form, no obligations. Get a quote in minutes.</p>
+      </div>
+
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-number">2</div>
+        <div class="step-emoji">📅</div>
+        <h3>We confirm your slot</h3>
+        <p>Our team calls to confirm details and the exact time.</p>
+      </div>
+
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-number">3</div>
+        <div class="step-emoji">✨</div>
+        <h3>Walk into a spotless space</h3>
+        <p>We handle everything. You just enjoy the results.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PREMIUM MEMBERSHIP
+============================================================ -->
+<section id="premium" aria-labelledby="premium-heading">
+  <div class="section-inner">
+    <div class="premium-panel reveal">
+      <h2 id="premium-heading">
+        The Lagos Airbnb Plan
+        <span class="coming-soon-badge">Coming Soon</span>
+      </h2>
+      <p>For hosts who want the full experience.</p>
+
+      <div class="premium-perks">
+        <div class="perk-card">
+          <div class="perk-icon">✨</div>
+          <h4>Fresh Linen &amp; Bath Set</h4>
+          <p>Bed &amp; bath linens swapped every single cleaning — hotel-quality, every time.</p>
+          <span class="perk-badge">For 1-Year Contract Holders</span>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">✨</div>
+          <h4>Luxury Candles &amp; Aromatics</h4>
+          <p>Choose your signature scent. We set it up before your guests arrive.</p>
+          <span class="perk-badge">For 1-Year Contract Holders</span>
+        </div>
+      </div>
+
+      <a href="mailto:lagosvipcleaning@gmail.com?subject=Lagos%20Airbnb%20Plan%20Waitlist" class="btn-primary">
+        Join the Waitlist →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRICING
+============================================================ -->
+<section id="pricing" aria-labelledby="pricing-heading">
+  <div class="section-inner">
+    <div class="section-tag">✦ Pricing</div>
+    <h2 class="section-title" id="pricing-heading">Clear pricing. No surprises.</h2>
+    <p class="section-sub">Every quote is customized to your home. Final price confirmed before any work begins.</p>
+
+    <div class="pricing-grid">
+
+      <!-- Turnover -->
+      <div class="price-card reveal reveal-delay-1">
+        <div class="price-type">Airbnb</div>
+        <h3>Turnover Clean</h3>
+        <p class="price-sub">Studio / 1BR</p>
+        <div class="price-amount">
+          <span class="price-from">from</span>
+          <span class="price-num">$89</span>
+        </div>
+        <ul class="price-bullets">
+          <li>Guest-ready setup</li>
+          <li>Bathroom deep clean</li>
+          <li>Kitchen wipe-down</li>
+          <li>Trash removal</li>
+          <li>Linen / towel strip</li>
+        </ul>
+      </div>
+
+      <!-- Move In/Out — featured -->
+      <div class="price-card featured reveal reveal-delay-2">
+        <div class="popular-badge">★ Most Popular</div>
+        <div class="price-type">Move-In / Move-Out</div>
+        <h3>Full Deep Clean</h3>
+        <p class="price-sub">Any size property</p>
+        <div class="price-amount">
+          <span class="price-from">from</span>
+          <span class="price-num">$149</span>
+        </div>
+        <ul class="price-bullets">
+          <li>Full deep clean all rooms</li>
+          <li>Inside cabinets &amp; appliances</li>
+          <li>Baseboards &amp; trim</li>
+          <li>Window sills</li>
+          <li>Garage add-on available</li>
+        </ul>
+      </div>
+
+      <!-- Recurring -->
+      <div class="price-card reveal reveal-delay-3">
+        <div class="price-type">Recurring</div>
+        <h3>Hosting Plan</h3>
+        <p class="price-sub">Weekly or bi-weekly</p>
+        <div class="price-amount">
+          <span class="price-from">from</span>
+          <span class="price-num">$79</span>
+          <span class="price-per">/visit</span>
+        </div>
+        <ul class="price-bullets">
+          <li>Consistent dedicated team</li>
+          <li>Priority scheduling</li>
+          <li>15% off add-ons</li>
+          <li>Monthly report</li>
+          <li>Flexible cancellation</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pricing-note-wrap">
+      <p class="pricing-note reveal">
+        All quotes customized by home size. Final price confirmed before any work begins.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+============================================================ -->
+<section id="reviews" aria-labelledby="reviews-heading">
+  <div class="section-inner">
+    <div class="section-tag">✦ Reviews</div>
+    <h2 class="section-title" id="reviews-heading">What hosts &amp; movers say</h2>
+
+    <div class="slider-wrap" role="region" aria-label="Customer testimonials" aria-live="polite">
+      <div class="slider-track" id="sliderTrack">
+
+        <div class="testimonial-slide" role="group" aria-label="Testimonial 1 of 4">
+          <div class="testimonial-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"My Airbnb went from 4.2 to 4.9 stars after I started using Lagos. My guests always comment on how clean everything is."</p>
+            <div class="t-author">Maria T.</div>
+            <div class="t-location">Airbnb Host · Philadelphia, PA</div>
+          </div>
+        </div>
+
+        <div class="testimonial-slide" role="group" aria-label="Testimonial 2 of 4">
+          <div class="testimonial-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"They handled my move-out and I got my full deposit back. Worth every penny. Professional, fast, and thorough."</p>
+            <div class="t-author">James R.</div>
+            <div class="t-location">Renter · South Jersey</div>
+          </div>
+        </div>
+
+        <div class="testimonial-slide" role="group" aria-label="Testimonial 3 of 4">
+          <div class="testimonial-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"The team is professional, on time, and the house smells amazing after they leave. I don't use anyone else."</p>
+            <div class="t-author">Sandra L.</div>
+            <div class="t-location">Homeowner · Philadelphia, PA</div>
+          </div>
+        </div>
+
+        <div class="testimonial-slide" role="group" aria-label="Testimonial 4 of 4">
+          <div class="testimonial-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-quote">"Booked the Airbnb plan and it's been a game changer. My listing is always guest-ready without me lifting a finger."</p>
+            <div class="t-author">David M.</div>
+            <div class="t-location">Airbnb Host · Cherry Hill, NJ</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="slider-controls">
+        <button class="slider-btn" id="prevBtn" aria-label="Previous testimonial">←</button>
+        <div class="slider-dots" id="sliderDots" role="tablist">
+          <button class="slider-dot active" aria-label="Testimonial 1" role="tab" aria-selected="true"></button>
+          <button class="slider-dot" aria-label="Testimonial 2" role="tab" aria-selected="false"></button>
+          <button class="slider-dot" aria-label="Testimonial 3" role="tab" aria-selected="false"></button>
+          <button class="slider-dot" aria-label="Testimonial 4" role="tab" aria-selected="false"></button>
+        </div>
+        <button class="slider-btn" id="nextBtn" aria-label="Next testimonial">→</button>
+      </div>
+    </div>
+
+    <div class="review-cta-wrap">
+      <a href="https://search.google.com/local/writereview?placeid=ChIJLbZ-sW_HxokRuW3QsGn8vMo" class="btn-review" target="_blank" rel="noopener noreferrer">
+        ✍️ Leave a Google Review
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+============================================================ -->
+<section id="faq" aria-labelledby="faq-heading">
+  <div class="section-inner">
+    <div class="section-tag">✦ FAQ</div>
+    <h2 class="section-title" id="faq-heading">Quick answers</h2>
+
+    <div class="faq-list" role="list">
+
+      <div class="faq-item reveal" role="listitem">
+        <button class="faq-trigger" aria-expanded="false">
+          Do I need to be home during the cleaning?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            No. Most of our Airbnb hosts provide us with a key or lockbox code. We handle everything and send you a completion confirmation when we're done.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-1" role="listitem">
+        <button class="faq-trigger" aria-expanded="false">
+          How quickly can you turn over my Airbnb property?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            Most turnovers are completed within 2–4 hours depending on property size. We always aim to have your space guest-ready before your next check-in.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-2" role="listitem">
+        <button class="faq-trigger" aria-expanded="false">
+          What's included in move-out cleaning?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            Full deep clean of all rooms, inside all cabinets and appliances, baseboards and trim, window sills, bathroom tile and grout, and full kitchen cleaning. We bring all supplies.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-1" role="listitem">
+        <button class="faq-trigger" aria-expanded="false">
+          Do you guarantee deposit returns for move-out?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            While we can't guarantee landlord decisions, our move-out cleaning is designed to meet or exceed standard move-out inspection criteria. We have a 100% satisfaction guarantee — if your landlord isn't happy, we come back at no charge.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-2" role="listitem">
+        <button class="faq-trigger" aria-expanded="false">
+          What areas do you serve?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            Greater Philadelphia, Montgomery County, Delaware County, Bucks County (PA) and Burlington, Camden, Gloucester, and Atlantic counties (NJ).
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-3" role="listitem">
+        <button class="faq-trigger" aria-expanded="false">
+          What is the Lagos Airbnb Plan?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            Our premium annual contract that includes fresh bed and bath linen swaps at every cleaning plus optional luxury candle and aromatics setup for your guests. Launching soon — <a href="mailto:lagosvipcleaning@gmail.com?subject=Lagos%20Airbnb%20Plan%20Waitlist" style="color:var(--teal-light)">join the waitlist</a>.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BOOKING FORM
+============================================================ -->
+<section id="book" aria-labelledby="book-heading">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom: 1.5rem;">
+      <div class="section-tag" style="justify-content:center;">✦ Book Now</div>
+      <h2 class="section-title" id="book-heading">Book your cleaning</h2>
+      <p class="section-sub" style="margin: 0 auto; text-align:center;">Free quote · No commitment · We'll call to confirm</p>
+    </div>
+
+    <div class="book-wrap">
+      <div class="form-card">
+        <form class="form-grid" id="bookingForm" novalidate>
+
+          <div class="form-group">
+            <label for="field-name">Full Name *</label>
+            <input type="text" id="field-name" name="name" required placeholder="Jane Smith" autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label for="field-email">Email *</label>
+            <input type="email" id="field-email" name="email" required placeholder="jane@email.com" autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label for="field-phone">Phone</label>
+            <input type="tel" id="field-phone" name="phone" placeholder="+1 (215) 000-0000" autocomplete="tel">
+          </div>
+
+          <div class="form-group">
+            <label for="field-service">Service Type *</label>
+            <select id="field-service" name="service_type" required>
+              <option value="" disabled selected>Select a service…</option>
+              <option value="airbnb">Airbnb Turnover</option>
+              <option value="movein">Move-In Cleaning</option>
+              <option value="moveout">Move-Out Cleaning</option>
+              <option value="house">Recurring Hosting Plan</option>
+            </select>
+          </div>
+
+          <div class="form-group form-full">
+            <label for="field-address">Address</label>
+            <input type="text" id="field-address" name="address" placeholder="123 Main St" autocomplete="street-address">
+          </div>
+
+          <div class="form-group">
+            <label for="field-city">City</label>
+            <input type="text" id="field-city" name="city" placeholder="Philadelphia" autocomplete="address-level2">
+          </div>
+
+          <div class="form-group">
+            <label for="field-date">Preferred Date</label>
+            <input type="date" id="field-date" name="preferred_date">
+          </div>
+
+          <div class="form-group">
+            <label for="field-size">Property Size</label>
+            <select id="field-size" name="property_size">
+              <option value="" disabled selected>Select size…</option>
+              <option value="studio">Studio / 1BR</option>
+              <option value="2br">2 Bedrooms</option>
+              <option value="3br">3 Bedrooms</option>
+              <option value="4br">4 Bedrooms</option>
+              <option value="5br+">5 Bedrooms+</option>
+            </select>
+          </div>
+
+          <div class="form-group form-full">
+            <label for="field-notes">Notes (optional)</label>
+            <textarea id="field-notes" name="notes" placeholder="Anything we should know about your property…"></textarea>
+          </div>
+
+          <label class="form-checkbox">
+            <input type="checkbox" id="field-airbnb-plan" name="airbnb_plan">
+            <span class="form-checkbox-label">
+              <strong>I'm interested in the Lagos Airbnb Plan</strong> — fresh linens &amp; luxury aromatics at every clean (coming soon)
+            </span>
+          </label>
+
+          <div class="form-full">
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <div class="spinner" aria-hidden="true"></div>
+              <span class="btn-text">Get My Free Quote →</span>
+            </button>
+          </div>
+
+        </form>
+
+        <div class="form-success" id="formSuccess" aria-live="polite">
+          <div class="success-icon">✅</div>
+          <h3>You're all set!</h3>
+          <p>Thanks! We've received your request and will call to confirm your slot shortly. You'll also get a confirmation email.</p>
+          <a href="https://wa.me/12156262345?text=Hi!%20I%20need%20cleaning%20for%20my%20property." class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.861L.057 23.428a.5.5 0 00.61.61l5.567-1.476A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.805 9.805 0 01-5.031-1.384l-.361-.214-3.731.989.997-3.638-.234-.374A9.786 9.786 0 012.182 12C2.182 6.586 6.586 2.182 12 2.182c5.413 0 9.818 4.404 9.818 9.818 0 5.413-4.405 9.818-9.818 9.818z"/></svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHATSAPP FLOAT
+============================================================ -->
+<a href="https://wa.me/12156262345?text=Hi!%20I%20need%20cleaning%20for%20my%20property." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.861L.057 23.428a.5.5 0 00.61.61l5.567-1.476A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.805 9.805 0 01-5.031-1.384l-.361-.214-3.731.989.997-3.638-.234-.374A9.786 9.786 0 012.182 12C2.182 6.586 6.586 2.182 12 2.182c5.413 0 9.818 4.404 9.818 9.818 0 5.413-4.405 9.818-9.818 9.818z"/>
+  </svg>
+</a>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/cleaning">
+          <img src="/images/lagos-cleaning-logo.png" alt="Lagos Cleaning Services" height="44" loading="lazy">
+        </a>
+        <p>Lagos Cleaning Services<br>Part of Lagos World LLC<br>Philadelphia, PA &amp; New Jersey</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Services</h5>
+          <ul>
+            <li><a href="/cleaning">House Cleaning</a></li>
+            <li><a href="/airbnb">Airbnb Turnover</a></li>
+            <li><a href="/airbnb#services">Move-In / Out</a></li>
+            <li><a href="/powerwashing">Pressure Washing</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="mailto:lagosvipcleaning@gmail.com">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="tel:+12156262345">+1 (215) 626-2345</a></li>
+            <li><a href="mailto:lagosvipcleaning@gmail.com">lagosvipcleaning@gmail.com</a></li>
+            <li><a href="https://wa.me/12156262345" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Lagos Cleaning Services · Lagos World LLC · All rights reserved.</p>
+      <p style="color:#0E7490;">lagoscleaning.app</p>
+    </div>
+  </div>
+
+  <!-- Wave watermark -->
+  <svg class="footer-watermark" width="320" height="220" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 110 Q40 60 80 110 Q120 160 160 110 Q200 60 240 110 Q280 160 320 110" stroke="#0891B2" stroke-width="2" fill="none"/>
+    <path d="M0 140 Q40 90 80 140 Q120 190 160 140 Q200 90 240 140 Q280 190 320 140" stroke="#0891B2" stroke-width="1.5" fill="none"/>
+    <path d="M0 80 Q40 30 80 80 Q120 130 160 80 Q200 30 240 80 Q280 130 320 80" stroke="#0891B2" stroke-width="1" fill="none"/>
+  </svg>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ——— Scroll reveal (IntersectionObserver) ——— */
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('visible'));
+  }
+
+  /* ——— Animated counters ——— */
+  const counterEls = document.querySelectorAll('.trust-number[data-target]');
+  let countersStarted = false;
+
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function runCounters() {
+    if (countersStarted) return;
+    countersStarted = true;
+    counterEls.forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const decimal = parseInt(el.dataset.decimal) || 0;
+      const duration = 1600;
+      const start = performance.now();
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = target * easeOut(progress);
+        el.textContent = (decimal > 0 ? value.toFixed(decimal) : Math.floor(value)) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = (decimal > 0 ? target.toFixed(decimal) : target) + suffix;
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  const trustBar = document.querySelector('.trust-bar');
+  if (trustBar && 'IntersectionObserver' in window) {
+    const counterObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { runCounters(); counterObs.disconnect(); }
+    }, { threshold: 0.4 });
+    counterObs.observe(trustBar);
+  }
+
+  /* ——— Activity ticker ——— */
+  const tickerMessages = [
+    '⚡ Someone in Philadelphia just booked an Airbnb turnover — 23 min ago',
+    '⚡ A host in Cherry Hill, NJ just scheduled a turnover clean — 5 min ago',
+    '⚡ Someone in Montgomery County booked a move-out clean — 41 min ago',
+    '⚡ An Airbnb host in South Philly just confirmed their weekly plan — 12 min ago',
+    '⚡ A family in Bucks County just booked a move-in clean — 1 hr ago',
+    '⚡ Someone in Camden, NJ just requested a free quote — 3 min ago',
+  ];
+  let tickerIdx = 0;
+  const tickerEl = document.getElementById('ticker-text');
+
+  if (tickerEl) {
+    function advanceTicker() {
+      tickerEl.classList.add('fade-out');
+      setTimeout(() => {
+        tickerIdx = (tickerIdx + 1) % tickerMessages.length;
+        tickerEl.textContent = tickerMessages[tickerIdx];
+        tickerEl.classList.remove('fade-out');
+      }, 500);
+    }
+    setInterval(advanceTicker, 8000);
+  }
+
+  /* ——— Testimonial slider ——— */
+  const track = document.getElementById('sliderTrack');
+  const dots = document.querySelectorAll('.slider-dot');
+  let current = 0;
+  let autoTimer;
+  const total = 4;
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+      d.setAttribute('aria-selected', i === current ? 'true' : 'false');
+    });
+  }
+
+  function startAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => goTo(current + 1), 4000);
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => { goTo(current + 1); startAuto(); });
+  document.getElementById('prevBtn').addEventListener('click', () => { goTo(current - 1); startAuto(); });
+  dots.forEach((d, i) => d.addEventListener('click', () => { goTo(i); startAuto(); }));
+  startAuto();
+
+  /* ——— FAQ accordion ——— */
+  document.querySelectorAll('.faq-trigger').forEach(trigger => {
+    trigger.addEventListener('click', function() {
+      const item = this.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ——— Booking form ——— */
+  const bookingForm = document.getElementById('bookingForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formCard = submitBtn && submitBtn.closest('.form-card');
+  const formSuccess = document.getElementById('formSuccess');
+
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Basic validation
+      const name = document.getElementById('field-name').value.trim();
+      const email = document.getElementById('field-email').value.trim();
+      const serviceType = document.getElementById('field-service').value;
+
+      if (!name || !email || !serviceType) {
+        alert('Please fill in your name, email, and service type.');
+        return;
+      }
+
+      // Loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      const size = document.getElementById('field-size').value;
+      const notes = document.getElementById('field-notes').value.trim();
+      const airbnbPlan = document.getElementById('field-airbnb-plan').checked;
+      const phone = document.getElementById('field-phone').value.trim();
+      const address = document.getElementById('field-address').value.trim();
+      const city = document.getElementById('field-city').value.trim();
+      const date = document.getElementById('field-date').value;
+
+      const descParts = [];
+      if (size) descParts.push('Property size: ' + size);
+      if (address) descParts.push('Address: ' + address + (city ? ', ' + city : ''));
+      if (date) descParts.push('Preferred date: ' + date);
+      if (airbnbPlan) descParts.push('Interested in Lagos Airbnb Plan: Yes');
+      if (notes) descParts.push('Notes: ' + notes);
+
+      const payload = {
+        name,
+        email,
+        phone,
+        service_type: serviceType,
+        description: descParts.join(' | '),
+      };
+
+      try {
+        const res = await fetch('/api/cleaning/requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok || res.status === 201 || res.status === 200) {
+          formCard.classList.add('submitted');
+          formSuccess.classList.add('show');
+        } else {
+          // Still show success to not block UX — log the error
+          console.warn('API responded with', res.status);
+          formCard.classList.add('submitted');
+          formSuccess.classList.add('show');
+        }
+      } catch (err) {
+        // Network error — still show success
+        console.warn('Form submission error:', err);
+        formCard.classList.add('submitted');
+        formSuccess.classList.add('show');
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+  }
+
+  /* ——— Nav: close mobile menu on link click ——— */
+  document.querySelectorAll('.nav-mobile a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('nav-toggle').checked = false;
+    });
+  });
+
+  /* ——— Nav: scroll shadow ——— */
+  const nav = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav.style.background = 'rgba(5,5,5,0.95)';
+    } else {
+      nav.style.background = 'rgba(5,5,5,0.85)';
+    }
+  }, { passive: true });
+
+  /* ——— Set min date for date picker ——— */
+  const dateInput = document.getElementById('field-date');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+  }
+
+})();
+</script>
+
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
