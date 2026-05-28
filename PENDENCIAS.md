@@ -1,10 +1,44 @@
 # Pendências — Lagos World
 
-> Atualizado: 2026-05-26
+> Atualizado: 2026-05-28
 
 ---
 
 ## 🔴 Alta Prioridade
+
+### 0. Páginas Legais + Conteúdo — RISCO JURÍDICO
+**Referência:** https://maidbrigade.com (usar como modelo de conteúdo)
+
+**Páginas obrigatórias antes de escalar tráfego pago:**
+
+- [ ] **Privacy Policy** (`/privacy-policy`) — LGPD + CCPA compliance
+  - Coleção de dados (nome, email, ZIP, cookies, analytics)
+  - Como usamos (email marketing, Google Calendar, Supabase)
+  - Direitos do usuário (acesso, exclusão, portabilidade)
+  - Referência: https://maidbrigade.com/privacy-policy/
+
+- [ ] **Terms of Service** (`/terms-of-service`) — proteção contra processos
+  - Política de cancelamento (24h de antecedência)
+  - Responsabilidade por danos durante o serviço
+  - Limitação de responsabilidade
+  - Referência: https://maidbrigade.com/terms-of-service/
+
+- [ ] **Leave a Review** (`/reviews`) — funil de reputação
+  - Link direto para Google Business Profile review
+  - Link para Yelp / Facebook se aplicável
+  - Referência: https://maidbrigade.com/leave-a-review/
+
+- [ ] **Blog** (`/blog`) — SEO de longo prazo
+  - Artigos: "How to prepare for your cleaning", "Airbnb cleaning checklist"
+  - Frequência: 1 post/semana mínimo para ranquear
+  - Referência: https://maidbrigade.com/blog/
+
+**Ação imediata:**
+1. Contratar advogado ou usar gerador (TermsFeed / Termly ~$10/mês) para Privacy Policy + ToS
+2. Criar `/public/privacy-policy/index.html` e `/public/terms-of-service/index.html`
+3. Adicionar links no footer de todas as páginas
+
+---
 
 ### 1. Chave Pix da Dayane Lago
 **Responsável:** Henrique → Dayane Lago
@@ -88,6 +122,35 @@ Ver `LAGOS_CLEANING_ROADMAP.md` para passo a passo completo.
 - [ ] Landing page `/airbnb-cleaning` (prioridade máxima)
 - [ ] Landing page `/move-in-move-out`
 - [ ] Adicionar CORS para novo domínio em `api/index.js`
+
+### Telnyx 10DLC + WhatsApp + Milla Autônoma
+- [ ] Fazer upgrade da conta Telnyx
+- [ ] Registrar Brand (nome empresa, EIN)
+- [ ] Registrar Campaign (customer care)
+- [ ] Configurar webhook SMS → `/api/milla/sms`
+- [ ] WhatsApp Business API via Telnyx (número dedicado)
+- [ ] Milla responde mensagens de clientes autonomamente
+- [ ] Cron: follow-up, pedido de avaliação, contato leads diários
+- [ ] Relatório semanal automático no grupo WhatsApp
+
+### Email Template — Redesign confirmação cleaning
+- [ ] Adicionar imagens de marketing (criar com IA primeiro)
+  - Salvar em `public/images/marketing/`
+  - Upload para Supabase Storage → usar URL pública
+- [ ] Redesenhar `ct.cleaningConfirmed()` em `cleaningEmailTemplates.js`
+  - Hero banner teal + logo
+  - Card de detalhes do agendamento
+  - "What happens next" (3 passos)
+  - Botão "Add to My Calendar" para o cliente
+  - WhatsApp CTA + satisfaction guarantee
+- [ ] Subject line: `✔ Confirmed! Lagos Cleaning is coming to you — [data]`
+
+### Site Bilíngue EN/PT-BR
+- [ ] Fase 1: `cleaning/index.html` + `powerwashing/index.html`
+- [ ] Fase 2: `jewelry/index.html`
+- [ ] Fase 3: admin panel
+- [ ] Fase 4: email templates
+- [ ] Estratégia: `data-i18n` attributes + dicionário JS, toggle no topbar
 
 ### Admin Panel — Tarefas pendentes (2026-05-28)
 - [ ] Invoice auto-send → criar endpoint `/api/cleaning/invoice` (backend faltando)
