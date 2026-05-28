@@ -103,9 +103,8 @@ a{text-decoration:none;color:inherit}
 /* NAV */
 nav{position:sticky;top:0;z-index:300;background:#fff;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
 .nav-inner{max-width:1200px;margin:0 auto;padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
-.nav-logo{display:flex;flex-direction:column;line-height:1.2}
-.nav-logo-main{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--teal-d)}
-.nav-logo-sub{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.nav-logo{display:flex;align-items:center}
+.nav-logo img{height:48px;width:auto;display:block}
 .nav-links{display:flex;gap:1.8rem;list-style:none}
 .nav-links a{font-size:.78rem;font-weight:500;color:var(--text-mid);transition:color .2s}
 .nav-links a:hover{color:var(--teal)}
@@ -504,8 +503,9 @@ body{background:transparent}
 <nav>
   <div class="nav-inner">
     <div class="nav-logo">
-      <a href="/" class="nav-logo-main">Lagos Cleaning</a>
-      <span class="nav-logo-sub">Part of Lagos World</span>
+      <a href="/">
+        <img src="/images/lagos-cleaning-logo.png" alt="Lagos Cleaning — Part of Lagos World" fetchpriority="high">
+      </a>
     </div>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
@@ -1377,7 +1377,7 @@ body{background:transparent}
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <div class="footer-brand">Lagos Cleaning</div>
+        <img src="/images/lagos-cleaning-logo.png" alt="Lagos Cleaning" style="height:52px;width:auto;display:block;margin-bottom:.8rem;filter:brightness(0) invert(1)">
         <p class="footer-tagline">Professional cleaning services for homes and businesses across Pennsylvania and New Jersey. Bonded, insured, and 100% satisfaction guaranteed.</p>
         <a href="#booking" class="btn btn-primary" style="font-size:.75rem">Book a Cleaning →</a>
       </div>
