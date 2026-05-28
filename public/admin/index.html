@@ -377,6 +377,7 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
       <small>Manager Panel</small>
     </div>
     <a href="/jewelry" target="_blank" class="topbar-btn">🛍 View Store</a>
+    <a href="https://www.instagram.com/lagoscleanservices/" target="_blank" class="topbar-btn" title="Lagos Clean on Instagram" style="color:#E1306C;border-color:rgba(225,48,108,.35)">📸 Instagram</a>
     <button class="topbar-btn" onclick="exportData()">📥 Export</button>
     <button class="topbar-btn" onclick="document.getElementById('import-file').click()">📤 Import</button>
     <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)">
@@ -428,22 +429,17 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
 
       <div class="dash-divider"></div>
 
-      <!-- CLIENT STRATEGY LIST -->
+      <!-- CUSTOMERS TABS -->
       <div style="padding:1.2rem 0 .5rem">
-        <div class="dash-panel-title" style="padding:0 0 .8rem">
-          Client Strategies — Personalized by Spend Tier
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.5rem">
+          <div class="week-pills" id="cust-tab-pills" style="margin:0">
+            <button class="week-pill active" onclick="switchCustTab('jewelry',this)">💎 Jewelry Customers</button>
+            <button class="week-pill" onclick="switchCustTab('cleaning',this)">🧹 Cleaning Customers</button>
+          </div>
           <button class="topbar-btn primary" onclick="openRegModal()" style="font-size:.58rem;padding:.35rem .8rem">+ Register Client</button>
         </div>
-        <div class="week-pills" id="strat-filters">
-          <button class="week-pill active" onclick="filterStrat('all',this)">All Clients</button>
-          <button class="week-pill" onclick="filterStrat('ELITE',this)">★ Elite</button>
-          <button class="week-pill" onclick="filterStrat('PREMIUM',this)">Premium</button>
-          <button class="week-pill" onclick="filterStrat('STANDARD',this)">Standard</button>
-          <button class="week-pill" onclick="filterStrat('NEW',this)">New</button>
-        </div>
-      </div>
-      <div class="client-list" id="client-list">
-        <div class="empty"><div class="empty-icon">⏳</div>Loading client data...</div>
+        <div id="cust-tab-jewelry"></div>
+        <div id="cust-tab-cleaning" style="display:none"></div>
       </div>
     </div>
 
@@ -1273,6 +1269,15 @@ async function requestProof(orderId, email, name) {
     const d = await r.json();
     if (r.ok && d.ok) {
       showToast('✓ Payment proof request sent to ' + email);
+      // Also open WhatsApp to same client (best-effort — need phone)
+      const order = (dashData.orders || []).find(o => o.id === orderId);
+      const rawPhone = (order?.customer_phone || '').replace(/\D/g, '');
+      if (rawPhone.length >= 10) {
+        const waMsg = encodeURIComponent(
+          `Hello ${name || 'there'} 👋\n\nThis is Lagos World. We noticed your order #${orderId} is pending payment confirmation.\n\nCould you please send us the payment proof (screenshot/receipt) so we can process your order right away?\n\nThank you! 🙏`
+        );
+        window.open('https://wa.me/1' + rawPhone.slice(-10) + '?text=' + waMsg, '_blank');
+      }
     } else {
       showToast('⚠ ' + (d.error || 'Failed to send request'));
     }
@@ -1563,6 +1568,7 @@ async function loadDashboard() {
     dashData.loadedAt = now;
 
     renderKPIs();
+    renderCustomerTabs();
     renderClientList();
 
     const ts = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
@@ -1620,11 +1626,25 @@ function renderKPIs() {
   const completedLeads = cleaning.filter(r => r.status === 'completed').length;
   const monthLeads = cleaning.filter(r => new Date(r.created_at) >= monthStart).length;
 
+  // Revenue Month — sum pricing from lj_clean_pricing for completed leads this month
+  let cleanPricingAll = {};
+  try { cleanPricingAll = JSON.parse(localStorage.getItem('lj_clean_pricing') || '{}'); } catch(e) {}
+  const monthRevC = cleaning
+    .filter(r => r.status === 'completed' && new Date(r.created_at) >= monthStart)
+    .reduce((sum, r) => {
+      const p = cleanPricingAll[r.id] || {};
+      const base = Number(p.price || 0);
+      const extra = Number(p.extra || 0);
+      const disc = Number(p.desconto || 0);
+      return sum + Math.max(0, base + extra - disc);
+    }, 0);
+
   const cleaningEl = document.getElementById('cleaning-kpi-rows');
   if (cleaningEl) cleaningEl.innerHTML =
     kpiRow('Total Leads', totalLeads) +
     kpiRow('Open Leads', openLeads) +
     kpiRow('Completed', completedLeads) +
+    kpiRow('Revenue (Month)', fmt(monthRevC)) +
     kpiRow('This Month', monthLeads);
 
   // Low stock table
@@ -1637,7 +1657,7 @@ function renderLowStockTable() {
   if (!el) return;
   const prods = window.PRODUCTS_ADMIN || [];
   const lowItems = prods
-    .filter(p => stockOv[p.id] !== undefined && stockOv[p.id] <= 10)
+    .filter(p => stockOv[p.id] !== undefined && stockOv[p.id] < 3)
     .sort((a, b) => stockOv[a.id] - stockOv[b.id]);
 
   if (!lowItems.length) {
@@ -1661,7 +1681,102 @@ function renderLowStockTable() {
   </table>`;
 }
 
-// ── CLIENT STRATEGY LIST ──
+// ── CUSTOMER TABS ──
+let _custTab = 'jewelry';
+
+function switchCustTab(tab, btn) {
+  _custTab = tab;
+  document.querySelectorAll('#cust-tab-pills .week-pill').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('cust-tab-jewelry').style.display  = tab === 'jewelry'  ? '' : 'none';
+  document.getElementById('cust-tab-cleaning').style.display = tab === 'cleaning' ? '' : 'none';
+}
+
+function renderCustomerTabs() {
+  renderJewelryCustomers();
+  renderCleaningCustomers();
+}
+
+function renderJewelryCustomers() {
+  const el = document.getElementById('cust-tab-jewelry');
+  if (!el) return;
+  const orders = dashData.orders || [];
+  if (!orders.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">💎</div>No jewelry orders yet.</div>'; return; }
+
+  const map = {};
+  orders.forEach(o => {
+    const key = (o.customer_email || o.customer_name || '').toLowerCase().trim();
+    if (!key) return;
+    if (!map[key]) map[key] = { name: o.customer_name || '—', email: o.customer_email || '', phone: o.customer_phone || '', orders: 0, spend: 0, last: null };
+    map[key].orders++;
+    map[key].spend += Number(o.total || 0);
+    const d = new Date(o.created_at);
+    if (!map[key].last || d > map[key].last) map[key].last = d;
+  });
+
+  const clients = Object.values(map).sort((a, b) => b.spend - a.spend);
+  el.innerHTML = `<table class="orders-table" style="width:100%">
+    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Orders</th><th>Total Spend</th><th>Last Order</th></tr></thead>
+    <tbody>${clients.map(c => {
+      const lastD = c.last ? c.last.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+      const spendFmt = '$' + c.spend.toFixed(2);
+      const wa = c.phone.replace(/\D/g,'').slice(-10);
+      const waLink = wa.length === 10 ? `<a href="https://wa.me/1${wa}" target="_blank" style="font-size:.6rem;color:#25D366;text-decoration:none" title="WhatsApp">💬</a>` : '';
+      return `<tr>
+        <td>${c.name}</td>
+        <td style="font-size:.68rem;color:var(--text-muted)">${c.email || '—'}</td>
+        <td style="font-size:.68rem;color:var(--text-muted)">${c.phone || '—'} ${waLink}</td>
+        <td style="text-align:center">${c.orders}</td>
+        <td style="color:var(--gold);font-weight:700">${spendFmt}</td>
+        <td style="font-size:.68rem;color:var(--text-muted)">${lastD}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
+}
+
+function renderCleaningCustomers() {
+  const el = document.getElementById('cust-tab-cleaning');
+  if (!el) return;
+  const cleaning = dashData.cleaning || [];
+  if (!cleaning.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🧹</div>No cleaning requests yet.</div>'; return; }
+
+  const map = {};
+  cleaning.forEach(r => {
+    const key = (r.customer_email || r.customer_name || '').toLowerCase().trim();
+    if (!key) return;
+    if (!map[key]) map[key] = { name: r.customer_name || '—', email: r.customer_email || '', phone: r.customer_phone || '', requests: 0, last: null, lastService: '', lastStatus: '' };
+    map[key].requests++;
+    const d = new Date(r.created_at);
+    if (!map[key].last || d > map[key].last) {
+      map[key].last = d;
+      map[key].lastService = r.service_type || '—';
+      map[key].lastStatus = r.status || 'open';
+    }
+  });
+
+  const clients = Object.values(map).sort((a, b) => b.requests - a.requests);
+  const statusColor = { open:'#4caf79', pending:'#ffc107', confirmed:'#20B2AA', scheduled:'#20B2AA', in_progress:'#E0A830', completed:'#888', cancelled:'#e05252' };
+  el.innerHTML = `<table class="orders-table" style="width:100%">
+    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Requests</th><th>Last Service</th><th>Last Status</th><th>Last Date</th></tr></thead>
+    <tbody>${clients.map(c => {
+      const lastD = c.last ? c.last.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+      const col = statusColor[c.lastStatus] || 'var(--text-muted)';
+      const wa = c.phone.replace(/\D/g,'').slice(-10);
+      const waLink = wa.length === 10 ? `<a href="https://wa.me/1${wa}" target="_blank" style="font-size:.6rem;color:#25D366;text-decoration:none" title="WhatsApp">💬</a>` : '';
+      return `<tr>
+        <td>${c.name}</td>
+        <td style="font-size:.68rem;color:var(--text-muted)">${c.email || '—'}</td>
+        <td style="font-size:.68rem;color:var(--text-muted)">${c.phone || '—'} ${waLink}</td>
+        <td style="text-align:center">${c.requests}</td>
+        <td style="font-size:.68rem">${c.lastService}</td>
+        <td><span style="color:${col};font-size:.65rem;font-weight:700">${c.lastStatus}</span></td>
+        <td style="font-size:.68rem;color:var(--text-muted)">${lastD}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
+}
+
+// ── CLIENT STRATEGY LIST (legacy — kept for registerClientModal) ──
 let allClients = [];
 function renderClientList() {
   // Build unified client records
@@ -1794,6 +1909,7 @@ function saveRegClient() {
   closeRegModal();
   showToast('✓ Client registered successfully');
   // Reload dashboard so new client appears
+  renderCustomerTabs();
   renderClientList();
 }
 
@@ -1995,21 +2111,22 @@ function loadTemplates() {
   const sections = [];
 
   const renderSection = (title, badge, templates) => {
-    const cards = templates.map(tpl => `
-      <div class="tpl-card ${badge}" data-cat="${badge}">
+    const cards = templates.map(tpl => {
+      // Load any saved edits from localStorage
+      const saved = _tplEdits[tpl.type] || {};
+      const subj = saved.subject || tpl.subject;
+      return `
+      <div class="tpl-card ${badge}" data-cat="${badge}" onclick="openTplModal('${tpl.type}','${badge}')" style="cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
           <span class="tpl-card-badge ${badge}">${badge === 'cleaning' ? '🧹 Cleaning' : '💎 Jewelry'}</span>
           <span class="tpl-card-trigger">${tpl.trigger}</span>
         </div>
         <div class="tpl-card-name">${tpl.name}</div>
-        <div class="tpl-card-subject">"${tpl.subject}"</div>
+        <div class="tpl-card-subject">"${subj}"</div>
         <div class="tpl-card-desc">${tpl.desc}</div>
-        <div class="tpl-card-actions">
-          <input class="tpl-email-input" type="email" id="tpl-email-${tpl.type}" placeholder="recipient@email.com">
-          <button class="tpl-send-btn ${badge}" onclick="sendTestEmail('${tpl.type}','${tpl.name}','${badge}')">▶ Send Test</button>
-        </div>
+        <div style="font-size:.58rem;color:var(--text-muted);margin-top:.5rem;opacity:.7">Click to view &amp; edit →</div>
       </div>
-    `).join('');
+    `;}).join('');
 
     return `
       <div class="tpl-section-title">✦ <span>${title}</span></div>
@@ -2058,6 +2175,121 @@ async function sendTestEmail(type, name, category = 'jewelry') {
     btn.textContent = orig;
     btn.disabled = false;
   }
+}
+
+// ── TEMPLATE MODAL ───────────────────────────────────────────────────────────
+const LS_TPL_EDITS = 'lj_tpl_edits';
+let _tplEdits = {};
+try { _tplEdits = JSON.parse(localStorage.getItem(LS_TPL_EDITS) || '{}'); } catch(e) {}
+
+let _activeTplType = null;
+let _activeTplBadge = null;
+let _activeTplImgData = null; // base64 data URL
+
+function _findTpl(type) {
+  const all = [...EMAIL_TEMPLATES.cleaning, ...EMAIL_TEMPLATES.jewelry];
+  return all.find(t => t.type === type) || null;
+}
+
+function openTplModal(type, badge) {
+  _activeTplType = type;
+  _activeTplBadge = badge;
+  const tpl = _findTpl(type);
+  if (!tpl) return;
+  const saved = _tplEdits[type] || {};
+
+  document.getElementById('tpl-modal-badge').textContent = badge === 'cleaning' ? '🧹 Cleaning' : '💎 Jewelry';
+  document.getElementById('tpl-modal-badge').style.color  = badge === 'cleaning' ? '#1a9e97' : 'var(--gold)';
+  document.getElementById('tpl-modal-name').textContent    = tpl.name;
+  document.getElementById('tpl-modal-trigger').textContent = tpl.trigger;
+  document.getElementById('tpl-modal-subject').value       = saved.subject || tpl.subject;
+  document.getElementById('tpl-modal-desc').value          = saved.desc    || tpl.desc;
+  document.getElementById('tpl-modal-email').value         = '';
+
+  // Load saved promo image
+  const imgData = saved.imgData || null;
+  _activeTplImgData = imgData;
+  const prev = document.getElementById('tpl-modal-img-preview');
+  const namEl = document.getElementById('tpl-modal-img-name');
+  const clrBtn = document.getElementById('tpl-modal-img-clear');
+  if (imgData) {
+    prev.src = imgData; prev.style.display = 'block';
+    namEl.textContent = saved.imgName || 'Saved image';
+    clrBtn.style.display = '';
+  } else {
+    prev.src = ''; prev.style.display = 'none';
+    namEl.textContent = 'No image selected';
+    clrBtn.style.display = 'none';
+  }
+  document.getElementById('tpl-modal-img-input').value = '';
+
+  document.getElementById('tpl-detail-modal').style.display = 'flex';
+}
+
+function closeTplModal() {
+  document.getElementById('tpl-detail-modal').style.display = 'none';
+  _activeTplType = null;
+}
+
+function onTplImgChange(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const namEl = document.getElementById('tpl-modal-img-name');
+  const prev  = document.getElementById('tpl-modal-img-preview');
+  const clrBtn = document.getElementById('tpl-modal-img-clear');
+  namEl.textContent = file.name;
+  clrBtn.style.display = '';
+  const reader = new FileReader();
+  reader.onload = e => {
+    _activeTplImgData = e.target.result;
+    prev.src = _activeTplImgData;
+    prev.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearTplImg() {
+  _activeTplImgData = null;
+  document.getElementById('tpl-modal-img-preview').src = '';
+  document.getElementById('tpl-modal-img-preview').style.display = 'none';
+  document.getElementById('tpl-modal-img-name').textContent = 'No image selected';
+  document.getElementById('tpl-modal-img-clear').style.display = 'none';
+  document.getElementById('tpl-modal-img-input').value = '';
+}
+
+function saveTplEdits() {
+  if (!_activeTplType) return;
+  const subj = document.getElementById('tpl-modal-subject').value.trim();
+  const desc = document.getElementById('tpl-modal-desc').value.trim();
+  const imgInput = document.getElementById('tpl-modal-img-input');
+  const imgName = imgInput.files[0] ? imgInput.files[0].name : (_tplEdits[_activeTplType]?.imgName || '');
+
+  _tplEdits[_activeTplType] = { subject: subj, desc, imgData: _activeTplImgData || null, imgName };
+  localStorage.setItem(LS_TPL_EDITS, JSON.stringify(_tplEdits));
+  showToast('✓ Template edits saved');
+  loadTemplates(); // refresh cards with updated subject
+}
+
+async function sendTplModalEmail() {
+  if (!_activeTplType) return;
+  const to = document.getElementById('tpl-modal-email').value.trim();
+  if (!to || !to.includes('@')) { showToast('⚠ Enter a valid email first'); return; }
+  const tpl = _findTpl(_activeTplType);
+  if (!tpl) return;
+
+  const btn = document.getElementById('tpl-modal-send-btn');
+  btn.textContent = '⏳ Sending...'; btn.disabled = true;
+  try {
+    const r = await fetch('/api/cron/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: _activeTplType, to, name: to.split('@')[0] })
+    });
+    const d = await r.json();
+    if (d.ok) { showToast('✓ ' + tpl.name + ' sent to ' + to); document.getElementById('tpl-modal-email').value = ''; }
+    else showToast('⚠ ' + (d.error || 'Send failed'));
+  } catch(e) { showToast('⚠ Error: ' + e.message); }
+  finally { btn.textContent = '▶ Send Test'; btn.disabled = false; }
 }
 
 // ── CALENDARIO TAB ────────────────────────────────────────────────────────────
@@ -2587,6 +2819,45 @@ async function replyToLead(email, name) {
 </script>
 
 <!-- Email Confirm Modal -->
+<!-- TEMPLATE DETAIL MODAL -->
+<div id="tpl-detail-modal" style="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1500;display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto">
+  <div style="background:var(--dark2);border:1px solid var(--border);width:100%;max-width:620px;padding:2rem;position:relative;border-radius:2px">
+    <button onclick="closeTplModal()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;line-height:1">✕</button>
+    <div id="tpl-modal-badge" style="font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;font-weight:700;margin-bottom:.8rem"></div>
+    <div id="tpl-modal-name" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);margin-bottom:.3rem"></div>
+    <div id="tpl-modal-trigger" style="font-size:.65rem;color:var(--text-muted);margin-bottom:1.5rem"></div>
+
+    <div style="margin-bottom:1rem">
+      <label style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.35rem">Subject Line</label>
+      <input id="tpl-modal-subject" type="text" style="width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);padding:.5rem .7rem;font-size:.78rem;font-family:'Montserrat',sans-serif;outline:none;box-sizing:border-box">
+    </div>
+
+    <div style="margin-bottom:1rem">
+      <label style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.35rem">Description / Notes</label>
+      <textarea id="tpl-modal-desc" rows="3" style="width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);padding:.5rem .7rem;font-size:.75rem;font-family:'Montserrat',sans-serif;outline:none;resize:vertical;box-sizing:border-box"></textarea>
+    </div>
+
+    <div style="margin-bottom:1.2rem">
+      <label style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.35rem">Promo Image (optional)</label>
+      <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
+        <label for="tpl-modal-img-input" style="cursor:pointer;background:rgba(255,255,255,.05);border:1px dashed var(--border);padding:.5rem 1rem;font-size:.65rem;color:var(--text-muted);letter-spacing:.1em">📎 Choose image</label>
+        <input type="file" id="tpl-modal-img-input" accept="image/*" style="display:none" onchange="onTplImgChange(this)">
+        <span id="tpl-modal-img-name" style="font-size:.65rem;color:var(--text-muted)">No image selected</span>
+        <button id="tpl-modal-img-clear" onclick="clearTplImg()" style="background:none;border:none;color:#e05252;font-size:.65rem;cursor:pointer;display:none">✕ Remove</button>
+      </div>
+      <img id="tpl-modal-img-preview" src="" alt="" style="display:none;margin-top:.7rem;max-width:100%;max-height:180px;border:1px solid var(--border);object-fit:contain">
+    </div>
+
+    <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap">
+      <button onclick="saveTplEdits()" class="topbar-btn primary" style="font-size:.6rem">✓ Save Edits</button>
+      <div style="flex:1;min-width:160px;display:flex;gap:.5rem;align-items:center">
+        <input id="tpl-modal-email" type="email" placeholder="test@email.com" style="flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);padding:.4rem .6rem;font-size:.7rem;font-family:'Montserrat',sans-serif;outline:none">
+        <button id="tpl-modal-send-btn" onclick="sendTplModalEmail()" class="topbar-btn" style="font-size:.6rem;white-space:nowrap">▶ Send Test</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="email-confirm-modal">
   <div class="email-confirm-box">
     <h3>✝ Notify Customer?</h3>
