@@ -384,11 +384,10 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
   </div>
 
   <div class="tabs">
-    <button class="tab active" id="tab-btn-dashboard" onclick="switchTab('dashboard',this)">📊 Dashboard</button>
+    <button class="tab active" id="btn-tab-dashboard" onclick="switchTab('dashboard',this)">📊 Dashboard</button>
     <button class="tab" onclick="switchTab('products',this)">Products <span id="tab-count"></span></button>
     <button class="tab" onclick="switchTab('orders',this)">Orders</button>
     <button class="tab" onclick="switchTab('cleaning',this)">Cleaning Leads</button>
-    <button class="tab" onclick="switchTab('cart',this)">🛒 Cart Activity</button>
     <button class="tab" onclick="switchTab('templates',this)">📧 Templates</button>
     <button class="tab" onclick="switchTab('agenda',this)">📅 Agenda</button>
     <button class="tab" onclick="switchTab('calendario',this)">📆 Campanhas</button>
@@ -403,33 +402,28 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
         <div class="last-update" id="dash-last-update">Updating...</div>
       </div>
 
-      <!-- KPI STRIP -->
-      <div class="dash-grid" id="kpi-strip">
-        <div class="kpi"><div class="kpi-label">Total Revenue</div><div class="kpi-val" id="kpi-total-rev">—</div><div class="kpi-sub" id="kpi-total-rev-sub"></div><div class="kpi-accent">$</div></div>
-        <div class="kpi"><div class="kpi-label">This Month</div><div class="kpi-val green" id="kpi-month-rev">—</div><div class="kpi-sub" id="kpi-month-sub"></div><div class="kpi-accent">📅</div></div>
-        <div class="kpi"><div class="kpi-label">This Week</div><div class="kpi-val blue" id="kpi-week-rev">—</div><div class="kpi-sub" id="kpi-week-sub"></div><div class="kpi-accent">📆</div></div>
-        <div class="kpi"><div class="kpi-label">Total Bookings</div><div class="kpi-val" id="kpi-bookings">—</div><div class="kpi-sub" id="kpi-bookings-sub"></div><div class="kpi-accent">📋</div></div>
-        <div class="kpi"><div class="kpi-label">Avg. Ticket</div><div class="kpi-val" id="kpi-avg">—</div><div class="kpi-sub">per transaction</div><div class="kpi-accent">✦</div></div>
-        <div class="kpi"><div class="kpi-label">New This Week</div><div class="kpi-val blue" id="kpi-new-week">—</div><div class="kpi-sub">new clients</div><div class="kpi-accent">🆕</div></div>
+      <!-- BUSINESS OVERVIEW — two panels side-by-side -->
+      <div style="display:flex;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap">
+        <!-- Jewelry panel -->
+        <div style="flex:1;min-width:260px;background:var(--dark2);border:1px solid var(--border);padding:1.2rem;border-radius:4px">
+          <div style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--gold);padding-bottom:.5rem;margin-bottom:.9rem;font-weight:700">💎 Lagos Jewelry</div>
+          <div id="jewelry-kpi-rows" style="display:flex;flex-direction:column;gap:.5rem">
+            <div style="font-size:.72rem;color:var(--text-muted)">Loading...</div>
+          </div>
+        </div>
+        <!-- Cleaning panel -->
+        <div style="flex:1;min-width:260px;background:var(--dark2);border:1px solid var(--border);padding:1.2rem;border-radius:4px">
+          <div style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:#1a9e97;border-bottom:2px solid #1a9e97;padding-bottom:.5rem;margin-bottom:.9rem;font-weight:700">🧹 Lagos Cleaning</div>
+          <div id="cleaning-kpi-rows" style="display:flex;flex-direction:column;gap:.5rem">
+            <div style="font-size:.72rem;color:var(--text-muted)">Loading...</div>
+          </div>
+        </div>
       </div>
 
-      <div class="dash-divider"></div>
-
-      <!-- CHARTS ROW -->
-      <div class="dash-row">
-        <div class="dash-panel">
-          <div class="dash-panel-title">
-            Weekly Revenue (last 8 weeks)
-            <span class="dash-refresh" id="dash-refresh-ts"></span>
-          </div>
-          <canvas id="rev-chart"></canvas>
-        </div>
-        <div class="dash-panel">
-          <div class="dash-panel-title">Top Service Areas</div>
-          <div class="area-bars" id="area-bars">
-            <div class="empty" style="padding:1rem">Loading...</div>
-          </div>
-        </div>
+      <!-- LOW STOCK ALERT -->
+      <div style="background:var(--dark2);border:1px solid var(--border);padding:1.2rem;margin-bottom:1.5rem;border-radius:4px">
+        <div style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:#e0a830;margin-bottom:.9rem;font-weight:700">⚠ Low Stock</div>
+        <div id="low-stock-table"></div>
       </div>
 
       <div class="dash-divider"></div>
@@ -494,11 +488,6 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
     <!-- CLEANING LEADS TAB -->
     <div id="tab-cleaning" style="display:none">
       <div id="cleaning-content"><div class="empty"><div class="empty-icon">🧹</div>Loading cleaning requests...</div></div>
-    </div>
-
-    <!-- CART ACTIVITY TAB -->
-    <div id="tab-cart" style="display:none">
-      <div id="cart-content"><div class="empty"><div class="empty-icon">🛒</div>Loading cart activity...</div></div>
     </div>
 
     <!-- TEMPLATES TAB -->
@@ -661,6 +650,7 @@ let priceOv  = {};
 let descOv   = {};
 let imgsOv   = {};
 let videoOv  = {};
+let stockOv  = {};
 let editingId = null;
 let filteredProducts = [];
 let currentPage = 1;
@@ -723,11 +713,15 @@ function logout() {
 
 // ── INIT ──
 async function initApp() {
+  // Alias products data — products-data.js exports window.PRODUCTS
+  window.PRODUCTS_ADMIN = window.PRODUCTS_ADMIN || window.PRODUCTS || [];
+
   // Load from localStorage first (instant render)
   priceOv      = JSON.parse(localStorage.getItem(LS_PRICES)         || '{}');
   descOv       = JSON.parse(localStorage.getItem(LS_DESC)           || '{}');
   imgsOv       = JSON.parse(localStorage.getItem(LS_IMGS)           || '{}');
   videoOv      = JSON.parse(localStorage.getItem(LS_VIDEOS)         || '{}');
+  stockOv      = JSON.parse(localStorage.getItem('lj_stock')        || '{}');
   manualClients= JSON.parse(localStorage.getItem(LS_MANUAL_CLIENTS) || '[]');
 
   const cats = [...new Set((window.PRODUCTS_ADMIN || []).map(p => p.cat).filter(Boolean))].sort();
@@ -840,6 +834,17 @@ function renderGrid() {
       <div class="pc-name">${p.name}</div>
       <div class="pc-sku">SKU: ${p.sku||'—'}</div>
       <div class="pc-price">${price}</div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin-top:.6rem">
+        <span style="font-size:.58rem;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase">Stock</span>
+        <input type="number" min="0"
+          class="stock-inp"
+          value="${stockOv[p.id] !== undefined ? stockOv[p.id] : ''}"
+          placeholder="—"
+          onclick="event.stopPropagation()"
+          onchange="saveStock(${p.id}, this.value)"
+          style="width:56px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);padding:.25rem .4rem;font-size:.78rem;text-align:center;font-family:'Montserrat',sans-serif;outline:none">
+        ${stockOv[p.id] !== undefined ? `<span style="font-size:.6rem;padding:.15rem .5rem;border-radius:2px;font-weight:700;background:${stockOv[p.id]<3?'rgba(224,82,82,.2)':stockOv[p.id]<6?'rgba(255,193,7,.2)':'rgba(76,175,121,.2)'};color:${stockOv[p.id]<3?'#e05252':stockOv[p.id]<6?'#ffc107':'#4caf79'}">${stockOv[p.id]<3?'LOW':stockOv[p.id]<6?'WATCH':'OK'}</span>` : ''}
+      </div>
       ${mod ? `<div style="font-size:.55rem;color:var(--gold);margin-top:.4rem;letter-spacing:.1em">✎ Modified</div>` : ''}
     </div>`;
   }).join('');
@@ -1121,6 +1126,14 @@ function resetAllEdits() {
   showToast('All edits reset to defaults');
 }
 
+// ── STOCK MANAGEMENT ──
+function saveStock(id, val) {
+  const n = parseInt(val);
+  if (isNaN(n) || n < 0) { delete stockOv[id]; } else { stockOv[id] = n; }
+  localStorage.setItem('lj_stock', JSON.stringify(stockOv));
+  renderGrid(); // re-render to update badges
+}
+
 // ── EXPORT / IMPORT ──
 function exportData() {
   const data = {
@@ -1171,7 +1184,6 @@ function switchTab(name, el) {
     if (name === 'dashboard') loadDashboard();
     if (name === 'orders') loadOrders();
     if (name === 'cleaning') loadCleaning();
-    if (name === 'cart') loadCartActivity();
     if (name === 'templates') loadTemplates();
     if (name === 'agenda') loadAgenda();
     if (name === 'calendario') loadCalendario();
@@ -1213,19 +1225,23 @@ async function loadOrders() {
     // ── Orders table ───────────────────────────────────────────────────────
     const tableRows = orders.map(o => {
       const items = Array.isArray(o.items) ? o.items : [];
-      const itemStr = items.map(i => `${i.title||i.name||'?'} ×${i.quantity||i.qty||1}`).join(', ');
+      const itemStr = items.map(i => `${i.title||i.name||'?'}${i.sku?' ['+i.sku+']':''} ×${i.quantity||i.qty||1}`).join(', ');
       const d = new Date(o.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
       const statuses = ['pending','confirmed','paid','shipped','delivered','cancelled'];
       const cur = o.status || 'pending';
       const opts = statuses.map(s => `<option value="${s}"${s===cur?' selected':''}>${s}</option>`).join('');
       const safeEmail = (o.customer_email||'').replace(/'/g,"\\'");
       const safeName = (o.customer_name||'').replace(/'/g,"\\'");
+      const proofCell = o.zelle_proof
+        ? `<img src="${o.zelle_proof}" style="width:40px;height:40px;object-fit:cover;cursor:pointer" onclick="window.open('${o.zelle_proof}','_blank')">`
+        : `<button class="topbar-btn" onclick="requestProof('${o.id}','${safeEmail}','${safeName}')" style="font-size:.55rem;padding:.25rem .5rem;white-space:nowrap">📧 Request</button>`;
       return `<tr>
         <td style="white-space:nowrap">${d}</td>
         <td>${o.customer_name||'—'}</td>
         <td style="color:var(--text-muted)">${o.customer_email||'—'}</td>
         <td style="max-width:220px;word-break:break-word">${itemStr||'—'}</td>
         <td style="color:var(--gold);font-weight:700">$${Number(o.total||0).toFixed(2)}</td>
+        <td>${proofCell}</td>
         <td><select class="status-select" onchange="updateOrderStatus('${o.id}',this.value,'${safeEmail}','${safeName}','jewelry')">${opts}</select></td>
       </tr>`;
     }).join('');
@@ -1237,7 +1253,7 @@ async function loadOrders() {
       </div>
       <table class="orders-table">
         <thead><tr>
-          <th>Date</th><th>Customer</th><th>Email</th><th>Items</th><th>Total</th><th>Status</th>
+          <th>Date</th><th>Customer</th><th>Email</th><th>Items</th><th>Total</th><th>Payment Proof</th><th>Status</th>
         </tr></thead>
         <tbody>${tableRows}</tbody>
       </table>`;
@@ -1246,7 +1262,56 @@ async function loadOrders() {
   }
 }
 
+// ── REQUEST PAYMENT PROOF ──
+async function requestProof(orderId, email, name) {
+  try {
+    const r = await fetch('/api/jewelry/request-proof', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+      body: JSON.stringify({ orderId, email, name })
+    });
+    const d = await r.json();
+    if (r.ok && d.ok) {
+      showToast('✓ Payment proof request sent to ' + email);
+    } else {
+      showToast('⚠ ' + (d.error || 'Failed to send request'));
+    }
+  } catch(e) {
+    showToast('⚠ Error: ' + e.message);
+  }
+}
+
 // ── CLEANING LEADS ──
+// Pricing stored per request in localStorage
+let _cleanPricing = {};
+try { _cleanPricing = JSON.parse(localStorage.getItem('lj_clean_pricing') || '{}'); } catch(e) {}
+
+function saveCleanPricing(id, field, val) {
+  if (!_cleanPricing[id]) _cleanPricing[id] = {};
+  const n = parseFloat(val);
+  if (isNaN(n)) { delete _cleanPricing[id][field]; } else { _cleanPricing[id][field] = n; }
+  localStorage.setItem('lj_clean_pricing', JSON.stringify(_cleanPricing));
+}
+
+function pricingInpHtml(id, field, placeholder) {
+  const v = _cleanPricing[id] && _cleanPricing[id][field] !== undefined ? _cleanPricing[id][field] : '';
+  return `<input type="number" min="0" step="0.01" value="${v}" placeholder="${placeholder}"
+    onclick="event.stopPropagation()"
+    onchange="saveCleanPricing('${id}','${field}',this.value)"
+    style="width:64px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);padding:.2rem .35rem;font-size:.7rem;text-align:right;font-family:'Montserrat',sans-serif;outline:none">`;
+}
+
+async function sendCleaningInvoice(r) {
+  const pricing = _cleanPricing[r.id] || {};
+  try {
+    await fetch('/api/cleaning/invoice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+      body: JSON.stringify({ ...r, price: pricing.price, extra: pricing.extra, desconto: pricing.desconto })
+    });
+  } catch(e) { console.warn('Invoice send failed:', e.message); }
+}
+
 async function loadCleaning() {
   const el = document.getElementById('cleaning-content');
   el.innerHTML = '<div class="empty"><div class="empty-icon">⏳</div>Loading...</div>';
@@ -1256,14 +1321,23 @@ async function loadCleaning() {
     const reqs = await r.json();
     if (!reqs || !reqs.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🧹</div>No cleaning requests yet.</div>'; return; }
 
+    const recurLabels = {
+      'twice_weekly': '2x por semana',
+      'weekly':       '1x por semana',
+      'biweekly':     'Quinzenal',
+      'monthly':      'Mensal',
+      'one-time':     'Única vez',
+      '':             'Única vez'
+    };
+
     // ── Google Calendar link builder ───────────────────────────────────────
-    function gcalLink(r) {
-      const title = encodeURIComponent(`🧹 ${r.service_type||'Cleaning'} — ${r.customer_name||''}`);
-      const loc   = encodeURIComponent([r.address, r.city].filter(Boolean).join(', '));
-      const desc  = encodeURIComponent(`Phone: ${r.customer_phone||'—'}\nEmail: ${r.customer_email||'—'}\nFrequency: ${r.recurrence||'One-time'}\nNotes: ${r.description||'—'}`);
+    function gcalLink(req) {
+      const title = encodeURIComponent(`🧹 ${req.service_type||'Cleaning'} — ${req.customer_name||''}`);
+      const loc   = encodeURIComponent([req.address, req.city].filter(Boolean).join(', '));
+      const desc  = encodeURIComponent(`Phone: ${req.customer_phone||'—'}\nEmail: ${req.customer_email||'—'}\nFrequency: ${req.recurrence||'One-time'}\nNotes: ${req.description||'—'}`);
       let dates = '';
-      if (r.preferred_date && /^\d{4}-\d{2}-\d{2}$/.test(r.preferred_date)) {
-        const d = r.preferred_date.replace(/-/g,'');
+      if (req.preferred_date && /^\d{4}-\d{2}-\d{2}$/.test(req.preferred_date)) {
+        const d = req.preferred_date.replace(/-/g,'');
         dates = `&dates=${d}T090000/${d}T110000`;
       }
       return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&location=${loc}&details=${desc}&add=admin.lagosworld@gmail.com${dates}`;
@@ -1271,9 +1345,9 @@ async function loadCleaning() {
 
     // ── KPI summary ────────────────────────────────────────────────────────
     const total = reqs.length;
-    const recurring = reqs.filter(r => r.recurrence && r.recurrence !== 'one-time').length;
-    const open = reqs.filter(r => !r.status || r.status === 'open' || r.status === 'pending').length;
-    const completed = reqs.filter(r => r.status === 'completed').length;
+    const recurring = reqs.filter(req => req.recurrence && req.recurrence !== 'one-time').length;
+    const open = reqs.filter(req => !req.status || req.status === 'open' || req.status === 'pending').length;
+    const completed = reqs.filter(req => req.status === 'completed').length;
 
     const kpiHtml = `<div class="clean-kpi">
       <div class="clean-kpi-box"><div class="clean-kpi-val">${total}</div><div class="clean-kpi-label">Total Leads</div></div>
@@ -1283,37 +1357,85 @@ async function loadCleaning() {
     </div>`;
 
     // ── Table ──────────────────────────────────────────────────────────────
-    const tableRows = reqs.map(r => {
-      const d = new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-      const statuses = ['open','pending','confirmed','scheduled','completed','cancelled'];
-      const cur = r.status || 'open';
+    const statuses = ['open','confirmed','scheduled','in_progress','completed','cancelled'];
+    const tableRows = reqs.map(req => {
+      const d = new Date(req.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      // map 'finalizado' alias → 'completed' for display
+      let cur = req.status || 'open';
+      if (cur === 'finalizado') cur = 'completed';
       const opts = statuses.map(s => `<option value="${s}"${s===cur?' selected':''}>${s}</option>`).join('');
-      const safeEmail = (r.customer_email||'').replace(/'/g,"\\'");
-      const safeName = (r.customer_name||'').replace(/'/g,"\\'");
-      const phone = r.customer_phone || '—';
-      const addr = [r.address, r.city].filter(Boolean).join(', ') || '—';
-      const recur = r.recurrence || '—';
-      const cal = gcalLink(r);
+      const safeEmail = (req.customer_email||'').replace(/'/g,"\\'");
+      const safeName = (req.customer_name||'').replace(/'/g,"\\'");
+      const phone = req.customer_phone || '—';
+      const addr = [req.address, req.city].filter(Boolean).join(', ') || '—';
+      const recurDisplay = recurLabels[req.recurrence] !== undefined ? recurLabels[req.recurrence] : (req.recurrence || 'Única vez');
+      const cal = gcalLink(req);
+      const safeId = req.id;
       return `<tr>
         <td style="white-space:nowrap">${d}</td>
-        <td><div>${r.customer_name||'—'}</div><div style="font-size:.65rem;color:var(--text-muted)">${phone}</div></td>
-        <td style="color:var(--text-muted)">${r.customer_email||'—'}</td>
-        <td>${r.service_type||'—'}</td>
+        <td><div>${req.customer_name||'—'}</div><div style="font-size:.65rem;color:var(--text-muted)">${phone}</div></td>
+        <td style="color:var(--text-muted)">${req.customer_email||'—'}</td>
+        <td>${req.service_type||'—'}</td>
         <td style="font-size:.7rem;color:var(--text-muted)">${addr}</td>
-        <td style="font-size:.7rem">${recur}</td>
-        <td><select class="status-select" onchange="updateOrderStatus('${r.id}',this.value,'${safeEmail}','${safeName}','cleaning')">${opts}</select></td>
+        <td style="font-size:.7rem">${recurDisplay}</td>
+        <td style="white-space:nowrap">
+          <div style="display:flex;flex-direction:column;gap:.2rem">
+            <div style="display:flex;gap:.3rem;align-items:center"><span style="font-size:.58rem;color:var(--text-muted);width:48px">Price</span>${pricingInpHtml(safeId,'price','0.00')}</div>
+            <div style="display:flex;gap:.3rem;align-items:center"><span style="font-size:.58rem;color:var(--text-muted);width:48px">Extra</span>${pricingInpHtml(safeId,'extra','0.00')}</div>
+            <div style="display:flex;gap:.3rem;align-items:center"><span style="font-size:.58rem;color:var(--text-muted);width:48px">Desc.</span>${pricingInpHtml(safeId,'desconto','0.00')}</div>
+          </div>
+        </td>
+        <td><select class="status-select" onchange="updateCleaningStatus('${safeId}',this.value,'${safeEmail}','${safeName}',${JSON.stringify(req).replace(/"/g,'&quot;')})">${opts}</select></td>
         <td><a href="${cal}" target="_blank" style="font-size:.65rem;color:#20B2AA;text-decoration:none;white-space:nowrap" title="Add to Google Calendar">📅 Calendar</a></td>
       </tr>`;
     }).join('');
 
     el.innerHTML = kpiHtml + `<table class="orders-table">
       <thead><tr>
-        <th>Date</th><th>Name / Phone</th><th>Email</th><th>Service</th><th>Address</th><th>Recurrence</th><th>Status</th><th></th>
+        <th>Date</th><th>Name / Phone</th><th>Email</th><th>Service</th><th>Address</th><th>Recurrence</th><th>Pricing</th><th>Status</th><th></th>
       </tr></thead>
       <tbody>${tableRows}</tbody>
     </table>`;
   } catch(err) {
     el.innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>Could not load requests: ${err.message}</div>`;
+  }
+}
+
+// Cleaning-specific status update (sends invoice on 'completed')
+async function updateCleaningStatus(id, newStatus, customerEmail, customerName, reqData) {
+  if (typeof reqData === 'string') {
+    try { reqData = JSON.parse(reqData.replace(/&quot;/g,'"')); } catch(e) { reqData = {}; }
+  }
+  // Map finalizado → completed
+  const statusToSend = newStatus === 'finalizado' ? 'completed' : newStatus;
+  try {
+    const r = await fetch(`/api/cleaning/requests/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: statusToSend })
+    });
+    if (!r.ok) throw new Error('API error ' + r.status);
+    if (statusToSend === 'completed') {
+      showToast(`✓ Status updated. Invoice will be sent to ${customerEmail}.`);
+      sendCleaningInvoice({ ...reqData, id });
+    } else {
+      showToast(`✓ Status updated → ${statusToSend}`);
+    }
+    // Trigger email confirm for non-completed statuses too
+    if (customerEmail && customerEmail !== '—' && statusToSend !== 'completed') {
+      const emailTypes = { confirmed: 'cleaning_confirm', scheduled: 'cleaning_confirm', completed: 'cleaning_done', cancelled: 'cancelled' };
+      const emailType = emailTypes[statusToSend];
+      if (emailType) {
+        _pendingEmail = { type: emailType, to: customerEmail, name: customerName };
+        document.getElementById('ecm-status').textContent = statusToSend;
+        document.getElementById('ecm-email').textContent = customerEmail;
+        document.getElementById('ecm-name').textContent = customerName || '';
+        document.getElementById('email-confirm-modal').classList.add('open');
+      }
+    }
+  } catch (err) {
+    showToast('⚠ Status update failed');
+    console.error(err);
   }
 }
 
@@ -1441,13 +1563,10 @@ async function loadDashboard() {
     dashData.loadedAt = now;
 
     renderKPIs();
-    renderRevenueChart();
-    renderAreaBars();
     renderClientList();
 
     const ts = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     document.getElementById('dash-last-update').textContent = `Last updated: ${ts}`;
-    document.getElementById('dash-refresh-ts').textContent = `Auto-refresh every 5 min`;
 
     // Auto refresh every 5 minutes
     setTimeout(loadDashboard, 5 * 60 * 1000);
@@ -1458,181 +1577,88 @@ async function loadDashboard() {
   }
 }
 
-// ── KPIs ──
+// ── BUSINESS OVERVIEW PANELS ──
 function renderKPIs() {
   const now = new Date();
-  const weekStart = new Date(now); weekStart.setDate(now.getDate() - 7);
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const fmt = n => '$' + Number(n).toFixed(2);
 
-  // Combine all transactions
-  const allTx = [
-    ...dashData.orders.map(o => ({
-      total: Number(o.total || 0),
-      date: new Date(o.created_at),
-      type: 'jewelry',
-      name: o.customer_name || '—',
-    })),
-    ...dashData.cleaning.map(c => ({
-      total: Number(c.estimated_price || c.price || 0),
-      date: new Date(c.created_at),
-      type: 'cleaning',
-      name: c.customer_name || '—',
-    })),
-  ].filter(t => !isNaN(t.date));
+  // Jewelry panel
+  const orders = dashData.orders || [];
+  const totalOrders = orders.length;
+  const monthOrders = orders.filter(o => new Date(o.created_at) >= monthStart);
+  const monthRevJ = monthOrders.reduce((s, o) => s + Number(o.total || 0), 0);
+  const totalRevJ = orders.reduce((s, o) => s + Number(o.total || 0), 0);
+  const avgTicket = totalOrders ? totalRevJ / totalOrders : 0;
 
-  const totalRev   = allTx.reduce((s, t) => s + t.total, 0);
-  const monthTx    = allTx.filter(t => t.date >= monthStart);
-  const weekTx     = allTx.filter(t => t.date >= weekStart);
-  const monthRev   = monthTx.reduce((s, t) => s + t.total, 0);
-  const weekRev    = weekTx.reduce((s, t) => s + t.total, 0);
-  const avgTicket  = allTx.length ? totalRev / allTx.length : 0;
+  // Top product
+  const pCounts = {};
+  orders.forEach(o => (Array.isArray(o.items) ? o.items : []).forEach(i => {
+    const k = i.title || i.name || 'Unknown';
+    pCounts[k] = (pCounts[k] || 0) + (Number(i.quantity || i.qty) || 1);
+  }));
+  const topProduct = Object.entries(pCounts).sort((a,b) => b[1]-a[1])[0];
 
-  // Unique clients this week
-  const weekClients = new Set(weekTx.map(t => t.name));
-
-  const fmt = n => n >= 1000 ? '$' + (n/1000).toFixed(1) + 'k' : '$' + n.toFixed(0);
-
-  set('kpi-total-rev', fmt(totalRev));
-  set('kpi-total-rev-sub', `${allTx.length} total transactions`);
-  set('kpi-month-rev', fmt(monthRev));
-  set('kpi-month-sub', `${monthTx.length} transactions this month`);
-  set('kpi-week-rev', fmt(weekRev));
-  set('kpi-week-sub', `${weekTx.length} transactions this week`);
-  set('kpi-bookings', String(allTx.length));
-  set('kpi-bookings-sub', `${dashData.orders.length} jewelry · ${dashData.cleaning.length} cleaning`);
-  set('kpi-avg', fmt(avgTicket));
-  set('kpi-new-week', String(weekClients.size));
-
-  function set(id, val) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  }
-}
-
-// ── REVENUE CHART ──
-function renderRevenueChart() {
-  const canvas = document.getElementById('rev-chart');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  // Build 8 weeks of data
-  const weeks = [];
-  const now = new Date();
-  for (let i = 7; i >= 0; i--) {
-    const wEnd   = new Date(now); wEnd.setDate(now.getDate() - i * 7);
-    const wStart = new Date(wEnd); wStart.setDate(wEnd.getDate() - 7);
-    const label  = wStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    const rev    = [
-      ...dashData.orders,
-      ...dashData.cleaning,
-    ].filter(x => {
-      const d = new Date(x.created_at);
-      return d >= wStart && d < wEnd;
-    }).reduce((s, x) => s + Number(x.total || x.estimated_price || 0), 0);
-    weeks.push({ label, rev });
-  }
-
-  const W = canvas.offsetWidth || 400;
-  const H = 130;
-  canvas.width = W * devicePixelRatio;
-  canvas.height = H * devicePixelRatio;
-  ctx.scale(devicePixelRatio, devicePixelRatio);
-
-  const maxRev = Math.max(...weeks.map(w => w.rev), 1);
-  const pad = { l: 42, r: 10, t: 10, b: 28 };
-  const chartW = W - pad.l - pad.r;
-  const chartH = H - pad.t - pad.b;
-  const barW = chartW / weeks.length;
-
-  ctx.clearRect(0, 0, W, H);
-
-  // Grid lines
-  ctx.strokeStyle = 'rgba(255,255,255,.06)';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 4; i++) {
-    const y = pad.t + (chartH / 4) * i;
-    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
-    const val = maxRev * (1 - i / 4);
-    ctx.fillStyle = 'rgba(255,255,255,.35)';
-    ctx.font = `${9 * devicePixelRatio}px Montserrat`;
-    ctx.textAlign = 'right';
-    ctx.fillText(val >= 1000 ? '$' + (val/1000).toFixed(1) + 'k' : '$' + Math.round(val), pad.l - 4, y + 3.5);
-  }
-
-  // Bars
-  weeks.forEach((w, i) => {
-    const x = pad.l + i * barW + barW * 0.1;
-    const bw = barW * 0.8;
-    const bh = (w.rev / maxRev) * chartH;
-    const y = pad.t + chartH - bh;
-
-    const isLast = i === weeks.length - 1;
-    const grad = ctx.createLinearGradient(0, y, 0, pad.t + chartH);
-    grad.addColorStop(0, isLast ? 'rgba(184,146,46,.9)' : 'rgba(184,146,46,.5)');
-    grad.addColorStop(1, 'rgba(184,146,46,.1)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(x, y, bw, bh);
-
-    // Label
-    ctx.fillStyle = 'rgba(255,255,255,.35)';
-    ctx.font = `${8 * devicePixelRatio}px Montserrat`;
-    ctx.textAlign = 'center';
-    ctx.fillText(w.label.slice(0, 6), pad.l + i * barW + barW / 2, H - 8);
-
-    // Value on bar
-    if (w.rev > 0) {
-      ctx.fillStyle = isLast ? '#b8922e' : 'rgba(184,146,46,.7)';
-      ctx.font = `bold ${8 * devicePixelRatio}px Montserrat`;
-      ctx.textAlign = 'center';
-      ctx.fillText('$' + Math.round(w.rev), pad.l + i * barW + barW / 2, y - 4);
-    }
-  });
-}
-
-// ── AREA BARS ──
-function renderAreaBars() {
-  const el = document.getElementById('area-bars');
-  if (!el) return;
-
-  // Count bookings per city
-  const cityCounts = {};
-  dashData.cleaning.forEach(c => {
-    const city = (c.city || 'Unknown').trim();
-    cityCounts[city] = (cityCounts[city] || 0) + 1;
-  });
-
-  // Merge with known area data
-  const cityRevs = {};
-  dashData.cleaning.forEach(c => {
-    const city = (c.city || 'Unknown').trim();
-    cityRevs[city] = (cityRevs[city] || 0) + Number(c.estimated_price || c.price || 0);
-  });
-
-  // Top 6 areas by count + known priority areas
-  const priorityAreas = ['Lower Merion', 'Easttown', 'Haddonfield', 'Radnor', 'Wayne', 'Moorestown'];
-  const cityData = {};
-  [...priorityAreas, ...Object.keys(cityCounts)].forEach(city => {
-    if (!cityData[city]) {
-      cityData[city] = { count: cityCounts[city] || 0, rev: cityRevs[city] || 0 };
-    }
-  });
-
-  const sorted = Object.entries(cityData)
-    .sort((a, b) => (b[1].count + b[1].rev / 1000) - (a[1].count + a[1].rev / 1000))
-    .slice(0, 6);
-
-  const maxCount = Math.max(...sorted.map(s => s[1].count), 1);
-
-  el.innerHTML = sorted.map(([city, d]) => {
-    const pct = (d.count / maxCount) * 100;
-    const meta = AREAS_META[city];
-    const label = meta ? `${city} · ${meta.state}` : city;
-    return `<div class="area-bar-row">
-      <div class="area-bar-label" title="${city}">${label}</div>
-      <div class="area-bar-track"><div class="area-bar-fill" style="width:${pct}%"></div></div>
-      <div class="area-bar-val">${d.count ? d.count + ' job' + (d.count !== 1 ? 's' : '') : '—'}</div>
+  function kpiRow(label, val) {
+    return `<div style="display:flex;justify-content:space-between;align-items:center;font-size:.75rem;padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.04)">
+      <span style="color:var(--text-muted)">${label}</span>
+      <span style="color:var(--text);font-weight:600">${val}</span>
     </div>`;
-  }).join('');
+  }
+
+  const jewelryEl = document.getElementById('jewelry-kpi-rows');
+  if (jewelryEl) jewelryEl.innerHTML =
+    kpiRow('Total Orders', totalOrders) +
+    kpiRow('Revenue (Month)', fmt(monthRevJ)) +
+    kpiRow('Avg Ticket', fmt(avgTicket)) +
+    kpiRow('Top-Selling Product', topProduct ? `${topProduct[0].slice(0,24)} (×${topProduct[1]})` : '—');
+
+  // Cleaning panel
+  const cleaning = dashData.cleaning || [];
+  const totalLeads = cleaning.length;
+  const openLeads = cleaning.filter(r => !r.status || r.status === 'open' || r.status === 'pending').length;
+  const completedLeads = cleaning.filter(r => r.status === 'completed').length;
+  const monthLeads = cleaning.filter(r => new Date(r.created_at) >= monthStart).length;
+
+  const cleaningEl = document.getElementById('cleaning-kpi-rows');
+  if (cleaningEl) cleaningEl.innerHTML =
+    kpiRow('Total Leads', totalLeads) +
+    kpiRow('Open Leads', openLeads) +
+    kpiRow('Completed', completedLeads) +
+    kpiRow('This Month', monthLeads);
+
+  // Low stock table
+  renderLowStockTable();
+}
+
+// ── LOW STOCK TABLE ──
+function renderLowStockTable() {
+  const el = document.getElementById('low-stock-table');
+  if (!el) return;
+  const prods = window.PRODUCTS_ADMIN || [];
+  const lowItems = prods
+    .filter(p => stockOv[p.id] !== undefined && stockOv[p.id] <= 10)
+    .sort((a, b) => stockOv[a.id] - stockOv[b.id]);
+
+  if (!lowItems.length) {
+    el.innerHTML = '<div style="font-size:.72rem;color:var(--text-muted);padding:.4rem 0">All stock levels look good ✓</div>';
+    return;
+  }
+
+  el.innerHTML = `<table class="orders-table" style="width:100%">
+    <thead><tr><th>Product Name</th><th>SKU</th><th>Stock</th><th>Category</th></tr></thead>
+    <tbody>${lowItems.map(p => {
+      const qty = stockOv[p.id];
+      const bg  = qty >= 6 ? 'rgba(76,175,121,.2)'  : qty >= 3 ? 'rgba(255,193,7,.2)'  : 'rgba(224,82,82,.2)';
+      const col = qty >= 6 ? '#4caf79'               : qty >= 3 ? '#ffc107'              : '#e05252';
+      return `<tr>
+        <td>${p.name}</td>
+        <td style="color:var(--text-muted)">${p.sku||'—'}</td>
+        <td><span style="background:${bg};color:${col};padding:.15rem .5rem;border-radius:2px;font-size:.65rem;font-weight:700">${qty}</span></td>
+        <td style="color:var(--text-muted)">${p.cat||'—'}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
 }
 
 // ── CLIENT STRATEGY LIST ──
@@ -1731,48 +1757,6 @@ function filterStrat(tier, el) {
   displayClients(filtered);
 }
 
-// ── CART ACTIVITY ──
-function loadCartActivity() {
-  const el = document.getElementById('cart-content');
-  const LS_CART = 'lj_cart_events';
-  let events = [];
-  try { events = JSON.parse(localStorage.getItem(LS_CART) || '[]'); } catch(e) {}
-
-  if (!events.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">🛒</div>No cart activity recorded yet.<br><small style="font-size:.65rem;margin-top:.5rem;display:block">Events are captured when visitors add items, open cart, abandon, or purchase on the jewelry store.</small></div>';
-    return;
-  }
-
-  const typeLabel = { add:'➕ Add to Cart', cart_abandon:'⚠️ Cart Abandoned', purchase:'✅ Purchase', cart_open:'🛒 Cart Opened' };
-  const typeBadge = { add:'status-pending', cart_abandon:'', purchase:'status-completed', cart_open:'status-pending' };
-  const typeColor  = { add:'var(--gold)', cart_abandon:'var(--red)', purchase:'var(--green)', cart_open:'var(--text-muted)' };
-
-  const summary = events.reduce((acc,e)=>{ acc[e.type]=(acc[e.type]||0)+1; return acc; }, {});
-
-  el.innerHTML = `
-    <div class="stats-bar" style="margin-bottom:1.5rem">
-      <div class="stat-card"><div class="stat-num" style="color:var(--green)">${summary.purchase||0}</div><div class="stat-label">Purchases</div></div>
-      <div class="stat-card"><div class="stat-num">${summary.add||0}</div><div class="stat-label">Add to Cart</div></div>
-      <div class="stat-card"><div class="stat-num" style="color:var(--red)">${summary.cart_abandon||0}</div><div class="stat-label">Abandoned</div></div>
-      <div class="stat-card"><div class="stat-num">${events.length}</div><div class="stat-label">Total Events</div></div>
-    </div>
-    <table class="orders-table">
-      <thead><tr><th>Time</th><th>Event</th><th>Customer</th><th>Items</th><th>Cart Total</th></tr></thead>
-      <tbody>${events.map(e => {
-        const d = new Date(e.timestamp);
-        const timeStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-        const itemStr = (e.items||[]).map(i=>`${i.name} ×${i.qty}`).slice(0,3).join(', ') + ((e.items||[]).length>3?'…':'');
-        const customer = [e.name!=='—'?e.name:'',e.email,e.phone].filter(Boolean).join(' · ') || '—';
-        return `<tr>
-          <td style="white-space:nowrap;color:var(--text-muted);font-size:.68rem">${timeStr}</td>
-          <td><span style="font-weight:700;color:${typeColor[e.type]||'var(--text)'};font-size:.7rem">${typeLabel[e.type]||e.type}</span></td>
-          <td style="font-size:.72rem">${customer}</td>
-          <td style="font-size:.68rem;color:var(--text-muted);max-width:200px">${itemStr||'—'}</td>
-          <td style="color:var(--gold);font-weight:700">$${Number(e.total||0).toFixed(2)}</td>
-        </tr>`;
-      }).join('')}</tbody>
-    </table>`;
-}
 
 // ── MANUAL CLIENT REGISTRATION ──
 const LS_MANUAL_CLIENTS = 'lj_manual_clients';
