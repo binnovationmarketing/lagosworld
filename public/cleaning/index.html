@@ -1374,13 +1374,16 @@ async function submitBooking(e) {
     promo_code: form.get('promo_code') || null
   };
   try {
-    const res = await fetch('/api/cleaning/requests', {
+    const res  = await fetch('/api/cleaning/requests', {
       method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data)
     });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || 'Request failed');
     btn.textContent = '✅ Request Sent! We\'ll contact you within 2 hours.';
     btn.style.background = 'var(--green)';
     e.target.reset();
-  } catch {
+  } catch (err) {
+    console.error('Cleaning form error:', err.message);
     btn.textContent = '📞 Error — Please call +1 (215) 626-2345';
     btn.style.background = '#DC2626';
     btn.disabled = false;

@@ -1195,7 +1195,9 @@ document.getElementById('quoteForm').addEventListener('submit', async e => {
   btn.disabled = true;
 
   const data = Object.fromEntries(new FormData(e.target));
-  data.business = 'power_washing';
+  data.service_type = data.service_type || 'power_washing';
+  data.description  = data.message || null;  // form field is "message", backend expects "description"
+  delete data.message;
 
   try {
     const res  = await fetch('/api/cleaning/requests', {
@@ -1204,11 +1206,12 @@ document.getElementById('quoteForm').addEventListener('submit', async e => {
       body: JSON.stringify(data)
     });
     const json = await res.json();
-    if (json.ok) {
+    if (res.ok && json.success) {
       document.getElementById('formInner').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
-    } else throw new Error(json.error);
-  } catch {
+    } else throw new Error(json.error || 'Request failed');
+  } catch (err) {
+    console.error('Quote form error:', err.message);
     btn.textContent = 'Get My Free Quote';
     btn.disabled = false;
     alert('Something went wrong. Please call (240) 780-6473.');
