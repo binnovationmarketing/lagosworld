@@ -94,10 +94,86 @@
   } catch(e) { /* silent fallback to localStorage */ }
 })();
 
+// ── STOCK — fetch live stock levels and apply unavailable overlays ────────────
+(async function syncStock() {
+  try {
+    const r = await fetch('/api/jewelry/stock');
+    if (!r.ok) return;
+    const stockMap = await r.json(); // { sku: stock_qty }
+    if (!stockMap || !Object.keys(stockMap).length) return;
+
+    // Store globally so modal can read it
+    window.__STOCK__ = stockMap;
+
+    // Apply overlays to all rendered cards
+    applyStockOverlays(stockMap);
+  } catch (e) { /* non-fatal */ }
+})();
+
+function applyStockOverlays(stockMap) {
+  if (!stockMap) return;
+  document.querySelectorAll('.card[data-sku]').forEach(card => {
+    const sku = card.getAttribute('data-sku');
+    const qty = stockMap[sku];
+    if (qty !== undefined && qty !== null && qty <= 0) {
+      markCardUnavailable(card);
+    }
+  });
+  // Also patch cards that embed sku via data attribute added by renderAllCards
+  document.querySelectorAll('.card').forEach(card => {
+    const btn = card.querySelector('[onclick*="openModal"]');
+    if (!btn) return;
+    // Try to find product by matching card's rendered name vs PRODUCTS
+    const nameEl = card.querySelector('.card-name');
+    if (!nameEl) return;
+    const name = nameEl.textContent?.trim();
+    const prod = PRODUCTS.find(p => (nameEl.textContent?.includes(p.name)));
+    if (!prod || !prod.sku) return;
+    const qty = stockMap[prod.sku];
+    if (qty !== undefined && qty !== null && qty <= 0) {
+      markCardUnavailable(card);
+    }
+  });
+}
+
+function markCardUnavailable(card) {
+  if (card.querySelector('.stock-unavailable')) return; // already done
+  card.style.position = 'relative';
+  // Overlay badge
+  const badge = document.createElement('div');
+  badge.className = 'stock-unavailable';
+  badge.innerHTML = 'Unavailable';
+  badge.style.cssText = [
+    'position:absolute',
+    'bottom:0','left:0','right:0',
+    'background:rgba(18,18,18,0.72)',
+    'color:#e2c97e',
+    'font-size:.6rem',
+    'letter-spacing:.18em',
+    'text-transform:uppercase',
+    'text-align:center',
+    'padding:.32rem 0',
+    'font-family:Montserrat,sans-serif',
+    'font-weight:600',
+    'pointer-events:none',
+    'z-index:4',
+    'backdrop-filter:blur(2px)',
+  ].join(';');
+  card.appendChild(badge);
+  // Dim the image slightly
+  const img = card.querySelector('.card-img');
+  if (img) img.style.cssText += ';filter:grayscale(35%) brightness(0.85)';
+  // Disable add-to-cart button but still allow viewing
+  const addBtn = card.querySelector('.card-cta, [data-action="add"], .add-btn');
+  if (addBtn) { addBtn.style.opacity = '.45'; addBtn.style.pointerEvents = 'none'; }
+}
+
 // ── INIT — run pagination on first load ──────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderAllCards();  // inject all product cards from PRODUCTS array
   renderShopPage();
+  // Apply stock overlays after cards are rendered (stock fetch may resolve later)
+  if (window.__STOCK__) applyStockOverlays(window.__STOCK__);
   // Deep-link: lagosworld.app/jewelry#12345678 opens that product modal
   const hash = window.location.hash.replace('#','');
   if (hash && /^\d+$/.test(hash)) {
