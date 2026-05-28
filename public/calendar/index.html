@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appointments Calendar | Lagos Cleaning</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#0891B2;--teal-d:#0E7490;--teal-bg:#F0FDFF;
+  --text:#111827;--text-mid:#374151;--text-muted:#6B7280;--border:#E5E7EB;
+  --dark:#0F172A;
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:#F8FAFC;color:var(--text)}
+a{color:var(--teal);text-decoration:none}
+
+/* ── NAV ─────────────────────────────────────────────────────────────── */
+nav{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:.85rem 1.5rem;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+  box-shadow:0 1px 3px rgba(0,0,0,.06)
+}
+.nav-logo img{height:40px;width:auto;display:block}
+.nav-title{font-size:.78rem;font-weight:600;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase}
+.nav-actions{display:flex;gap:.75rem;align-items:center}
+.nav-btn{
+  font-size:.75rem;font-weight:600;padding:.45rem 1rem;border-radius:6px;
+  text-decoration:none;transition:all .2s
+}
+.nav-btn-outline{border:1.5px solid var(--teal);color:var(--teal)}
+.nav-btn-outline:hover{background:var(--teal);color:#fff}
+.nav-btn-solid{background:var(--teal);color:#fff;border:1.5px solid var(--teal)}
+.nav-btn-solid:hover{background:var(--teal-d)}
+
+/* ── HEADER BANNER ───────────────────────────────────────────────────── */
+.cal-header{
+  background:linear-gradient(135deg,var(--teal-d),#0891B2 60%,#06B6D4);
+  color:#fff;padding:2rem 1.5rem 1.8rem;
+}
+.cal-header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.cal-header h1{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;margin-bottom:.25rem}
+.cal-header p{font-size:.82rem;opacity:.85;max-width:480px}
+.cal-header-stats{display:flex;gap:1.5rem;flex-wrap:wrap}
+.cal-stat{text-align:center}
+.cal-stat-num{font-size:1.4rem;font-weight:700;display:block}
+.cal-stat-label{font-size:.68rem;opacity:.7;letter-spacing:.06em;text-transform:uppercase}
+
+/* ── LEGEND ──────────────────────────────────────────────────────────── */
+.cal-legend{
+  max-width:1100px;margin:1.2rem auto 0;padding:0 1.5rem;
+  display:flex;gap:1rem;flex-wrap:wrap;align-items:center
+}
+.legend-item{display:flex;align-items:center;gap:.45rem;font-size:.72rem;font-weight:500;color:var(--text-mid)}
+.legend-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.legend-peacock{background:#039be5}
+.legend-tangerine{background:#f6bf26}
+.legend-grape{background:#8e24aa}
+.legend-green{background:#33b679}
+.legend-banana{background:#f4c13d}
+.legend-holiday{background:#0b8043}
+
+/* ── CALENDAR CONTAINER ──────────────────────────────────────────────── */
+.cal-wrap{
+  max-width:1100px;margin:1.5rem auto 2rem;padding:0 1.5rem;
+}
+.cal-frame-outer{
+  background:#fff;border-radius:14px;overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:0 4px 24px rgba(0,0,0,.08);
+  position:relative;
+}
+/* Branded top bar above the iframe */
+.cal-brand-bar{
+  background:var(--teal-d);padding:.55rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cal-brand-bar-left{display:flex;align-items:center;gap:.65rem}
+.cal-brand-bar-logo{
+  font-size:.72rem;letter-spacing:.2em;color:rgba(255,255,255,.9);
+  text-transform:uppercase;font-weight:600
+}
+.cal-brand-bar-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4)}
+.cal-brand-bar-label{font-size:.68rem;color:rgba(255,255,255,.65);letter-spacing:.06em}
+.cal-brand-bar-right{font-size:.68rem;color:rgba(255,255,255,.5)}
+
+iframe.cal-embed{
+  display:block;width:100%;border:none;
+  min-height:620px;
+}
+
+/* ── QUICK ACTIONS ───────────────────────────────────────────────────── */
+.cal-actions{
+  max-width:1100px;margin:0 auto 2rem;padding:0 1.5rem;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+}
+@media(max-width:640px){.cal-actions{grid-template-columns:1fr}}
+.action-card{
+  background:#fff;border:1px solid var(--border);border-radius:12px;
+  padding:1.2rem 1.3rem;display:flex;align-items:flex-start;gap:.85rem;
+  transition:all .2s;text-decoration:none;color:inherit
+}
+.action-card:hover{border-color:var(--teal);box-shadow:0 4px 16px rgba(8,145,178,.1);transform:translateY(-2px)}
+.action-card-icon{
+  width:40px;height:40px;border-radius:10px;background:var(--teal-bg);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0
+}
+.action-card-body h3{font-size:.83rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.action-card-body p{font-size:.73rem;color:var(--text-muted);line-height:1.5}
+
+/* ── TIPS BOX ────────────────────────────────────────────────────────── */
+.cal-tips{
+  max-width:1100px;margin:0 auto 3rem;padding:0 1.5rem;
+}
+.tips-box{
+  background:var(--teal-bg);border:1px solid #A5F3FC;border-radius:12px;
+  padding:1.2rem 1.4rem;
+}
+.tips-box h4{font-size:.8rem;font-weight:700;color:var(--teal-d);margin-bottom:.7rem;letter-spacing:.04em;text-transform:uppercase}
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+@media(max-width:500px){.tips-grid{grid-template-columns:1fr}}
+.tip{font-size:.75rem;color:#164E63;display:flex;align-items:flex-start;gap:.45rem;line-height:1.5}
+.tip-icon{flex-shrink:0;font-size:.85rem;margin-top:.05rem}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────── */
+footer{background:var(--dark);color:#64748B;padding:1.5rem;text-align:center;font-size:.72rem}
+footer a{color:#38BDF8}
+
+/* ── WAVE WATERMARK ──────────────────────────────────────────────────── */
+.wave-watermark{position:fixed;bottom:-60px;right:-60px;width:400px;height:400px;opacity:.18;pointer-events:none;z-index:0}
+.cal-wrap,.cal-header,.cal-actions,.cal-tips,nav,footer{position:relative;z-index:1}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+@media(max-width:768px){
+  .cal-header-inner{flex-direction:column;align-items:flex-start}
+  .cal-header h1{font-size:1.35rem}
+  .cal-header-stats{gap:1rem}
+  iframe.cal-embed{min-height:500px}
+}
+@media(max-width:480px){
+  .cal-legend{gap:.7rem}
+  nav{padding:.7rem 1rem}
+  .nav-title{display:none}
+  iframe.cal-embed{min-height:420px}
+}
+</style>
+</head>
+<body>
+
+<!-- Wave watermark -->
+<svg class="wave-watermark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M10 130 Q30 80 55 110 Q80 140 105 90 Q130 40 155 80 Q175 108 190 70"
+        stroke="#0891B2" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <path d="M10 155 Q35 105 60 135 Q85 165 110 115 Q135 65 160 105 Q178 130 190 100"
+        stroke="#0891B2" stroke-width="8" stroke-linecap="round" fill="none" opacity=".55"/>
+  <circle cx="55" cy="108" r="4" fill="#0891B2"/>
+  <circle cx="105" cy="88" r="3" fill="#0891B2" opacity=".7"/>
+  <circle cx="155" cy="78" r="4" fill="#0891B2"/>
+  <path d="M172 45 L174 39 L176 45 L182 47 L176 49 L174 55 L172 49 L166 47Z" fill="#0891B2" opacity=".8"/>
+</svg>
+
+<!-- NAV -->
+<nav>
+  <a href="/cleaning" class="nav-logo">
+    <img src="/images/lagos-cleaning-logo.png" alt="Lagos Cleaning">
+  </a>
+  <span class="nav-title">Appointments Calendar</span>
+  <div class="nav-actions">
+    <a href="/cleaning" class="nav-btn nav-btn-outline">← Back to Site</a>
+    <a href="https://calendar.google.com/calendar/r" target="_blank" rel="noopener" class="nav-btn nav-btn-solid">Open in Google Calendar</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="cal-header">
+  <div class="cal-header-inner">
+    <div>
+      <h1>Lagos Cleaning — Appointments</h1>
+      <p>All confirmed bookings, Airbnb turnovers, move-in/move-out and power wash appointments. Synced in real time with <strong>lagosvipcleaning@gmail.com</strong>.</p>
+    </div>
+    <div class="cal-header-stats">
+      <div class="cal-stat">
+        <span class="cal-stat-num">📅</span>
+        <span class="cal-stat-label">Live Sync</span>
+      </div>
+      <div class="cal-stat">
+        <span class="cal-stat-num">🔔</span>
+        <span class="cal-stat-label">Reminders On</span>
+      </div>
+      <div class="cal-stat">
+        <span class="cal-stat-num">📩</span>
+        <span class="cal-stat-label">Client Invited</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="cal-legend">
+  <span style="font-size:.72rem;color:var(--text-muted);font-weight:600;margin-right:.3rem">Color Key:</span>
+  <div class="legend-item"><div class="legend-dot legend-peacock"></div>House / Airbnb / Move-In/Out</div>
+  <div class="legend-item"><div class="legend-dot legend-tangerine"></div>Power Washing</div>
+  <div class="legend-item"><div class="legend-dot legend-grape"></div>Office / Commercial</div>
+  <div class="legend-item"><div class="legend-dot legend-banana"></div>⭐ First-Time Client</div>
+  <div class="legend-item"><div class="legend-dot legend-holiday"></div>US Holidays</div>
+</div>
+
+<!-- CALENDAR -->
+<div class="cal-wrap">
+  <div class="cal-frame-outer">
+    <!-- Branded bar above calendar -->
+    <div class="cal-brand-bar">
+      <div class="cal-brand-bar-left">
+        <span class="cal-brand-bar-logo">Lagos Cleaning</span>
+        <div class="cal-brand-bar-dot"></div>
+        <span class="cal-brand-bar-label">lagosvipcleaning@gmail.com · Philadelphia, PA</span>
+      </div>
+      <span class="cal-brand-bar-right">Real-time sync · Google Calendar</span>
+    </div>
+    <!-- Google Calendar embed -->
+    <iframe
+      class="cal-embed"
+      src="https://calendar.google.com/calendar/embed?height=620&wkst=1&ctz=America%2FNew_York&showPrint=0&showTitle=0&showNav=1&showDate=1&showTabs=1&showCalendars=0&src=bGFnb3N2aXBjbGVhbmluZ0BnbWFpbC5jb20&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043"
+      frameborder="0"
+      scrolling="no"
+      title="Lagos Cleaning Appointments"
+      loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="cal-actions">
+  <a href="https://calendar.google.com/calendar/r" target="_blank" rel="noopener" class="action-card">
+    <div class="action-card-icon">📅</div>
+    <div class="action-card-body">
+      <h3>Open Full Calendar</h3>
+      <p>Switch to week, day or agenda view in Google Calendar for detailed management.</p>
+    </div>
+  </a>
+  <a href="/cleaning" class="action-card">
+    <div class="action-card-icon">🧹</div>
+    <div class="action-card-body">
+      <h3>New Booking Request</h3>
+      <p>Client submits a request on the website — calendar event auto-created.</p>
+    </div>
+  </a>
+  <a href="https://wa.me/12156262345" target="_blank" rel="noopener" class="action-card">
+    <div class="action-card-icon">💬</div>
+    <div class="action-card-body">
+      <h3>WhatsApp Quick Book</h3>
+      <p>Clients can also book via WhatsApp — manually add event after confirming.</p>
+    </div>
+  </a>
+</div>
+
+<!-- TIPS -->
+<div class="cal-tips">
+  <div class="tips-box">
+    <h4>How calendar events are created</h4>
+    <div class="tips-grid">
+      <div class="tip"><span class="tip-icon">🤖</span><span><strong>Automatic:</strong> Every website booking instantly creates a Google Calendar event with client name, address, service type, and phone number.</span></div>
+      <div class="tip"><span class="tip-icon">🌟</span><span><strong>First-time clients</strong> show in gold (banana color) so you can give extra attention to new customers.</span></div>
+      <div class="tip"><span class="tip-icon">📩</span><span><strong>Client receives</strong> a .ics calendar file in their confirmation email — Gmail and Apple Mail show an "Add to Calendar" button automatically.</span></div>
+      <div class="tip"><span class="tip-icon">🔔</span><span><strong>Reminders:</strong> Email 24h before, email 2h before, popup 30 min before — all set automatically on every booking.</span></div>
+      <div class="tip"><span class="tip-icon">🎨</span><span><strong>Color coding:</strong> Blue = cleaning, Orange = power wash, Purple = commercial, Gold = new client, Green = US holidays.</span></div>
+      <div class="tip"><span class="tip-icon">📋</span><span><strong>Invoice:</strong> Send an invoice anytime via <code style="font-size:.7rem;background:rgba(8,145,178,.1);padding:.1rem .3rem;border-radius:3px">POST /api/cleaning/invoice</code> — auto-branded email sent to client.</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Lagos Cleaning Services · <a href="/cleaning">lagoscleaning.app</a> · <a href="/terms">Terms</a> · <a href="/privacy-policy">Privacy</a></p>
+  <p style="margin-top:.4rem">Part of Lagos World LLC · Philadelphia, PA · <a href="mailto:lagosvipcleaning@gmail.com">lagosvipcleaning@gmail.com</a></p>
+</footer>
+
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
