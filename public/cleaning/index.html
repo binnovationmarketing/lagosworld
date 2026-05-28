@@ -420,9 +420,49 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
 /* BEFORE/AFTER KEN BURNS */
 @keyframes ba-ken-burns{from{transform:scale(1.06)}to{transform:scale(1)}}
 .ba-card.vis .ba-side img{animation:ba-ken-burns 1.4s ease forwards}
+
+/* ── CINEMATIC PARALLAX BACKGROUND ──────────────────────────────────── */
+body{background:transparent}
+
+.scene-bg{
+  position:fixed;inset:0;z-index:-1;
+  overflow:hidden;pointer-events:none;
+}
+.bg-slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity 2.2s ease;
+  will-change:opacity,transform;
+}
+.bg-slide.bg-active{
+  opacity:1;
+  animation:bgkb 16s ease-in-out forwards;
+}
+@keyframes bgkb{
+  from{transform:scale(1.07) translate(0,0)}
+  to  {transform:scale(1.00) translate(-0.8%,-0.4%)}
+}
+
+/* sections float over bg with light veil */
+.section      {background:rgba(255,255,255,.90)}
+.section-alt  {background:rgba(249,250,251,.90)}
+.section-teal {background:rgba(240,253,255,.92)}
+.contact-bar  {background:rgba(248,251,251,.90)}
+
+/* hero / elite / booking / promo / footer stay fully opaque — own colors */
 </style>
 </head>
 <body>
+
+<!-- CINEMATIC BACKGROUND — fixed, behind all content, cycles through 6 photos -->
+<div class="scene-bg" aria-hidden="true">
+  <div class="bg-slide" data-bg="/images/marketing/team-dining-room.png"></div>
+  <div class="bg-slide" data-bg="/images/marketing/team-kitchen.png"></div>
+  <div class="bg-slide" data-bg="/images/marketing/window-cleaning-philly-female.png"></div>
+  <div class="bg-slide" data-bg="/images/marketing/clean-kitchen-result.png"></div>
+  <div class="bg-slide" data-bg="/images/marketing/luxury-apartment-team.jpg"></div>
+  <div class="bg-slide" data-bg="/images/marketing/office-cleaning-wide.png"></div>
+</div>
 
 <!-- TOP BAR -->
 <div class="top-bar">
@@ -1596,5 +1636,34 @@ async function submitNewsletter() {
   <!-- Vercel Web Analytics -->
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
   <script defer src="/_vercel/insights/script.js"></script>
+
+<script>
+/* ── CINEMATIC BACKGROUND ENGINE ───────────────────────────────────── */
+/* Fixed-position bg stays still; semi-transparent sections scroll over it  */
+/* → natural cascade parallax, zero conflict with Ken Burns transform anim  */
+(function(){
+  var slides = Array.from(document.querySelectorAll('.bg-slide'));
+  if (!slides.length) return;
+  var cur = 0;
+
+  function load(i){
+    var s = slides[i];
+    if (!s.style.backgroundImage && s.dataset.bg)
+      s.style.backgroundImage = "url('" + s.dataset.bg + "')";
+  }
+
+  function go(i){
+    slides[cur].classList.remove('bg-active');
+    cur = i;
+    load(cur);
+    load((cur + 1) % slides.length); // preload next
+    slides[cur].classList.add('bg-active');
+  }
+
+  load(0); load(1);       // load first two up-front
+  slides[0].classList.add('bg-active');
+  setInterval(function(){ go((cur + 1) % slides.length); }, 5500);
+})();
+</script>
 </body>
 </html>
