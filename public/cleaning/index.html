@@ -477,6 +477,185 @@ body{background:transparent}
 .section-alt  {background:rgba(249,250,251,.60)}
 .section-teal {background:rgba(240,253,255,.62)}
 .contact-bar  {background:rgba(248,251,251,.60)}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — tablet & mobile comprehensive overrides
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 900px (tablet landscape) ───────────────────────── */
+@media(max-width:900px){
+  .elite-inner{gap:2.5rem}
+  .booking-inner{gap:2.5rem}
+  .booking-info h2{font-size:1.9rem}
+}
+
+/* ── 768px (tablet portrait) ────────────────────────── */
+@media(max-width:768px){
+  /* Rating summary — stack vertically */
+  .rating-summary{flex-direction:column;gap:1.5rem;align-items:stretch;padding:1.5rem 1.2rem}
+  .rating-big{display:flex;align-items:center;gap:1.2rem}
+  .rating-bars{min-width:0}
+
+  /* Booking form */
+  .booking-form{padding:1.6rem}
+  .booking-section{padding:3.5rem 1.5rem}
+
+  /* Elite cards: 2-col still fine at 768 → fix at 560 below */
+
+  /* Market cards: drop minmax so they always fit */
+  .market-cards-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+
+  /* Hero card full row on tablet */
+  .hero-inner{gap:2rem}
+}
+
+/* ── 640px ───────────────────────────────────────────── */
+@media(max-width:640px){
+  /* ZIP row: stack button below input */
+  .zip-row{flex-direction:column;gap:.6rem;max-width:100%}
+  .zip-btn{width:100%;text-align:center;justify-content:center;border-radius:8px}
+  .zip-input-wrap{border-radius:8px}
+
+  /* Promo banner: stack items vertically */
+  .promo-banner-inner{flex-direction:column;text-align:center;gap:.6rem}
+
+  /* Elite cards: single column */
+  .elite-cards{grid-template-columns:1fr;max-width:380px;margin:0 auto}
+}
+
+/* ── 480px (large mobile) ───────────────────────────── */
+@media(max-width:480px){
+  /* Top bar: smaller, 2 visible items */
+  .top-bar{padding:.45rem 1rem;font-size:.66rem;gap:.35rem;justify-content:center}
+  .top-bar span:nth-child(2){display:none} /* hide hours on very small */
+
+  /* Nav: tighter logo + smaller buttons */
+  .nav-inner{padding:.7rem 1rem;gap:1rem}
+  .nav-logo img{height:38px}
+  .nav-actions{gap:.4rem}
+  .nav-actions .btn{padding:.52rem .85rem;font-size:.72rem;letter-spacing:0}
+  /* Hide "Call Now" text — keep icon version via sticky CTA */
+  .nav-actions .btn-outline{display:none}
+
+  /* Hero */
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero-badge{font-size:.62rem;padding:.28rem .72rem}
+  .hero h1{font-size:clamp(1.8rem,7vw,2.6rem)}
+  .hero-sub{font-size:.88rem}
+  .hero-trust{gap:.8rem}
+  .trust-badge{font-size:.67rem}
+
+  /* Hero card */
+  .hero-card{padding:1.4rem 1.2rem}
+  .hero-stat{gap:.5rem}
+  .hs-num{font-size:1.25rem}
+  .hs-label{font-size:.58rem}
+
+  /* Hero CTA bar buttons */
+  .hero-ctabar{gap:.6rem}
+  .hero-ctabar .btn-xl{padding:.82rem 1.4rem;font-size:.82rem}
+
+  /* ZIP widget */
+  .zip-row{flex-direction:column;gap:.6rem;max-width:100%}
+  .zip-btn{width:100%;border-radius:8px}
+  .zip-hint{font-size:.62rem}
+
+  /* Steps */
+  .step-num{width:54px;height:54px;font-size:1.1rem}
+
+  /* Elite section */
+  .elite-section{padding:3rem 1.2rem}
+  .elite-title{font-size:clamp(1.7rem,6vw,2.5rem)}
+  .elite-desc{font-size:.85rem}
+  .elite-list li{font-size:.8rem}
+  .elite-cards{grid-template-columns:1fr;max-width:100%}
+
+  /* Rating summary */
+  .rating-summary{flex-direction:column;gap:1.2rem;align-items:stretch;padding:1.2rem 1rem}
+  .rating-big{display:flex;align-items:center;gap:1rem}
+  .rating-num{font-size:2.8rem}
+
+  /* Booking */
+  .booking-section{padding:3rem 1.2rem}
+  .booking-form{padding:1.2rem 1rem}
+  .booking-info h2{font-size:1.6rem}
+  .booking-info p{font-size:.82rem}
+
+  /* Contact bar items */
+  .contact-item p,.contact-item a{font-size:.82rem;word-break:break-word}
+
+  /* Footer logo smaller */
+  .footer-top img{height:40px!important}
+
+  /* Sticky CTA: tighter text */
+  .sticky-cta{padding:.6rem .85rem;gap:.5rem}
+  .sticky-cta a{font-size:.7rem;padding:.55rem .7rem}
+
+  /* Section headings */
+  .section-title{font-size:clamp(1.5rem,6vw,2rem)}
+  .section-sub{font-size:.82rem}
+
+  /* pw-surfaces: maintain 2 columns but shorter cards */
+  .pw-card-name{font-size:.82rem}
+
+  /* Market cards inner grid */
+  .market-cards-grid{grid-template-columns:1fr!important}
+
+  /* Promo banner */
+  .promo-banner-inner{flex-direction:column;text-align:center;gap:.6rem}
+  .promo-banner span{font-size:.78rem}
+
+  /* Areas grid already 1fr at 768 */
+  .areas-grid{gap:2rem}
+
+  /* Reviews grid */
+  .review-card{padding:1.3rem}
+}
+
+/* ── 375px (small mobile – iPhone SE) ───────────────── */
+@media(max-width:375px){
+  .nav-logo img{height:32px}
+  .hero h1{font-size:1.75rem}
+  .hero-card{padding:1.1rem .9rem}
+  .hs-num{font-size:1.1rem}
+
+  /* pw-surfaces: single column on very small */
+  .pw-surfaces{grid-template-columns:1fr}
+  .pw-card-img{aspect-ratio:16/9}
+
+  .booking-form{padding:1rem .85rem}
+  .contact-icon{width:36px;height:36px;font-size:1rem}
+  .contact-item{padding:.75rem .85rem}
+  .sticky-cta a{font-size:.65rem;padding:.5rem .55rem}
+}
+
+/* ── Market cards grid override (inline style uses display:grid) ── */
+@media(max-width:560px){
+  /* Force market cards to 1 column via !important since the grid is inline styled */
+  #areas [style*="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"],
+  #areas [style*="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))"] {
+    grid-template-columns:1fr!important;
+  }
+  /* Pricing reference table: 1 column */
+  #areas [style*="minmax(220px,1fr)"] {
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* ── Elite watermark: prevent overflow on mobile ─── */
+@media(max-width:900px){
+  .elite-section::before{font-size:7rem;right:-1rem}
+}
+@media(max-width:480px){
+  .elite-section::before{font-size:5rem;right:0}
+}
+
+/* ── Landscape phone: give hero more room ──────────────── */
+@media(max-width:768px) and (orientation:landscape){
+  .hero{padding:2rem 1.5rem}
+  .hero-inner{gap:1.5rem}
+  .scene-bg{position:absolute} /* avoid fixed bg issues in landscape */
+}
 </style>
 </head>
 <body>
@@ -851,7 +1030,7 @@ body{background:transparent}
     <!-- TOP PRIORITY MARKETS -->
     <div style="margin:2.5rem 0 1rem" class="fade-up">
       <p style="font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--teal-d);font-weight:700;margin-bottom:1.5rem">★ Our Top Service Markets</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:1.25rem">
 
         <div class="market-card">
           <div class="market-card-img">
@@ -937,7 +1116,7 @@ body{background:transparent}
     <!-- PRICING REFERENCE -->
     <div style="margin:2.5rem 0;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:1.8rem 2rem" class="fade-up">
       <h3 style="font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--green);margin-bottom:1.2rem">Pricing Reference — Premium Areas</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:1.5rem">
         <div>
           <div style="font-size:.75rem;font-weight:600;color:#fff;margin-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:.4rem">House Cleaning</div>
           <div style="font-size:.72rem;color:rgba(255,255,255,.7);line-height:1.8">
