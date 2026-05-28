@@ -363,7 +363,7 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
   <div class="login-box">
     <h2>Access Restricted</h2>
     <p>Enter your admin password to continue</p>
-    <input class="login-inp" type="password" id="pw-inp" placeholder="Admin password" onkeydown="if(event.key==='Enter')doLogin()">
+    <input class="login-inp" type="password" id="pw-inp" placeholder="Admin password" onkeydown="if(event.key==='Enter')setTimeout(doLogin,0)">
     <button class="login-btn" onclick="doLogin()">Enter Panel</button>
     <div class="login-err" id="login-err">⚠ Incorrect password. Try again.</div>
   </div>
@@ -1187,6 +1187,14 @@ function switchTab(name, el) {
 }
 
 // ── ORDERS ──
+// Order notes — stored locally per order ID
+let _orderNotes = {};
+try { _orderNotes = JSON.parse(localStorage.getItem('lj_order_notes') || '{}'); } catch(e) {}
+function saveOrderNote(orderId, val) {
+  _orderNotes[orderId] = val;
+  localStorage.setItem('lj_order_notes', JSON.stringify(_orderNotes));
+}
+
 async function loadOrders() {
   const el = document.getElementById('orders-content');
   el.innerHTML = '<div class="empty"><div class="empty-icon">⏳</div>Loading...</div>';
@@ -1231,11 +1239,23 @@ async function loadOrders() {
       const proofCell = o.zelle_proof
         ? `<img src="${o.zelle_proof}" style="width:40px;height:40px;object-fit:cover;cursor:pointer" onclick="window.open('${o.zelle_proof}','_blank')">`
         : `<button class="topbar-btn" onclick="requestProof('${o.id}','${safeEmail}','${safeName}')" style="font-size:.55rem;padding:.25rem .5rem;white-space:nowrap">📧 Request</button>`;
+      const itemLines = items.length
+        ? items.map(i => `${i.title||i.name||'?'}${i.sku?' ['+i.sku+']':''} ×${i.quantity||i.qty||1}`).join('\n')
+        : '';
+      const itemsCell = `<div style="max-width:200px">
+        ${itemLines
+          ? `<div style="font-size:.68rem;color:var(--text);line-height:1.4;margin-bottom:.3rem;white-space:pre-line">${itemLines}</div>`
+          : ''}
+        <textarea rows="2" placeholder="Notes / items..." onclick="event.stopPropagation()"
+          style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);font-size:.65rem;padding:.25rem .4rem;font-family:'Montserrat',sans-serif;resize:vertical;outline:none;box-sizing:border-box"
+          onchange="saveOrderNote('${o.id}',this.value)"
+        >${_orderNotes[o.id]||''}</textarea>
+      </div>`;
       return `<tr>
         <td style="white-space:nowrap">${d}</td>
         <td>${o.customer_name||'—'}</td>
         <td style="color:var(--text-muted)">${o.customer_email||'—'}</td>
-        <td style="max-width:220px;word-break:break-word">${itemStr||'—'}</td>
+        <td style="vertical-align:top">${itemsCell}</td>
         <td style="color:var(--gold);font-weight:700">$${Number(o.total||0).toFixed(2)}</td>
         <td>${proofCell}</td>
         <td><select class="status-select" onchange="updateOrderStatus('${o.id}',this.value,'${safeEmail}','${safeName}','jewelry')">${opts}</select></td>
@@ -1639,12 +1659,25 @@ function renderKPIs() {
       return sum + Math.max(0, base + extra - disc);
     }, 0);
 
+  // Avg ticket across ALL completed leads with pricing
+  const allPricedCompleted = cleaning
+    .filter(r => r.status === 'completed')
+    .map(r => {
+      const p = cleanPricingAll[r.id] || {};
+      return Math.max(0, Number(p.price || 0) + Number(p.extra || 0) - Number(p.desconto || 0));
+    })
+    .filter(v => v > 0);
+  const avgTicketC = allPricedCompleted.length
+    ? allPricedCompleted.reduce((s, v) => s + v, 0) / allPricedCompleted.length
+    : 0;
+
   const cleaningEl = document.getElementById('cleaning-kpi-rows');
   if (cleaningEl) cleaningEl.innerHTML =
     kpiRow('Total Leads', totalLeads) +
     kpiRow('Open Leads', openLeads) +
     kpiRow('Completed', completedLeads) +
     kpiRow('Revenue (Month)', fmt(monthRevC)) +
+    kpiRow('Avg Ticket', avgTicketC > 0 ? fmt(avgTicketC) : '—') +
     kpiRow('This Month', monthLeads);
 
   // Low stock table
