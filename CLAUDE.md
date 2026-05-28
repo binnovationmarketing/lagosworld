@@ -138,6 +138,69 @@ SUPABASE_URL=... SUPABASE_SERVICE_KEY=... python3 scripts/regen_products_data.py
 
 ---
 
+## Admin Panel — Key Facts (last updated 2026-05-28)
+
+- **URL:** `/admin` — protected by JWT login (`ADMIN_PASSWORD` env var)
+- **File:** `public/admin/index.html` (single-file SPA ~2700+ lines)
+- **Tab IDs:** `tab-dashboard`, `tab-products`, `tab-orders`, `tab-cleaning`, `tab-templates`, `tab-agenda`, `tab-calendario`
+- **Dashboard button ID:** `btn-tab-dashboard` (not `tab-btn-dashboard` — would match selector and hide)
+- **Products alias fix:** `window.PRODUCTS_ADMIN = window.PRODUCTS_ADMIN || window.PRODUCTS || []` in `initApp()`
+- **Stock tracking:** `stockOv` object → `localStorage('lj_stock')`, threshold `< 3` for Low Stock alert
+- **Clean pricing:** `_cleanPricing` → `localStorage('lj_clean_pricing')` = `{ [requestId]: { price, extra, desconto } }`
+- **Template edits:** `_tplEdits` → `localStorage('lj_tpl_edits')` = `{ [type]: { subject, desc, imgData, imgName } }`
+- **Recurrence labels map:** `twice_weekly→2x por semana`, `weekly→1x por semana`, `biweekly→Quinzenal`, `monthly→Mensal`
+- **Customer tabs:** `#cust-tab-jewelry` (from orders) + `#cust-tab-cleaning` (from cleaning_requests)
+- **Instagram link:** `https://www.instagram.com/lagoscleanservices/` in topbar
+
+---
+
+## Cleaning Route — Validated service_type values
+
+```javascript
+// lib/routes/cleaning.js — body('service_type').isIn([...])
+'house_exterior','driveway_sidewalk','deck_patio','roof_softwash',
+'commercial','gutter_cleaning','multiple',           // power washing form
+'house','apartment','movein','onetime','office',     // cleaning form
+'power_deck','power_patio','power_siding','power_full',
+'residential','power_washing'                        // legacy/API
+```
+
+---
+
+## Milla — Anti-Hallucination Rules
+
+- ONLY use SKUs returned by `search_jewelry` tool — never invent
+- Real SKU format: `CO 764`, `B2437`, `A 628` — NOT `BE002`, `CE001`
+- Supabase `jewelry_products` has 588 products; static `products-data.js` has 548
+- If search returns < 3 results → recommend only those, do NOT fill gaps
+
+---
+
+## Email — Critical Pattern (Vercel serverless)
+
+```javascript
+// ALWAYS await email BEFORE res.json() — Vercel freezes function after response
+await sendCleaningConfirmation(...);  // ← must complete first
+res.json({ success: true });          // ← then respond
+```
+
+- `nodemailer pool:true` is BANNED in serverless — causes infinite hang
+- Use `createTransport({ pool: false })` or recreate transport per call
+
+---
+
+## Hero Images (Supabase Storage)
+
+Images migrated from local PNG to Supabase (88% compression):
+```
+vthtufcomuaiyeussrrj.supabase.co/storage/v1/object/public/jewelry-images/site/dayane-1-opt.jpeg
+vthtufcomuaiyeussrrj.supabase.co/storage/v1/object/public/jewelry-images/site/dayane-2-opt.jpeg
+vthtufcomuaiyeussrrj.supabase.co/storage/v1/object/public/jewelry-images/site/dayane-3-opt.jpeg
+```
+Local originals removed from git (`.gitignore`).
+
+---
+
 ## Known Technical Debt
 
 | Item | File | Impact |
@@ -147,6 +210,8 @@ SUPABASE_URL=... SUPABASE_SERVICE_KEY=... python3 scripts/regen_products_data.py
 | Newsletter route inline | `api/index.js` | Should move to `lib/routes/newsletter.js` |
 | Milla tool-calling unstable | Groq Llama 3.3 70B | Consider claude-3-5-haiku (~$0.003/conv) |
 | `CJ 10045` price $0.00 | jewelry_products | No variations priced in supplier catalog |
+| Invoice auto-send | backend missing `/api/cleaning/invoice` endpoint | Cleaning invoice on job completion |
+| Bilingual site | 100+ files | EN/PT-BR — major separate project |
 
 ---
 

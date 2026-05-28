@@ -79,13 +79,47 @@ ALTER TABLE product_overrides ADD COLUMN IF NOT EXISTS name TEXT;
 
 ---
 
+## 🔵 Próximas tarefas (backlog)
+
+### Lagos Cleaning — Domínio separado
+Ver `LAGOS_CLEANING_ROADMAP.md` para passo a passo completo.
+- [ ] Registrar `lagoscleaningpa.com` no Namecheap/Cloudflare (~$12)
+- [ ] Criar perfil GMB "Lagos Cleaning Services" → business.google.com
+- [ ] Landing page `/airbnb-cleaning` (prioridade máxima)
+- [ ] Landing page `/move-in-move-out`
+- [ ] Adicionar CORS para novo domínio em `api/index.js`
+
+### Admin Panel — Tarefas pendentes (2026-05-28)
+- [ ] Invoice auto-send → criar endpoint `/api/cleaning/invoice` (backend faltando)
+- [ ] Templates tab: integrar imagem de promoção ao envio do email (hoje só salva local)
+- [ ] Agenda: botão de fechar card + trigger de invoice
+
+### Grandes projetos (sessão separada)
+- [ ] Bilingual site EN/PT-BR (100+ arquivos — projeto separado)
+
+---
+
 ## ✅ Concluído (referência)
 
+**2026-05-28**
+- Admin: Customer tabs (Jewelry/Cleaning) substituindo Client Strategies
+- Admin: Revenue (Month) no painel Lagos Cleaning (lê lj_clean_pricing)
+- Admin: Low Stock threshold mudado de ≤10 para <3
+- Admin: Templates expand-on-click com modal (editar subject, desc, imagem promo)
+- Admin: requestProof() abre WhatsApp após enviar email
+- Admin: botão Instagram (lagoscleanservices) na topbar
+- Hero images migradas para Supabase Storage (88% compressão)
+- INP 211ms corrigido (backdrop-filter:blur removido dos overlays)
+- Emails cleaning/powerwashing corrigidos (3 bugs simultâneos)
+- Admin overhaul: products tab (window.PRODUCTS_ADMIN alias), dashboard tab (ID fix)
+- Milla anti-hallucination: SKU format enforced, tool-first approach
+- Shipping options mergeadas em seção única
+
+**Anterior**
 - Milla v3 — Executive Partner AI (Groq Llama 3.3 70B)
 - Fallback automático 70B → 8B-instant em rate limit
 - Multilíngue PT/EN/ES com detecção server-side e language lock
 - Widget mobile bottom sheet (iOS safe-area)
-- INP fix — remoção do event listener do textarea
 - Paginação jewelry: 20/página padrão com toggle 20|40
 - Pix / TED Brasil como opção de pagamento
 - Seção "Quem Somos & Garantias" na página jewelry
