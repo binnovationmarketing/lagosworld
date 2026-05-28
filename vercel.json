@@ -9,6 +9,8 @@
   },
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index.js" },
+    { "source": "/", "has": [{"type": "host", "value": "lagoscleaning.app"}], "destination": "/cleaning/index.html" },
+    { "source": "/", "has": [{"type": "host", "value": "www.lagoscleaning.app"}], "destination": "/cleaning/index.html" },
     { "source": "/jewelry", "destination": "/jewelry/index.html" },
     { "source": "/cleaning", "destination": "/cleaning/index.html" },
     { "source": "/courses", "destination": "/courses/index.html" },
