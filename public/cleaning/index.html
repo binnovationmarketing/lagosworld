@@ -310,17 +310,32 @@ nav{position:sticky;top:0;z-index:300;background:#fff;border-bottom:1px solid va
 .rbar-fill{height:100%;background:var(--amber);border-radius:999px}
 .rbar-count{width:28px;color:var(--text-light)}
 
-/* FAQ */
-.faq-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:.75rem}
-.faq-item{border:1.5px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s}
-.faq-item.open{border-color:var(--teal)}
-.faq-q{padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:600;font-size:.88rem;color:var(--text);gap:1rem;user-select:none;transition:background .2s}
-.faq-q:hover{background:var(--bg-soft)}
-.faq-item.open .faq-q{background:var(--teal-bg);color:var(--teal-d)}
-.faq-icon{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;transition:all .3s;color:var(--text-muted)}
+/* FAQ — translucent teal glass bars */
+.faq-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:.6rem}
+.faq-item{
+  border:1px solid rgba(8,145,178,.18);
+  border-radius:10px;overflow:hidden;
+  background:rgba(8,145,178,.07);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition:border-color .35s,background .35s,box-shadow .35s;
+}
+.faq-item:hover{
+  border-color:rgba(8,145,178,.38);
+  background:rgba(8,145,178,.12);
+  box-shadow:0 4px 18px rgba(8,145,178,.13);
+}
+.faq-item.open{
+  border-color:rgba(8,145,178,.5);
+  background:rgba(8,145,178,.16);
+  box-shadow:0 6px 24px rgba(8,145,178,.18);
+}
+.faq-q{padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:600;font-size:.88rem;color:var(--text);gap:1rem;user-select:none;transition:color .25s;background:transparent}
+.faq-q:hover{background:transparent}
+.faq-item.open .faq-q{background:transparent;color:var(--teal-d)}
+.faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(8,145,178,.35);display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;transition:all .35s;color:var(--teal-d);background:rgba(8,145,178,.08)}
 .faq-item.open .faq-icon{background:var(--teal);border-color:var(--teal);color:#fff;transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
-.faq-a.open{max-height:400px;padding:0 1.5rem 1.2rem}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),padding .35s}
+.faq-a.open{max-height:400px;padding:0 1.5rem 1.3rem}
 .faq-a p{font-size:.83rem;color:var(--text-mid);line-height:1.75}
 
 /* BOOKING FORM */
@@ -443,6 +458,13 @@ body{background:transparent}
   from{transform:scale(1.07)}
   to  {transform:scale(1.00) translate(-0.8%,-0.4%)}
 }
+/* white flash overlay for smooth photo transitions */
+.bg-flash{
+  position:absolute;inset:0;z-index:2;
+  background:#fff;opacity:0;pointer-events:none;
+  transition:opacity .65s ease;
+}
+.scene-bg.flashing .bg-flash{opacity:.82}
 
 /* ALL content above the bg */
 .top-bar,nav,.promo-banner,.hero,.elite-section,
@@ -468,6 +490,7 @@ body{background:transparent}
   <div class="bg-slide" data-bg="/images/marketing/clean-kitchen-result.png"></div>
   <div class="bg-slide" data-bg="/images/marketing/luxury-apartment-team.jpg"></div>
   <div class="bg-slide" data-bg="/images/marketing/office-cleaning-wide.png"></div>
+  <div class="bg-flash"></div>
 </div>
 
 <!-- TOP BAR -->
@@ -1284,14 +1307,38 @@ body{background:transparent}
             </select>
           </div>
         </div>
-        <div class="fg"><label>Service Recurrence</label>
+        <div class="fg"><label>Service Frequency</label>
           <select name="recurrence">
-            <option value="">Única vez</option>
-            <option value="twice_weekly">2x por semana</option>
-            <option value="weekly">1x por semana</option>
-            <option value="biweekly">Quinzenal</option>
-            <option value="monthly">Mensal</option>
+            <option value="onetime">One-Time</option>
+            <option value="twice_weekly">Twice a Week</option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Every Two Weeks</option>
+            <option value="monthly">Monthly</option>
           </select>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Bedrooms</label>
+            <select name="bedrooms">
+              <option value="">— select —</option>
+              <option value="studio">Studio</option>
+              <option value="1">1 Bedroom</option>
+              <option value="2">2 Bedrooms</option>
+              <option value="3">3 Bedrooms</option>
+              <option value="4">4 Bedrooms</option>
+              <option value="5+">5+ Bedrooms</option>
+            </select>
+          </div>
+          <div class="fg"><label>Bathrooms</label>
+            <select name="bathrooms">
+              <option value="">— select —</option>
+              <option value="1">1 Bathroom</option>
+              <option value="1.5">1.5 Bathrooms</option>
+              <option value="2">2 Bathrooms</option>
+              <option value="2.5">2.5 Bathrooms</option>
+              <option value="3">3 Bathrooms</option>
+              <option value="4+">4+ Bathrooms</option>
+            </select>
+          </div>
         </div>
         <div class="fg"><label>Preferred Date</label><input type="date" name="preferred_date"></div>
         <div class="fg"><label>Additional Details</label><textarea name="notes" placeholder="Home size, specific areas, access instructions, questions..."></textarea></div>
@@ -1536,18 +1583,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // FAQ TOGGLE
+// INP fix: cache DOM, defer writes inside rAF — avoids 480ms block
+var _faqItems = null;
 function toggleFaq(el) {
-  const item = el.parentElement;
-  const answer = item.querySelector('.faq-a');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => {
-    i.classList.remove('open');
-    i.querySelector('.faq-a').classList.remove('open');
+  requestAnimationFrame(function() {
+    if (!_faqItems) _faqItems = Array.from(document.querySelectorAll('.faq-item'));
+    var item = el.parentElement;
+    var isOpen = item.classList.contains('open');
+    // batch all writes together — no interleaved read/write
+    _faqItems.forEach(function(i) {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').classList.remove('open');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      item.querySelector('.faq-a').classList.add('open');
+    }
   });
-  if (!isOpen) {
-    item.classList.add('open');
-    answer.classList.add('open');
-  }
 }
 
 // BOOKING FORM
@@ -1645,11 +1697,10 @@ async function submitNewsletter() {
 
 <script>
 /* ── CINEMATIC BACKGROUND ENGINE ───────────────────────────────────── */
-/* Fixed-position bg stays still; semi-transparent sections scroll over it  */
-/* → natural cascade parallax, zero conflict with Ken Burns transform anim  */
 (function(){
   var slides = Array.from(document.querySelectorAll('.bg-slide'));
-  if (!slides.length) return;
+  var sceneBg = document.querySelector('.scene-bg');
+  if (!slides.length || !sceneBg) return;
   var cur = 0;
 
   function load(i){
@@ -1659,16 +1710,23 @@ async function submitNewsletter() {
   }
 
   function go(i){
-    slides[cur].classList.remove('bg-active');
-    cur = i;
-    load(cur);
-    load((cur + 1) % slides.length); // preload next
-    slides[cur].classList.add('bg-active');
+    // 1. flash white in
+    sceneBg.classList.add('flashing');
+    setTimeout(function(){
+      // 2. swap slide at peak-white (invisible to user)
+      slides[cur].classList.remove('bg-active');
+      cur = i;
+      load(cur);
+      load((cur + 1) % slides.length);
+      slides[cur].classList.add('bg-active');
+      // 3. flash white out
+      setTimeout(function(){ sceneBg.classList.remove('flashing'); }, 80);
+    }, 650);
   }
 
-  load(0); load(1);       // load first two up-front
+  load(0); load(1);
   slides[0].classList.add('bg-active');
-  setInterval(function(){ go((cur + 1) % slides.length); }, 5500);
+  setInterval(function(){ go((cur + 1) % slides.length); }, 6000);
 })();
 </script>
 </body>
