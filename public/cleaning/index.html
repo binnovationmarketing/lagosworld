@@ -413,23 +413,6 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
 .pw-card-cta{color:rgba(255,255,255,.95);font-size:.62rem;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:.22rem .7rem;display:inline-block;font-weight:700;transition:background .25s}
 .pw-card:hover .pw-card-cta{background:rgba(255,255,255,.38)}
 
-/* MARKET AREA CARDS */
-.market-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:all .3s}
-.market-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.market-card-img{height:130px;overflow:hidden}
-.market-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
-.market-card:hover .market-card-img img{transform:scale(1.07)}
-.market-bar{height:3px}
-.market-bar-pa{background:var(--green)}
-.market-bar-nj{background:#3B82F6}
-.market-card-body{padding:1rem 1.1rem 0}
-.market-card-title{font-weight:700;color:var(--text);font-size:.87rem;margin-bottom:.25rem;line-height:1.3}
-.market-card-county{font-size:.67rem;color:var(--text-muted);margin-bottom:.55rem;font-weight:500;letter-spacing:.01em}
-.market-card-income{font-size:.7rem;color:var(--text-mid);line-height:1.65;padding-bottom:.9rem}
-.market-card-cta{display:block;text-align:center;padding:.58rem;background:var(--teal-bg);color:var(--teal-d);font-size:.67rem;font-weight:700;border-top:1px solid var(--border-teal);transition:background .2s,color .2s}
-.market-card-cta:hover{background:var(--teal);color:#fff}
-.market-card-cta.nj{background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE}
-.market-card-cta.nj:hover{background:#1D4ED8;color:#fff}
 
 /* BEFORE/AFTER KEN BURNS */
 @keyframes ba-ken-burns{from{transform:scale(1.06)}to{transform:scale(1)}}
@@ -502,8 +485,6 @@ body{background:transparent}
 
   /* Elite cards: 2-col still fine at 768 → fix at 560 below */
 
-  /* Market cards: drop minmax so they always fit */
-  .market-cards-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 
   /* Hero card full row on tablet */
   .hero-inner{gap:2rem}
@@ -598,9 +579,6 @@ body{background:transparent}
   /* pw-surfaces: maintain 2 columns but shorter cards */
   .pw-card-name{font-size:.82rem}
 
-  /* Market cards inner grid */
-  .market-cards-grid{grid-template-columns:1fr!important}
-
   /* Promo banner */
   .promo-banner-inner{flex-direction:column;text-align:center;gap:.6rem}
   .promo-banner span{font-size:.78rem}
@@ -629,18 +607,6 @@ body{background:transparent}
   .sticky-cta a{font-size:.65rem;padding:.5rem .55rem}
 }
 
-/* ── Market cards grid override (inline style uses display:grid) ── */
-@media(max-width:560px){
-  /* Force market cards to 1 column via !important since the grid is inline styled */
-  #areas [style*="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"],
-  #areas [style*="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))"] {
-    grid-template-columns:1fr!important;
-  }
-  /* Pricing reference table: 1 column */
-  #areas [style*="minmax(220px,1fr)"] {
-    grid-template-columns:1fr!important;
-  }
-}
 
 /* ── Elite watermark: prevent overflow on mobile ─── */
 @media(max-width:900px){
@@ -1025,91 +991,6 @@ body{background:transparent}
       <span class="section-label">Service Areas</span>
       <h2 class="section-title">Trusted Cleaning for <span>PA's Most Prestigious Communities</span></h2>
       <p class="section-sub">We specialize in premium residential cleaning and power washing for high-value homes across the Philadelphia Main Line, Chester County, and South Jersey. Trusted, bonded, and background-checked.</p>
-    </div>
-
-    <!-- TOP PRIORITY MARKETS (removed per request) -->
-    <div style="display:none">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:1.25rem">
-
-        <div class="market-card">
-          <div class="market-card-img">
-            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=260&q=80&auto=format&fit=crop" alt="Lower Merion Main Line luxury home" loading="lazy">
-          </div>
-          <div class="market-bar market-bar-pa"></div>
-          <div class="market-card-body">
-            <div class="market-card-title">Lower Merion / Bryn Mawr / Gladwyne / Villanova</div>
-            <div class="market-card-county">Montgomery County · Main Line</div>
-            <div class="market-card-income">Median income: <strong style="color:var(--green)">$176,512</strong><br>Large homes, high-frequency recurring clients</div>
-          </div>
-          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
-        </div>
-
-        <div class="market-card">
-          <div class="market-card-img">
-            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&h=260&q=80&auto=format&fit=crop" alt="Easttown Chester County estate home" loading="lazy">
-          </div>
-          <div class="market-bar market-bar-pa"></div>
-          <div class="market-card-body">
-            <div class="market-card-title">Easttown / Berwyn / Devon</div>
-            <div class="market-card-county">Chester County</div>
-            <div class="market-card-income">Median income: <strong style="color:var(--green)">$214,861</strong><br>Premium clientele, estate-level properties</div>
-          </div>
-          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
-        </div>
-
-        <div class="market-card">
-          <div class="market-card-img">
-            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=500&h=260&q=80&auto=format&fit=crop" alt="Radnor Wayne Delaware County upscale home" loading="lazy">
-          </div>
-          <div class="market-bar market-bar-pa"></div>
-          <div class="market-card-body">
-            <div class="market-card-title">Radnor / Wayne / Villanova</div>
-            <div class="market-card-county">Delaware County</div>
-            <div class="market-card-income">Median income: <strong style="color:var(--green)">$164,359</strong><br>Upscale suburban families, strong referral market</div>
-          </div>
-          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
-        </div>
-
-        <div class="market-card">
-          <div class="market-card-img">
-            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=500&h=260&q=80&auto=format&fit=crop" alt="Haddonfield Camden County NJ home" loading="lazy">
-          </div>
-          <div class="market-bar market-bar-nj"></div>
-          <div class="market-card-body">
-            <div class="market-card-title">Haddonfield</div>
-            <div class="market-card-county">Camden County, NJ</div>
-            <div class="market-card-income">Median income: <strong style="color:#2563EB">$200,400</strong><br>Top South Jersey market, premium homes</div>
-          </div>
-          <a href="#booking" class="market-card-cta nj">Request a Quote for This Area →</a>
-        </div>
-
-        <div class="market-card">
-          <div class="market-card-img">
-            <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&h=260&q=80&auto=format&fit=crop" alt="Moorestown Burlington County NJ large home" loading="lazy">
-          </div>
-          <div class="market-bar market-bar-nj"></div>
-          <div class="market-card-body">
-            <div class="market-card-title">Moorestown</div>
-            <div class="market-card-county">Burlington County, NJ</div>
-            <div class="market-card-income">Median income: <strong style="color:#2563EB">$159,700</strong><br>Large family homes, excellent for power washing</div>
-          </div>
-          <a href="#booking" class="market-card-cta nj">Request a Quote for This Area →</a>
-        </div>
-
-        <div class="market-card">
-          <div class="market-card-img">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=500&h=260&q=80&auto=format&fit=crop" alt="Chestnut Hill Philadelphia premium home" loading="lazy">
-          </div>
-          <div class="market-bar market-bar-pa"></div>
-          <div class="market-card-body">
-            <div class="market-card-title">Chestnut Hill · Philadelphia</div>
-            <div class="market-card-county">Philadelphia County</div>
-            <div class="market-card-income">Median home price: <strong style="color:var(--green)">$751,000</strong><br>Most expensive neighborhood in Philadelphia (2024)</div>
-          </div>
-          <a href="#booking" class="market-card-cta">Request a Quote for This Area →</a>
-        </div>
-
-      </div>
     </div>
 
     <!-- PRICING REFERENCE -->
