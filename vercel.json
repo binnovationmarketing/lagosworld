@@ -7,10 +7,6 @@
       "maxDuration": 30
     }
   },
-  "redirects": [
-    { "source": "/", "has": [{"type": "host", "value": "lagoscleaning.app"}], "destination": "/cleaning", "permanent": false },
-    { "source": "/", "has": [{"type": "host", "value": "www.lagoscleaning.app"}], "destination": "/cleaning", "permanent": false }
-  ],
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index.js" },
     { "source": "/privacy-policy", "destination": "/privacy-policy/index.html" },

@@ -43,9 +43,26 @@ li{margin-bottom:.35rem}
 
 footer{background:#0F172A;color:#64748B;padding:2rem;text-align:center;font-size:.75rem}
 footer a{color:#38BDF8}
+
+/* Wave watermark */
+.wave-watermark{position:fixed;bottom:-60px;right:-60px;width:480px;height:480px;opacity:.35;pointer-events:none;z-index:0}
+.content,.page-hero,nav,footer{position:relative;z-index:1}
 </style>
 </head>
 <body>
+
+<!-- Wave watermark — Lagos Cleaning brand symbol -->
+<svg class="wave-watermark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M10 130 Q30 80 55 110 Q80 140 105 90 Q130 40 155 80 Q175 108 190 70"
+        stroke="#0891B2" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <path d="M10 155 Q35 105 60 135 Q85 165 110 115 Q135 65 160 105 Q178 130 190 100"
+        stroke="#0891B2" stroke-width="8" stroke-linecap="round" fill="none" opacity=".55"/>
+  <circle cx="55" cy="108" r="4" fill="#0891B2"/>
+  <circle cx="105" cy="88" r="3" fill="#0891B2" opacity=".7"/>
+  <circle cx="155" cy="78" r="4" fill="#0891B2"/>
+  <path d="M172 45 L174 39 L176 45 L182 47 L176 49 L174 55 L172 49 L166 47Z" fill="#0891B2" opacity=".8"/>
+  <path d="M30 60 L31.5 55 L33 60 L38 61.5 L33 63 L31.5 68 L30 63 L25 61.5Z" fill="#0891B2" opacity=".6"/>
+</svg>
 
 <nav>
   <a href="/cleaning" class="nav-logo">
