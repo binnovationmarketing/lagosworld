@@ -422,10 +422,11 @@ footer{background:#0F172A;color:#94A3B8;padding:3.5rem 2rem 1.5rem}
 .ba-card.vis .ba-side img{animation:ba-ken-burns 1.4s ease forwards}
 
 /* ── CINEMATIC PARALLAX BACKGROUND ──────────────────────────────────── */
+/* z-index: -1 goes BELOW browser canvas — must use 0 + push content to 1 */
 body{background:transparent}
 
 .scene-bg{
-  position:fixed;inset:0;z-index:-1;
+  position:fixed;inset:0;z-index:0;
   overflow:hidden;pointer-events:none;
 }
 .bg-slide{
@@ -439,8 +440,15 @@ body{background:transparent}
   animation:bgkb 16s ease-in-out forwards;
 }
 @keyframes bgkb{
-  from{transform:scale(1.07) translate(0,0)}
+  from{transform:scale(1.07)}
   to  {transform:scale(1.00) translate(-0.8%,-0.4%)}
+}
+
+/* ALL content above the bg */
+.top-bar,nav,.promo-banner,.hero,.elite-section,
+.booking-section,.section,.section-alt,.section-teal,
+.contact-bar,footer,.sticky-cta,.nl-popup{
+  position:relative;z-index:1;
 }
 
 /* sections float over bg with light veil */
@@ -448,8 +456,6 @@ body{background:transparent}
 .section-alt  {background:rgba(249,250,251,.90)}
 .section-teal {background:rgba(240,253,255,.92)}
 .contact-bar  {background:rgba(248,251,251,.90)}
-
-/* hero / elite / booking / promo / footer stay fully opaque — own colors */
 </style>
 </head>
 <body>
