@@ -28,7 +28,7 @@
     { "source": "/cleaning", "destination": "/cleaning/index.html" },
     { "source": "/airbnb", "destination": "/airbnb/index.html" },
     { "source": "/calendar", "destination": "/calendar/index.html" },
-    { "source": "/courses", "destination": "/courses/index.html" },
+    { "source": "/courses", "destination": "/jewelry/index.html" },
     { "source": "/powerwashing", "destination": "/powerwashing/index.html" }
   ],
   "crons": [
