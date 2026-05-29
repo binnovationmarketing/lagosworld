@@ -17,16 +17,21 @@
     const r = await fetch('/api/jewelry/overrides');
     if (!r.ok) return;
     const rows = await r.json();
-    if (!rows.length) return;
+    if (!Array.isArray(rows)) return;
 
+    // DB is the single source of truth — rebuild maps from scratch so overrides
+    // removed in the DB (e.g. stale marketing images) don't linger in a browser's
+    // localStorage cache. Merging used to leave deleted overrides on forever.
+    const np = {}, nd = {}, ni = {}, nv = {}, nn = {};
     rows.forEach(row => {
       const pid = row.product_id;
-      if (row.price_overrides) Object.assign(priceOv, row.price_overrides);
-      if (row.description !== null && row.description !== undefined) descOv[pid] = row.description;
-      if (Array.isArray(row.images) && row.images.length) imgsOv[pid] = row.images;
-      if (row.video_url) videoOv[pid] = row.video_url;
-      if (row.name !== null && row.name !== undefined) nameOv[pid] = row.name;
+      if (row.price_overrides) Object.assign(np, row.price_overrides);
+      if (row.description !== null && row.description !== undefined) nd[pid] = row.description;
+      if (Array.isArray(row.images) && row.images.length) ni[pid] = row.images;
+      if (row.video_url) nv[pid] = row.video_url;
+      if (row.name !== null && row.name !== undefined) nn[pid] = row.name;
     });
+    priceOv = np; descOv = nd; imgsOv = ni; videoOv = nv; nameOv = nn;
 
     localStorage.setItem('lj_prices', JSON.stringify(priceOv));
     localStorage.setItem('lj_desc',   JSON.stringify(descOv));
