@@ -649,12 +649,17 @@ body{background:transparent}
 .price-row span{color:rgba(255,255,255,.92);text-shadow:0 1px 4px rgba(0,0,0,.8)}
 .price-row strong{color:#fff;font-weight:700;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.8)}
 .discount-val{color:#4ADE80!important;font-size:.85rem!important;text-shadow:0 1px 4px rgba(0,0,0,.8)!important}
+.disc-row{display:flex;align-items:center;gap:.6rem}
+.disc-label{font-size:.7rem;color:rgba(255,255,255,.88);text-shadow:0 1px 3px rgba(0,0,0,.8);width:62px;flex-shrink:0;font-weight:500}
+.disc-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden}
+.disc-bar{height:100%;border-radius:999px;transition:width .8s ease}
+.disc-pct{font-size:.72rem;font-weight:800;color:#4ADE80;text-shadow:0 1px 4px rgba(0,0,0,.9);white-space:nowrap;width:52px;text-align:right;flex-shrink:0}
 .pricing-note{font-size:.65rem;color:rgba(255,255,255,.55);text-align:center;margin-bottom:2.5rem;font-style:italic;text-shadow:0 1px 3px rgba(0,0,0,.7)}
 
 /* ── BEFORE / AFTER PRICING CARDS ───────────────────── */
 .pricing-ba-card{padding:0!important;overflow:hidden;min-height:240px;display:flex;flex-direction:column}
 .ba-split{display:flex;flex:1;position:relative;min-height:190px;overflow:hidden}
-.ba-split-img{flex:1;background-size:cover;background-position:center;position:relative;transition:transform .6s ease}
+.ba-split-img{flex:1;background-size:cover;background-position:center;position:relative;transition:opacity .5s ease, transform .6s ease}
 .pricing-ba-card:hover .ba-split-img{transform:scale(1.05)}
 .ba-split-divider{position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(255,255,255,.9);z-index:2;transform:translateX(-50%);pointer-events:none}
 .ba-split-divider::after{content:'↔';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:.65rem;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;line-height:24px;text-align:center;backdrop-filter:blur(4px)}
@@ -671,15 +676,15 @@ body{background:transparent}
 /* ── STATE AREAS ─────────────────────────────────────── */
 .state-areas{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
 @media(max-width:768px){.state-areas{grid-template-columns:1fr}}
-.state-column{background:rgba(255,255,255,.07);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:1.5rem}
-.state-header{display:flex;align-items:center;gap:.85rem;margin-bottom:1.2rem;padding-bottom:.85rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.state-column{background:rgba(4,18,52,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(103,232,249,.18);border-radius:14px;padding:1.5rem}
+.state-header{display:flex;align-items:center;gap:.85rem;margin-bottom:1.2rem;padding-bottom:.85rem;border-bottom:1px solid rgba(255,255,255,.18)}
 .state-flag{font-size:1.8rem;flex-shrink:0}
-.state-name{font-size:1rem;font-weight:700;color:#fff}
-.state-sub{font-size:.68rem;color:rgba(255,255,255,.6);margin-top:.15rem}
+.state-name{font-size:1rem;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.state-sub{font-size:.68rem;color:rgba(255,255,255,.7);margin-top:.15rem;text-shadow:0 1px 3px rgba(0,0,0,.7)}
 .state-cities{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem}
-.state-city{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.88);padding:.28rem .7rem;border-radius:999px;font-size:.68rem;font-weight:500;transition:all .2s;cursor:default}
-.state-city:hover{background:rgba(8,145,178,.3);border-color:rgba(8,145,178,.6);color:#fff}
-.state-note{background:rgba(8,145,178,.15);border:1px solid rgba(8,145,178,.3);border-radius:8px;padding:.75rem 1rem;font-size:.73rem;color:rgba(255,255,255,.82);display:flex;align-items:flex-start;gap:.5rem;margin-top:.5rem}
+.state-city{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:.28rem .7rem;border-radius:999px;font-size:.68rem;font-weight:500;transition:all .2s;cursor:default;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.state-city:hover{background:rgba(8,145,178,.45);border-color:rgba(8,145,178,.8);color:#fff}
+.state-note{background:rgba(8,145,178,.25);border:1px solid rgba(103,232,249,.35);border-radius:8px;padding:.75rem 1rem;font-size:.73rem;color:#fff;display:flex;align-items:flex-start;gap:.5rem;margin-top:.5rem;text-shadow:0 1px 3px rgba(0,0,0,.7)}
 .state-note strong{color:#67E8F9}
 
 /* ── REVIEW CTA ──────────────────────────────────────── */
@@ -758,7 +763,7 @@ body{background:transparent}
         <div class="zip-row">
           <div class="zip-input-wrap">
             <span class="zip-pin">📍</span>
-            <input type="text" id="hero-zip" class="zip-inp" maxlength="5" inputmode="numeric" pattern="[0-9]{5}" placeholder="Enter your ZIP code" autocomplete="postal-code" oninput="this.value=this.value.replace(/\D/g,'')">
+            <input type="text" id="hero-zip" class="zip-inp" maxlength="5" inputmode="numeric" pattern="[0-9]{5}" placeholder="Enter your ZIP code" autocomplete="postal-code">
           </div>
           <button class="zip-btn" onclick="checkZip()">Get a Free Estimate →</button>
         </div>
@@ -1065,14 +1070,14 @@ body{background:transparent}
     <!-- PRICING GLASS CARDS -->
     <div class="pricing-cards fade-up">
 
-      <!-- HOUSE CLEANING BEFORE/AFTER -->
+      <!-- HOUSE CLEANING BEFORE/AFTER (rotating "After" photos) -->
       <div class="pricing-card pricing-ba-card">
         <div class="ba-split">
           <div class="ba-split-img ba-before" style="background-image:url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&h=280&q=80&auto=format&fit=crop')">
             <span class="ba-split-tag">Before</span>
           </div>
           <div class="ba-split-divider"></div>
-          <div class="ba-split-img ba-after" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=280&q=80&auto=format&fit=crop')">
+          <div id="ba-house-after" class="ba-split-img ba-after" style="background-image:url('/images/marketing/clean-kitchen-result.png')">
             <span class="ba-split-tag">After</span>
           </div>
         </div>
@@ -1083,14 +1088,14 @@ body{background:transparent}
         </div>
       </div>
 
-      <!-- POWER WASHING BEFORE/AFTER -->
+      <!-- POWER WASHING BEFORE/AFTER (rotating "After" photos) -->
       <div class="pricing-card pricing-ba-card">
         <div class="ba-split">
           <div class="ba-split-img ba-before" style="background-image:url('https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=500&h=280&q=80&auto=format&fit=crop')">
             <span class="ba-split-tag">Before</span>
           </div>
           <div class="ba-split-divider"></div>
-          <div class="ba-split-img ba-after" style="background-image:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=280&q=80&auto=format&fit=crop')">
+          <div id="ba-pw-after" class="ba-split-img ba-after" style="background-image:url('/images/marketing/window-cleaning-philly-female.png')">
             <span class="ba-split-tag">After</span>
           </div>
         </div>
@@ -1105,17 +1110,37 @@ body{background:transparent}
         <span class="pricing-badge">Best Value</span>
         <span class="pricing-icon">✨</span>
         <h4>Complete Package</h4>
-        <div class="price-row"><span>Interior Deep + Exterior Wash</span><strong style="color:#67E8F9">Combo</strong></div>
-        <div class="price-row"><span>Medium homes</span><strong>$699 – $999</strong></div>
-        <div class="price-row"><span>Large / premium</span><strong>$1,200 – $1,800</strong></div>
+        <p style="font-size:.75rem;color:rgba(255,255,255,.88);line-height:1.6;text-shadow:0 1px 4px rgba(0,0,0,.8);margin-bottom:.8rem">Interior deep clean <strong style="color:#67E8F9">+</strong> full exterior power wash — bundled for maximum results at one visit.</p>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:.73rem;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.8)">✔ All rooms top-to-bottom</div>
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:.73rem;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.8)">✔ Driveway, deck &amp; siding</div>
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:.73rem;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.8)">✔ Eco-friendly products</div>
+        </div>
+        <a href="#booking" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;padding:.45rem 1rem;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;transition:background .2s;text-shadow:0 1px 3px rgba(0,0,0,.8)">Get a Free Quote →</a>
       </div>
 
       <div class="pricing-card pricing-card-discount">
         <span class="pricing-icon">🔁</span>
         <h4>Recurring Discounts</h4>
-        <div class="price-row"><span>Weekly service</span><strong class="discount-val">15% OFF</strong></div>
-        <div class="price-row"><span>Bi-weekly</span><strong class="discount-val">10% OFF</strong></div>
-        <div class="price-row"><span>Monthly</span><strong class="discount-val">5% OFF</strong></div>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <div class="disc-row">
+            <div class="disc-label">Weekly</div>
+            <div class="disc-bar-wrap"><div class="disc-bar" style="width:100%;background:rgba(74,222,128,.55)"></div></div>
+            <div class="disc-pct">15% OFF</div>
+          </div>
+          <div class="disc-row">
+            <div class="disc-label">Bi-weekly</div>
+            <div class="disc-bar-wrap"><div class="disc-bar" style="width:67%;background:rgba(74,222,128,.4)"></div></div>
+            <div class="disc-pct">10% OFF</div>
+          </div>
+          <div class="disc-row">
+            <div class="disc-label">Monthly</div>
+            <div class="disc-bar-wrap"><div class="disc-bar" style="width:34%;background:rgba(74,222,128,.28)"></div></div>
+            <div class="disc-pct">5% OFF</div>
+          </div>
+        </div>
+        <p style="font-size:.62rem;color:rgba(255,255,255,.65);margin-top:.9rem;text-shadow:0 1px 3px rgba(0,0,0,.7);font-style:italic">Discounts apply automatically when you book a recurring plan.</p>
+        <a href="#booking" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;background:rgba(74,222,128,.22);border:1px solid rgba(74,222,128,.45);color:#4ADE80;padding:.45rem 1rem;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;transition:background .2s">Start Saving →</a>
       </div>
 
     </div>
@@ -1752,10 +1777,16 @@ async function checkZip() {
   }
 }
 
-// Allow Enter key on zip input
+// ZIP input — digits-only + Enter: passive listeners avoid INP block
 document.addEventListener('DOMContentLoaded', () => {
   const zi = document.getElementById('hero-zip');
-  if (zi) zi.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); checkZip(); } });
+  if (zi) {
+    zi.addEventListener('input', function() {
+      var v = this.value.replace(/\D/g,'');
+      if (v !== this.value) this.value = v;
+    }, { passive: true });
+    zi.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); checkZip(); } });
+  }
 });
 
 // FAQ TOGGLE
@@ -1876,6 +1907,40 @@ async function submitNewsletter() {
   <!-- Vercel Web Analytics -->
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
   <script defer src="/_vercel/insights/script.js"></script>
+
+<script>
+/* ── ROTATING BEFORE/AFTER PHOTOS ──────────────────────────────────── */
+(function(){
+  var houseAfter = [
+    '/images/marketing/clean-kitchen-result.png',
+    '/images/marketing/clean-kitchen-branded.jpg',
+    '/images/marketing/luxury-apartment-team.jpg',
+    '/images/marketing/email-hero.jpg',
+    '/images/marketing/team-kitchen.png',
+    '/images/marketing/team-kitchen-2.png'
+  ];
+  var pwAfter = [
+    '/images/marketing/window-cleaning-philly-female.png',
+    '/images/marketing/window-cleaning-philly-male.png',
+    '/images/marketing/pro-lobby.png',
+    '/images/marketing/lagos-cleaning-van.png'
+  ];
+  function cycle(el, photos, state) {
+    state.idx = (state.idx + 1) % photos.length;
+    el.style.opacity = '0';
+    setTimeout(function(){
+      el.style.backgroundImage = "url('" + photos[state.idx] + "')";
+      el.style.opacity = '1';
+    }, 500);
+  }
+  var hEl = document.getElementById('ba-house-after');
+  var pEl = document.getElementById('ba-pw-after');
+  var hState = { idx: 0 };
+  var pState = { idx: 0 };
+  if (hEl) setInterval(function(){ cycle(hEl, houseAfter, hState); }, 4500);
+  if (pEl) setTimeout(function(){ setInterval(function(){ cycle(pEl, pwAfter, pState); }, 4500); }, 2250);
+})();
+</script>
 
 <script>
 /* ── CINEMATIC BACKGROUND ENGINE ───────────────────────────────────── */
