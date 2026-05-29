@@ -633,24 +633,40 @@ body{background:transparent}
 }
 
 /* ── PRICING GLASS CARDS ─────────────────────────────── */
-.pricing-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2.5rem 0 .75rem}
-@media(max-width:900px){.pricing-cards{grid-template-columns:repeat(2,1fr)}}
+.pricing-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin:2.5rem 0 .75rem}
 @media(max-width:480px){.pricing-cards{grid-template-columns:1fr}}
-.pricing-card{background:rgba(255,255,255,.11);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:1.4rem;position:relative;transition:all .3s}
-.pricing-card:hover{background:rgba(255,255,255,.18);transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.18)}
-.pricing-card-featured{background:rgba(8,145,178,.18);border-color:rgba(8,145,178,.45)}
-.pricing-card-featured:hover{background:rgba(8,145,178,.26)}
-.pricing-card-discount{background:rgba(22,163,74,.12);border-color:rgba(22,163,74,.32)}
-.pricing-card-discount:hover{background:rgba(22,163,74,.2)}
-.pricing-icon{font-size:1.6rem;margin-bottom:.65rem;display:block}
+.pricing-card{background:rgba(255,255,255,.30);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.38);border-radius:14px;padding:1.6rem;position:relative;transition:all .3s}
+.pricing-card:hover{background:rgba(255,255,255,.42);transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.25)}
+.pricing-card-featured{background:rgba(8,145,178,.38);border-color:rgba(8,145,178,.6)}
+.pricing-card-featured:hover{background:rgba(8,145,178,.50)}
+.pricing-card-discount{background:rgba(22,163,74,.30);border-color:rgba(22,163,74,.5)}
+.pricing-card-discount:hover{background:rgba(22,163,74,.44)}
+.pricing-icon{font-size:1.8rem;margin-bottom:.75rem;display:block}
 .pricing-badge{position:absolute;top:.75rem;right:.75rem;background:var(--amber);color:#fff;font-size:.55rem;font-weight:700;padding:.2rem .6rem;border-radius:999px;text-transform:uppercase;letter-spacing:.06em}
-.pricing-card h4{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,255,255,.14)}
-.price-row{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pricing-card h4{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.9rem;padding-bottom:.55rem;border-bottom:1px solid rgba(255,255,255,.28);text-shadow:0 1px 5px rgba(0,0,0,.9)}
+.price-row{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.08)}
 .price-row:last-of-type{border:none}
-.price-row span{color:rgba(255,255,255,.72)}
-.price-row strong{color:#fff;font-weight:700;white-space:nowrap}
-.discount-val{color:#4ADE80!important;font-size:.8rem!important}
-.pricing-note{font-size:.65rem;color:rgba(255,255,255,.4);text-align:center;margin-bottom:2.5rem;font-style:italic}
+.price-row span{color:rgba(255,255,255,.92);text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.price-row strong{color:#fff;font-weight:700;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.discount-val{color:#4ADE80!important;font-size:.85rem!important;text-shadow:0 1px 4px rgba(0,0,0,.8)!important}
+.pricing-note{font-size:.65rem;color:rgba(255,255,255,.55);text-align:center;margin-bottom:2.5rem;font-style:italic;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+
+/* ── BEFORE / AFTER PRICING CARDS ───────────────────── */
+.pricing-ba-card{padding:0!important;overflow:hidden;min-height:240px;display:flex;flex-direction:column}
+.ba-split{display:flex;flex:1;position:relative;min-height:190px;overflow:hidden}
+.ba-split-img{flex:1;background-size:cover;background-position:center;position:relative;transition:transform .6s ease}
+.pricing-ba-card:hover .ba-split-img{transform:scale(1.05)}
+.ba-split-divider{position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(255,255,255,.9);z-index:2;transform:translateX(-50%);pointer-events:none}
+.ba-split-divider::after{content:'↔';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:.65rem;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;line-height:24px;text-align:center;backdrop-filter:blur(4px)}
+.ba-split-tag{position:absolute;bottom:.55rem;font-size:.56rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:.2rem .55rem;background:rgba(0,0,0,.6);border-radius:999px;backdrop-filter:blur(4px)}
+.ba-before .ba-split-tag{left:.55rem}
+.ba-after .ba-split-tag{right:.55rem}
+.ba-split-footer{display:flex;align-items:center;gap:.65rem;padding:.75rem 1rem;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.18)}
+.ba-split-icon{font-size:1.3rem;flex-shrink:0}
+.ba-split-title{font-size:.8rem;font-weight:700;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.95);line-height:1.2}
+.ba-split-sub{font-size:.6rem;color:rgba(255,255,255,.78);text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.ba-split-cta{margin-left:auto;background:rgba(8,145,178,.8);color:#fff;border:1px solid rgba(8,145,178,.95);border-radius:5px;padding:.35rem .8rem;font-size:.64rem;font-weight:700;white-space:nowrap;flex-shrink:0;transition:background .2s;text-decoration:none}
+.ba-split-cta:hover{background:rgba(8,145,178,1)}
 
 /* ── STATE AREAS ─────────────────────────────────────── */
 .state-areas{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
@@ -1049,20 +1065,40 @@ body{background:transparent}
     <!-- PRICING GLASS CARDS -->
     <div class="pricing-cards fade-up">
 
-      <div class="pricing-card">
-        <span class="pricing-icon">🏠</span>
-        <h4>House Cleaning</h4>
-        <div class="price-row"><span>Standard Clean</span><strong>$160 – $420</strong></div>
-        <div class="price-row"><span>Deep Cleaning</span><strong>$300 – $850</strong></div>
-        <div class="price-row"><span>Move-In / Out</span><strong>$250 – $600</strong></div>
+      <!-- HOUSE CLEANING BEFORE/AFTER -->
+      <div class="pricing-card pricing-ba-card">
+        <div class="ba-split">
+          <div class="ba-split-img ba-before" style="background-image:url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&h=280&q=80&auto=format&fit=crop')">
+            <span class="ba-split-tag">Before</span>
+          </div>
+          <div class="ba-split-divider"></div>
+          <div class="ba-split-img ba-after" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=280&q=80&auto=format&fit=crop')">
+            <span class="ba-split-tag">After</span>
+          </div>
+        </div>
+        <div class="ba-split-footer">
+          <span class="ba-split-icon">🏠</span>
+          <div><div class="ba-split-title">House Cleaning</div><div class="ba-split-sub">Spotless from top to bottom</div></div>
+          <a href="#booking" class="ba-split-cta">Book →</a>
+        </div>
       </div>
 
-      <div class="pricing-card">
-        <span class="pricing-icon">💧</span>
-        <h4>Power Washing</h4>
-        <div class="price-row"><span>Driveway + Sidewalk</span><strong>$199 – $399</strong></div>
-        <div class="price-row"><span>Deck / Patio</span><strong>$250 – $600</strong></div>
-        <div class="price-row"><span>House Siding</span><strong>$350 – $900</strong></div>
+      <!-- POWER WASHING BEFORE/AFTER -->
+      <div class="pricing-card pricing-ba-card">
+        <div class="ba-split">
+          <div class="ba-split-img ba-before" style="background-image:url('https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=500&h=280&q=80&auto=format&fit=crop')">
+            <span class="ba-split-tag">Before</span>
+          </div>
+          <div class="ba-split-divider"></div>
+          <div class="ba-split-img ba-after" style="background-image:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=280&q=80&auto=format&fit=crop')">
+            <span class="ba-split-tag">After</span>
+          </div>
+        </div>
+        <div class="ba-split-footer">
+          <span class="ba-split-icon">💧</span>
+          <div><div class="ba-split-title">Power Washing</div><div class="ba-split-sub">Like-new driveways &amp; decks</div></div>
+          <a href="#booking" class="ba-split-cta">Book →</a>
+        </div>
       </div>
 
       <div class="pricing-card pricing-card-featured">
@@ -1784,11 +1820,17 @@ const obs = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
-// NAV SCROLL
-window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.boxShadow = window.scrollY > 20
-    ? '0 4px 20px rgba(0,0,0,.1)' : '0 1px 3px rgba(0,0,0,.06)';
-});
+// NAV SCROLL — rAF + passive prevents INP block on anchor-link clicks
+var _navEl = document.querySelector('nav');
+var _navRaf = null;
+window.addEventListener('scroll', function() {
+  if (_navRaf) return;
+  _navRaf = requestAnimationFrame(function() {
+    _navEl.style.boxShadow = window.scrollY > 20
+      ? '0 4px 20px rgba(0,0,0,.1)' : '0 1px 3px rgba(0,0,0,.06)';
+    _navRaf = null;
+  });
+}, { passive: true });
 
 // NEWSLETTER POPUP
 (function(){
