@@ -91,7 +91,8 @@
       }
     });
     buildHotDeals();
-  } catch(e) { /* silent fallback to localStorage */ }
+    buildNewArrivals();
+  } catch(e) { buildNewArrivals(); /* still show new arrivals even if overrides fail */ }
 })();
 
 // ── STOCK — fetch live stock levels and apply unavailable overlays ────────────
@@ -171,6 +172,7 @@ function markCardUnavailable(card) {
 // ── INIT — run pagination on first load ──────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderAllCards();  // inject all product cards from PRODUCTS array
+  buildNewArrivals(); // show new arrivals immediately (before overrides load)
   renderShopPage();
   // Apply stock overlays after cards are rendered (stock fetch may resolve later)
   if (window.__STOCK__) applyStockOverlays(window.__STOCK__);

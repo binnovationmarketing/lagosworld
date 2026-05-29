@@ -40,7 +40,7 @@ function openAdmin(){
   if(!adminUnlocked)return;
   document.getElementById('admin-panel').classList.add('open');
   document.body.style.overflow='hidden';
-  setTimeout(()=>buildAdminTable(),0);
+  setTimeout(()=>{buildAdminSummary();buildAdminTable();},0);
 }
 
 function closeAdmin(){
@@ -50,18 +50,59 @@ function closeAdmin(){
 }
 
 function adminSearch(q){
-  document.querySelectorAll('#admin-tbody tr').forEach(r=>r.style.display=r.dataset.name.includes(q.toLowerCase())?'':'none');
+  document.querySelectorAll('#admin-tbody tr').forEach(r=>{
+    r.style.display=(r.dataset.name||'').includes(q.toLowerCase())?'':'none';
+  });
+}
+
+function adminFilterNew(){
+  document.querySelectorAll('#admin-tbody tr').forEach(r=>{
+    r.style.display=(r.dataset.new==='1')?'':'none';
+  });
+}
+
+function adminFilterStock(){
+  document.querySelectorAll('#admin-tbody tr').forEach(r=>{
+    r.style.display=(r.dataset.stock&&parseInt(r.dataset.stock)>0)?'':'none';
+  });
+}
+
+function adminFilterAll(){
+  document.querySelectorAll('#admin-tbody tr').forEach(r=>r.style.display='');
+}
+
+function buildAdminSummary(){
+  const el=document.getElementById('admin-summary');
+  if(!el||!window.PRODUCTS)return;
+  const total=PRODUCTS.length;
+  const newCount=PRODUCTS.filter(p=>p.newArrival).length;
+  const inStock=PRODUCTS.filter(p=>p.stock>0).length;
+  const totalUnits=PRODUCTS.reduce((s,p)=>s+p.stock,0);
+  el.innerHTML=`
+    <span>📦 <strong style="color:#e4ddd0">${total}</strong> products</span>
+    <span style="color:#c9a84c">🆕 <strong>${newCount}</strong> new arrivals</span>
+    <span style="color:#4ade80">✓ <strong>${inStock}</strong> SKUs in stock</span>
+    <span style="color:#4ade80">📊 <strong>${totalUnits}</strong> units total</span>
+  `;
 }
 
 function buildAdminTable(){
   const tb=document.getElementById('admin-tbody');tb.innerHTML='';
-  PRODUCTS.forEach(p=>{
+  // Sort: new arrivals first
+  const sorted=[...PRODUCTS].sort((a,b)=>(b.newArrival?1:0)-(a.newArrival?1:0));
+  sorted.forEach(p=>{
     const curName = nameOv[p.id] || p.name;
     const curDesc = descOv[p.id] || '';
     const metaRow = document.createElement('tr');
     metaRow.dataset.name = (p.name+' '+p.cat).toLowerCase();
-    metaRow.style.cssText = 'background:rgba(201,168,76,.07)';
-    metaRow.innerHTML = `<td colspan="2" style="color:var(--gold);font-size:.7rem;letter-spacing:.1em">✦ ${p.sku||p.id}</td>
+    metaRow.dataset.new = p.newArrival ? '1' : '0';
+    metaRow.dataset.stock = p.stock || 0;
+    const newMark = p.newArrival ? '🆕 ' : '';
+    const stockMark = p.stock > 0 ? ` <span style="color:#4ade80;font-size:.6rem">[${p.stock} in stock]</span>` : '';
+    metaRow.style.cssText = p.newArrival
+      ? 'background:rgba(201,168,76,.18);border-left:3px solid #c9a84c'
+      : 'background:rgba(201,168,76,.07)';
+    metaRow.innerHTML = `<td colspan="2" style="color:var(--gold);font-size:.7rem;letter-spacing:.1em">${newMark}✦ ${p.sku||p.id}${stockMark}</td>
       <td colspan="2"><input style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.2);color:#e4ddd0;padding:4px 6px;font-size:.75rem" type="text" placeholder="Product name" value="${curName.replace(/"/g,'&quot;')}" id="an_${p.id}"></td>
       <td colspan="2"><input style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.2);color:#e4ddd0;padding:4px 6px;font-size:.75rem" type="text" placeholder="Description override" value="${curDesc.replace(/"/g,'&quot;')}" id="ad_${p.id}"></td>
       <td><button class="admin-save" onclick="saveDetails(${p.id})">Save</button></td>`;

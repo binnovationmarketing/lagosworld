@@ -23,8 +23,11 @@ function renderAllCards(){
       : `$${p.minPrice.toFixed(2)} – $${p.maxPrice.toFixed(2)}`;
     const loading = idx < 20 ? 'eager' : 'lazy';
     const fetchprio = idx < 3 ? ' fetchpriority="high"' : '';
-    return `<div class="card hidden" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" style="animation-delay:${(idx%20)*50}ms">
-  <div class="card-imgs">
+    const newBadge = p.newArrival ? '<div class="badge-new">✦ NEW</div>' : '';
+    const stockBadge = (p.stock>0) ? '<div class="badge-stock">In Stock</div>' : '';
+    return `<div class="card hidden" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" data-new="${p.newArrival?'1':'0'}" style="animation-delay:${(idx%20)*50}ms">
+  <div class="card-imgs" style="position:relative">
+    ${newBadge}${stockBadge}
     <img class="card-img" src="${p.img}" alt="${p.name}" loading="${loading}"${fetchprio}>
     <img class="card-img-b" src="${p.img2||p.img}" alt="${p.name}" loading="lazy">
     <div class="card-overlay"></div>

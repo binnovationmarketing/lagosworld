@@ -155,7 +155,7 @@ async function main() {
     const ex = bySkuMap.get(p.sku);
     if (!ex) {
       const totalStock = p.variations.reduce((s, v) => s + (v.stock || 0), 0);
-      toInsert.push({ ...p, stock_qty: totalStock, sort_order: 0 });
+      toInsert.push({ ...p, stock_qty: totalStock, sort_order: 0, new_arrival: true });
     } else {
       const changed = (
         ex.name !== p.name ||

@@ -57,6 +57,70 @@ function hotNext() {
   _hotSlide();
 }
 
+// ── NEW ARRIVALS CAROUSEL ─────────────────────────────────────────────────────
+let _newIdx = 0;
+
+function buildNewArrivals() {
+  const arrivals = PRODUCTS.filter(p => p.newArrival);
+  const section = document.getElementById('new-arrivals-section');
+  if (!arrivals.length) { if(section) section.style.display='none'; return; }
+  if(section) section.style.display = '';
+  const track = document.getElementById('new-track');
+  if (!track) return;
+  track.innerHTML = arrivals.map(p => {
+    const img  = (imgsOv[p.id]&&imgsOv[p.id][0]) || p.imgs[0] || '';
+    const name = nameOv[p.id] || p.name;
+    const price = p.minPrice > 0
+      ? (p.minPrice === p.maxPrice ? `$${p.minPrice.toFixed(2)}` : `$${p.minPrice.toFixed(2)}+`)
+      : 'Price on request';
+    const stockLabel = p.stock > 0
+      ? `<span style="font-size:.55rem;color:#16a34a;font-weight:700;letter-spacing:.1em;text-transform:uppercase">✓ In Stock</span>`
+      : `<span style="font-size:.55rem;color:#b8922e;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Order Only</span>`;
+    const imgHtml = img
+      ? `<img src="${img}" alt="${name}" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`
+      : `<div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f5efe0,#ebe1c8);display:flex;align-items:center;justify-content:center;font-size:2.5rem">💎</div>`;
+    return `<div class="hot-card" onclick="requestAnimationFrame(()=>openModal(${p.id}))">
+      <div class="new-badge-card">✦ NEW</div>
+      ${imgHtml}
+      <div class="hot-info">
+        <div style="font-size:.58rem;color:#b8922e;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.3rem">${p.cat}</div>
+        <div class="hot-name">${name}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.5rem">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:#b8922e">${price}</span>
+          ${stockLabel}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  _newIdx = 0;
+  _newSlide();
+}
+
+function _newSlide() {
+  const track = document.getElementById('new-track');
+  if(!track) return;
+  const cards = track.querySelectorAll('.hot-card');
+  if (!cards.length) return;
+  const w = cards[0].offsetWidth + 16;
+  track.style.transform = `translateX(-${_newIdx * w}px)`;
+}
+
+function newPrev() {
+  const track = document.getElementById('new-track');
+  if(!track) return;
+  const total = track.querySelectorAll('.hot-card').length;
+  _newIdx = (_newIdx - 1 + total) % total;
+  _newSlide();
+}
+
+function newNext() {
+  const track = document.getElementById('new-track');
+  if(!track) return;
+  const total = track.querySelectorAll('.hot-card').length;
+  _newIdx = (_newIdx + 1) % total;
+  _newSlide();
+}
+
 // ── SCROLL ANIMATIONS ─────────────────────────────────────────────────────────
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.1});
 document.querySelectorAll('.animate-in').forEach(el=>obs.observe(el));
