@@ -128,7 +128,7 @@ Key tables:
 
 - **109 products in stock** from Pedido 000569 (Estação 79, R$13,849.04, 155 units)
 - **479 products** = order-only (stock_qty = 0)
-- **40 new products** added in latest catalog sync (flagged `isNew: true` in products-data.js)
+- **44 new products** flagged `new_arrival=true` in DB → `newArrival:true` in products-data.js (drives ✦NEW badge + carousel)
 - Rule: **NEVER delete products from DB** — only add or deactivate
 - Stock deducted automatically on order confirmation via `/api/jewelry/orders`
 
@@ -176,21 +176,19 @@ POST /api/produtos/listar  (paginated, up to 10 pages × 577 items)
 **Current count:** 588 products (in sync with DB as of 2026-05-29)
 **Must regenerate after:** every catalog sync, every manual DB change
 
-Quick regenerate:
+Quick regenerate (use the committed script — do NOT hand-roll the inline snippet):
 ```bash
-node -e "
-const BASE='https://vthtufcomuaiyeussrrj.supabase.co';
-const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0aHR1ZmNvbXVhaXlldXNzcnJqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTU2OTgxNSwiZXhwIjoyMDk1MTQ1ODE1fQ.l1ASVHF0JJa7cENn_gbSoy3b9E0umndmAxEYgj4R6aE';
-const h={'apikey':KEY,'Authorization':'Bearer '+KEY};
-const cutoff=new Date(Date.now()-2*24*60*60*1000).toISOString();
-const r=await fetch(BASE+'/rest/v1/jewelry_products?select=id,source_id,sku,name,description,category,images,img_primary,img_hover,min_price,max_price,variations,active,featured,stock_qty,created_at&active=eq.true&order=category.asc,name.asc&limit=3000',{headers:h});
-const products=await r.json();
-const fs=await import('fs');
-const t=products.map(p=>{const imgs=Array.isArray(p.images)?p.images:[];const v=(p.variations||[]).map(x=>({id:x.id,desc:x.desc||'',price:x.price||p.min_price||0,original:x.price||p.min_price||0}));return{id:p.id,name:p.name||'',sku:p.sku||'',cat:p.category||'OUTROS',imgs,img:p.img_primary||imgs[0]||'',img2:p.img_hover||imgs[1]||imgs[0]||'',minPrice:p.min_price||0,maxPrice:p.max_price||p.min_price||0,variacoes:v,descricao:p.description||'',featured:!!p.featured,stock:p.stock_qty||0,isNew:p.created_at>cutoff};});
-fs.writeFileSync('./public/js/products-data.js','/* AUTO-GENERATED '+new Date().toISOString()+' */\nwindow.PRODUCTS='+JSON.stringify(t)+';');
-console.log('Done:',t.length,'products');
-"
+export SUPABASE_URL="https://vthtufcomuaiyeussrrj.supabase.co"
+export SUPABASE_SERVICE_KEY="<service_role key>"   # never commit this
+node scripts/regen-products-data.mjs
 ```
+
+**CRITICAL field mapping** (frontend depends on these exact names):
+- `newArrival` ← DB `new_arrival` — drives ✦NEW badge + "Novidades" carousel.
+  Frontend reads `p.newArrival`. The old inline snippet emitted `isNew` from
+  `created_at` instead → carousel + badges silently empty. Do not regress.
+- `stock` ← `stock_qty` — drives "In Stock" badge.
+- `featured` ← `featured` — carried through, not yet consumed by any frontend.
 
 ---
 
@@ -267,7 +265,7 @@ All INP issues on jewelry page fixed:
    - View 2: Only 109 in-stock products
    - Toggle button in UI
 7. **Manual stock entry by SKU** — admin can type SKU → add to in-stock view
-8. **"NEW" badge UI** — 40 products have `isNew: true` in data but no badge rendered on cards
+8. ✅ DONE — "NEW" badge + "Novidades" carousel now render (44 products). Fixed field-name bug (`isNew`→`newArrival`) via `scripts/regen-products-data.mjs`.
 9. **"Order Only" label** — 479 products with `stock: 0` should show "Available to Order" badge
 
 ### 🟡 MEDIUM (UX improvements)
