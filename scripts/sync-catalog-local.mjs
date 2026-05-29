@@ -4,8 +4,9 @@
  * Usage: node scripts/sync-catalog-local.mjs
  */
 
-const SUPABASE_URL = 'https://vthtufcomuaiyeussrrj.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0aHR1ZmNvbXVhaXlldXNzcnJqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTU2OTgxNSwiZXhwIjoyMDk1MTQ1ODE1fQ.l1ASVHF0JJa7cENn_gbSoy3b9E0umndmAxEYgj4R6aE';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://vthtufcomuaiyeussrrj.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+if (!SUPABASE_KEY) { console.error('Missing SUPABASE_SERVICE_KEY env var.'); process.exit(1); }
 const CATALOG_TOKEN = '2441f464b56e9641d86b2772287d13d5';
 const API_BASE      = 'https://dados.conectavenda.com.br/api';
 
