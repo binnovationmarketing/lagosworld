@@ -61,7 +61,8 @@ function hotNext() {
 let _newIdx = 0;
 
 function buildNewArrivals() {
-  const arrivals = PRODUCTS.filter(p => p.newArrival);
+  // New Arrival = new product physically in stock -> available now
+  const arrivals = PRODUCTS.filter(p => p.newArrival && p.stock > 0);
   const section = document.getElementById('new-arrivals-section');
   if (!arrivals.length) { if(section) section.style.display='none'; return; }
   if(section) section.style.display = '';
@@ -119,6 +120,68 @@ function newNext() {
   const total = track.querySelectorAll('.hot-card').length;
   _newIdx = (_newIdx + 1) % total;
   _newSlide();
+}
+
+// ── NEW HOT CAROUSEL (new in catalog, order-only) ─────────────────────────────
+let _newHotIdx = 0;
+
+function buildNewHot() {
+  // New Hot = new product from supplier catalog, not in stock -> order only
+  const hots = PRODUCTS.filter(p => p.newArrival && !(p.stock > 0));
+  const section = document.getElementById('new-hot-section');
+  if (!hots.length) { if(section) section.style.display='none'; return; }
+  if(section) section.style.display = '';
+  const track = document.getElementById('newhot-track');
+  if (!track) return;
+  track.innerHTML = hots.map(p => {
+    const img  = (imgsOv[p.id]&&imgsOv[p.id][0]) || p.imgs[0] || '';
+    const name = nameOv[p.id] || p.name;
+    const price = p.minPrice > 0
+      ? (p.minPrice === p.maxPrice ? `$${p.minPrice.toFixed(2)}` : `$${p.minPrice.toFixed(2)}+`)
+      : 'Price on request';
+    const imgHtml = img
+      ? `<img src="${img}" alt="${name}" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`
+      : `<div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f5efe0,#ebe1c8);display:flex;align-items:center;justify-content:center;font-size:2.5rem">💎</div>`;
+    return `<div class="hot-card" onclick="requestAnimationFrame(()=>openModal(${p.id}))">
+      <div class="new-badge-card hot">🔥 NEW HOT</div>
+      ${imgHtml}
+      <div class="hot-info">
+        <div style="font-size:.58rem;color:#c94c4c;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.3rem">${p.cat}</div>
+        <div class="hot-name">${name}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.5rem">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:#b8922e">${price}</span>
+          <span style="font-size:.55rem;color:#b8922e;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Sob Encomenda</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  _newHotIdx = 0;
+  _newHotSlide();
+}
+
+function _newHotSlide() {
+  const track = document.getElementById('newhot-track');
+  if(!track) return;
+  const cards = track.querySelectorAll('.hot-card');
+  if (!cards.length) return;
+  const w = cards[0].offsetWidth + 16;
+  track.style.transform = `translateX(-${_newHotIdx * w}px)`;
+}
+
+function newHotPrev() {
+  const track = document.getElementById('newhot-track');
+  if(!track) return;
+  const total = track.querySelectorAll('.hot-card').length;
+  _newHotIdx = (_newHotIdx - 1 + total) % total;
+  _newHotSlide();
+}
+
+function newHotNext() {
+  const track = document.getElementById('newhot-track');
+  if(!track) return;
+  const total = track.querySelectorAll('.hot-card').length;
+  _newHotIdx = (_newHotIdx + 1) % total;
+  _newHotSlide();
 }
 
 // ── SCROLL ANIMATIONS ─────────────────────────────────────────────────────────

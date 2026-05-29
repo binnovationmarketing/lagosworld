@@ -353,6 +353,10 @@ body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--tex
 /* NEW badge on grid cards */
 .card .badge-new{position:absolute;top:.5rem;left:.5rem;background:linear-gradient(135deg,#b8922e,#c9a84c);color:#fff;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;padding:.2rem .55rem;z-index:3;pointer-events:none}
 .card .badge-stock{position:absolute;top:.5rem;right:.5rem;background:rgba(22,163,74,.9);color:#fff;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:.2rem .5rem;z-index:3;pointer-events:none}
+/* New Hot (new in catalog, order-only) = red; Order-only label = amber */
+.new-badge-card.hot{background:linear-gradient(135deg,#c94c4c,#ff6b6b)}
+.card .badge-new.hot{background:linear-gradient(135deg,#c94c4c,#ff6b6b)}
+.card .badge-order{position:absolute;top:.5rem;right:.5rem;background:rgba(184,146,46,.92);color:#fff;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:.2rem .5rem;z-index:3;pointer-events:none}
 .price-orig-cut{font-size:.75rem;color:#a09890;text-decoration:line-through;margin-left:.3rem}
 .price-save{font-size:.5rem;letter-spacing:.15em;color:#c94c4c;font-weight:700;border:1px solid rgba(201,76,76,.2);padding:.1rem .35rem;background:rgba(201,76,76,.06)}
 .footer{background:linear-gradient(0deg,#050505,var(--black));border-top:1px solid rgba(201,168,76,.12);padding:4rem 1.5rem 2rem;text-align:center}
@@ -689,17 +693,31 @@ body{background:#ffffff!important;color:#2c2822!important}
   </div>
 
 
-  <!-- NEW ARRIVALS CAROUSEL — rendered by jewelry-init.js -->
+  <!-- NEW ARRIVALS CAROUSEL (new + in stock) — rendered by jewelry-init.js -->
   <div id="new-arrivals-section" style="display:none" class="new-arrivals-section">
-    <div class="new-label"><span class="new-label-dot"></span>✦ NEW ARRIVALS</div>
-    <h2 class="hot-title" style="color:#b8922e">Novidades — Just In</h2>
-    <p style="font-size:.78rem;color:#7a7268;margin-bottom:1.5rem;max-width:520px">Peças recém chegadas do Brasil — disponíveis em estoque ou sob encomenda.</p>
+    <div class="new-label"><span class="new-label-dot"></span>✦ NEW ARRIVAL</div>
+    <h2 class="hot-title" style="color:#b8922e">Novidades — Disponível Agora!</h2>
+    <p style="font-size:.78rem;color:#7a7268;margin-bottom:1.5rem;max-width:520px">Peças novas, já no nosso estoque — pronta entrega.</p>
     <div class="hot-carousel-wrap">
       <div class="hot-track" id="new-track"></div>
     </div>
     <div class="hot-nav">
       <button class="hot-nav-btn" onclick="newPrev()">‹</button>
       <button class="hot-nav-btn" onclick="newNext()">›</button>
+    </div>
+  </div>
+
+  <!-- NEW HOT CAROUSEL (new in catalog + order-only) — rendered by jewelry-init.js -->
+  <div id="new-hot-section" style="display:none" class="new-arrivals-section">
+    <div class="new-label" style="background:linear-gradient(135deg,#c94c4c,#ff6b6b)"><span class="new-label-dot"></span>🔥 NEW HOT</div>
+    <h2 class="hot-title" style="color:#c94c4c">Novidades do Catálogo — Sob Encomenda</h2>
+    <p style="font-size:.78rem;color:#7a7268;margin-bottom:1.5rem;max-width:520px">Lançamentos recém chegados do Brasil — disponíveis sob encomenda.</p>
+    <div class="hot-carousel-wrap">
+      <div class="hot-track" id="newhot-track"></div>
+    </div>
+    <div class="hot-nav">
+      <button class="hot-nav-btn" onclick="newHotPrev()">‹</button>
+      <button class="hot-nav-btn" onclick="newHotNext()">›</button>
     </div>
   </div>
 

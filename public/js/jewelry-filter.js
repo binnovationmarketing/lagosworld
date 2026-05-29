@@ -23,8 +23,13 @@ function renderAllCards(){
       : `$${p.minPrice.toFixed(2)} – $${p.maxPrice.toFixed(2)}`;
     const loading = idx < 20 ? 'eager' : 'lazy';
     const fetchprio = idx < 3 ? ' fetchpriority="high"' : '';
-    const newBadge = p.newArrival ? '<div class="badge-new">✦ NEW</div>' : '';
-    const stockBadge = (p.stock>0) ? '<div class="badge-stock">In Stock</div>' : '';
+    // 4 states: New Arrival (new+stock) | New Hot (new+order) | In Stock | Order Only
+    const inStock = p.stock > 0;
+    let newBadge = '', stockBadge = '';
+    if (p.newArrival && inStock)      { newBadge = '<div class="badge-new">✦ NEW ARRIVAL</div>'; stockBadge = '<div class="badge-stock">Disponível Agora</div>'; }
+    else if (p.newArrival && !inStock){ newBadge = '<div class="badge-new hot">🔥 NEW HOT</div>'; stockBadge = '<div class="badge-order">Sob Encomenda</div>'; }
+    else if (inStock)                 { stockBadge = '<div class="badge-stock">Em Estoque</div>'; }
+    else                              { stockBadge = '<div class="badge-order">Sob Encomenda</div>'; }
     return `<div class="card hidden" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" data-new="${p.newArrival?'1':'0'}" style="animation-delay:${(idx%20)*50}ms">
   <div class="card-imgs" style="position:relative">
     ${newBadge}${stockBadge}
