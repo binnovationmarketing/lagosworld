@@ -3,6 +3,8 @@ let shopPageSize=20;
 let shopPage=1;
 let _matchedCards=[];
 let _cardCache=null; // cached after renderAllCards()
+let _visibleCards=new Set(); // track current visible cards — only toggle delta
+let _searchTimer=null; // debounce timer for search
 
 // ── Render all product cards into #grid (replaces static HTML) ───────────────
 function renderAllCards(){
@@ -13,6 +15,7 @@ function renderAllCards(){
     'PULSEIRAS E BRACELETES':'✨','CONJUNTOS':'👑',
     'PINGENTES':'🔮','ACESSÓRIOS':'🌟','AÇO':'⚡','OUTROS':'✦'
   };
+  _visibleCards=new Set(); // reset on re-render
   grid.innerHTML = PRODUCTS.map((p, idx) => {
     const imgCount = p.imgs ? p.imgs.length : 1;
     const price = p.minPrice === p.maxPrice
@@ -20,7 +23,7 @@ function renderAllCards(){
       : `$${p.minPrice.toFixed(2)} – $${p.maxPrice.toFixed(2)}`;
     const loading = idx < 20 ? 'eager' : 'lazy';
     const fetchprio = idx < 3 ? ' fetchpriority="high"' : '';
-    return `<div class="card" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" style="animation-delay:${(idx%20)*50}ms">
+    return `<div class="card hidden" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" style="animation-delay:${(idx%20)*50}ms">
   <div class="card-imgs">
     <img class="card-img" src="${p.img}" alt="${p.name}" loading="${loading}"${fetchprio}>
     <img class="card-img-b" src="${p.img2||p.img}" alt="${p.name}" loading="lazy">
@@ -80,7 +83,11 @@ function filterCat(cat,btn){
   });
 }
 
-function doSearch(q){curSearch=q.toLowerCase().trim();shopPage=1;applyFilters()}
+// Debounced — called from passive input listener in jewelry-init.js
+function doSearch(q){
+  clearTimeout(_searchTimer);
+  _searchTimer=setTimeout(()=>{curSearch=q.toLowerCase().trim();shopPage=1;applyFilters();},180);
+}
 
 function applyFilters(){
   shopPage=1;
@@ -100,9 +107,12 @@ function renderShopPage(){
   shopPage=Math.max(1,Math.min(shopPage,totalPages));
   const start=(shopPage-1)*shopPageSize;
   const pageSet=new Set(_matchedCards.slice(start,start+shopPageSize));
-  // rAF 1: card show/hide (single layout pass — yields to browser paint first)
+  // rAF 1: card show/hide — delta only (hide old visible, show new page)
+  // Max 40 DOM touches (20 old + 20 new) instead of 588
   requestAnimationFrame(()=>{
-    cards.forEach(c=>c.classList.toggle('hidden',!pageSet.has(c)));
+    for(const c of _visibleCards){if(!pageSet.has(c))c.classList.add('hidden');}
+    for(const c of pageSet){c.classList.remove('hidden');}
+    _visibleCards=new Set(pageSet);
     document.getElementById('res-n').textContent=total;
     // rAF 2: pagination HTML (deferred so nav-cat click paints instantly → fixes INP)
     requestAnimationFrame(()=>renderShopPagination(total,totalPages));

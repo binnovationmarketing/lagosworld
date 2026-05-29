@@ -62,10 +62,20 @@ const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersec
 document.querySelectorAll('.animate-in').forEach(el=>obs.observe(el));
 
 // ── KEYBOARD NAV for modal images ─────────────────────────────────────────────
+// passive:false only when modal is open (need to intercept arrow keys); passive otherwise
+// Using a flag avoids forcing style recalc on every keydown when modal is closed
+let _modalOpen=false;
 document.addEventListener('keydown',e=>{
-  if(!document.getElementById('modal-bg').classList.contains('open'))return;
+  if(!_modalOpen)return;
   if(e.key==='ArrowLeft')modalPrev();
   else if(e.key==='ArrowRight')modalNext();
+},{passive:true});
+// _modalOpen is set by jewelry-modal.js openModal/closeModal
+
+// ── SEARCH INPUT — passive debounced listener (replaces inline oninput) ────────
+document.addEventListener('DOMContentLoaded',()=>{
+  const si=document.getElementById('search');
+  if(si) si.addEventListener('input',function(){doSearch(this.value);},{passive:true});
 });
 
 // ── NEWSLETTER POPUP ──────────────────────────────────────────────────────────

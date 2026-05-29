@@ -58,6 +58,7 @@ function openModal(id){
   if(vars.length===1)vd.querySelector('.var-btn').click();
   document.getElementById('modal-bg').classList.add('open');
   document.body.style.overflow='hidden';
+  if(typeof _modalOpen!=='undefined')_modalOpen=true;
 }
 
 function setModalImg(i){
@@ -82,7 +83,7 @@ function updateModalCounter(){
 function modalPrev(){if(modalProd){const imgs=modalProd._activeImgs||modalProd.imgs;setModalImg((modalImgIdx-1+imgs.length)%imgs.length)}}
 function modalNext(){if(modalProd){const imgs=modalProd._activeImgs||modalProd.imgs;setModalImg((modalImgIdx+1)%imgs.length)}}
 
-function closeModal(){document.getElementById('modal-bg').classList.remove('open');document.body.style.overflow=''}
+function closeModal(){document.getElementById('modal-bg').classList.remove('open');document.body.style.overflow='';if(typeof _modalOpen!=='undefined')_modalOpen=false;}
 
 function addFromModal(){
   if(!modalProd||!selVar)return;
