@@ -119,22 +119,15 @@
 
 function applyStockOverlays(stockMap) {
   if (!stockMap) return;
-  document.querySelectorAll('.card[data-sku]').forEach(card => {
-    const sku = card.getAttribute('data-sku');
-    const qty = stockMap[sku];
-    if (qty !== undefined && qty !== null && qty <= 0) {
-      markCardUnavailable(card);
-    }
-  });
-  // Also patch cards that embed sku via data attribute added by renderAllCards
+  // Match each card to its exact product by id (from openModal(id)), then check
+  // that product's own SKU stock. Avoids the old bugs: data-sku was lowercased
+  // (never matched the original-case stockMap) and name-substring matching
+  // mis-identified duplicate names (e.g. several "Pulseira Riviera").
   document.querySelectorAll('.card').forEach(card => {
     const btn = card.querySelector('[onclick*="openModal"]');
-    if (!btn) return;
-    // Try to find product by matching card's rendered name vs PRODUCTS
-    const nameEl = card.querySelector('.card-name');
-    if (!nameEl) return;
-    const name = nameEl.textContent?.trim();
-    const prod = PRODUCTS.find(p => (nameEl.textContent?.includes(p.name)));
+    const m = btn && (btn.getAttribute('onclick') || '').match(/\d+/);
+    if (!m) return;
+    const prod = PRODUCTS.find(p => p.id === Number(m[0]));
     if (!prod || !prod.sku) return;
     const qty = stockMap[prod.sku];
     if (qty !== undefined && qty !== null && qty <= 0) {

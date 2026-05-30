@@ -154,7 +154,7 @@ function buildNewHot() {
         <div class="hot-name">${name}</div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.5rem">
           <span style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:#b8922e">${price}</span>
-          <span style="font-size:.55rem;color:#b8922e;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Sob Encomenda</span>
+          <span style="font-size:.55rem;color:#b8922e;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Made to Order</span>
         </div>
       </div>
     </div>`;
