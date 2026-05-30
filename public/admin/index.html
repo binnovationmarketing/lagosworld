@@ -521,8 +521,10 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
             <button class="topbar-btn primary" onclick="smOpen('sm-batch')">+ New Batch (by SKU)</button>
             <button class="topbar-btn primary" onclick="smOpen('sm-new')">+ New Product</button>
             <button class="topbar-btn" onclick="smLoadAudit()">🕑 Audit Log</button>
+            <button class="topbar-btn primary" onclick="smRebuild()">🔄 Rebuild Catalog</button>
           </div>
         </div>
+        <div id="sm-rebuild-msg" class="sm-msg" style="margin:-.5rem 0 .8rem"></div>
 
         <div id="sm-batch" class="sm-panel" style="display:none">
           <h3>New Batch / Stock Adjust by SKU</h3>
@@ -1419,6 +1421,20 @@ async function smSubmitNew() {
     ['sku','name','cat','price','stock','img'].forEach(f => { const el=document.getElementById('sm-n-'+f); if(el) el.value=''; });
     await smLoad();
   } catch(e){ msg.textContent='✗ '+e.message; msg.style.color='var(--red)'; }
+}
+async function smRebuild() {
+  const msg = document.getElementById('sm-rebuild-msg');
+  msg.textContent = 'Rebuilding…'; msg.style.color = 'var(--text-muted)';
+  try {
+    const r = await fetch('/api/jewelry/admin/rebuild', { method: 'POST', headers: smAuthHeaders() });
+    const d = await r.json();
+    if (!r.ok) { msg.textContent = '✗ ' + (d.error || r.status); msg.style.color = 'var(--red)'; return; }
+    // Warm the public edge cache so the storefront picks up changes promptly.
+    try { await fetch('/api/jewelry/catalog.js', { cache: 'no-store' }); } catch (e) {}
+    msg.textContent = `✓ Catalog live: ${d.products} products · ${d.inStock} in stock · ${d.newArrivals} new. Storefront reflects edits within ~60s.`;
+    msg.style.color = 'var(--green)';
+    await smLoad();
+  } catch (e) { msg.textContent = '✗ ' + e.message; msg.style.color = 'var(--red)'; }
 }
 async function smLoadAudit() {
   const wrap = document.getElementById('sm-audit');

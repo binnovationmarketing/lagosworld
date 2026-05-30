@@ -1159,7 +1159,10 @@ body{background:#ffffff!important;color:#2c2822!important}
 <!-- TOAST -->
 <div class="toast" id="toast"><span id="toast-msg"></span></div>
 
-<script src="/js/products-data.js"></script>
+<!-- Live catalog from DB (admin edits surface within ~60s). Falls back to the
+     static products-data.js if the dynamic endpoint ever fails (empty PRODUCTS). -->
+<script src="/api/jewelry/catalog.js"></script>
+<script>if(!window.PRODUCTS||!window.PRODUCTS.length){document.write('<script src="/js/products-data.js"><\/script>')}</script>
 <script src="/js/jewelry-state.js"></script>
 <script src="/js/jewelry-filter.js"></script>
 <script src="/js/jewelry-modal.js"></script>
