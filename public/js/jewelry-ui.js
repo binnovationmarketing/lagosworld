@@ -61,8 +61,10 @@ function hotNext() {
 let _newIdx = 0;
 
 function buildNewArrivals() {
-  // New Arrival = new product physically in stock -> available now
-  const arrivals = PRODUCTS.filter(p => p.newArrival && p.stock > 0);
+  // New Arrival = new product physically in stock -> available now.
+  // Only show items that actually have a photo (no placeholder cards).
+  const hasImg = p => !!((imgsOv[p.id] && imgsOv[p.id][0]) || (p.imgs && p.imgs[0]));
+  const arrivals = PRODUCTS.filter(p => p.newArrival && p.stock > 0 && hasImg(p));
   const section = document.getElementById('new-arrivals-section');
   if (!arrivals.length) { if(section) section.style.display='none'; return; }
   if(section) section.style.display = '';
@@ -126,8 +128,10 @@ function newNext() {
 let _newHotIdx = 0;
 
 function buildNewHot() {
-  // New Hot = new product from supplier catalog, not in stock -> order only
-  const hots = PRODUCTS.filter(p => p.newArrival && !(p.stock > 0));
+  // New Hot = new product from supplier catalog, not in stock -> order only.
+  // Only show items that actually have a photo (no placeholder cards).
+  const hasImg = p => !!((imgsOv[p.id] && imgsOv[p.id][0]) || (p.imgs && p.imgs[0]));
+  const hots = PRODUCTS.filter(p => p.newArrival && !(p.stock > 0) && hasImg(p));
   const section = document.getElementById('new-hot-section');
   if (!hots.length) { if(section) section.style.display='none'; return; }
   if(section) section.style.display = '';
