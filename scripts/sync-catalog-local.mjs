@@ -72,9 +72,15 @@ function transformProduct(raw) {
   for (const v of (raw.produto_variacoes || [])) {
     const p = (v.variacao_preco || 0) / 100;
     if (p > 0) { if (minP === null || p < minP) minP = p; if (maxP === null || p > maxP) maxP = p; }
+    // Variations can be 2-level: variacao_descricao = banho/cor (e.g. "Ródio
+    // Branco"), variacao_subvariacao = the distinguishing attribute (e.g. stone
+    // "Cristal"). Combine so options stay distinct; otherwise all rows collapse
+    // to the same desc (was the B 10136 "all Ródio Branco" bug).
+    const base = (v.variacao_descricao || '').trim();
+    const sub  = (v.variacao_subvariacao || '').trim();
     vars.push({
       id:    v.variacao_id,
-      desc:  v.variacao_descricao || '',
+      desc:  sub ? (base ? `${base} — ${sub}` : sub) : base,
       price: p,
       stock: v.variacao_estoque ?? null,
       active: v.variacao_ativo !== 0,
