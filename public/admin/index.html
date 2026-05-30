@@ -378,6 +378,13 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
 .sm-pill.zero{background:rgba(122,114,104,.18);color:var(--text-muted)}
 .sm-mini{width:64px;background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:.25rem;font-size:.72rem;text-align:center}
 .sm-empty{padding:1rem;color:var(--text-muted);font-size:.78rem}
+.sm-lbl{display:block;font-size:.56rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem}
+.sm-panel textarea{width:100%;background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:.5rem .6rem;font-size:.78rem;font-family:'Montserrat',sans-serif;resize:vertical;box-sizing:border-box}
+.gold-save{background:var(--gold)!important;color:var(--black)!important;border-color:var(--gold)!important;font-weight:700}
+.gold-save:hover{background:var(--gold-l)!important;color:var(--black)!important}
+.sm-edit-btn{cursor:pointer;color:var(--gold);font-size:.9rem;background:none;border:1px solid var(--border);border-radius:3px;padding:.1rem .4rem;line-height:1}
+.sm-edit-btn:hover{border-color:var(--gold);background:rgba(184,146,46,.12)}
+.sm-tbl td.sm-edit-cell{width:38px;text-align:center}
 @media(max-width:640px){.sm-bar{flex-direction:column;align-items:stretch}.sm-btns{justify-content:stretch}.sm-btns .topbar-btn{flex:1;justify-content:center}}
 </style>
 </head>
@@ -529,7 +536,7 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
         <div id="sm-batch" class="sm-panel" style="display:none">
           <h3>New Batch / Stock Adjust by SKU</h3>
           <div class="sm-form">
-            <div class="sm-frow"><input id="sm-b-sku" placeholder="SKU (e.g. P 10054)" oninput="smLookup()"><span id="sm-b-found" class="sm-found"></span></div>
+            <div class="sm-frow"><input id="sm-b-sku" placeholder="SKU (e.g. P 10054)" oninput="smLookupDebounced()"><span id="sm-b-found" class="sm-found"></span></div>
             <div class="sm-frow">
               <select id="sm-b-mode"><option value="add">Add (+) to stock</option><option value="set">Set exact value</option></select>
               <input id="sm-b-qty" type="number" min="0" placeholder="Quantity">
@@ -544,7 +551,7 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
           <div class="sm-grid">
             <input id="sm-n-sku" placeholder="SKU *">
             <input id="sm-n-name" placeholder="Name *">
-            <input id="sm-n-cat" placeholder="Category (e.g. ANÉIS)">
+            <input id="sm-n-cat" list="sm-cats" placeholder="Category — pick or type new">
             <input id="sm-n-price" type="number" min="0" step="0.01" placeholder="Price * (USD)">
             <input id="sm-n-stock" type="number" min="0" placeholder="Initial stock">
             <input id="sm-n-img" placeholder="Image URL">
@@ -552,10 +559,29 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
           <div class="sm-frow"><button class="topbar-btn primary" onclick="smSubmitNew()">Create Product</button><button class="topbar-btn" onclick="smClose('sm-new')">Cancel</button><span id="sm-n-msg" class="sm-msg"></span></div>
         </div>
 
+        <datalist id="sm-cats"></datalist>
+
+        <!-- edit name/description/category panel -->
+        <div id="sm-edit" class="sm-panel" style="display:none">
+          <h3>Edit Product <span id="sm-e-sku" style="color:var(--text-muted);font-weight:400"></span></h3>
+          <input type="hidden" id="sm-e-key">
+          <div class="sm-grid">
+            <div style="grid-column:1/-1"><label class="sm-lbl">Name</label><input id="sm-e-name" placeholder="Product name"></div>
+            <div><label class="sm-lbl">Category</label><input id="sm-e-cat" list="sm-cats" placeholder="Pick or type new"></div>
+          </div>
+          <label class="sm-lbl">Description</label>
+          <textarea id="sm-e-desc" rows="3" placeholder="Product description…"></textarea>
+          <div class="sm-frow" style="margin-top:.7rem">
+            <button class="topbar-btn gold-save" onclick="smEditSave()">💾 Save Changes</button>
+            <button class="topbar-btn" onclick="smClose('sm-edit')">Cancel</button>
+            <span id="sm-e-msg" class="sm-msg"></span>
+          </div>
+        </div>
+
         <div class="sm-views">
           <button class="sm-vbtn active" id="sm-v-all" onclick="smView('all')">Full Catalog <span id="sm-c-all"></span></button>
           <button class="sm-vbtn" id="sm-v-stock" onclick="smView('stock')">In Stock <span id="sm-c-stock"></span></button>
-          <input id="sm-search" placeholder="Filter SKU or name…" oninput="smRender()">
+          <input id="sm-search" placeholder="Filter SKU or name…" oninput="smSearchDebounced()">
         </div>
         <div id="sm-table" class="sm-table-wrap"><div class="sm-empty">Open the Products tab to load live stock…</div></div>
         <div id="sm-audit"></div>
@@ -1322,6 +1348,9 @@ async function smLoad() {
     const inStock = _smRows.filter(p => (p.stock_qty || 0) > 0).length;
     document.getElementById('sm-c-all').textContent = '(' + _smRows.length + ')';
     document.getElementById('sm-c-stock').textContent = '(' + inStock + ')';
+    const cats = [...new Set(_smRows.map(p => p.category).filter(Boolean))].sort();
+    const dl = document.getElementById('sm-cats');
+    if (dl) dl.innerHTML = cats.map(c => '<option value="' + smEsc(c) + '">').join('');
     smRender();
   } catch (e) {
     if (wrap) wrap.innerHTML = '<div class="sm-empty">Failed to load: ' + e.message + '</div>';
@@ -1347,19 +1376,20 @@ function smRender() {
   let rows = _smView === 'stock' ? _smRows.filter(p => (p.stock_qty || 0) > 0) : _smRows;
   if (term) rows = rows.filter(p => (p.sku || '').toLowerCase().includes(term) || (p.name || '').toLowerCase().includes(term));
   if (!rows.length) { wrap.innerHTML = '<div class="sm-empty">No products match.</div>'; return; }
-  const body = rows.slice(0, 500).map(p => `<tr>
+  const body = rows.slice(0, 300).map(p => `<tr>
     <td>${smEsc(p.sku)}</td>
+    <td class="sm-edit-cell"><button class="sm-edit-btn" title="Edit name/description" onclick='smEditOpen(${JSON.stringify(p.sku)})'>✏️</button></td>
     <td>${smEsc(p.name)}</td>
     <td>${smEsc(p.category)}</td>
     <td>$${Number(p.min_price||0).toFixed(2)}</td>
     <td>${smPill(p.stock_qty)}</td>
-    <td><input class="sm-mini" type="number" min="0" value="${p.stock_qty||0}" onchange="smQuickSet('${smEsc(p.sku)}', this.value, this)"></td>
+    <td><input class="sm-mini" type="number" min="0" value="${p.stock_qty||0}" onchange='smQuickSet(${JSON.stringify(p.sku)}, this.value, this)'></td>
     <td>${p.active ? '✓' : '✗'}${p.new_arrival ? ' ✦' : ''}</td>
   </tr>`).join('');
   wrap.innerHTML = `<table class="sm-tbl"><thead><tr>
-    <th>SKU</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Set</th><th>St.</th>
+    <th>SKU</th><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Set</th><th>St.</th>
   </tr></thead><tbody>${body}</tbody></table>` +
-    (rows.length > 500 ? '<div class="sm-empty">Showing first 500 of ' + rows.length + ' — use filter.</div>' : '');
+    (rows.length > 300 ? '<div class="sm-empty">Showing first 300 of ' + rows.length + ' — use filter.</div>' : '');
 }
 async function smQuickSet(sku, val, el) {
   const qty = Number(val);
@@ -1381,12 +1411,62 @@ async function smPostStock(body) {
 }
 function smOpen(id){ document.getElementById(id).style.display='block'; }
 function smClose(id){ document.getElementById(id).style.display='none'; }
-async function smLookup() {
+
+// debounce — keeps typing snappy (fixes INP on filter/lookup)
+function smDebounce(fn, ms){ let t; return function(){ clearTimeout(t); t=setTimeout(fn, ms); }; }
+const smSearchDebounced = smDebounce(smRender, 180);
+const smLookupDebounced = smDebounce(smLookup, 200);
+
+// open the edit panel for a SKU (name / description / category)
+function smEditOpen(sku) {
+  const p = _smRows.find(x => x.sku === sku) || _smRows.find(x => (x.sku||'').toLowerCase() === String(sku).toLowerCase());
+  if (!p) { showToast('Product not loaded'); return; }
+  document.getElementById('sm-e-key').value = p.sku;
+  document.getElementById('sm-e-sku').textContent = '· ' + p.sku;
+  document.getElementById('sm-e-name').value = p.name || '';
+  document.getElementById('sm-e-cat').value = p.category || '';
+  document.getElementById('sm-e-desc').value = p.description || '';
+  document.getElementById('sm-e-msg').textContent = '';
+  smOpen('sm-edit');
+  document.getElementById('sm-edit').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+async function smEditSave() {
+  const sku = document.getElementById('sm-e-key').value;
+  const body = {
+    sku,
+    name: document.getElementById('sm-e-name').value.trim(),
+    description: document.getElementById('sm-e-desc').value.trim(),
+    category: document.getElementById('sm-e-cat').value.trim(),
+  };
+  const msg = document.getElementById('sm-e-msg');
+  if (!body.name) { msg.textContent = 'Name required'; msg.style.color = 'var(--red)'; return; }
+  msg.textContent = 'Saving…'; msg.style.color = 'var(--text-muted)';
+  try {
+    const r = await fetch('/api/jewelry/admin/product-edit', {
+      method: 'POST', headers: smAuthHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(body),
+    });
+    const d = await r.json();
+    if (!r.ok) { msg.textContent = '✗ ' + (d.error || r.status); msg.style.color = 'var(--red)'; return; }
+    msg.textContent = d.unchanged ? 'No changes' : '✓ Saved';
+    msg.style.color = 'var(--green)';
+    await smLoad();
+    showToast('✓ ' + sku + ' updated');
+    setTimeout(() => smClose('sm-edit'), 700);
+  } catch (e) { msg.textContent = '✗ ' + e.message; msg.style.color = 'var(--red)'; }
+}
+function smLookup() {
   const sku = document.getElementById('sm-b-sku').value.trim();
   const out = document.getElementById('sm-b-found');
+  if (!sku) { out.innerHTML = ''; return; }
   const p = _smRows.find(x => (x.sku || '').toLowerCase() === sku.toLowerCase());
-  out.textContent = p ? `→ ${p.name} · current stock: ${p.stock_qty||0}` : (sku ? '→ SKU not found' : '');
-  out.style.color = p ? 'var(--green)' : 'var(--red)';
+  if (p) {
+    out.style.color = 'var(--green)';
+    out.innerHTML = `✓ Already registered: <b>${smEsc(p.name)}</b> · stock ${p.stock_qty||0} ` +
+      `<button class="sm-edit-btn" style="margin-left:.4rem" onclick='smEditOpen(${JSON.stringify(p.sku)})'>✎ Go to product</button>`;
+  } else {
+    out.style.color = 'var(--gold-l)';
+    out.innerHTML = '✦ New SKU — use <b>+ New Product</b> to register it (name, price, stock, image).';
+  }
 }
 async function smSubmitBatch() {
   const sku = document.getElementById('sm-b-sku').value.trim();
