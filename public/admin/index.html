@@ -350,6 +350,35 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
   .login-box{width:100%;padding:1.5rem 1.2rem}
   .modal{padding:1.2rem}
 }
+/* ── Stock management & audit ── */
+.sm-wrap{margin-top:2rem;border-top:2px solid var(--border);padding-top:1.2rem}
+.sm-bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.sm-btns{display:flex;gap:.4rem;flex-wrap:wrap}
+.sm-panel{background:var(--dark2);border:1px solid var(--border);padding:1rem;margin-bottom:1rem}
+.sm-panel h3{margin:0 0 .8rem;font-size:.8rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.sm-form,.sm-frow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.5rem}
+.sm-frow{margin-bottom:0}
+.sm-form{flex-direction:column;align-items:stretch}
+.sm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.5rem;margin-bottom:.7rem}
+.sm-panel input,.sm-panel select{background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:.5rem .6rem;font-size:.78rem;font-family:'Montserrat',sans-serif;flex:1;min-width:120px}
+.sm-found{font-size:.72rem;color:var(--text-muted)}
+.sm-msg{font-size:.72rem;font-weight:700}
+.sm-views{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem}
+.sm-vbtn{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-muted);padding:.45rem .9rem;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',sans-serif}
+.sm-vbtn.active{border-color:var(--gold);color:var(--gold);background:rgba(184,146,46,.1)}
+.sm-views input{flex:1;min-width:150px;background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:.45rem .6rem;font-size:.78rem;font-family:'Montserrat',sans-serif}
+.sm-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sm-tbl{width:100%;border-collapse:collapse;font-size:.74rem;min-width:560px}
+.sm-tbl th,.sm-tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--border);white-space:nowrap}
+.sm-tbl th{color:var(--gold);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;position:sticky;top:0;background:var(--dark2)}
+.sm-tbl tbody tr:hover{background:rgba(184,146,46,.06)}
+.sm-pill{font-size:.58rem;padding:.12rem .45rem;border-radius:2px;font-weight:700}
+.sm-pill.ok{background:rgba(76,175,121,.18);color:var(--green)}
+.sm-pill.low{background:rgba(224,82,82,.18);color:var(--red)}
+.sm-pill.zero{background:rgba(122,114,104,.18);color:var(--text-muted)}
+.sm-mini{width:64px;background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:.25rem;font-size:.72rem;text-align:center}
+.sm-empty{padding:1rem;color:var(--text-muted);font-size:.78rem}
+@media(max-width:640px){.sm-bar{flex-direction:column;align-items:stretch}.sm-btns{justify-content:stretch}.sm-btns .topbar-btn{flex:1;justify-content:center}}
 </style>
 </head>
 <body>
@@ -483,6 +512,52 @@ canvas#rev-chart{width:100%!important;height:130px!important;display:block}
 
       <div class="products-grid" id="products-grid"></div>
       <div id="pagination-wrap"></div>
+
+      <!-- ══ STOCK MANAGEMENT & AUDIT (live from DB) ══════════════════════ -->
+      <div class="sm-wrap">
+        <div class="sm-bar">
+          <h2 style="margin:0">📦 Stock <em>& Audit</em></h2>
+          <div class="sm-btns">
+            <button class="topbar-btn primary" onclick="smOpen('sm-batch')">+ New Batch (by SKU)</button>
+            <button class="topbar-btn primary" onclick="smOpen('sm-new')">+ New Product</button>
+            <button class="topbar-btn" onclick="smLoadAudit()">🕑 Audit Log</button>
+          </div>
+        </div>
+
+        <div id="sm-batch" class="sm-panel" style="display:none">
+          <h3>New Batch / Stock Adjust by SKU</h3>
+          <div class="sm-form">
+            <div class="sm-frow"><input id="sm-b-sku" placeholder="SKU (e.g. P 10054)" oninput="smLookup()"><span id="sm-b-found" class="sm-found"></span></div>
+            <div class="sm-frow">
+              <select id="sm-b-mode"><option value="add">Add (+) to stock</option><option value="set">Set exact value</option></select>
+              <input id="sm-b-qty" type="number" min="0" placeholder="Quantity">
+              <input id="sm-b-note" placeholder="Note (e.g. Pedido 000570)">
+            </div>
+            <div class="sm-frow"><button class="topbar-btn primary" onclick="smSubmitBatch()">Save</button><button class="topbar-btn" onclick="smClose('sm-batch')">Cancel</button><span id="sm-b-msg" class="sm-msg"></span></div>
+          </div>
+        </div>
+
+        <div id="sm-new" class="sm-panel" style="display:none">
+          <h3>New Manual Product</h3>
+          <div class="sm-grid">
+            <input id="sm-n-sku" placeholder="SKU *">
+            <input id="sm-n-name" placeholder="Name *">
+            <input id="sm-n-cat" placeholder="Category (e.g. ANÉIS)">
+            <input id="sm-n-price" type="number" min="0" step="0.01" placeholder="Price * (USD)">
+            <input id="sm-n-stock" type="number" min="0" placeholder="Initial stock">
+            <input id="sm-n-img" placeholder="Image URL">
+          </div>
+          <div class="sm-frow"><button class="topbar-btn primary" onclick="smSubmitNew()">Create Product</button><button class="topbar-btn" onclick="smClose('sm-new')">Cancel</button><span id="sm-n-msg" class="sm-msg"></span></div>
+        </div>
+
+        <div class="sm-views">
+          <button class="sm-vbtn active" id="sm-v-all" onclick="smView('all')">Full Catalog <span id="sm-c-all"></span></button>
+          <button class="sm-vbtn" id="sm-v-stock" onclick="smView('stock')">In Stock <span id="sm-c-stock"></span></button>
+          <input id="sm-search" placeholder="Filter SKU or name…" oninput="smRender()">
+        </div>
+        <div id="sm-table" class="sm-table-wrap"><div class="sm-empty">Open the Products tab to load live stock…</div></div>
+        <div id="sm-audit"></div>
+      </div>
     </div>
 
     <!-- ORDERS TAB -->
@@ -1219,7 +1294,148 @@ function switchTab(name, el) {
     if (name === 'templates') loadTemplates();
     if (name === 'agenda') loadAgenda();
     if (name === 'calendario') loadCalendario();
+    if (name === 'products') smInit();
   }, 0);
+}
+
+// ══ STOCK MANAGEMENT & AUDIT (live DB) ════════════════════════════════════════
+let _smView = 'all', _smRows = [], _smLoaded = false;
+
+function smAuthHeaders(extra) {
+  return Object.assign({ 'Authorization': 'Bearer ' + adminToken }, extra || {});
+}
+async function smInit() {
+  if (_smLoaded) return;        // load once per session; refresh after writes
+  await smLoad();
+}
+async function smLoad() {
+  const wrap = document.getElementById('sm-table');
+  if (wrap && !_smRows.length) wrap.innerHTML = '<div class="sm-empty">Loading from database…</div>';
+  try {
+    const r = await fetch('/api/jewelry/admin/products', { headers: smAuthHeaders() });
+    if (r.status === 401) { wrap.innerHTML = '<div class="sm-empty">Session expired — refresh & log in.</div>'; return; }
+    const d = await r.json();
+    _smRows = d.products || [];
+    _smLoaded = true;
+    const inStock = _smRows.filter(p => (p.stock_qty || 0) > 0).length;
+    document.getElementById('sm-c-all').textContent = '(' + _smRows.length + ')';
+    document.getElementById('sm-c-stock').textContent = '(' + inStock + ')';
+    smRender();
+  } catch (e) {
+    if (wrap) wrap.innerHTML = '<div class="sm-empty">Failed to load: ' + e.message + '</div>';
+  }
+}
+function smView(v) {
+  _smView = v;
+  document.getElementById('sm-v-all').classList.toggle('active', v === 'all');
+  document.getElementById('sm-v-stock').classList.toggle('active', v === 'stock');
+  smRender();
+}
+function smPill(q) {
+  if (q == null) return '<span class="sm-pill zero">—</span>';
+  if (q <= 0) return '<span class="sm-pill zero">0</span>';
+  if (q < 3)  return '<span class="sm-pill low">' + q + '</span>';
+  return '<span class="sm-pill ok">' + q + '</span>';
+}
+function smEsc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function smRender() {
+  const wrap = document.getElementById('sm-table');
+  if (!wrap) return;
+  const term = (document.getElementById('sm-search').value || '').toLowerCase().trim();
+  let rows = _smView === 'stock' ? _smRows.filter(p => (p.stock_qty || 0) > 0) : _smRows;
+  if (term) rows = rows.filter(p => (p.sku || '').toLowerCase().includes(term) || (p.name || '').toLowerCase().includes(term));
+  if (!rows.length) { wrap.innerHTML = '<div class="sm-empty">No products match.</div>'; return; }
+  const body = rows.slice(0, 500).map(p => `<tr>
+    <td>${smEsc(p.sku)}</td>
+    <td>${smEsc(p.name)}</td>
+    <td>${smEsc(p.category)}</td>
+    <td>$${Number(p.min_price||0).toFixed(2)}</td>
+    <td>${smPill(p.stock_qty)}</td>
+    <td><input class="sm-mini" type="number" min="0" value="${p.stock_qty||0}" onchange="smQuickSet('${smEsc(p.sku)}', this.value, this)"></td>
+    <td>${p.active ? '✓' : '✗'}${p.new_arrival ? ' ✦' : ''}</td>
+  </tr>`).join('');
+  wrap.innerHTML = `<table class="sm-tbl"><thead><tr>
+    <th>SKU</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Set</th><th>St.</th>
+  </tr></thead><tbody>${body}</tbody></table>` +
+    (rows.length > 500 ? '<div class="sm-empty">Showing first 500 of ' + rows.length + ' — use filter.</div>' : '');
+}
+async function smQuickSet(sku, val, el) {
+  const qty = Number(val);
+  if (!Number.isFinite(qty) || qty < 0) { showToast('Invalid qty'); return; }
+  el.disabled = true;
+  const ok = await smPostStock({ sku, mode: 'set', qty, note: 'inline edit' });
+  el.disabled = false;
+  if (ok) { showToast('✓ ' + sku + ' → ' + qty); await smLoad(); }
+}
+async function smPostStock(body) {
+  try {
+    const r = await fetch('/api/jewelry/admin/stock', {
+      method: 'POST', headers: smAuthHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(body),
+    });
+    const d = await r.json();
+    if (!r.ok) { showToast('✗ ' + (d.error || r.status)); return false; }
+    return d;
+  } catch (e) { showToast('✗ ' + e.message); return false; }
+}
+function smOpen(id){ document.getElementById(id).style.display='block'; }
+function smClose(id){ document.getElementById(id).style.display='none'; }
+async function smLookup() {
+  const sku = document.getElementById('sm-b-sku').value.trim();
+  const out = document.getElementById('sm-b-found');
+  const p = _smRows.find(x => (x.sku || '').toLowerCase() === sku.toLowerCase());
+  out.textContent = p ? `→ ${p.name} · current stock: ${p.stock_qty||0}` : (sku ? '→ SKU not found' : '');
+  out.style.color = p ? 'var(--green)' : 'var(--red)';
+}
+async function smSubmitBatch() {
+  const sku = document.getElementById('sm-b-sku').value.trim();
+  const mode = document.getElementById('sm-b-mode').value;
+  const qty = Number(document.getElementById('sm-b-qty').value);
+  const note = document.getElementById('sm-b-note').value.trim();
+  const msg = document.getElementById('sm-b-msg');
+  if (!sku || !Number.isFinite(qty) || qty < 0) { msg.textContent='SKU + qty required'; msg.style.color='var(--red)'; return; }
+  msg.textContent = 'Saving…'; msg.style.color='var(--text-muted)';
+  const d = await smPostStock({ sku, mode, qty, note });
+  if (d) { msg.textContent = `✓ ${d.sku}: ${d.before} → ${d.after}`; msg.style.color='var(--green)';
+    document.getElementById('sm-b-qty').value=''; await smLoad(); }
+  else { msg.textContent='Failed'; msg.style.color='var(--red)'; }
+}
+async function smSubmitNew() {
+  const body = {
+    sku: document.getElementById('sm-n-sku').value.trim(),
+    name: document.getElementById('sm-n-name').value.trim(),
+    category: document.getElementById('sm-n-cat').value.trim(),
+    price: Number(document.getElementById('sm-n-price').value),
+    stock: Number(document.getElementById('sm-n-stock').value) || 0,
+    img: document.getElementById('sm-n-img').value.trim(),
+  };
+  const msg = document.getElementById('sm-n-msg');
+  if (!body.sku || !body.name || !Number.isFinite(body.price) || body.price < 0) { msg.textContent='SKU, name, price required'; msg.style.color='var(--red)'; return; }
+  msg.textContent='Creating…'; msg.style.color='var(--text-muted)';
+  try {
+    const r = await fetch('/api/jewelry/admin/product', { method:'POST', headers: smAuthHeaders({ 'Content-Type':'application/json' }), body: JSON.stringify(body) });
+    const d = await r.json();
+    if (!r.ok) { msg.textContent='✗ '+(d.error||r.status); msg.style.color='var(--red)'; return; }
+    msg.textContent = `✓ Created ${d.sku} (id ${d.id})`; msg.style.color='var(--green)';
+    ['sku','name','cat','price','stock','img'].forEach(f => { const el=document.getElementById('sm-n-'+f); if(el) el.value=''; });
+    await smLoad();
+  } catch(e){ msg.textContent='✗ '+e.message; msg.style.color='var(--red)'; }
+}
+async function smLoadAudit() {
+  const wrap = document.getElementById('sm-audit');
+  wrap.innerHTML = '<div class="sm-empty">Loading audit…</div>';
+  try {
+    const r = await fetch('/api/jewelry/admin/audit?limit=100', { headers: smAuthHeaders() });
+    const d = await r.json();
+    const rows = d.audit || [];
+    if (!rows.length) { wrap.innerHTML = '<div class="sm-empty">No audit entries yet.</div>'; return; }
+    const body = rows.map(a => {
+      const st = a.changes && a.changes.stock;
+      const detail = st ? `${st.before} → ${st.after} (${st.delta>=0?'+':''}${st.delta})` : (a.changes && a.changes.created ? `price $${a.changes.created.price}, stock ${a.changes.created.stock}` : '');
+      return `<tr><td>${new Date(a.created_at).toLocaleString()}</td><td>${smEsc(a.action)}</td><td>${smEsc(a.sku)}</td><td>${smEsc(a.product_name)}</td><td>${smEsc(detail)}</td><td>${smEsc(a.note)}</td></tr>`;
+    }).join('');
+    wrap.innerHTML = `<h3 style="margin:1.2rem 0 .6rem;font-size:.8rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase">🕑 Audit Log (last ${rows.length})</h3>
+      <div class="sm-table-wrap"><table class="sm-tbl"><thead><tr><th>When</th><th>Action</th><th>SKU</th><th>Product</th><th>Change</th><th>Note</th></tr></thead><tbody>${body}</tbody></table></div>`;
+  } catch(e){ wrap.innerHTML = '<div class="sm-empty">Failed: '+e.message+'</div>'; }
 }
 
 // ── ORDERS ──
