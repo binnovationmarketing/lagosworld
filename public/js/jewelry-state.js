@@ -19,6 +19,7 @@ let nameOv  = JSON.parse(localStorage.getItem('lj_names') ||'{}');
 // Cart & UI state
 let cart = [];
 let curCat = 'ALL', curSearch = '';
+let curStockOnly = false; // "Available Now" filter — show only stock>0
 let modalProd = null, modalImgIdx = 0, selVar = null;
 let selPayment = null;
 let selShipping = null;

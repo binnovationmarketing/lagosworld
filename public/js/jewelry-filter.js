@@ -30,7 +30,7 @@ function renderAllCards(){
     else if (p.newArrival && !inStock){ newBadge = '<div class="badge-new hot">🔥 NEW HOT</div>'; stockBadge = '<div class="badge-order">Made to Order</div>'; }
     else if (inStock)                 { stockBadge = '<div class="badge-stock">In Stock</div>'; }
     else                              { stockBadge = '<div class="badge-order">Made to Order</div>'; }
-    return `<div class="card hidden" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" data-new="${p.newArrival?'1':'0'}" style="animation-delay:${(idx%20)*50}ms">
+    return `<div class="card hidden" data-cat="${p.cat}" data-name="${(p.name||'').toLowerCase()}" data-sku="${(p.sku||'').toLowerCase()}" data-new="${p.newArrival?'1':'0'}" data-stock="${inStock?'1':'0'}" style="animation-delay:${(idx%20)*50}ms">
   <div class="card-imgs" style="position:relative">
     ${newBadge}${stockBadge}
     <img class="card-img" src="${p.img}" alt="${p.name}" loading="${loading}"${fetchprio}>
@@ -68,8 +68,10 @@ function renderCatFilters(){
   const counts = {};
   PRODUCTS.forEach(p => { counts[p.cat] = (counts[p.cat]||0) + 1; });
   const total = PRODUCTS.length;
+  const inStockCount = PRODUCTS.filter(p => p.stock > 0).length;
   const cats = Object.entries(counts).sort((a,b) => b[1]-a[1]);
   wrap.innerHTML =
+    `<button class="fp fp-stock${curStockOnly?' active':''}" onclick="toggleStock(this)"><span>✓ Available Now (${inStockCount})</span></button>` +
     `<button class="fp${curCat==='ALL'?' active':''}" onclick="filterCat('ALL',this)"><span>✦ All (${total})</span></button>` +
     cats.map(([cat, n]) => {
       const icon = CAT_ICONS[cat] || '✦';
@@ -83,7 +85,21 @@ function filterCat(cat,btn){
   requestAnimationFrame(()=>{
     document.querySelectorAll('.nav-cat,.fp').forEach(b=>b.classList.remove('active'));
     if(btn)btn.classList.add('active');
+    // stock toggle is orthogonal to category — re-assert its state
+    if(curStockOnly)document.querySelector('.fp-stock')?.classList.add('active');
     // Frame 2: run heavy filter + pagination after active state is painted
+    requestAnimationFrame(()=>{
+      applyFilters();
+      if(window.scrollY>200)document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+}
+
+// "Available Now" toggle — show only in-stock products (orthogonal to category)
+function toggleStock(btn){
+  curStockOnly=!curStockOnly;shopPage=1;
+  requestAnimationFrame(()=>{
+    if(btn)btn.classList.toggle('active',curStockOnly);
     requestAnimationFrame(()=>{
       applyFilters();
       if(window.scrollY>200)document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
@@ -108,6 +124,7 @@ function renderShopPage(){
   const cards=_cardCache;
   _matchedCards=cards.filter(c=>
     (curCat==='ALL'||c.dataset.cat===curCat)&&
+    (!curStockOnly||c.dataset.stock==='1')&&
     (!curSearch||c.dataset.name.includes(curSearch)||c.dataset.cat.toLowerCase().includes(curSearch)||c.dataset.sku.includes(curSearch))
   );
   const total=_matchedCards.length;
