@@ -643,12 +643,12 @@ body{background:#ffffff!important;color:#2c2822!important}
   <div class="hero-glow"></div>
 
   <div class="hero-content">
-    <p class="hero-eyebrow">Gold 18k · Hypoallergenic · 1 Year Warranty</p>
+    <p class="hero-eyebrow" data-en="Gold 18k · Hypoallergenic · 1 Year Warranty" data-pt="Ouro 18k · Hipoalergênica · 1 Ano de Garantia">Gold 18k · Hypoallergenic · 1 Year Warranty</p>
     <h1 class="hero-title">Lagos<br>Jewelry</h1>
-    <span class="hero-subtitle">De mulher para mulher</span>
-    <p class="hero-verse">"She is clothed with strength and dignity" — Proverbs 31:25</p>
+    <span class="hero-subtitle" data-en="From woman to woman" data-pt="De mulher para mulher">From woman to woman</span>
+    <p class="hero-verse" data-en="&quot;She is clothed with strength and dignity&quot; — Proverbs 31:25" data-pt="&quot;Ela se reveste de força e dignidade&quot; — Provérbios 31:25">"She is clothed with strength and dignity" — Proverbs 31:25</p>
     <button class="hero-cta" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
-      <span>✦</span><span>Explore Collection</span><span>→</span>
+      <span>✦</span><span data-en="Explore Collection" data-pt="Explorar Coleção">Explore Collection</span><span>→</span>
     </button>
   </div>
   <div class="hero-scroll" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
@@ -662,18 +662,22 @@ body{background:#ffffff!important;color:#2c2822!important}
     <a href="/" class="nav-back-home">← Lagos World</a>
     <a href="#top" class="nav-brand">Lagos Jewelry</a>
     <div class="nav-cats" id="nav-cats">
-      <button class="nav-cat active" onclick="filterCat('ALL',this)">All</button>
-      <button class="nav-cat" onclick="filterCat('BRINCOS',this)">💎 BRINCOS</button>
-      <button class="nav-cat" onclick="filterCat('ANÉIS',this)">💍 ANÉIS</button>
-      <button class="nav-cat" onclick="filterCat('COLARES',this)">📿 COLARES</button>
-      <button class="nav-cat" onclick="filterCat('PULSEIRAS E BRACELETES',this)">✨ PULSEIRAS E BRACELETES</button>
-      <button class="nav-cat" onclick="filterCat('CONJUNTOS',this)">👑 CONJUNTOS</button>
-      <button class="nav-cat" onclick="filterCat('PINGENTES',this)">🔮 PINGENTES</button>
-      <button class="nav-cat" onclick="filterCat('ACESSÓRIOS',this)">🌟 ACESSÓRIOS</button>
-      <button class="nav-cat" onclick="filterCat('AÇO',this)">⚡ AÇO</button>
+      <button class="nav-cat active" onclick="filterCat('ALL',this)" data-en="All" data-pt="Todos">All</button>
+      <button class="nav-cat" onclick="filterCat('BRINCOS',this)" data-en="💎 Earrings" data-pt="💎 Brincos">💎 Earrings</button>
+      <button class="nav-cat" onclick="filterCat('ANÉIS',this)" data-en="💍 Rings" data-pt="💍 Anéis">💍 Rings</button>
+      <button class="nav-cat" onclick="filterCat('COLARES',this)" data-en="📿 Necklaces" data-pt="📿 Colares">📿 Necklaces</button>
+      <button class="nav-cat" onclick="filterCat('PULSEIRAS E BRACELETES',this)" data-en="✨ Bracelets" data-pt="✨ Pulseiras e Braceletes">✨ Bracelets</button>
+      <button class="nav-cat" onclick="filterCat('CONJUNTOS',this)" data-en="👑 Sets" data-pt="👑 Conjuntos">👑 Sets</button>
+      <button class="nav-cat" onclick="filterCat('PINGENTES',this)" data-en="🔮 Pendants" data-pt="🔮 Pingentes">🔮 Pendants</button>
+      <button class="nav-cat" onclick="filterCat('ACESSÓRIOS',this)" data-en="🌟 Accessories" data-pt="🌟 Acessórios">🌟 Accessories</button>
+      <button class="nav-cat" onclick="filterCat('AÇO',this)" data-en="⚡ Steel" data-pt="⚡ Aço">⚡ Steel</button>
+    </div>
+    <div style="display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:3px;overflow:hidden;margin-right:.5rem">
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')" style="background:none;border:none;color:#c9a84c;font-size:.58rem;letter-spacing:.1em;font-weight:700;padding:.35rem .55rem;cursor:pointer">EN</button>
+      <button class="lang-btn" data-lang="pt" onclick="setLang('pt')" style="background:none;border:none;color:#c9a84c;font-size:.58rem;letter-spacing:.1em;font-weight:700;padding:.35rem .55rem;cursor:pointer">PT</button>
     </div>
     <button class="cart-btn" onclick="toggleCart()">
-      <span>🛒</span><span>Cart</span>
+      <span>🛒</span><span data-en="Cart" data-pt="Sacola">Cart</span>
       <span class="cart-badge" id="cart-badge">0</span>
     </button>
   </div>
@@ -683,9 +687,9 @@ body{background:#ffffff!important;color:#2c2822!important}
 <div class="catalog-wrap" id="catalog">
   <div class="section-hero animate-in">
     <span class="section-cross">✦</span>
-    <span class="section-eyebrow">✦ Full Collection ✦</span>
-    <h2 class="section-title">Our Collection</h2>
-    <span class="section-italic">Cada peça conta uma história de fé e elegância</span>
+    <span class="section-eyebrow" data-en="✦ Full Collection ✦" data-pt="✦ Coleção Completa ✦">✦ Full Collection ✦</span>
+    <h2 class="section-title" data-en="Our Collection" data-pt="Nossa Coleção">Our Collection</h2>
+    <span class="section-italic" data-en="Each piece tells a story of faith and elegance" data-pt="Cada peça conta uma história de fé e elegância">Each piece tells a story of faith and elegance</span>
     <div class="orn"><span></span><i>✦</i><span></span></div>
     <p class="section-verse">"Favor is deceitful, and beauty is vain: but a woman that feareth the Lord, she shall be praised." — Proverbs 31:30</p>
     <br>
@@ -761,7 +765,7 @@ body{background:#ffffff!important;color:#2c2822!important}
     <!-- Section header -->
     <div style="text-align:center;margin-bottom:3.5rem">
       <p style="font-size:.58rem;letter-spacing:.45em;text-transform:uppercase;color:#b8922e;margin-bottom:.75rem">Lagos Jewelry</p>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:#f0ece4;letter-spacing:.08em;margin:0 0 .75rem">Quem Somos & Garantias</h2>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:#f0ece4;letter-spacing:.08em;margin:0 0 .75rem" data-en="About Us & Warranty" data-pt="Quem Somos & Garantias">About Us & Warranty</h2>
       <div style="width:40px;height:1px;background:#b8922e;margin:0 auto"></div>
     </div>
 
@@ -770,23 +774,23 @@ body{background:#ffffff!important;color:#2c2822!important}
 
       <!-- Novo pagamento -->
       <div style="background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:10px;padding:1.75rem">
-        <p style="font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#b8922e;margin:0 0 .6rem">Novidade</p>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#f0ece4;margin:0 0 .9rem;line-height:1.4">A pedidos, adicionamos um novo modelo de pagamento!</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Além de Cash e Zelle (EUA), agora também aceitamos <strong style="color:#c9a84c">Pix e Transferência Bancária direto no Brasil</strong>. Ideal para clientes brasileiras que preferem pagar em BRL. Selecione "Pix / TED" no checkout e envie o comprovante.</p>
+        <p style="font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#b8922e;margin:0 0 .6rem" data-en="What's New" data-pt="Novidade">What's New</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#f0ece4;margin:0 0 .9rem;line-height:1.4" data-en="By popular demand, we added a new payment method!" data-pt="A pedidos, adicionamos um novo modelo de pagamento!">By popular demand, we added a new payment method!</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="Beyond Cash and Zelle (US), we now also accept <strong style=&quot;color:#c9a84c&quot;>Pix and bank transfer directly in Brazil</strong>. Ideal for Brazilian clients who prefer to pay in BRL. Select &quot;Pix / TED&quot; at checkout and send the receipt." data-pt="Além de Cash e Zelle (EUA), agora também aceitamos <strong style=&quot;color:#c9a84c&quot;>Pix e Transferência Bancária direto no Brasil</strong>. Ideal para clientes brasileiras que preferem pagar em BRL. Selecione &quot;Pix / TED&quot; no checkout e envie o comprovante.">Beyond Cash and Zelle (US), we now also accept <strong style="color:#c9a84c">Pix and bank transfer directly in Brazil</strong>. Ideal for Brazilian clients who prefer to pay in BRL. Select "Pix / TED" at checkout and send the receipt.</p>
       </div>
 
       <!-- Garantia -->
       <div style="background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:10px;padding:1.75rem">
-        <p style="font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#b8922e;margin:0 0 .6rem">Garantia</p>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#f0ece4;margin:0 0 .9rem;line-height:1.4">Como funciona a garantia?</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Oferecemos <strong style="color:#c9a84c">1 ano de garantia</strong> para todas as nossas joias. Nossas peças não contêm níquel, são <strong style="color:#c9a84c">totalmente hipoalergênicas</strong> — não causam alergia nem irritação na pele. Desenvolvemos semijoias de forte tendência com banho 100% nacional, giro rápido, estilo e bom gosto.</p>
+        <p style="font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#b8922e;margin:0 0 .6rem" data-en="Warranty" data-pt="Garantia">Warranty</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#f0ece4;margin:0 0 .9rem;line-height:1.4" data-en="How does the warranty work?" data-pt="Como funciona a garantia?">How does the warranty work?</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="We offer a <strong style=&quot;color:#c9a84c&quot;>1-year warranty</strong> on all our jewelry. Our pieces are nickel-free and <strong style=&quot;color:#c9a84c&quot;>fully hypoallergenic</strong> — they won't cause allergies or skin irritation. We craft on-trend gold-plated jewelry with premium plating, fast turnover, style, and good taste." data-pt="Oferecemos <strong style=&quot;color:#c9a84c&quot;>1 ano de garantia</strong> para todas as nossas joias. Nossas peças não contêm níquel, são <strong style=&quot;color:#c9a84c&quot;>totalmente hipoalergênicas</strong> — não causam alergia nem irritação na pele. Desenvolvemos semijoias de forte tendência com banho 100% nacional, giro rápido, estilo e bom gosto.">We offer a <strong style="color:#c9a84c">1-year warranty</strong> on all our jewelry. Our pieces are nickel-free and <strong style="color:#c9a84c">fully hypoallergenic</strong> — they won't cause allergies or skin irritation. We craft on-trend gold-plated jewelry with premium plating, fast turnover, style, and good taste.</p>
       </div>
 
       <!-- Por que escolher -->
       <div style="grid-column:1/-1;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:10px;padding:1.75rem">
-        <p style="font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#b8922e;margin:0 0 .6rem">Nossa História</p>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#f0ece4;margin:0 0 .9rem;line-height:1.4">Por que escolher a Lagos Jewelry?</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Somos uma empresa especializada em semijoias com banho 100% nacional, acompanhando a tendência do mercado — joias que você usa em diversos momentos e ocasiões. Com <strong style="color:#c9a84c">2 anos de mercado</strong>, nosso propósito é empoderar todas as mulheres, fazendo com que entendam o tamanho do poder que existe dentro de cada uma. Amamos lançar novos produtos e tendências. Nossa missão sempre foi transbordar na vida das mulheres através de cada atendimento e consultoria. Estamos comprometidas com a experiência da nossa cliente — não apenas na compra, mas em todo o conjunto de processos que existe dentro da Lagos Jewelry, com a finalidade de entregar e satisfazer ao máximo. <strong style="color:#c9a84c">Nosso maior objetivo está voltado para o sucesso de cada mulher, no sucesso de cada negócio.</strong></p>
+        <p style="font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:#b8922e;margin:0 0 .6rem" data-en="Our Story" data-pt="Nossa História">Our Story</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#f0ece4;margin:0 0 .9rem;line-height:1.4" data-en="Why choose Lagos Jewelry?" data-pt="Por que escolher a Lagos Jewelry?">Why choose Lagos Jewelry?</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="We specialize in premium gold-plated jewelry that follows the trends — pieces you wear across every moment and occasion. With <strong style=&quot;color:#c9a84c&quot;>2 years in the market</strong>, our purpose is to empower every woman to understand the power within her. We love launching new products and trends. Our mission has always been to overflow into women's lives through every interaction and consultation. We are committed to our client's experience — not just the purchase, but every process within Lagos Jewelry, to deliver and satisfy to the fullest. <strong style=&quot;color:#c9a84c&quot;>Our greatest goal is the success of every woman, in the success of every business.</strong>" data-pt="Somos uma empresa especializada em semijoias com banho 100% nacional, acompanhando a tendência do mercado — joias que você usa em diversos momentos e ocasiões. Com <strong style=&quot;color:#c9a84c&quot;>2 anos de mercado</strong>, nosso propósito é empoderar todas as mulheres, fazendo com que entendam o tamanho do poder que existe dentro de cada uma. Amamos lançar novos produtos e tendências. Nossa missão sempre foi transbordar na vida das mulheres através de cada atendimento e consultoria. Estamos comprometidas com a experiência da nossa cliente — não apenas na compra, mas em todo o conjunto de processos que existe dentro da Lagos Jewelry, com a finalidade de entregar e satisfazer ao máximo. <strong style=&quot;color:#c9a84c&quot;>Nosso maior objetivo está voltado para o sucesso de cada mulher, no sucesso de cada negócio.</strong>">We specialize in premium gold-plated jewelry that follows the trends — pieces you wear across every moment and occasion. With <strong style="color:#c9a84c">2 years in the market</strong>, our purpose is to empower every woman to understand the power within her. We love launching new products and trends. Our mission has always been to overflow into women's lives through every interaction and consultation. We are committed to our client's experience — not just the purchase, but every process within Lagos Jewelry, to deliver and satisfy to the fullest. <strong style="color:#c9a84c">Our greatest goal is the success of every woman, in the success of every business.</strong></p>
       </div>
 
     </div>
@@ -799,11 +803,11 @@ body{background:#ffffff!important;color:#2c2822!important}
       </div>
       <div style="text-align:center">
         <div style="font-size:1.4rem;margin-bottom:.3rem">🛡️</div>
-        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase">1 Ano Garantia</div>
+        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase" data-en="1yr Warranty" data-pt="1 Ano Garantia">1yr Warranty</div>
       </div>
       <div style="text-align:center">
         <div style="font-size:1.4rem;margin-bottom:.3rem">💎</div>
-        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase">Hipoalergênica</div>
+        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase" data-en="Hypoallergenic" data-pt="Hipoalergênica">Hypoallergenic</div>
       </div>
       <div style="text-align:center">
         <div style="font-size:1.4rem;margin-bottom:.3rem">🇧🇷</div>
@@ -811,11 +815,11 @@ body{background:#ffffff!important;color:#2c2822!important}
       </div>
       <div style="text-align:center">
         <div style="font-size:1.4rem;margin-bottom:.3rem">🚚</div>
-        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase">Frete Grátis +$200</div>
+        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase" data-en="Free Shipping +$200" data-pt="Frete Grátis +$200">Free Shipping +$200</div>
       </div>
       <div style="text-align:center">
         <div style="font-size:1.4rem;margin-bottom:.3rem">📦</div>
-        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase">Envio Nacional</div>
+        <div style="font-size:.62rem;color:#c9a84c;letter-spacing:.2em;text-transform:uppercase" data-en="Nationwide Shipping" data-pt="Envio Nacional">Nationwide Shipping</div>
       </div>
     </div>
   </div>
@@ -831,10 +835,10 @@ body{background:#ffffff!important;color:#2c2822!important}
 
     <!-- Header -->
     <div style="text-align:center;margin-bottom:4.5rem">
-      <p style="font-size:.55rem;letter-spacing:.5em;text-transform:uppercase;color:#b8922e;margin:0 0 1rem">Lagos Jewelry · Programa de Revendedoras</p>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;color:#f0ece4;letter-spacing:.06em;line-height:1.2;margin:0 0 1.25rem">Seja uma Empreendedora<br><span style="color:#c9a84c;font-style:italic">de Sucesso</span></h2>
+      <p style="font-size:.55rem;letter-spacing:.5em;text-transform:uppercase;color:#b8922e;margin:0 0 1rem" data-en="Lagos Jewelry · Reseller Program" data-pt="Lagos Jewelry · Programa de Revendedoras">Lagos Jewelry · Reseller Program</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;color:#f0ece4;letter-spacing:.06em;line-height:1.2;margin:0 0 1.25rem" data-en="Become a Successful<br><span style=&quot;color:#c9a84c;font-style:italic&quot;>Entrepreneur</span>" data-pt="Seja uma Empreendedora<br><span style=&quot;color:#c9a84c;font-style:italic&quot;>de Sucesso</span>">Become a Successful<br><span style="color:#c9a84c;font-style:italic">Entrepreneur</span></h2>
       <div style="width:48px;height:1px;background:linear-gradient(90deg,transparent,#b8922e,transparent);margin:0 auto 1.5rem"></div>
-      <p style="font-size:.92rem;color:#a09890;line-height:1.9;max-width:540px;margin:0 auto">Tenha a sua independência financeira e compartilhe bom gosto com a Lagos Jewelry. Faça parte de uma rede de mulheres que faturam vendendo o que amam.</p>
+      <p style="font-size:.92rem;color:#a09890;line-height:1.9;max-width:540px;margin:0 auto" data-en="Build your financial independence and share good taste with Lagos Jewelry. Join a network of women who earn selling what they love." data-pt="Tenha a sua independência financeira e compartilhe bom gosto com a Lagos Jewelry. Faça parte de uma rede de mulheres que faturam vendendo o que amam.">Build your financial independence and share good taste with Lagos Jewelry. Join a network of women who earn selling what they love.</p>
     </div>
 
     <!-- Benefits grid -->
@@ -843,78 +847,78 @@ body{background:#ffffff!important;color:#2c2822!important}
       <!-- 1 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">💰</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Preços Altamente Competitivos</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Você ganhará credibilidade e fidelização das suas clientes com preços que permitem margem real e clientes que voltam sempre.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Highly Competitive Prices" data-pt="Preços Altamente Competitivos">Highly Competitive Prices</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="You'll earn credibility and customer loyalty with prices that allow real margins and clients who keep coming back." data-pt="Você ganhará credibilidade e fidelização das suas clientes com preços que permitem margem real e clientes que voltam sempre.">You'll earn credibility and customer loyalty with prices that allow real margins and clients who keep coming back.</p>
       </div>
 
       <!-- 2 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">✨</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Lançamentos Semanais</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Todas as semanas novidades para turbinar as suas vendas. Produtos frescos, tendências atuais, vitrine sempre viva.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Weekly Launches" data-pt="Lançamentos Semanais">Weekly Launches</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="New arrivals every week to supercharge your sales. Fresh products, current trends, a storefront that's always alive." data-pt="Todas as semanas novidades para turbinar as suas vendas. Produtos frescos, tendências atuais, vitrine sempre viva.">New arrivals every week to supercharge your sales. Fresh products, current trends, a storefront that's always alive.</p>
       </div>
 
       <!-- 3 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">📲</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Marketing Estratégico</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Ajudamos você a fazer o seu marketing. Fotos e vídeos prontos para enviar às suas clientes e fechar vendas on-line com profissionalismo.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Strategic Marketing" data-pt="Marketing Estratégico">Strategic Marketing</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="We help you with your marketing. Photos and videos ready to send to your clients and close online sales professionally." data-pt="Ajudamos você a fazer o seu marketing. Fotos e vídeos prontos para enviar às suas clientes e fechar vendas on-line com profissionalismo.">We help you with your marketing. Photos and videos ready to send to your clients and close online sales professionally.</p>
       </div>
 
       <!-- 4 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">📈</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Excelente Margem de Lucro</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Quem faz o preço de venda é você. A precificação é calculada com base no lucro que deseja ter — total liberdade e controle.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Excellent Profit Margin" data-pt="Excelente Margem de Lucro">Excellent Profit Margin</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="You set the selling price. Pricing is based on the profit you want — total freedom and control." data-pt="Quem faz o preço de venda é você. A precificação é calculada com base no lucro que deseja ter — total liberdade e controle.">You set the selling price. Pricing is based on the profit you want — total freedom and control.</p>
       </div>
 
       <!-- 5 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">💎</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Objeto de Desejo</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">As semijoias mais desejadas do momento — que sua cliente vai usar em todos os momentos e ocasiões. Peças que vendem sozinhas.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Object of Desire" data-pt="Objeto de Desejo">Object of Desire</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="The most desired jewelry of the moment — that your client will wear at every moment and occasion. Pieces that sell themselves." data-pt="As semijoias mais desejadas do momento — que sua cliente vai usar em todos os momentos e ocasiões. Peças que vendem sozinhas.">The most desired jewelry of the moment — that your client will wear at every moment and occasion. Pieces that sell themselves.</p>
       </div>
 
       <!-- 6 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">🛍️</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Compre a Distância</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Para montar o seu mostruário, você nem precisa sair de casa. Atendimento on-line totalmente humanizado — do início ao fim.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Shop Remotely" data-pt="Compre a Distância">Shop Remotely</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="To build your showcase, you don't even need to leave home. Fully personalized online service — from start to finish." data-pt="Para montar o seu mostruário, você nem precisa sair de casa. Atendimento on-line totalmente humanizado — do início ao fim.">To build your showcase, you don't even need to leave home. Fully personalized online service — from start to finish.</p>
       </div>
 
       <!-- 7 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">🛡️</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Assistência Técnica</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Equipe especializada para te ajudar quando precisar. Você nunca estará sozinha na sua jornada como revendedora Lagos.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Technical Support" data-pt="Assistência Técnica">Technical Support</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="A specialized team to help you whenever you need. You'll never be alone on your journey as a Lagos reseller." data-pt="Equipe especializada para te ajudar quando precisar. Você nunca estará sozinha na sua jornada como revendedora Lagos.">A specialized team to help you whenever you need. You'll never be alone on your journey as a Lagos reseller.</p>
       </div>
 
       <!-- 8 -->
       <div style="background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:2rem 1.75rem;transition:border-color .3s" onmouseover="this.style.borderColor='rgba(201,168,76,.28)'" onmouseout="this.style.borderColor='rgba(201,168,76,.1)'">
         <div style="font-size:1.6rem;margin-bottom:1rem">🤝</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em">Suporte ao Cliente</h3>
-        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0">Conte conosco para alavancar suas vendas e conquistar todos os seus objetivos. Atendimento personalizado do início ao fim.</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#f0ece4;margin:0 0 .7rem;letter-spacing:.04em" data-en="Customer Support" data-pt="Suporte ao Cliente">Customer Support</h3>
+        <p style="font-size:.78rem;color:#a09890;line-height:1.85;margin:0" data-en="Count on us to boost your sales and achieve all your goals. Personalized service from start to finish." data-pt="Conte conosco para alavancar suas vendas e conquistar todos os seus objetivos. Atendimento personalizado do início ao fim.">Count on us to boost your sales and achieve all your goals. Personalized service from start to finish.</p>
       </div>
 
     </div>
 
     <!-- CTA block -->
     <div style="text-align:center;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:3rem 2rem">
-      <p style="font-size:.55rem;letter-spacing:.45em;text-transform:uppercase;color:#b8922e;margin:0 0 .75rem">Pronta para começar?</p>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;color:#f0ece4;letter-spacing:.05em;margin:0 0 .9rem;line-height:1.3">Faça parte da família Lagos Jewelry</h3>
-      <p style="font-size:.82rem;color:#a09890;line-height:1.8;max-width:480px;margin:0 auto 2rem">Entre em contato agora e dê o primeiro passo rumo à sua independência financeira com elegância e propósito.</p>
+      <p style="font-size:.55rem;letter-spacing:.45em;text-transform:uppercase;color:#b8922e;margin:0 0 .75rem" data-en="Ready to start?" data-pt="Pronta para começar?">Ready to start?</p>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;color:#f0ece4;letter-spacing:.05em;margin:0 0 .9rem;line-height:1.3" data-en="Join the Lagos Jewelry family" data-pt="Faça parte da família Lagos Jewelry">Join the Lagos Jewelry family</h3>
+      <p style="font-size:.82rem;color:#a09890;line-height:1.8;max-width:480px;margin:0 auto 2rem" data-en="Get in touch now and take the first step toward your financial independence with elegance and purpose." data-pt="Entre em contato agora e dê o primeiro passo rumo à sua independência financeira com elegância e propósito.">Get in touch now and take the first step toward your financial independence with elegance and purpose.</p>
       <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
         <a href="https://wa.me/12156262345?text=Olá%20Dayane!%20Quero%20saber%20mais%20sobre%20ser%20revendedora%20Lagos%20Jewelry%20🌟"
            target="_blank" rel="noopener"
            style="display:inline-flex;align-items:center;gap:.6rem;background:#25d366;color:#fff;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;padding:.9rem 2rem;border-radius:6px;transition:opacity .2s"
            onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Quero ser Revendedora
+          <span data-en="I Want to Be a Reseller" data-pt="Quero ser Revendedora">I Want to Be a Reseller</span>
         </a>
         <a href="mailto:admin.lagosworld@gmail.com?subject=Interesse%20em%20ser%20Revendedora%20Lagos%20Jewelry"
            style="display:inline-flex;align-items:center;gap:.6rem;background:transparent;color:#c9a84c;border:1px solid rgba(201,168,76,.4);font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;padding:.9rem 2rem;border-radius:6px;transition:all .2s"
            onmouseover="this.style.background='rgba(201,168,76,.08)';this.style.borderColor='rgba(201,168,76,.6)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(201,168,76,.4)'">
-          ✉ Enviar E-mail
+          <span data-en="✉ Send Email" data-pt="✉ Enviar E-mail">✉ Send Email</span>
         </a>
       </div>
     </div>
@@ -933,8 +937,8 @@ body{background:#ffffff!important;color:#2c2822!important}
   <div class="footer-grid">
     <div class="footer-col">
       <p class="footer-col-title">✝ Lagos Jewelry</p>
-      <p>Founded by Dayane Lago</p>
-      <p>De mulher para mulher</p>
+      <p data-en="Founded by Dayane Lago" data-pt="Fundada por Dayane Lago">Founded by Dayane Lago</p>
+      <p data-en="From woman to woman" data-pt="De mulher para mulher">From woman to woman</p>
       <p>Gold 18k · Hypoallergenic</p>
       <p>1 Year Warranty</p>
     </div>
@@ -1172,6 +1176,25 @@ body{background:#ffffff!important;color:#2c2822!important}
 <script src="/js/jewelry-admin.js"></script>
 <script src="/js/jewelry-ui.js"></script>
 <script src="/js/jewelry-init.js"></script>
+
+<!-- i18n — English primary, Portuguese optional (data-en / data-pt) -->
+<script>
+function setLang(lang){
+  if(lang!=='pt') lang='en';
+  document.documentElement.lang = lang==='pt' ? 'pt-BR' : 'en';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = lang==='pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
+    if(v!=null) el.innerHTML = v;
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.style.background = on ? 'rgba(201,168,76,.18)' : 'none';
+    b.style.opacity = on ? '1' : '.6';
+  });
+  try{ localStorage.setItem('lagos_lang', lang); }catch(e){}
+}
+(function(){ let s='en'; try{ s=localStorage.getItem('lagos_lang')||'en'; }catch(e){} setLang(s); })();
+</script>
 
 <!-- NEWSLETTER POPUP -->
 <div id="newsletter-popup" style="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;transition:opacity .4s;pointer-events:none">
