@@ -99,9 +99,53 @@ footer{background:#0a0a0b;border-top:1px solid var(--line);padding:3rem 0 2rem;t
 .foot-copy{color:#555;font-size:.7rem;margin-top:1.2rem}
 .reveal{opacity:0;transform:translateY(24px);transition:.7s}
 .reveal.vis{opacity:1;transform:none}
+/* ── full-page animated photo background ── */
+.bg-seq{position:fixed;inset:0;z-index:-2;overflow:hidden;background:#0d0d0e}
+.bg-seq img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;will-change:opacity,transform;animation:bgseq 52s linear infinite}
+@keyframes bgseq{0%{opacity:0;transform:scale(1.03)}2%{opacity:.92}7%{opacity:.92}9.5%{opacity:0;transform:scale(1.11)}100%{opacity:0;transform:scale(1.11)}}
+.bg-seq img:nth-child(1){animation-delay:0s}
+.bg-seq img:nth-child(2){animation-delay:4s}
+.bg-seq img:nth-child(3){animation-delay:8s}
+.bg-seq img:nth-child(4){animation-delay:12s}
+.bg-seq img:nth-child(5){animation-delay:16s}
+.bg-seq img:nth-child(6){animation-delay:20s}
+.bg-seq img:nth-child(7){animation-delay:24s}
+.bg-seq img:nth-child(8){animation-delay:28s}
+.bg-seq img:nth-child(9){animation-delay:32s}
+.bg-seq img:nth-child(10){animation-delay:36s}
+.bg-seq img:nth-child(11){animation-delay:40s}
+.bg-seq img:nth-child(12){animation-delay:44s}
+.bg-seq img:nth-child(13){animation-delay:48s}
+.bg-veil{position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(13,13,14,.74),rgba(13,13,14,.8))}
+@media(prefers-reduced-motion:reduce){.bg-seq img{animation:none}.bg-seq img:nth-child(1){opacity:.85}}
+/* glass + transparent sections so the photos show between cards */
+body{background:transparent}
+.bg2{background:rgba(13,13,14,.42)}
+.svc{background:rgba(22,22,25,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.quote-box{background:rgba(20,20,23,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.nav{background:rgba(13,13,14,.55)}
+footer{background:rgba(10,10,11,.85)}
 </style>
 </head>
 <body>
+
+<!-- Full-page animated photo background (crossfade + ken burns) -->
+<div class="bg-seq" aria-hidden="true">
+  <img src="/powerwashing/assets/p1.jpg" alt="" fetchpriority="high">
+  <img src="/powerwashing/assets/p3.jpg" alt="">
+  <img src="/powerwashing/assets/p4.jpg" alt="">
+  <img src="/powerwashing/assets/p5.jpg" alt="">
+  <img src="/powerwashing/assets/p6.jpg" alt="">
+  <img src="/powerwashing/assets/p7.jpg" alt="">
+  <img src="/powerwashing/assets/p8.jpg" alt="">
+  <img src="/powerwashing/assets/p9.jpg" alt="">
+  <img src="/powerwashing/assets/p10.jpg" alt="">
+  <img src="/powerwashing/assets/p11.jpg" alt="">
+  <img src="/powerwashing/assets/p12.jpg" alt="">
+  <img src="/powerwashing/assets/p13.jpg" alt="">
+  <img src="/powerwashing/assets/p14.jpg" alt="">
+</div>
+<div class="bg-veil" aria-hidden="true"></div>
 
 <nav class="nav" id="nav">
   <a href="/" class="nav-logo"><img src="/powerwashing/assets/logo-white.png" alt="CH Elite Washing"></a>
@@ -113,16 +157,6 @@ footer{background:#0a0a0b;border-top:1px solid var(--line);padding:3rem 0 2rem;t
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-media">
-    <!-- Sharp still until the HQ promo video is ready. To use the video,
-         swap the <img> below for the commented <video> block. -->
-    <img src="/powerwashing/assets/g8.jpg" alt="CH Elite Washing in action" fetchpriority="high">
-    <!--
-    <video autoplay muted loop playsinline poster="/powerwashing/assets/g8.jpg">
-      <source src="/powerwashing/assets/hero-hq.mp4" type="video/mp4">
-    </video>
-    -->
-  </div>
   <div class="wrap hero-inner">
     <div class="hero-eyebrow">✦ <span data-en="Power Washing · Detail Services · Philadelphia" data-pt="Power Washing · Detail Services · Philadelphia">Power Washing · Detail Services · Philadelphia</span></div>
     <h1 data-en="Showroom-Level Clean<br><span>For Every Surface</span>" data-pt="Limpeza Nível Showroom<br><span>Para Cada Superfície</span>">Showroom-Level Clean<br><span>For Every Surface</span></h1>
@@ -182,12 +216,12 @@ footer{background:#0a0a0b;border-top:1px solid var(--line);padding:3rem 0 2rem;t
       <h2 data-en="Recent <span class='copper'>Projects</span>" data-pt="Projetos <span class='copper'>Recentes</span>">Recent <span class="copper">Projects</span></h2>
     </div>
     <div class="gal">
-      <a href="#quote"><img src="/powerwashing/assets/g1.jpg" alt="CH Elite Washing on-site" loading="lazy"></a>
-      <a href="#quote"><img src="/powerwashing/assets/g8.jpg" alt="Surface cleaning at sunset" loading="lazy"></a>
-      <a href="#quote"><img src="/powerwashing/assets/g3.jpg" alt="Power washing project" loading="lazy"></a>
-      <a href="#quote"><img src="/powerwashing/assets/g5.jpg" alt="Power washing project" loading="lazy"></a>
-      <a href="#quote"><img src="/powerwashing/assets/g6.jpg" alt="Power washing project" loading="lazy"></a>
-      <a href="#quote"><img src="/powerwashing/assets/g7.jpg" alt="Power washing project" loading="lazy"></a>
+      <a href="#quote"><img src="/powerwashing/assets/p3.jpg" alt="CH Elite Washing on-site" loading="lazy"></a>
+      <a href="#quote"><img src="/powerwashing/assets/p5.jpg" alt="Surface cleaning" loading="lazy"></a>
+      <a href="#quote"><img src="/powerwashing/assets/p7.jpg" alt="Power washing project" loading="lazy"></a>
+      <a href="#quote"><img src="/powerwashing/assets/p9.jpg" alt="Power washing project" loading="lazy"></a>
+      <a href="#quote"><img src="/powerwashing/assets/p11.jpg" alt="Power washing project" loading="lazy"></a>
+      <a href="#quote"><img src="/powerwashing/assets/p13.jpg" alt="Power washing project" loading="lazy"></a>
     </div>
   </div>
 </section>
