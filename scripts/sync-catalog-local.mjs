@@ -7,7 +7,7 @@
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://vthtufcomuaiyeussrrj.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 if (!SUPABASE_KEY) { console.error('Missing SUPABASE_SERVICE_KEY env var.'); process.exit(1); }
-const CATALOG_TOKEN = '2441f464b56e9641d86b2772287d13d5';
+const CATALOG_TOKEN = process.env.CONECTA_TOKEN || '2441f464b56e9641d86b2772287d13d5';
 const API_BASE      = 'https://dados.conectavenda.com.br/api';
 
 // Minimal Supabase REST client
