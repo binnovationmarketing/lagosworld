@@ -4,30 +4,39 @@
 let _hotIdx = 0;
 
 function buildHotDeals() {
-  const deals = PRODUCTS.filter(p => {
-    const origMin = Math.min(...p.variacoes.map(v => v.price));
-    const ovMin   = Math.min(...p.variacoes.map(v => priceOv[p.id+'_'+v.id] ?? v.price));
-    return ovMin < origMin;
-  });
+  const hasImg = p => !!((imgsOv[p.id] && imgsOv[p.id][0]) || (p.imgs && p.imgs[0]));
+  // Move high-value inventory: in-stock pieces ranked by capital tied up
+  // (stock × price). Highest first. A discount badge shows only when a real
+  // price override exists; otherwise an "In Stock" badge signals ready-to-ship.
+  const deals = PRODUCTS
+    .filter(p => p.stock > 0 && hasImg(p) && p.minPrice > 0)
+    .map(p => {
+      const origMin = Math.min(...p.variacoes.map(v => v.price));
+      const ovMin   = Math.min(...p.variacoes.map(v => priceOv[p.id+'_'+v.id] ?? v.price));
+      return { p, origMin, ovMin, value: (p.stock || 0) * ovMin };
+    })
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 15);
   const section = document.getElementById('hot-deals-section');
-  if (!deals.length) { section.style.display = 'none'; return; }
+  if (!deals.length) { if (section) section.style.display = 'none'; return; }
   section.style.display = '';
   const track = document.getElementById('hot-track');
-  track.innerHTML = deals.map(p => {
-    const ovMin   = Math.min(...p.variacoes.map(v => priceOv[p.id+'_'+v.id] ?? v.price));
-    const origMin = Math.min(...p.variacoes.map(v => v.price));
-    const pct     = Math.round((1 - ovMin / origMin) * 100);
-    const img     = (imgsOv[p.id] && imgsOv[p.id][0]) || p.imgs[0] || '';
-    const name    = nameOv[p.id] || p.name;
+  track.innerHTML = deals.map(({ p, origMin, ovMin }) => {
+    const discounted = ovMin < origMin;
+    const img   = (imgsOv[p.id] && imgsOv[p.id][0]) || p.imgs[0] || '';
+    const name  = nameOv[p.id] || p.name;
+    const badge = discounted
+      ? `<div class="hot-badge">-${Math.round((1 - ovMin / origMin) * 100)}%</div>`
+      : `<div class="hot-badge" style="background:linear-gradient(135deg,#16a34a,#22c55e)">✓ In Stock</div>`;
+    const prices = discounted
+      ? `<span class="hot-orig">${origMin.toFixed(2)}</span><span class="hot-now">${ovMin.toFixed(2)}</span>`
+      : `<span class="hot-now">$${ovMin.toFixed(2)}</span>`;
     return `<div class="hot-card" onclick="openModal(${p.id})">
-      <div class="hot-badge">-${pct}%</div>
+      ${badge}
       <img src="${img}" alt="${name}" loading="lazy">
       <div class="hot-info">
         <div class="hot-name">${name}</div>
-        <div class="hot-prices">
-          <span class="hot-orig">${origMin.toFixed(2)}</span>
-          <span class="hot-now">${ovMin.toFixed(2)}</span>
-        </div>
+        <div class="hot-prices">${prices}</div>
       </div>
     </div>`;
   }).join('');
