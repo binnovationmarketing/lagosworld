@@ -7,7 +7,6 @@ const { body, validationResult } = require('express-validator');
 const { createClient } = require('@supabase/supabase-js');
 const jewelryRoutes  = require('../lib/routes/jewelry');
 const cleaningRoutes = require('../lib/routes/cleaning');
-const coursesRoutes  = require('../lib/routes/courses');
 const cronRoutes     = require('../lib/routes/cron');
 const adminRoutes    = require('../lib/routes/admin');
 const millaRoutes    = require('../lib/routes/milla');
@@ -122,7 +121,6 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/jewelry',  jewelryRoutes);
 app.use('/api/cleaning', cleaningRoutes);
-app.use('/api/courses',  coursesRoutes);
 app.use('/api/cron',     cronRoutes);
 app.use('/api/admin',    adminRoutes);
 app.use('/api/milla',    millaRoutes);

@@ -106,12 +106,8 @@ footer{background:#0a0a0b;border-top:1px solid var(--line);padding:3rem 0 2rem;t
 <nav class="nav" id="nav">
   <a href="/" class="nav-logo"><img src="/powerwashing/assets/logo-white.png" alt="CH Elite Washing"></a>
   <div class="nav-right">
-    <a href="https://lagoscleaning.app" class="nav-back" data-en="← Lagos Cleaning" data-pt="← Lagos Cleaning">← Lagos Cleaning</a>
-    <div class="lang-switch">
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">PT</button>
-    </div>
-    <a href="#quote" class="btn btn-copper" style="padding:.6rem 1.1rem" data-en="Free Quote" data-pt="Orçamento Grátis">Free Quote</a>
+    <a href="https://lagoscleaning.app" class="nav-back">← Lagos Cleaning</a>
+    <a href="#quote" class="btn btn-copper" style="padding:.6rem 1.1rem">Free Quote</a>
   </div>
 </nav>
 
@@ -256,18 +252,6 @@ addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('s
 // reveal
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-// i18n — English primary, Portuguese optional
-function setLang(lang){
-  if(lang!=='pt') lang='en';
-  document.documentElement.lang = lang==='pt'?'pt-BR':'en';
-  document.querySelectorAll('[data-en]').forEach(el=>{
-    const v = lang==='pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
-    if(v!=null){ if('value' in el && el.tagName==='OPTION') el.textContent=v; else el.innerHTML=v; }
-  });
-  document.querySelectorAll('.lang-btn').forEach(b=>{const on=b.dataset.lang===lang;b.style.background=on?'rgba(200,138,79,.2)':'none';b.style.opacity=on?'1':'.55';});
-  try{localStorage.setItem('lagos_lang',lang);}catch(e){}
-}
-(function(){let s='en';try{s=localStorage.getItem('lagos_lang')||'en';}catch(e){}setLang(s);})();
 // quote form → /api/cleaning/requests
 document.getElementById('quoteForm').addEventListener('submit',async e=>{
   e.preventDefault();
