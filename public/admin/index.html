@@ -1547,7 +1547,7 @@ async function loadOrders() {
   const el = document.getElementById('orders-content');
   el.innerHTML = '<div class="empty"><div class="empty-icon">⏳</div>Loading...</div>';
   try {
-    const r = await fetch('/api/jewelry/orders');
+    const r = await fetch('/api/jewelry/orders', { headers: { 'Authorization': 'Bearer ' + adminToken } });
     if (!r.ok) throw new Error('API error ' + r.status);
     const orders = await r.json();
     if (!orders.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📦</div>No orders yet.</div>'; return; }
@@ -1927,7 +1927,7 @@ async function loadDashboard() {
   try {
     // Parallel fetch
     const [ordRes, cleanRes, zipRes] = await Promise.allSettled([
-      fetch('/api/jewelry/orders'),
+      fetch('/api/jewelry/orders', { headers: { 'Authorization': 'Bearer ' + adminToken } }),
       fetch('/api/cleaning/requests'),
       fetch('/api/cleaning/zip-stats'),
     ]);
@@ -2417,7 +2417,7 @@ async function updateOrderStatus(id, newStatus, customerEmail, customerName, typ
   try {
     const r = await fetch(endpoint, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
       body: JSON.stringify({ status: newStatus })
     });
     if (!r.ok) throw new Error('API error ' + r.status);

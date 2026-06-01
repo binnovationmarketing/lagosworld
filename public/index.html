@@ -6,10 +6,10 @@
 <link rel="shortcut icon" href="/favicon.svg">
 <meta name="theme-color" content="#c9a84c">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lagos World — Alta Joalheria · Philadelphia, PA</title>
+<title>Lagos World — Fine Jewelry · Philadelphia, PA</title>
 <meta name="description" content="Lagos World — Curated 18k gold-plated jewelry for the modern woman. Founded by Dayane Lago. Philadelphia, PA.">
 <!-- OPEN GRAPH / WHATSAPP / SOCIAL -->
-<meta property="og:title" content="Lagos World — Alta Joalheria">
+<meta property="og:title" content="Lagos World — Fine Jewelry">
 <meta property="og:description" content="Curated 18k gold-plated jewelry for the modern woman. Founded by Dayane Lago. Philadelphia, PA.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lagosworld.app/">
@@ -274,12 +274,16 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 <nav id="navbar">
   <a href="/" class="nav-logo">Lagos <span>World</span></a>
   <ul class="nav-links">
-    <li><a href="/jewelry">Alta Joalheria</a></li>
-    <li><a href="#story">Nossa História</a></li>
+    <li><a href="/jewelry" data-en="Fine Jewelry" data-pt="Alta Joalheria">Fine Jewelry</a></li>
+    <li><a href="#story" data-en="Our Story" data-pt="Nossa História">Our Story</a></li>
   </ul>
   <div class="nav-right">
-    <a href="https://wa.me/12156262345" class="nav-cta">Contact</a>
-    <a href="/admin" class="nav-admin" title="Manager Panel" style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;gap:.3rem;border:1px solid var(--border-soft);padding:.3rem .7rem;color:var(--text-muted)">⚙ Gestor</a>
+    <div class="lang-switch" style="display:inline-flex;border:1px solid var(--border-soft);border-radius:3px;overflow:hidden;margin-right:.2rem">
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')" style="background:none;border:none;color:var(--text-muted);font-size:.58rem;letter-spacing:.1em;font-weight:700;padding:.3rem .5rem;cursor:pointer">EN</button>
+      <button class="lang-btn" data-lang="pt" onclick="setLang('pt')" style="background:none;border:none;color:var(--text-muted);font-size:.58rem;letter-spacing:.1em;font-weight:700;padding:.3rem .5rem;cursor:pointer">PT</button>
+    </div>
+    <a href="https://wa.me/12156262345" class="nav-cta" data-en="Contact" data-pt="Contato">Contact</a>
+    <a href="/admin" class="nav-admin" title="Manager Panel" style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;gap:.3rem;border:1px solid var(--border-soft);padding:.3rem .7rem;color:var(--text-muted)" data-en="⚙ Manager" data-pt="⚙ Gestor">⚙ Manager</a>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </button>
@@ -287,9 +291,13 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 </nav>
 <!-- MOBILE MENU -->
 <div class="nav-mobile" id="nav-mobile">
-  <a href="/jewelry" onclick="toggleMenu()">💎 Alta Joalheria</a>
-  <a href="#story" onclick="toggleMenu()">Nossa História</a>
+  <a href="/jewelry" onclick="toggleMenu()" data-en="💎 Fine Jewelry" data-pt="💎 Alta Joalheria">💎 Fine Jewelry</a>
+  <a href="#story" onclick="toggleMenu()" data-en="Our Story" data-pt="Nossa História">Our Story</a>
   <a href="https://wa.me/12156262345">WhatsApp</a>
+  <div style="display:flex;gap:.5rem;padding:.4rem 0">
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')" style="flex:1;background:none;border:1px solid var(--border-soft);color:var(--text-muted);font-size:.6rem;font-weight:700;padding:.4rem;cursor:pointer">EN</button>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')" style="flex:1;background:none;border:1px solid var(--border-soft);color:var(--text-muted);font-size:.6rem;font-weight:700;padding:.4rem;cursor:pointer">PT</button>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -300,14 +308,11 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
   </div>
   <div class="hero-content">
     <div class="hero-eyebrow">Philadelphia, PA · Lagos World</div>
-    <h1 class="hero-title">
-      O Ecossistema
-      <em>da Mulher Moderna</em>
-    </h1>
-    <p class="hero-sub">Alta joalheria. Gestão de ambientes. Desenvolvimento &amp; liderança. Identidade visual. Tudo o que você precisa para alcançar sua melhor versão — em um só lugar.</p>
+    <h1 class="hero-title" data-en="The Ecosystem <em>of the Modern Woman</em>" data-pt="O Ecossistema <em>da Mulher Moderna</em>">The Ecosystem <em>of the Modern Woman</em></h1>
+    <p class="hero-sub" data-en="Fine jewelry. Space management. Development &amp; leadership. Visual identity. Everything you need to reach your best self — in one place." data-pt="Alta joalheria. Gestão de ambientes. Desenvolvimento &amp; liderança. Identidade visual. Tudo o que você precisa para alcançar sua melhor versão — em um só lugar.">Fine jewelry. Space management. Development &amp; leadership. Visual identity. Everything you need to reach your best self — in one place.</p>
     <div class="hero-actions">
-      <a href="/jewelry" class="btn-primary">Alta Joalheria</a>
-      <a href="#pilares" class="btn-outline">Explorar</a>
+      <a href="/jewelry" class="btn-primary" data-en="Fine Jewelry" data-pt="Alta Joalheria">Fine Jewelry</a>
+      <a href="#pilares" class="btn-outline" data-en="Explore" data-pt="Explorar">Explore</a>
     </div>
   </div>
 </section>
@@ -316,19 +321,19 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 <div class="trust-bar">
   <div class="trust-item">
     <span class="trust-icon">✦</span>
-    <span class="trust-text">Alta Joalheria · Curadoria Exclusiva</span>
+    <span class="trust-text" data-en="Fine Jewelry · Exclusive Curation" data-pt="Alta Joalheria · Curadoria Exclusiva">Fine Jewelry · Exclusive Curation</span>
   </div>
   <div class="trust-item">
     <span class="trust-icon">✦</span>
-    <span class="trust-text">Joias 18k · Peças Sofisticadas</span>
+    <span class="trust-text" data-en="18k Jewelry · Sophisticated Pieces" data-pt="Joias 18k · Peças Sofisticadas">18k Jewelry · Sophisticated Pieces</span>
   </div>
   <div class="trust-item">
     <span class="trust-icon">✦</span>
-    <span class="trust-text">Gestão Premium de Ambientes</span>
+    <span class="trust-text" data-en="Premium Space Management" data-pt="Gestão Premium de Ambientes">Premium Space Management</span>
   </div>
   <div class="trust-item">
     <span class="trust-icon">✦</span>
-    <span class="trust-text">Limpeza Residencial &amp; Comercial · PA &amp; NJ</span>
+    <span class="trust-text" data-en="Residential &amp; Commercial Cleaning · PA &amp; NJ" data-pt="Limpeza Residencial &amp; Comercial · PA &amp; NJ">Residential &amp; Commercial Cleaning · PA &amp; NJ</span>
   </div>
 </div>
 
@@ -336,9 +341,9 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 <section class="platforms section" id="pilares">
   <div class="container">
     <div style="text-align:center;margin-bottom:0" class="reveal">
-      <div class="section-label">Ecossistema Lagos World</div>
-      <h2 class="section-title" style="text-align:center">Nossas <em>Plataformas</em></h2>
-      <p style="font-size:.8rem;color:var(--text-muted);max-width:520px;margin:.8rem auto 0;line-height:1.8">Dois pilares de excelência integrados para simplificar, valorizar e impulsionar a rotina da mulher contemporânea.</p>
+      <div class="section-label" data-en="Lagos World Ecosystem" data-pt="Ecossistema Lagos World">Lagos World Ecosystem</div>
+      <h2 class="section-title" style="text-align:center" data-en="Our <em>Platforms</em>" data-pt="Nossas <em>Plataformas</em>">Our <em>Platforms</em></h2>
+      <p style="font-size:.8rem;color:var(--text-muted);max-width:520px;margin:.8rem auto 0;line-height:1.8" data-en="Two integrated pillars of excellence to simplify, elevate, and empower the modern woman's routine." data-pt="Dois pilares de excelência integrados para simplificar, valorizar e impulsionar a rotina da mulher contemporânea.">Two integrated pillars of excellence to simplify, elevate, and empower the modern woman's routine.</p>
     </div>
     <div class="platforms-grid">
 
@@ -346,12 +351,12 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         <div class="pc-image">
           <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&q=90&auto=format&fit=crop" alt="Alta Joalheria Lagos — Curadoria Exclusiva" loading="lazy">
           <div class="pc-image-overlay"></div>
-          <div class="pc-tag">Alta Joalheria</div>
+          <div class="pc-tag" data-en="Fine Jewelry" data-pt="Alta Joalheria">Fine Jewelry</div>
         </div>
         <div class="pc-info">
           <div class="pc-name">Lagos Jewelry</div>
-          <p class="pc-sub">Curadoria de peças sofisticadas em ouro 18k que refletem a sua força, elegância e identidade.</p>
-          <span class="pc-link">Descobrir Coleção</span>
+          <p class="pc-sub" data-en="A curation of sophisticated 18k gold pieces that reflect your strength, elegance, and identity." data-pt="Curadoria de peças sofisticadas em ouro 18k que refletem a sua força, elegância e identidade.">A curation of sophisticated 18k gold pieces that reflect your strength, elegance, and identity.</p>
+          <span class="pc-link" data-en="Discover Collection" data-pt="Descobrir Coleção">Discover Collection</span>
         </div>
       </a>
 
@@ -359,12 +364,12 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         <div class="pc-image">
           <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=90&auto=format&fit=crop" alt="Lagos Cleaning — Professional Cleaning Services" loading="lazy">
           <div class="pc-image-overlay"></div>
-          <div class="pc-tag">Professional Cleaning</div>
+          <div class="pc-tag" data-en="Professional Cleaning" data-pt="Limpeza Profissional">Professional Cleaning</div>
         </div>
         <div class="pc-info">
           <div class="pc-name">Lagos Cleaning</div>
-          <p class="pc-sub">Premium residential and commercial cleaning services across Pennsylvania & New Jersey. Visit lagoscleaning.app</p>
-          <span class="pc-link">Visit Lagos Cleaning ↗</span>
+          <p class="pc-sub" data-en="Premium residential and commercial cleaning services across Pennsylvania &amp; New Jersey. Visit lagoscleaning.app" data-pt="Serviços premium de limpeza residencial e comercial na Pensilvânia &amp; Nova Jersey. Visite lagoscleaning.app">Premium residential and commercial cleaning services across Pennsylvania &amp; New Jersey. Visit lagoscleaning.app</p>
+          <span class="pc-link" data-en="Visit Lagos Cleaning ↗" data-pt="Visitar Lagos Cleaning ↗">Visit Lagos Cleaning ↗</span>
         </div>
       </a>
 
@@ -379,41 +384,41 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
       <img src="https://vthtufcomuaiyeussrrj.supabase.co/storage/v1/object/public/jewelry-images/site/dayane-3-opt.jpeg" alt="Dayane Lago — Founder of Lagos World">
     </div>
     <div class="story-text-wrap reveal-right">
-      <div class="section-label">The Founder</div>
-      <h2 class="section-title">Dayane Lago<em>Uma História de Vitória</em></h2>
-      <p class="story-body">
+      <div class="section-label" data-en="The Founder" data-pt="A Fundadora">The Founder</div>
+      <h2 class="section-title" data-en="Dayane Lago<em>A Story of Victory</em>" data-pt="Dayane Lago<em>Uma História de Vitória</em>">Dayane Lago<em>A Story of Victory</em></h2>
+      <p class="story-body" data-en="She was born in southern Brazil and raised in <strong>Jaru, Rondônia</strong> — a small city that gave her something no city can manufacture: the foundation of a strong family, the courage to dream, and the faith to follow." data-pt="Ela nasceu no sul do Brasil e cresceu em <strong>Jaru, Rondônia</strong> — uma cidade pequena que lhe deu algo que nenhuma cidade fabrica: a base de uma família forte, a coragem de sonhar e a fé para seguir.">
         She was born in southern Brazil and raised in <strong>Jaru, Rondônia</strong> — a small city that gave her something no city can manufacture: the foundation of a strong family, the courage to dream, and the faith to follow.
       </p>
-      <p class="story-body">
+      <p class="story-body" data-en="She married young. And with her heart full of hope and her bags packed with everything she had, <strong>Dayane Lago crossed the ocean</strong> to build a life in America — not because it was easy, but because she believed it was possible." data-pt="Ela se casou jovem. E com o coração cheio de esperança e as malas com tudo o que tinha, <strong>Dayane Lago cruzou o oceano</strong> para construir uma vida na América — não porque fosse fácil, mas porque acreditava que era possível.">
         She married young. And with her heart full of hope and her bags packed with everything she had, <strong>Dayane Lago crossed the ocean</strong> to build a life in America — not because it was easy, but because she believed it was possible.
       </p>
-      <blockquote class="story-quote">
+      <blockquote class="story-quote" data-en="&quot;I didn't come here looking for a shortcut. I came here looking for a future — for myself, and one day, for every woman who would walk the same path.&quot;" data-pt="&quot;Não vim em busca de um atalho. Vim em busca de um futuro — para mim e, um dia, para cada mulher que trilharia o mesmo caminho.&quot;">
         "I didn't come here looking for a shortcut. I came here looking for a future — for myself, and one day, for every woman who would walk the same path."
       </blockquote>
-      <p class="story-body">
+      <p class="story-body" data-en="That was over <strong>20 years ago</strong>. Two decades of learning, building, failing, rising. Two decades of pouring herself into homes and businesses across Pennsylvania and New Jersey — until her cleaning business became a name people trusted, recommended, and called first." data-pt="Isso foi há mais de <strong>20 anos</strong>. Duas décadas aprendendo, construindo, caindo, levantando. Duas décadas se dedicando a lares e empresas pela Pensilvânia e Nova Jersey — até seu negócio de limpeza virar um nome em que as pessoas confiavam, recomendavam e chamavam primeiro.">
         That was over <strong>20 years ago</strong>. Two decades of learning, building, failing, rising. Two decades of pouring herself into homes and businesses across Pennsylvania and New Jersey — until her cleaning business became a name people trusted, recommended, and called first.
       </p>
-      <p class="story-body">
+      <p class="story-body" data-en="Lagos World is the fruit of that journey. A platform born from sweat, faith, and an unbreakable belief: <strong>that every woman deserves beauty, dignity, and the opportunity to rise.</strong>" data-pt="A Lagos World é o fruto dessa jornada. Uma plataforma nascida do suor, da fé e de uma crença inabalável: <strong>a de que toda mulher merece beleza, dignidade e a oportunidade de se elevar.</strong>">
         Lagos World is the fruit of that journey. A platform born from sweat, faith, and an unbreakable belief: <strong>that every woman deserves beauty, dignity, and the opportunity to rise.</strong>
       </p>
-      <div class="story-sig">— Dayane Lago, Founder · Lagos World</div>
+      <div class="story-sig" data-en="— Dayane Lago, Founder · Lagos World" data-pt="— Dayane Lago, Fundadora · Lagos World">— Dayane Lago, Founder · Lagos World</div>
     </div>
   </div>
 </section>
 
 <!-- VERSE -->
 <div class="verse-section">
-  <p class="verse-text">"She is clothed with strength and dignity, and she laughs without fear of the future."</p>
-  <div class="verse-ref">Proverbs 31:25</div>
+  <p class="verse-text" data-en="&quot;She is clothed with strength and dignity, and she laughs without fear of the future.&quot;" data-pt="&quot;Ela se reveste de força e dignidade e sorri diante do futuro.&quot;">"She is clothed with strength and dignity, and she laughs without fear of the future."</p>
+  <div class="verse-ref" data-en="Proverbs 31:25" data-pt="Provérbios 31:25">Proverbs 31:25</div>
 </div>
 
 <!-- FOUNDER GALLERY -->
 <section class="gallery section">
   <div class="container">
     <div style="text-align:center" class="reveal">
-      <div class="section-label">Shop The Look</div>
+      <div class="section-label" data-en="Shop The Look" data-pt="Use o Look">Shop The Look</div>
       <h2 class="section-title" style="text-align:center">Dayane Lago · <em>Lagos World</em></h2>
-      <p style="font-size:.78rem;color:var(--text-muted);text-align:center;margin:.5rem auto 0;max-width:420px;line-height:1.7">Click any photo to shop the jewelry Dayane is wearing — curated 18k gold-plated pieces.</p>
+      <p style="font-size:.78rem;color:var(--text-muted);text-align:center;margin:.5rem auto 0;max-width:420px;line-height:1.7" data-en="Click any photo to shop the jewelry Dayane is wearing — curated 18k gold-plated pieces." data-pt="Clique em qualquer foto para comprar as joias que a Dayane está usando — peças banhadas a ouro 18k selecionadas.">Click any photo to shop the jewelry Dayane is wearing — curated 18k gold-plated pieces.</p>
     </div>
     <div class="gallery-grid">
       <div class="gallery-item reveal">
@@ -421,7 +426,7 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         <div class="gallery-overlay"></div>
         <div class="gallery-caption">
           <p>Pearl Drop Pendant · Gold 18k</p>
-          <a href="/jewelry" class="gallery-shop-btn">Shop This Look →</a>
+          <a href="/jewelry" class="gallery-shop-btn" data-en="Shop This Look →" data-pt="Comprar este Look →">Shop This Look →</a>
         </div>
       </div>
       <div class="gallery-item reveal delay-1">
@@ -429,7 +434,7 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         <div class="gallery-overlay"></div>
         <div class="gallery-caption">
           <p>Statement Chain · Gold 18k</p>
-          <a href="/jewelry" class="gallery-shop-btn">Shop This Look →</a>
+          <a href="/jewelry" class="gallery-shop-btn" data-en="Shop This Look →" data-pt="Comprar este Look →">Shop This Look →</a>
         </div>
       </div>
       <div class="gallery-item reveal delay-2">
@@ -437,7 +442,7 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
         <div class="gallery-overlay"></div>
         <div class="gallery-caption">
           <p>Ribbed Hoop Set · Silver</p>
-          <a href="/jewelry" class="gallery-shop-btn">Shop This Look →</a>
+          <a href="/jewelry" class="gallery-shop-btn" data-en="Shop This Look →" data-pt="Comprar este Look →">Shop This Look →</a>
         </div>
       </div>
     </div>
@@ -448,20 +453,20 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 <section class="values section" style="background:var(--bg-warm)">
   <div class="container">
     <div class="reveal" style="max-width:800px;margin-bottom:1.5rem">
-      <div class="section-label">Manifesto</div>
-      <h2 class="section-title">Mais do que uma plataforma.<br><em>Um ecossistema.</em></h2>
-      <p style="font-size:.9rem;line-height:1.95;color:var(--text-muted);margin-top:1rem">A Lagos World é mais do que uma plataforma — é um ecossistema construído por mulheres, para mulheres. Da curadoria de alta joalheria à gestão impecável dos seus espaços, tudo o que você precisa para alcançar a sua melhor versão, em um só lugar.</p>
+      <div class="section-label" data-en="Manifesto" data-pt="Manifesto">Manifesto</div>
+      <h2 class="section-title" data-en="More than a platform.<br><em>An ecosystem.</em>" data-pt="Mais do que uma plataforma.<br><em>Um ecossistema.</em>">More than a platform.<br><em>An ecosystem.</em></h2>
+      <p style="font-size:.9rem;line-height:1.95;color:var(--text-muted);margin-top:1rem" data-en="Lagos World is more than a platform — it's an ecosystem built by women, for women. From fine-jewelry curation to the impeccable management of your spaces, everything you need to reach your best self, in one place." data-pt="A Lagos World é mais do que uma plataforma — é um ecossistema construído por mulheres, para mulheres. Da curadoria de alta joalheria à gestão impecável dos seus espaços, tudo o que você precisa para alcançar a sua melhor versão, em um só lugar.">Lagos World is more than a platform — it's an ecosystem built by women, for women. From fine-jewelry curation to the impeccable management of your spaces, everything you need to reach your best self, in one place.</p>
     </div>
     <div class="values-grid" style="grid-template-columns:repeat(2,1fr)">
       <div class="value-item reveal">
         <div class="value-num">01</div>
-        <div class="value-title">Alta Joalheria</div>
-        <p class="value-text">Curadoria de peças sofisticadas em ouro 18k que expressam força, elegância e identidade. Cada peça selecionada para a mulher que conhece o seu valor.</p>
+        <div class="value-title" data-en="Fine Jewelry" data-pt="Alta Joalheria">Fine Jewelry</div>
+        <p class="value-text" data-en="A curation of sophisticated 18k gold pieces that express strength, elegance, and identity. Each piece chosen for the woman who knows her worth." data-pt="Curadoria de peças sofisticadas em ouro 18k que expressam força, elegância e identidade. Cada peça selecionada para a mulher que conhece o seu valor.">A curation of sophisticated 18k gold pieces that express strength, elegance, and identity. Each piece chosen for the woman who knows her worth.</p>
       </div>
       <div class="value-item reveal delay-1">
         <div class="value-num">02</div>
-        <div class="value-title">Gestão de Ambientes</div>
-        <p class="value-text">Soluções premium de conservação e cuidado para espaços residenciais e corporativos. Ambientes impecáveis que refletem o padrão de quem os habita.</p>
+        <div class="value-title" data-en="Space Management" data-pt="Gestão de Ambientes">Space Management</div>
+        <p class="value-text" data-en="Premium care and maintenance solutions for residential and corporate spaces. Impeccable environments that reflect the standard of those who live in them." data-pt="Soluções premium de conservação e cuidado para espaços residenciais e corporativos. Ambientes impecáveis que refletem o padrão de quem os habita.">Premium care and maintenance solutions for residential and corporate spaces. Impeccable environments that reflect the standard of those who live in them.</p>
       </div>
     </div>
   </div>
@@ -470,9 +475,9 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
 <!-- CONTACT STRIP -->
 <div class="contact-strip">
   <div class="contact-strip-text">
-    <h3>Entre no Ecossistema</h3>
-    <p>Fale conosco via WhatsApp. Atendimento rápido, personalizado e com o padrão Lagos World.</p>
-    <a href="https://wa.me/12156262345" class="btn-primary" style="margin-top:1.5rem;display:inline-block">Falar no WhatsApp</a>
+    <h3 data-en="Join the Ecosystem" data-pt="Entre no Ecossistema">Join the Ecosystem</h3>
+    <p data-en="Reach us on WhatsApp. Fast, personalized service with the Lagos World standard." data-pt="Fale conosco via WhatsApp. Atendimento rápido, personalizado e com o padrão Lagos World.">Reach us on WhatsApp. Fast, personalized service with the Lagos World standard.</p>
+    <a href="https://wa.me/12156262345" class="btn-primary" style="margin-top:1.5rem;display:inline-block" data-en="Chat on WhatsApp" data-pt="Falar no WhatsApp">Chat on WhatsApp</a>
   </div>
   <div class="contact-strip-divider"></div>
   <div class="contact-strip-info">
@@ -481,7 +486,7 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
       <span class="ci-value"><a href="https://wa.me/12156262345">+1 (215) 626-2345</a></span>
     </div>
     <div class="ci-item">
-      <span class="ci-label">Location</span>
+      <span class="ci-label" data-en="Location" data-pt="Localização">Location</span>
       <span class="ci-value">Philadelphia, PA</span>
     </div>
     <div class="ci-item">
@@ -497,40 +502,40 @@ footer{background:var(--black);color:#e8e4dc;padding:4rem 2.5rem 2rem}
     <div class="footer-top">
       <div>
         <div class="footer-brand">Lagos <span>World</span></div>
-        <p class="footer-tagline">Ecossistema de Excelência Feminina<br>✦ Alta Joalheria &nbsp;✦ Gestão de Ambientes<br>✦ Desenvolvimento &amp; Liderança &nbsp;✦ Hub VIP<br>Philadelphia, PA</p>
-        <a href="https://wa.me/12156262345" class="btn-primary" style="font-size:.6rem">Get in Touch</a>
+        <p class="footer-tagline" data-en="Ecosystem of Feminine Excellence<br>✦ Fine Jewelry &nbsp;✦ Space Management<br>✦ Development &amp; Leadership &nbsp;✦ VIP Hub<br>Philadelphia, PA" data-pt="Ecossistema de Excelência Feminina<br>✦ Alta Joalheria &nbsp;✦ Gestão de Ambientes<br>✦ Desenvolvimento &amp; Liderança &nbsp;✦ Hub VIP<br>Philadelphia, PA">Ecosystem of Feminine Excellence<br>✦ Fine Jewelry &nbsp;✦ Space Management<br>✦ Development &amp; Leadership &nbsp;✦ VIP Hub<br>Philadelphia, PA</p>
+        <a href="https://wa.me/12156262345" class="btn-primary" style="font-size:.6rem" data-en="Get in Touch" data-pt="Fale Conosco">Get in Touch</a>
       </div>
       <div class="footer-col">
-        <h4>Jewelry</h4>
+        <h4 data-en="Jewelry" data-pt="Joias">Jewelry</h4>
         <ul>
-          <li><a href="/jewelry">Shop All</a></li>
-          <li><a href="/jewelry">Necklaces</a></li>
-          <li><a href="/jewelry">Rings</a></li>
-          <li><a href="/jewelry">Bracelets</a></li>
-          <li><a href="/jewelry">Earrings</a></li>
+          <li><a href="/jewelry" data-en="Shop All" data-pt="Ver Tudo">Shop All</a></li>
+          <li><a href="/jewelry" data-en="Necklaces" data-pt="Colares">Necklaces</a></li>
+          <li><a href="/jewelry" data-en="Rings" data-pt="Anéis">Rings</a></li>
+          <li><a href="/jewelry" data-en="Bracelets" data-pt="Pulseiras">Bracelets</a></li>
+          <li><a href="/jewelry" data-en="Earrings" data-pt="Brincos">Earrings</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Lagos Cleaning</h4>
         <ul>
-          <li><a href="https://lagoscleaning.app/airbnb" target="_blank" rel="noopener">Airbnb Cleaning</a></li>
+          <li><a href="https://lagoscleaning.app/airbnb" target="_blank" rel="noopener" data-en="Airbnb Cleaning" data-pt="Limpeza Airbnb">Airbnb Cleaning</a></li>
           <li><a href="https://lagoscleaning.app/powerwashing" target="_blank" rel="noopener">Power Washing</a></li>
-          <li><a href="https://wa.me/12156262345">Book via WhatsApp</a></li>
+          <li><a href="https://wa.me/12156262345" data-en="Book via WhatsApp" data-pt="Reservar via WhatsApp">Book via WhatsApp</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Lagos World</h4>
         <ul>
-          <li><a href="#story">Nossa História</a></li>
-          <li><a href="https://wa.me/12156262345">Contato</a></li>
-          <li><a href="/jewelry">Rastrear Pedido</a></li>
-          <li><a href="#pilares">O Ecossistema</a></li>
+          <li><a href="#story" data-en="Our Story" data-pt="Nossa História">Our Story</a></li>
+          <li><a href="https://wa.me/12156262345" data-en="Contact" data-pt="Contato">Contact</a></li>
+          <li><a href="/jewelry" data-en="Track Order" data-pt="Rastrear Pedido">Track Order</a></li>
+          <li><a href="#pilares" data-en="The Ecosystem" data-pt="O Ecossistema">The Ecosystem</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2025 Lagos World · Philadelphia, PA · All rights reserved</span>
-      <span class="footer-verse">"She is clothed with strength and dignity" — Proverbs 31:25</span>
+      <span class="footer-copy" data-en="© 2025 Lagos World · Philadelphia, PA · All rights reserved" data-pt="© 2025 Lagos World · Philadelphia, PA · Todos os direitos reservados">© 2025 Lagos World · Philadelphia, PA · All rights reserved</span>
+      <span class="footer-verse" data-en="&quot;She is clothed with strength and dignity&quot; — Proverbs 31:25" data-pt="&quot;Ela se reveste de força e dignidade&quot; — Provérbios 31:25">"She is clothed with strength and dignity" — Proverbs 31:25</span>
     </div>
   </div>
 </footer>
@@ -580,6 +585,23 @@ const obs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
 },{threshold:.1});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
+
+// ── i18n — English primary, Portuguese optional (data-en / data-pt) ──
+function setLang(lang){
+  if(lang!=='pt') lang='en';
+  document.documentElement.lang = lang==='pt' ? 'pt-BR' : 'en';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = lang==='pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
+    if(v!=null) el.innerHTML = v;
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.style.color = on ? '#b8922e' : 'var(--text-muted)';
+    b.style.background = on ? 'rgba(184,146,46,.12)' : 'none';
+  });
+  try{ localStorage.setItem('lagos_lang', lang); }catch(e){}
+}
+(function(){ let s='en'; try{ s=localStorage.getItem('lagos_lang')||'en'; }catch(e){} setLang(s); })();
 </script>
   <!-- Vercel Web Analytics -->
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
