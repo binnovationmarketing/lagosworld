@@ -612,6 +612,29 @@ function setLang(lang){
   try{ localStorage.setItem('lagos_lang', lang); }catch(e){}
 }
 (function(){ let s='en'; try{ s=localStorage.getItem('lagos_lang')||'en'; }catch(e){} setLang(s); })();
+
+// ── Premium motion: cursor glow + light parallax (reduced-motion aware) ──
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  // Cursor glow — desktop pointer only
+  if(matchMedia('(pointer:fine)').matches && innerWidth>900){
+    const g=document.createElement('div');
+    g.style.cssText='position:fixed;width:440px;height:440px;border-radius:50%;pointer-events:none;z-index:150;background:radial-gradient(circle,rgba(201,168,76,.13),transparent 62%);transform:translate(-50%,-50%);left:-999px;top:0;opacity:0;transition:opacity .35s';
+    document.body.appendChild(g);
+    let tx=0,ty=0,x=0,y=0,run=false;
+    function loop(){x+=(tx-x)*.12;y+=(ty-y)*.12;g.style.left=x+'px';g.style.top=y+'px';if(Math.abs(tx-x)>.4||Math.abs(ty-y)>.4)requestAnimationFrame(loop);else run=false;}
+    addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;g.style.opacity='1';if(!run){run=true;requestAnimationFrame(loop);}},{passive:true});
+    addEventListener('mouseleave',()=>g.style.opacity='0');
+  }
+  // Light parallax on decorative background layers (no hover-transform conflict)
+  const px=document.querySelectorAll('.estudio-bg');
+  if(px.length){
+    let t=false;
+    const upd=()=>{const h=innerHeight;px.forEach(el=>{const r=el.getBoundingClientRect();if(r.bottom>0&&r.top<h)el.style.transform='translateY('+((r.top-h/2)*.06).toFixed(1)+'px)';});t=false;};
+    addEventListener('scroll',()=>{if(!t){t=true;requestAnimationFrame(upd);}},{passive:true});
+    upd();
+  }
+})();
 </script>
   <!-- Vercel Web Analytics -->
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
